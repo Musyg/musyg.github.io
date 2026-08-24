@@ -1,0 +1,44 @@
+{
+  "name": "musyg.github.io",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "oxlint",
+    "typecheck": "tsc -b",
+    "content:check": "node scripts/check-content.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
+    "prerender": "node scripts/prerender.mjs",
+    "build": "pnpm typecheck && pnpm content:check && pnpm build:client && pnpm build:ssr && pnpm prerender",
+    "preview": "vite preview --host 127.0.0.1",
+    "test:e2e": "playwright test --grep-invert @a11y",
+    "test:a11y": "playwright test --grep @a11y",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm content:check && pnpm test && pnpm build && pnpm test:e2e && pnpm test:a11y"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "jsdom": "30.0.1",
+    "oxlint": "^1.79.0",
+    "prettier": "3.9.6",
+    "typescript": "~7.0.2",
+    "vite": "^8.2.2",
+    "vitest": "4.1.11"
+  }
+}

@@ -1,0 +1,72 @@
+:root {
+  --canvas: #0f1216;
+  --surface: #151a21;
+  --ink: #f1f5f7;
+  --muted: #b7c2c9;
+  --line: #25303a;
+  --border-functional: #667d8d;
+  --accent: #005eff;
+  --on-accent: #ffffff;
+  --technical: #0f1216;
+  --technical-ink: #f1f5f7;
+  --technical-muted: #b7c2c9;
+  --technical-line: #25303a;
+  --technical-border: #667d8d;
+  --sans: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: var(--sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--canvas);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 16px;
+  color: var(--on-accent);
+  background: var(--accent);
+  font-weight: 700;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+::selection {
+  color: var(--on-accent);
+  background: var(--accent);
+}
