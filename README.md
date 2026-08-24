@@ -11,11 +11,11 @@ deployment to GitHub Pages at <https://musyg.github.io/>.
 
 ## Current state
 
-The complete local release candidate is implemented in English and French with the final
+The bilingual production site is published at <https://musyg.github.io/> with the final
 black and `#005EFF` visual direction. It includes the full route set, static prerendering,
 responsive layouts, metadata, content guards, tests, accessibility checks, and GitHub
-Pages workflows. Publication remains pending until independent local approval and the
-post-publication verification gate pass.
+Pages workflows. The initial release passed independent local review, CI, deployment,
+public route checks, and post-publication verification.
 
 Every production page, section, card, panel, navigation element, and footer uses black
 or a near-black neutral as its background. White and other light backgrounds are not
