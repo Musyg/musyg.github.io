@@ -24,6 +24,10 @@ export function render(pathname: string) {
   const enUrl = route.locale === "en" ? canonical : counterpart;
   const frUrl = route.locale === "fr" ? canonical : counterpart;
   const imageUrl = canonicalUrl("/social-preview.png");
+  const imageAlt =
+    route.locale === "fr"
+      ? "Portfolio de Gilles Musy : recherche en sécurité, ingénierie IA et systèmes logiciels"
+      : "Gilles Musy portfolio: security research, AI engineering, and software systems";
   const structuredData =
     route.kind === "home"
       ? [
@@ -63,11 +67,16 @@ export function render(pathname: string) {
     `<meta property="og:description" content="${escapeAttribute(route.description)}">`,
     `<meta property="og:url" content="${escapeAttribute(canonical)}">`,
     `<meta property="og:image" content="${escapeAttribute(imageUrl)}">`,
+    '<meta property="og:image:type" content="image/png">',
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    `<meta property="og:image:alt" content="${escapeAttribute(imageAlt)}">`,
     `<meta property="og:locale" content="${route.locale === "fr" ? "fr_CH" : "en_CH"}">`,
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${escapeAttribute(route.title)}">`,
     `<meta name="twitter:description" content="${escapeAttribute(route.description)}">`,
     `<meta name="twitter:image" content="${escapeAttribute(imageUrl)}">`,
+    `<meta name="twitter:image:alt" content="${escapeAttribute(imageAlt)}">`,
     structuredData
       ? `<script type="application/ld+json">${escapeJson(structuredData)}</script>`
       : "",

@@ -157,7 +157,15 @@ function Header({ route }: { route: RouteEntry }) {
           locale === "fr" ? "Gilles Musy, accueil" : "Gilles Musy, home"
         }
       >
-        Gilles Musy
+        <img
+          className="header-mark"
+          src="/header-mark.svg"
+          alt=""
+          width="28"
+          height="28"
+          aria-hidden="true"
+        />
+        <span>Gilles Musy</span>
       </a>
       <nav className="desktop-nav" aria-label={content.navLabel}>
         {navigation()}
@@ -294,17 +302,67 @@ function HomePage({ locale }: { locale: Locale }) {
   const featured = selectedProjectIds
     .map((id) => projectById(id))
     .filter((project): project is Project => Boolean(project));
+  const heroLines = isFrench
+    ? ["Recherche en sécurité.", "Ingénierie IA.", "Systèmes logiciels."]
+    : ["Security research.", "AI engineering.", "Software systems."];
+
+  useEffect(() => {
+    const syncVisibility = () => {
+      document.body.classList.toggle("is-document-hidden", document.hidden);
+    };
+
+    document.addEventListener("visibilitychange", syncVisibility);
+    syncVisibility();
+
+    return () => {
+      document.removeEventListener("visibilitychange", syncVisibility);
+      document.body.classList.remove("is-document-hidden");
+    };
+  }, []);
 
   return (
     <>
       <section className="hero-section" aria-labelledby="hero-title">
-        <div className="hero-grid" aria-hidden="true" />
+        <svg
+          className="hero-trace-field hero-trace-desktop"
+          viewBox="0 0 1000 700"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path className="hero-trace hero-trace-one" d="M0 132H238V254H418" />
+          <path
+            className="hero-trace hero-trace-two"
+            d="M1000 86H826V198H694V318"
+          />
+          <path
+            className="hero-trace hero-trace-three"
+            d="M112 700V584H286V516H472"
+          />
+        </svg>
+        <svg
+          className="hero-trace-field hero-trace-mobile"
+          viewBox="0 0 390 760"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path className="hero-trace hero-trace-one" d="M0 126H82V206H164" />
+          <path
+            className="hero-trace hero-trace-two"
+            d="M390 264H304V348H242"
+          />
+          <path
+            className="hero-trace hero-trace-three"
+            d="M44 760V664H126V606H214"
+          />
+        </svg>
         <div className="hero-content">
           <p className="eyebrow">{ui[locale].roleLine}</p>
-          <h1 id="hero-title">
-            {isFrench
-              ? "Recherche en sécurité. Ingénierie IA. Systèmes logiciels."
-              : "Security research. AI engineering. Software systems."}
+          <h1 id="hero-title" aria-label={heroLines.join(" ")}>
+            {heroLines.map((line) => (
+              <span key={line}>{line}</span>
+            ))}
           </h1>
           <p className="hero-lead">
             {isFrench
@@ -572,6 +630,16 @@ function ProjectPage({
             <p className="eyebrow">
               {localized(practiceLabels[project.practice], locale)}
             </p>
+            {project.id === "security-reviews" ? (
+              <img
+                className="security-review-case-mark"
+                src="/security-review-mark.svg"
+                alt=""
+                width="48"
+                height="48"
+                aria-hidden="true"
+              />
+            ) : null}
             <h1>{project.title}</h1>
             <p className="page-lead">{localized(project.summary, locale)}</p>
           </div>
