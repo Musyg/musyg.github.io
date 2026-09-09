@@ -27,6 +27,11 @@ export interface Bilingual {
 export interface PublicLink {
   label: Bilingual;
   url: string;
+  urlFr?: string;
+}
+
+export function publicLinkUrl(link: PublicLink, locale: Locale): string {
+  return locale === "fr" ? (link.urlFr ?? link.url) : link.url;
 }
 
 export interface Project {
@@ -564,6 +569,8 @@ export const projects: Project[] = [
       {
         label: { en: "Public case study", fr: "Étude de cas publique" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/inaricom.md",
+        urlFr:
+          "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/inaricom.md",
       },
     ],
   },
@@ -679,6 +686,8 @@ export const projects: Project[] = [
       {
         label: { en: "Public case study", fr: "Étude de cas publique" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/mikasshop.md",
+        urlFr:
+          "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/mikasshop.md",
       },
     ],
   },
@@ -794,6 +803,8 @@ export const projects: Project[] = [
       {
         label: { en: "Public case study", fr: "Étude de cas publique" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/pedi-sense.md",
+        urlFr:
+          "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/pedi-sense.md",
       },
     ],
   },
@@ -859,7 +870,7 @@ export const practicePages: Record<
     lead: Bilingual;
     capabilities: { en: string[]; fr: string[] };
     projectIds: string[];
-    evidence: { en: string[]; fr: string[] };
+    evidence: { en: string[]; fr: string[] } | PublicLink[];
   }
 > = {
   software: {
@@ -923,20 +934,44 @@ export const practicePages: Record<
       ],
     },
     projectIds: ["agent-resilience"],
-    evidence: {
-      en: [
-        "Agent Resilience v0.1.0 with public source, tests, packaging, and CI",
-        "Production Agent Template and related public backend packages",
-        "AI Adoption Playbook with a public interactive guide",
-        "Talos public architecture boundary and reproducible evaluation material",
-      ],
-      fr: [
-        "Agent Resilience v0.1.0 avec code source, tests, packaging et CI publics",
-        "Production Agent Template et packages backend publics associés",
-        "AI Adoption Playbook avec guide interactif public",
-        "Limite architecturale publique de Talos et matériel d’évaluation reproductible",
-      ],
-    },
+    evidence: [
+      {
+        label: {
+          en: "Agent Resilience: public source, tests, packaging, and CI",
+          fr: "Agent Resilience : code source, tests, packaging et CI publics",
+        },
+        url: "https://github.com/Musyg/agent-resilience",
+      },
+      {
+        label: {
+          en: "Production Agent Template: public repository",
+          fr: "Production Agent Template : dépôt public",
+        },
+        url: "https://github.com/Musyg/production-agent-template",
+      },
+      {
+        label: {
+          en: "AI Adoption Playbook: public repository",
+          fr: "AI Adoption Playbook : dépôt public",
+        },
+        url: "https://github.com/Musyg/ai-adoption-playbook",
+      },
+      {
+        label: {
+          en: "AI Adoption Playbook: interactive guide",
+          fr: "AI Adoption Playbook : guide interactif",
+        },
+        url: "https://musyg.github.io/ai-adoption-playbook/",
+        urlFr: "https://musyg.github.io/ai-adoption-playbook/fr/",
+      },
+      {
+        label: {
+          en: "Talos: public architecture and evaluation material; implementation remains private",
+          fr: "Talos : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
+        },
+        url: "https://github.com/Musyg/talos",
+      },
+    ],
   },
   security: {
     title: { en: "Security research", fr: "Recherche en sécurité" },

@@ -2,6 +2,114 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 
+test("case-study evidence is available in the hero in both languages", async ({
+  page,
+}) => {
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const locale of ["en", "fr"]) {
+      for (const slug of [
+        "celo-credentials",
+        "security-reviews",
+        "agent-resilience",
+        "inaricom",
+        "mikasshop",
+        "pedi-sense",
+      ]) {
+        await page.goto(
+          `${locale === "fr" ? "/fr/realisations" : "/work"}/${slug}/`,
+        );
+        const actions = page.locator(".case-hero .case-actions");
+        const heroLinks = actions.locator("a");
+        await expect(heroLinks).toHaveCount(2);
+        for (const link of await heroLinks.all()) {
+          await expect(link).toBeVisible();
+          const bounds = await link.boundingBox();
+          expect(bounds?.x).toBeGreaterThanOrEqual(0);
+          expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+          expect(bounds!.height).toBeGreaterThanOrEqual(44);
+        }
+        const hrefs = await heroLinks.evaluateAll((nodes) =>
+          nodes.map((node) => node.getAttribute("href")),
+        );
+        expect(
+          await page
+            .locator(".case-body .evidence-links a")
+            .evaluateAll((nodes) =>
+              nodes.map((node) => node.getAttribute("href")),
+            ),
+        ).toEqual(hrefs);
+        if (["inaricom", "mikasshop", "pedi-sense"].includes(slug)) {
+          expect(hrefs).toContain(
+            `https://github.com/Musyg/Musyg/blob/main/case-studies/${locale}/${slug}.md`,
+          );
+        }
+        expect(
+          await actions.evaluate(
+            (element) =>
+              element.getBoundingClientRect().bottom <
+              document.querySelector(".case-layout")!.getBoundingClientRect()
+                .top,
+          ),
+        ).toBe(true);
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+        ).toBe(true);
+      }
+    }
+  }
+});
+
+test("AI evidence links expose the named public resources and localized guide", async ({
+  page,
+}) => {
+  for (const [route, locale] of [
+    ["/ai-systems/", "en"],
+    ["/fr/systemes-ia/", "fr"],
+  ]) {
+    await page.setViewportSize({ width: 320, height: 900 });
+    await page.goto(route);
+    const evidence = page.locator(".evidence-list");
+    await expect(evidence.locator("a")).toHaveCount(5);
+    for (const repository of [
+      "agent-resilience",
+      "production-agent-template",
+      "ai-adoption-playbook",
+      "talos",
+    ]) {
+      await expect(
+        evidence.locator(`a[href="https://github.com/Musyg/${repository}"]`),
+      ).toBeVisible();
+    }
+    await expect(evidence.getByRole("link", { name: /Talos/ })).toContainText(
+      locale === "fr"
+        ? "l’implémentation reste privée"
+        : "implementation remains private",
+    );
+    await expect(
+      evidence.getByRole("link", { name: /interacti/ }),
+    ).toHaveAttribute(
+      "href",
+      `https://musyg.github.io/ai-adoption-playbook/${locale === "fr" ? "fr/" : ""}`,
+    );
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+});
+
+for (const route of ["/fr/systemes-ia/", "/fr/realisations/mikasshop/"]) {
+  test(`@a11y public evidence access ${route}`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 900 });
+    await page.goto(route);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  });
+}
+
 for (const route of publicRoutes) {
   test(`prerendered route ${route.path}`, async ({ page }) => {
     const response = await page.goto(route.path);
