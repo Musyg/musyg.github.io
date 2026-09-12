@@ -14,6 +14,32 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("presents Pedi-Sense beyond its storefront without claiming live backend activation", () => {
+    const project = projects.find((item) => item.id === "pedi-sense")!;
+    expect(project.status).toBe("store-and-integrations");
+    expect(project.filters).toContain("ai");
+    expect(project.projectStart).toEqual({ en: "Late 2022", fr: "Fin 2022" });
+    expect(project.stack).toEqual(
+      expect.arrayContaining(["Shopify", "Python", "MQTT", "Listmonk"]),
+    );
+    for (const locale of ["en", "fr"] as const) {
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "Hermes",
+      );
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "Listmonk",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+      );
+    }
+    expect(JSON.stringify(project)).not.toContain("hermes-agency");
+    expect(JSON.stringify(project)).not.toContain(
+      "5eb44f8839a3a457099df26bc784b67c4bbf151c",
+    );
+    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+  });
+
   it("keeps the report preview identical to the documented public source rendering", () => {
     const preview = readFileSync("public/stvault-report-cover.png");
     expect(createHash("sha256").update(preview).digest("hex")).toBe(

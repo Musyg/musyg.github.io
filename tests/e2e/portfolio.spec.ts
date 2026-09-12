@@ -3,6 +3,48 @@ import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 import { securityReportSource } from "../../src/SecurityOverview";
 
+test("Pedi-Sense distinguishes the storefront from implemented Hermes integrations", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/pedi-sense/`,
+      );
+      await expect(page.locator(".case-hero .page-lead")).toContainText(
+        locale === "fr" ? "agent SAV" : "customer-support agent",
+      );
+      await expect(page.locator(".metadata-rail")).toContainText(
+        locale === "fr" ? "intégrations développées" : "integrations developed",
+      );
+      await expect(page.locator(".case-body")).toContainText("Listmonk");
+      await expect(page.locator(".case-body")).toContainText(
+        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+      );
+      await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+});
+
+test("Pedi-Sense expanded scope accessibility @a11y", async ({ page }) => {
+  for (const path of ["/work/pedi-sense/", "/fr/realisations/pedi-sense/"]) {
+    await page.goto(path);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+});
+
 test("Security Reviews presents a real report and clearly labels the demonstration", async ({
   page,
 }) => {

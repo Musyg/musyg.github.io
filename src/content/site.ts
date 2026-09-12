@@ -3,7 +3,11 @@ export type Locale = "en" | "fr";
 export type Practice = "software" | "ai" | "security";
 
 export type ProjectStatus =
-  "stable-release" | "public-testnet" | "published-research" | "active-rebuild";
+  | "stable-release"
+  | "public-testnet"
+  | "published-research"
+  | "active-rebuild"
+  | "store-and-integrations";
 
 export type ProjectFilter = "all" | Practice | "web" | "blockchain";
 
@@ -81,6 +85,10 @@ export const sectionLabels: Record<SectionKey, Bilingual> = {
 
 export const statusLabels: Record<ProjectStatus, Bilingual> = {
   "stable-release": { en: "Stable release", fr: "Version stable" },
+  "store-and-integrations": {
+    en: "Public storefront; integrations developed",
+    fr: "Vitrine accessible ; intégrations développées",
+  },
   "public-testnet": {
     en: "Public testnet reference",
     fr: "Référence publique sur testnet",
@@ -703,39 +711,43 @@ export const projects: Project[] = [
     slug: { en: "pedi-sense", fr: "pedi-sense" },
     title: "Pedi-Sense",
     summary: {
-      en: "End-to-end Shopify store design and implementation for toe-separator socks.",
-      fr: "Conception et réalisation complète d’une boutique Shopify de chaussettes séparatrices d’orteils.",
+      en: "Shopify storefront, customer-support agent and custom ecommerce integrations.",
+      fr: "Boutique Shopify, agent SAV et intégrations e-commerce sur mesure.",
     },
     role: {
-      en: "Sole contributor for the Shopify store scope",
-      fr: "Seul intervenant sur le périmètre de la boutique Shopify",
+      en: "Storefront design, agent development and backend integrations",
+      fr: "Conception de la boutique, développement d’agents et intégrations backend",
     },
-    status: "stable-release",
+    status: "store-and-integrations",
     practice: "software",
-    filters: ["software", "web"],
-    evidenceCheckedAt: "2026-08-14",
+    filters: ["software", "web", "ai"],
+    evidenceCheckedAt: "2026-09-12",
     projectStart: { en: "Late 2022", fr: "Fin 2022" },
     stack: [
       "Shopify",
       "Liquid theme configuration",
       "Shopify Markets",
       "Localized metadata",
+      "Python",
+      "Shopify APIs",
+      "MQTT",
+      "Listmonk",
     ],
     sections: {
       summary: {
         en: [
-          "Pedi-Sense is a public Shopify store centered on toe-separator socks. It combines a focused product journey, color and bundle choices, brand content, support information, and localized editorial pages.",
+          "Pedi-Sense combines a Shopify storefront with custom services developed within Hermes: customer support, email workflows and ecommerce event analysis. The work covers both the customer-facing store and the integrations behind it.",
         ],
         fr: [
-          "Pedi-Sense est une boutique Shopify publique centrée sur les chaussettes séparatrices d’orteils. Elle réunit un parcours produit ciblé, des choix de couleurs et de lots, des contenus de marque, des informations d’assistance et des pages éditoriales localisées.",
+          "Pedi-Sense associe une boutique Shopify à des services sur mesure développés dans Hermes : SAV, parcours email et analyse des événements e-commerce. Le travail couvre à la fois la boutique visible par les clients et les intégrations qui l’accompagnent.",
         ],
       },
       role: {
         en: [
-          "I designed and implemented the complete Shopify storefront scope, including theme composition, navigation, product options, localization, cart and account paths, policies, FAQ, content, metadata, and launch.",
+          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed the Pedi-Sense integrations within Hermes, including customer-support workflows, branded emails and storefront event collection.",
         ],
         fr: [
-          "J’ai conçu et réalisé l’ensemble du périmètre de la vitrine Shopify, notamment la composition du thème, la navigation, les options produit, la localisation, les parcours de panier et de compte, les politiques, la FAQ, les contenus, les métadonnées et la mise en ligne.",
+          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations Pedi-Sense dans Hermes, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
         ],
       },
       problem: {
@@ -748,18 +760,18 @@ export const projects: Project[] = [
       },
       architecture: {
         en: [
-          "Shopify provides hosted catalogue, localization, account, cart, and checkout services. The storefront theme presents product options, bundle choices, brand and support pages, blog content, and localized search metadata.",
+          "Shopify handles the catalogue, accounts, cart and checkout. Separate Hermes services provide a multi-store support agent, connections to order and product information, email delivery through Listmonk, and event collection and attribution. Python services, Shopify APIs and MQTT connect these components.",
         ],
         fr: [
-          "Shopify fournit le catalogue hébergé, la localisation, le compte, le panier et le passage en caisse. Le thème de la vitrine présente les options produit, les offres par lot, les pages de marque et d’assistance, le blog et les métadonnées de recherche localisées.",
+          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Hermes distincts apportent un agent SAV multi-boutiques, l’accès aux informations de commande et de produit, l’envoi d’emails via Listmonk ainsi que la collecte et l’attribution des événements. Des services Python, les API Shopify et MQTT relient ces composants.",
         ],
       },
       decisions: {
         en: [
-          "The hosted commerce backend keeps product, order, localization, and checkout operations within standard Shopify flows. The custom work remains focused on presentation, content, navigation, and localized customer journeys.",
+          "I kept checkout within Shopify while developing business workflows separately. The support implementation includes draft responses for review and escalation to an operator. The email implementation includes templates for order confirmations, abandoned carts and shipping notifications; implementation and activation are tracked separately.",
         ],
         fr: [
-          "Le backend commercial hébergé conserve les produits, les commandes, la localisation et le passage en caisse dans les parcours standards de Shopify. Le travail réalisé se concentre sur la présentation, les contenus, la navigation et les parcours clients localisés.",
+          "J’ai conservé le paiement dans Shopify tout en développant les parcours métier séparément. Le SAV comprend des brouillons à valider et une transmission à un opérateur. La partie email comprend des modèles de confirmation de commande, de panier abandonné et d’expédition ; le développement et l’activation sont suivis séparément.",
         ],
       },
       security: {
@@ -788,18 +800,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The live storefront and public bilingual GitHub case study provide the evidence for the implemented scope.",
+          "The public storefront and the dated bilingual GitHub case study document the storefront. The Hermes implementation was reviewed separately in the private source repository; its code and customer data are not published here.",
         ],
         fr: [
-          "La boutique en ligne et l’étude de cas GitHub publique et bilingue fournissent les preuves du périmètre réalisé.",
+          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. L’implémentation Hermes a été examinée séparément dans le dépôt source privé ; son code et les données clients ne sont pas publiés ici.",
         ],
       },
       limitations: {
         en: [
-          "Sales, conversion, traffic, and revenue are not public and are not claimed. Product effects and customer statements are not treated as verified evidence. Shopify remains the commerce backend.",
+          "The storefront is publicly accessible. The backend implementation is private; its current production activation has not been verified for this case study. Sales, conversion, traffic and revenue are not claimed, and product effects and customer statements are not treated as verified evidence.",
         ],
         fr: [
-          "Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas publics et ne sont pas revendiqués. Les effets du produit et les témoignages clients ne sont pas considérés comme des preuves vérifiées. Shopify reste le backend commercial.",
+          "La vitrine est accessible publiquement. L’implémentation backend est privée ; son activation actuelle en production n’a pas été vérifiée pour cette étude de cas. Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas revendiqués, et les effets du produit comme les témoignages clients ne sont pas considérés comme des preuves vérifiées.",
         ],
       },
     },
@@ -809,7 +821,7 @@ export const projects: Project[] = [
         url: "https://pedi-sense.com",
       },
       {
-        label: { en: "Public case study", fr: "Étude de cas publique" },
+        label: { en: "Storefront case study", fr: "Étude de la vitrine" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/pedi-sense.md",
         urlFr:
           "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/pedi-sense.md",
