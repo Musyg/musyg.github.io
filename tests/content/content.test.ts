@@ -14,6 +14,27 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("separates Mika AI chat and SAV from the storefront and unverified runtime", () => {
+    const project = projects.find((item) => item.id === "mikasshop")!;
+    expect(project.status).toBe("store-and-integrations");
+    expect(project.filters).toContain("ai");
+    expect(project.projectStart).toEqual({ en: "2024", fr: "2024" });
+    expect(project.stack).toEqual(
+      expect.arrayContaining(["Python", "FastAPI", "SSE", "MQTT"]),
+    );
+    for (const locale of ["en", "fr"] as const) {
+      expect(project.sections.architecture[locale].join(" ")).toContain("Mika");
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "Hermes",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
+      );
+    }
+    expect(JSON.stringify(project)).not.toContain("hermes-agency");
+    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+  });
+
   it("describes Inaricom supplier integration without claiming a completed rebuild", () => {
     const project = projects.find((item) => item.id === "inaricom")!;
     expect(project.status).toBe("active-rebuild");

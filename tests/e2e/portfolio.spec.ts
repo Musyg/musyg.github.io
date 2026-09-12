@@ -3,6 +3,33 @@ import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 import { securityReportSource } from "../../src/SecurityOverview";
 
+test("Mika's Shop presents AI chat and separate SAV without runtime claims", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/mikasshop/`,
+      );
+      await expect(page.locator(".case-hero .page-lead")).toContainText(
+        locale === "fr" ? "chat IA Mika" : "Mika AI chat",
+      );
+      await expect(page.locator(".metadata-rail")).toContainText("2024");
+      await expect(page.locator(".case-body")).toContainText("FastAPI");
+      await expect(page.locator(".case-body")).toContainText(
+        locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
+      );
+      await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+});
+
 test("Pedi-Sense distinguishes the storefront from implemented Hermes integrations", async ({
   page,
 }) => {
