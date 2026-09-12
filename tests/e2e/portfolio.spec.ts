@@ -3,6 +3,74 @@ import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 import { securityReportSource } from "../../src/SecurityOverview";
 
+test("Pedi visual overview shows responsive captures and three implemented roles", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 768, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/pedi-sense/`,
+      );
+      const overview = page.locator(".pedi-overview");
+      await overview.scrollIntoViewIfNeeded();
+      await expect(overview.locator(".pedi-system-nodes > li")).toHaveCount(3);
+      await expect(overview).toContainText("Hermes");
+      await expect(overview).toContainText("Listmonk");
+      await expect(overview).toContainText(
+        locale === "fr" ? "développés" : "developed",
+      );
+      const mobile = overview.locator(".pedi-capture-mobile img");
+      await mobile.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          mobile.evaluate(
+            (img: HTMLImageElement) => img.complete && img.naturalWidth,
+          ),
+        )
+        .toBe(375);
+      const desktop = overview.locator(".pedi-capture-desktop img");
+      if (width > 600) {
+        await desktop.scrollIntoViewIfNeeded();
+        await expect
+          .poll(() =>
+            desktop.evaluate(
+              (img: HTMLImageElement) => img.complete && img.naturalWidth,
+            ),
+          )
+          .toBe(1425);
+      } else {
+        await expect(desktop).toBeHidden();
+        await expect(overview.locator(".pedi-desktop-link")).toBeVisible();
+      }
+      await expect(
+        overview.locator(".pedi-system-nodes > li").first(),
+      ).toHaveCSS("border-top-color", "rgb(0, 94, 255)");
+      await expect(
+        overview.locator(".pedi-system-nodes > li").first(),
+      ).toHaveCSS("border-left-width", "1px");
+      await expect(overview.locator(".pedi-node-detail").first()).toHaveCSS(
+        "border-top-color",
+        "rgb(102, 125, 141)",
+      );
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+  await page.goto("/fr/realisations/inaricom/");
+  await expect(page.locator(".pedi-overview")).toHaveCount(0);
+});
+
+test("@a11y Pedi visual overview in both languages", async ({ page }) => {
+  for (const path of ["/work/pedi-sense/", "/fr/realisations/pedi-sense/"]) {
+    await page.goto(path);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  }
+});
+
 test("Mika visual overview preserves the real cat identity and responsive captures", async ({
   page,
 }) => {

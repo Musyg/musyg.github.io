@@ -3,6 +3,7 @@ import { aboutCopy } from "./content/about";
 import { CeloOverview } from "./CeloOverview";
 import { SecurityOverview } from "./SecurityOverview";
 import { MikaOverview } from "./MikaOverview";
+import { PediOverview } from "./PediOverview";
 import {
   filterLabels,
   localized,
@@ -679,6 +680,7 @@ function ProjectPage({
         <SecurityOverview locale={locale} />
       )}
       {project.id === "mikasshop" && <MikaOverview locale={locale} />}
+      {project.id === "pedi-sense" && <PediOverview locale={locale} />}
       <div className="case-layout">
         <aside className="case-stack" aria-label={content.stack}>
           <h2>{content.stack}</h2>

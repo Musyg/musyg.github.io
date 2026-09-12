@@ -928,6 +928,115 @@
   max-width: 76ch;
 }
 
+.pedi-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.pedi-capture {
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--border-functional);
+  border-top: 3px solid #005eff;
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.pedi-capture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.pedi-capture figcaption {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.pedi-capture .text-link,
+.pedi-capture-note,
+.pedi-desktop-link {
+  font-size: 0.875rem;
+}
+
+.pedi-capture-note {
+  max-width: 76ch;
+  margin-top: 1.5rem;
+}
+
+.pedi-desktop-link {
+  display: none;
+}
+
+.pedi-system {
+  margin-top: 3rem;
+}
+
+.pedi-system-nodes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+.pedi-system-nodes > li {
+  min-width: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--border-functional);
+  border-top: 3px solid #005eff;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.pedi-node-number {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  font-family: monospace;
+}
+
+.pedi-system-nodes h4 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.pedi-node-detail {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-functional);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 720px) {
+  .pedi-system-nodes {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .pedi-gallery {
+    grid-template-columns: 1fr;
+  }
+  .pedi-capture-desktop {
+    display: none;
+  }
+  .pedi-capture-mobile {
+    width: min(100%, 22rem);
+    justify-self: center;
+  }
+  .pedi-desktop-link {
+    display: inline-flex;
+    margin-top: 1rem;
+  }
+}
+
 .mika-gallery {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
