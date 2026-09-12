@@ -472,8 +472,8 @@ export const projects: Project[] = [
     slug: { en: "inaricom", fr: "inaricom" },
     title: "Inaricom",
     summary: {
-      en: "A hybrid WordPress, WooCommerce, PHP, REST, React, and Vite rebuild in progress.",
-      fr: "Une refonte en cours associant WordPress, WooCommerce, PHP, REST, React et Vite.",
+      en: "Business website, custom backend and supplier integration for WooCommerce. Rebuild in progress.",
+      fr: "Site professionnel, backend sur mesure et intégration fournisseur pour WooCommerce. Refonte en cours.",
     },
     role: {
       en: "Website and backend development",
@@ -482,7 +482,7 @@ export const projects: Project[] = [
     status: "active-rebuild",
     practice: "software",
     filters: ["software", "web"],
-    evidenceCheckedAt: "2026-08-24",
+    evidenceCheckedAt: "2026-09-12",
     projectStart: { en: "2023", fr: "2023" },
     stack: [
       "WordPress",
@@ -504,10 +504,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "I am responsible for the website and backend development, including the WordPress structure, WooCommerce integration, custom PHP and REST layer, React interfaces, content paths, and deployment work.",
+          "I develop the website and backend: WordPress content models, custom PHP plugins and REST endpoints, React interfaces, contact flows and deployment tooling. I also built a DigiKey integration to search and import product references into WooCommerce, enrich product information and update prices and availability.",
         ],
         fr: [
-          "Je prends en charge le développement du site et du backend, notamment la structure WordPress, l’intégration WooCommerce, la couche PHP et REST dédiée, les interfaces React, les parcours de contenu et le déploiement.",
+          "Je développe le site et son backend : modèles de contenu WordPress, extensions PHP et points d’accès REST dédiés, interfaces React, parcours de contact et outils de déploiement. J’ai également créé une intégration DigiKey pour rechercher et importer des références dans WooCommerce, enrichir les fiches produits et mettre à jour les prix et disponibilités.",
         ],
       },
       problem: {
@@ -521,9 +521,11 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "A custom PHP plugin defines content models, taxonomies, structured data, REST endpoints, and conditional React mount points. Vite builds page-specific React 19 and TypeScript interfaces while WooCommerce retains catalogue and purchase flows.",
+          "A separate supplier integration connects the DigiKey API to WooCommerce products. It maps descriptions, images and technical attributes, with manual updates and a scheduled price and stock synchronisation mechanism. A custom contact endpoint connects the website form to WordPress mail handling.",
         ],
         fr: [
           "Une extension PHP dédiée définit les modèles de contenu, les taxonomies, les données structurées, les points d’accès REST et les points de montage conditionnels de React. Vite construit des interfaces React 19 et TypeScript propres à chaque page, tandis que WooCommerce conserve le catalogue et les parcours d’achat.",
+          "Une intégration fournisseur distincte relie l’API DigiKey aux produits WooCommerce. Elle associe descriptions, images et caractéristiques techniques, avec des mises à jour manuelles et un mécanisme de synchronisation programmé des prix et stocks. Un point d’accès dédié relie le formulaire de contact à l’envoi de courriels WordPress.",
         ],
       },
       decisions: {
@@ -544,10 +546,10 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "The public portfolio records only architecture already described publicly. End-to-end verification of the rebuilt site remains pending until the public relaunch.",
+          "Read-only source inspection confirmed the product-import, attribute-mapping and price/stock update implementation. This review did not execute supplier requests, import products or send messages. End-to-end verification of the rebuilt site remains pending until the public relaunch.",
         ],
         fr: [
-          "Le portfolio public reprend uniquement l’architecture déjà décrite publiquement. La vérification de bout en bout de la nouvelle version reste en attente jusqu’à la remise en ligne.",
+          "L’examen du code en lecture seule a confirmé l’implémentation de l’import produit, de la correspondance des attributs et de la mise à jour des prix et stocks. Cet examen n’a déclenché aucun appel fournisseur, import ni envoi de message. La vérification de bout en bout de la nouvelle version reste à réaliser lors de la remise en ligne.",
         ],
       },
       results: {
@@ -560,18 +562,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The project URL and bilingual public GitHub case study provide the attributable public evidence. No private source is copied into this portfolio.",
+          "The project URL and bilingual GitHub case study document the publicly described architecture. The supplier integration and contact implementation were reviewed separately in private source. This portfolio presents their role without publishing code or infrastructure details.",
         ],
         fr: [
-          "L’URL du projet et l’étude de cas GitHub publique et bilingue constituent les preuves publiques attribuables. Aucun code source privé n’est copié dans ce portfolio.",
+          "L’URL du projet et l’étude de cas GitHub bilingue documentent l’architecture déjà décrite publiquement. L’intégration fournisseur et le traitement du contact ont été examinés séparément dans le code privé. Le portfolio en présente le rôle sans publier le code ni les détails d’infrastructure.",
         ],
       },
       limitations: {
         en: [
-          "The rebuild is not a completed public release. Sales, traffic, infrastructure credentials, private source, and non-public business material are not exposed or claimed.",
+          "The rebuild remains in progress. Current production activation of the supplier integration and contact backend has not been verified. Sales, traffic and private business data are not published.",
         ],
         fr: [
-          "La refonte n’est pas une version publique terminée. Les ventes, l’audience, les identifiants d’infrastructure, le code source privé et les documents commerciaux non publics ne sont ni exposés ni revendiqués.",
+          "La refonte reste en cours. L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée. Les ventes, l’audience et les données commerciales privées ne sont pas publiées.",
         ],
       },
     },

@@ -14,6 +14,26 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("describes Inaricom supplier integration without claiming a completed rebuild", () => {
+    const project = projects.find((item) => item.id === "inaricom")!;
+    expect(project.status).toBe("active-rebuild");
+    expect(project.projectStart).toEqual({ en: "2023", fr: "2023" });
+    expect(project.filters).toEqual(["software", "web"]);
+    for (const locale of ["en", "fr"] as const) {
+      expect(project.sections.role[locale].join(" ")).toContain("DigiKey");
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "WooCommerce",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+      );
+    }
+    expect(JSON.stringify(project)).not.toContain("github.com/Musyg/Inaricom");
+    expect(JSON.stringify(project)).not.toContain(
+      "18dadcaf341f9dc5eeda293a047c91f982b8d313",
+    );
+  });
+
   it("presents Pedi-Sense beyond its storefront without claiming live backend activation", () => {
     const project = projects.find((item) => item.id === "pedi-sense")!;
     expect(project.status).toBe("store-and-integrations");
