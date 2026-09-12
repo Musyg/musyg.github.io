@@ -360,7 +360,6 @@ function HomePage({ locale }: { locale: Locale }) {
           />
         </svg>
         <div className="hero-content">
-          <p className="eyebrow">{ui[locale].roleLine}</p>
           <h1 id="hero-title" aria-label={heroLines.join(" ")}>
             {heroLines.map((line) => (
               <span key={line}>{line}</span>

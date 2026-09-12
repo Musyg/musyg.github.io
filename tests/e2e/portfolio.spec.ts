@@ -2,6 +2,39 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 
+test("homepage introduces its domains without a duplicate role line", async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/", "/fr/"]) {
+      await page.goto(path);
+      const hero = page.locator(".hero-content");
+      await expect(hero.locator(".eyebrow")).toHaveCount(0);
+      await expect(hero.locator("h1")).toBeVisible();
+      await expect(hero.locator("h1 span")).toHaveCount(3);
+      for (const line of await hero.locator("h1 span").all()) {
+        await expect(line).toHaveCSS("opacity", "1");
+      }
+      await expect(hero.locator(".hero-lead")).toHaveText(
+        path === "/fr/"
+          ? "Je travaille sur la sécurité applicative et les smart contracts, les systèmes d’IA agentiques et le développement full-stack."
+          : "I work across application and smart-contract security, agentic AI systems, and full-stack development.",
+      );
+      await expect(hero.locator(".hero-actions a")).toHaveCount(2);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+      ).toBeLessThanOrEqual(width);
+      await page.screenshot({
+        path: testInfo.outputPath(
+          `hero-${width}-${path === "/" ? "en" : "fr"}.png`,
+        ),
+      });
+    }
+  }
+});
+
 test("case-study evidence is available in the hero in both languages", async ({
   page,
 }) => {
