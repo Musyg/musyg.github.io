@@ -442,13 +442,54 @@
 }
 
 .section-shell {
-  padding-block: clamp(84px, 10vw, 136px);
+  padding-block: clamp(48px, 7vw, 96px);
+}
+
+/* Major sections share a blue entry mark; internal rules stay quieter. */
+:is(
+  .expertise-section,
+  .selected-section,
+  .evidence-band,
+  .writing-preview,
+  .contact-cta,
+  .practice-details,
+  .related-work,
+  .profile-section,
+  .publication-feature,
+  .principles-grid
+) {
+  position: relative;
+}
+
+:is(
+  .expertise-section,
+  .selected-section,
+  .evidence-band,
+  .writing-preview,
+  .contact-cta,
+  .practice-details,
+  .related-work,
+  .profile-section,
+  .publication-feature,
+  .principles-grid
+)::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 64px;
+  height: 2px;
+  content: "";
+  background: var(--accent);
+}
+
+.evidence-band::before {
+  left: max(24px, calc((100vw - 1200px) / 2));
 }
 
 .section-heading {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
-  gap: 30px 72px;
+  gap: 20px 56px;
   align-items: end;
   max-width: 1060px;
 }
@@ -469,7 +510,7 @@
 .principles-grid h2 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(2.15rem, 4vw, 4.1rem);
+  font-size: clamp(1.85rem, 3vw, 2.8rem);
   letter-spacing: -0.045em;
   line-height: 1.04;
   text-wrap: balance;
@@ -500,25 +541,19 @@
 
 .practice-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 72px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  margin-top: 40px;
+  gap: 18px;
 }
 
 .practice-card {
   min-height: 310px;
   padding: 28px 28px 34px;
-  border-right: 1px solid var(--line);
-}
-
-.practice-card:last-child {
-  border-right: 0;
 }
 
 .practice-number {
   width: 36px;
   height: 5px;
-  margin-bottom: 72px;
+  margin-bottom: 40px;
   overflow: hidden;
   color: transparent;
 }
@@ -571,14 +606,12 @@
 }
 
 .compact-heading {
-  margin-bottom: 64px;
+  margin-bottom: 40px;
 }
 
 .project-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  gap: 20px;
 }
 
 .project-card {
@@ -655,7 +688,7 @@
 }
 
 .evidence-band {
-  padding: clamp(76px, 9vw, 116px) max(24px, calc((100vw - 1200px) / 2));
+  padding: clamp(48px, 7vw, 96px) max(24px, calc((100vw - 1200px) / 2));
   background: var(--surface);
   border-block: 1px solid var(--line);
 }
@@ -666,10 +699,8 @@
 
 .evidence-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  margin-top: 60px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  gap: 18px;
+  margin-top: 40px;
 }
 
 .evidence-grid article {
@@ -680,7 +711,7 @@
 .evidence-marker {
   width: 28px;
   height: 4px;
-  margin-bottom: 54px;
+  margin-bottom: 32px;
 }
 
 .evidence-grid h3 {
@@ -703,7 +734,7 @@
 }
 
 .contact-cta {
-  padding-block: clamp(84px, 11vw, 148px);
+  padding-block: clamp(48px, 7vw, 96px);
 }
 
 .contact-cta h2 {
@@ -716,14 +747,26 @@
 
 .page-intro,
 .case-hero {
-  padding-block: clamp(82px, 10vw, 132px);
+  position: relative;
+  padding-block: clamp(48px, 7vw, 96px);
   border-bottom: 1px solid var(--line);
+}
+
+.page-intro::after,
+.case-hero::after {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 64px;
+  height: 2px;
+  content: "";
+  background: var(--accent);
 }
 
 .page-intro h1,
 .case-hero h1 {
   max-width: 1060px;
-  font-size: clamp(3rem, 6.4vw, 6.4rem);
+  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
 }
 
 .page-intro .page-lead,
@@ -1040,6 +1083,10 @@
   border-bottom: 1px solid var(--line);
 }
 
+.about-narrative {
+  padding-bottom: 0;
+}
+
 .about-narrative p {
   max-width: 72ch;
   margin: 0 0 1.5em;
@@ -1048,11 +1095,13 @@
 
 .principles-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  margin-block: clamp(84px, 10vw, 136px);
+  gap: 18px;
+  margin-block: clamp(48px, 7vw, 96px);
   padding-block: 0;
-  background: var(--line);
-  border: 1px solid var(--line);
+}
+
+.principles-grid::before {
+  top: -20px;
 }
 
 .principles-grid article {
@@ -1063,6 +1112,17 @@
 .principles-grid h2 {
   margin-top: 30px;
   font-size: 1.75rem;
+}
+
+.practice-card,
+.project-card,
+.evidence-grid article,
+.principles-grid article {
+  min-width: 0;
+  border: 1px solid rgb(0 94 255 / 26%);
+  border-radius: 12px;
+  background: rgb(21 26 33 / 72%);
+  backdrop-filter: blur(12px);
 }
 
 .not-found {
@@ -1191,12 +1251,6 @@
 
   .practice-card {
     min-height: 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .practice-card:last-child {
-    border-bottom: 0;
   }
 
   .practice-number {
@@ -1295,11 +1349,11 @@
   }
 
   .compact-heading {
-    margin-bottom: 44px;
+    margin-bottom: 32px;
   }
 
   .practice-grid {
-    margin-top: 46px;
+    margin-top: 32px;
   }
 
   .practice-card,
@@ -1315,7 +1369,7 @@
 
   .case-hero h1,
   .page-intro h1 {
-    font-size: clamp(2.7rem, 13vw, 4rem);
+    font-size: clamp(2rem, 8vw, 2.6rem);
   }
 
   .security-review-case-mark {
@@ -1336,6 +1390,13 @@
 }
 
 @supports not (backdrop-filter: blur(12px)) {
+  .practice-card,
+  .project-card,
+  .evidence-grid article,
+  .principles-grid article {
+    background: var(--surface);
+  }
+
   .hero-actions .button-primary {
     background: var(--accent);
   }

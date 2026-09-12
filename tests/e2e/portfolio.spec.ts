@@ -373,15 +373,15 @@ test("the bilingual About renders the personal narrative", async ({ page }) => {
   }
 });
 
-test("the bilingual About principles keep spacing outside the divider surface", async ({
+test("the bilingual About cards stay separated without a visible grid", async ({
   page,
 }) => {
   const viewports = [
-    { width: 1440, height: 900, margin: 136 },
-    { width: 960, height: 800, margin: 96 },
-    { width: 520, height: 800, margin: 84 },
-    { width: 390, height: 844, margin: 84 },
-    { width: 320, height: 700, margin: 84 },
+    { width: 1440, height: 900, margin: 96 },
+    { width: 960, height: 800, margin: 67.2 },
+    { width: 520, height: 800, margin: 48 },
+    { width: 390, height: 844, margin: 48 },
+    { width: 320, height: 700, margin: 48 },
   ];
 
   for (const path of ["/about/", "/fr/a-propos/"]) {
@@ -399,6 +399,7 @@ test("the bilingual About principles keep spacing outside the divider surface", 
         return {
           articleCount: articles.length,
           background: style.backgroundColor,
+          gap: Number.parseFloat(style.gap),
           marginTop: Number.parseFloat(style.marginTop),
           marginBottom: Number.parseFloat(style.marginBottom),
           paddingTop: Number.parseFloat(style.paddingTop),
@@ -409,7 +410,8 @@ test("the bilingual About principles keep spacing outside the divider surface", 
       });
 
       expect(layout.articleCount).toBe(3);
-      expect(layout.background).toBe("rgb(37, 48, 58)");
+      expect(layout.background).toBe("rgba(0, 0, 0, 0)");
+      expect(layout.gap).toBe(18);
       expect(layout.marginTop).toBeCloseTo(viewport.margin, 0);
       expect(layout.marginBottom).toBeCloseTo(viewport.margin, 0);
       expect(layout.paddingTop).toBe(0);
@@ -423,6 +425,58 @@ test("the bilingual About principles keep spacing outside the divider surface", 
             document.documentElement.clientWidth,
         ),
       ).toBeLessThanOrEqual(1);
+    }
+  }
+});
+
+test("section landmarks and detached cards retain the exact blue on desktop and mobile", async ({
+  page,
+}, testInfo) => {
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/fr/", "/fr/a-propos/", "/fr/realisations/"]) {
+      await page.goto(path);
+      const cards = page.locator(
+        ".project-card, .practice-card, .evidence-grid article, .principles-grid article",
+      );
+      const styles = await cards.evaluateAll((elements) =>
+        elements.map((element) => {
+          const style = getComputedStyle(element);
+          return { radius: style.borderRadius, border: style.borderTopColor };
+        }),
+      );
+      expect(styles.length).toBeGreaterThan(0);
+      for (const style of styles) {
+        expect(style.radius).toBe("12px");
+        expect(style.border).toBe("rgba(0, 94, 255, 0.26)");
+      }
+      const intro = page.locator(".page-intro");
+      if (await intro.count()) {
+        expect(
+          await intro.evaluate(
+            (element) => getComputedStyle(element, "::after").backgroundColor,
+          ),
+        ).toBe("rgb(0, 94, 255)");
+        const size = await intro
+          .locator("h1")
+          .evaluate((element) =>
+            parseFloat(getComputedStyle(element).fontSize),
+          );
+        expect(size).toBeLessThanOrEqual(width <= 520 ? 42 : 68);
+      } else {
+        const marker = page.locator(".expertise-section");
+        expect(
+          await marker.evaluate(
+            (element) => getComputedStyle(element, "::before").backgroundColor,
+          ),
+        ).toBe("rgb(0, 94, 255)");
+        await marker.scrollIntoViewIfNeeded();
+      }
+      await page.screenshot({
+        path: testInfo.outputPath(
+          `hierarchy-${width}-${path.replaceAll("/", "_")}.png`,
+        ),
+      });
     }
   }
 });
@@ -447,7 +501,13 @@ test("dark backgrounds only across representative routes and viewports", async (
     { width: 1440, height: 900 },
   ]) {
     await page.setViewportSize(viewport);
-    for (const path of ["/", "/work/celo-credentials/", "/fr/contact/"]) {
+    for (const path of [
+      "/",
+      "/work/celo-credentials/",
+      "/fr/contact/",
+      "/fr/a-propos/",
+      "/fr/realisations/",
+    ]) {
       await page.goto(path);
       const result = await page.locator("*").evaluateAll(
         (elements, allowed) =>
