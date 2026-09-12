@@ -43,7 +43,8 @@ export interface Project {
   status: ProjectStatus;
   practice: Practice;
   filters: ProjectFilter[];
-  date: string;
+  evidenceCheckedAt: string;
+  projectStart?: Bilingual;
   stack: string[];
   sections: Record<SectionKey, { en: string[]; fr: string[] }>;
   links: PublicLink[];
@@ -122,7 +123,8 @@ export const projects: Project[] = [
     status: "public-testnet",
     practice: "software",
     filters: ["software", "blockchain"],
-    date: "2026-08-16",
+    evidenceCheckedAt: "2026-08-16",
+    projectStart: { en: "June 2026", fr: "Juin 2026" },
     stack: [
       "Solidity",
       "Foundry",
@@ -241,7 +243,7 @@ export const projects: Project[] = [
     status: "published-research",
     practice: "security",
     filters: ["security", "blockchain"],
-    date: "2026-08-24",
+    evidenceCheckedAt: "2026-08-24",
     stack: [
       "Solidity",
       "Vyper",
@@ -362,7 +364,7 @@ export const projects: Project[] = [
     status: "stable-release",
     practice: "ai",
     filters: ["ai", "software"],
-    date: "2026-08-13",
+    evidenceCheckedAt: "2026-08-13",
     stack: ["Python", "Redis", "MQTT", "pytest", "GitHub Actions"],
     sections: {
       summary: {
@@ -472,7 +474,8 @@ export const projects: Project[] = [
     status: "active-rebuild",
     practice: "software",
     filters: ["software", "web"],
-    date: "2026-08-24",
+    evidenceCheckedAt: "2026-08-24",
+    projectStart: { en: "2023", fr: "2023" },
     stack: [
       "WordPress",
       "WooCommerce",
@@ -592,7 +595,8 @@ export const projects: Project[] = [
     status: "stable-release",
     practice: "software",
     filters: ["software", "web"],
-    date: "2026-08-14",
+    evidenceCheckedAt: "2026-08-14",
+    projectStart: { en: "2024", fr: "2024" },
     stack: [
       "Shopify",
       "Liquid theme configuration",
@@ -709,7 +713,8 @@ export const projects: Project[] = [
     status: "stable-release",
     practice: "software",
     filters: ["software", "web"],
-    date: "2026-08-14",
+    evidenceCheckedAt: "2026-08-14",
+    projectStart: { en: "Late 2022", fr: "Fin 2022" },
     stack: [
       "Shopify",
       "Liquid theme configuration",
@@ -969,8 +974,8 @@ export const practicePages: Record<
       },
       {
         label: {
-          en: "Talos: public architecture and evaluation material; implementation remains private",
-          fr: "Talos : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
+          en: "Talos (Hermes), since December 2024: public architecture and evaluation material; implementation remains private",
+          fr: "Talos (Hermes), depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
         },
         url: "https://github.com/Musyg/talos",
       },
@@ -1040,7 +1045,7 @@ export const ui = {
     status: "Status",
     role: "Role",
     stack: "Stack",
-    updated: "Evidence date",
+    projectStart: "Project started",
     selected: "Selected",
     filters: "Filter work",
     noProjects: "No project matches this filter.",
@@ -1072,7 +1077,7 @@ export const ui = {
     status: "État",
     role: "Rôle",
     stack: "Technologies",
-    updated: "Date des preuves",
+    projectStart: "Début du projet",
     selected: "Sélectionné",
     filters: "Filtrer les réalisations",
     noProjects: "Aucun projet ne correspond à ce filtre.",

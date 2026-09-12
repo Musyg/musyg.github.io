@@ -2,6 +2,45 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 
+test("project history is distinct from evidence check dates", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    await page.goto(locale === "fr" ? "/fr/realisations/" : "/work/");
+    await expect(page.locator(".project-card time")).toHaveCount(0);
+    for (const [slug, en, fr] of [
+      ["inaricom", "2023", "2023"],
+      ["pedi-sense", "Late 2022", "Fin 2022"],
+      ["mikasshop", "2024", "2024"],
+      ["celo-credentials", "June 2026", "Juin 2026"],
+    ]) {
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/${slug}/`,
+      );
+      const metadata = page.locator(".metadata-rail");
+      await expect(metadata).toContainText(
+        locale === "fr" ? "Début du projet" : "Project started",
+      );
+      await expect(metadata).toContainText(locale === "fr" ? fr : en);
+      await expect(metadata).not.toContainText(
+        /2026-08|Evidence date|Date des preuves/,
+      );
+    }
+    for (const slug of ["security-reviews", "agent-resilience"]) {
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/${slug}/`,
+      );
+      await expect(page.locator(".metadata-rail")).not.toContainText(
+        /Project started|Début du projet|2026-08/,
+      );
+    }
+    await page.goto(locale === "fr" ? "/fr/systemes-ia/" : "/ai-systems/");
+    await expect(page.getByRole("link", { name: /Talos/ })).toContainText(
+      locale === "fr" ? "depuis décembre 2024" : "since December 2024",
+    );
+  }
+});
+
 test("editorial tone keeps project context without repetitive caveat slogans", async ({
   page,
 }, testInfo) => {

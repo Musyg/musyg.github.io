@@ -255,7 +255,6 @@ function ProjectCard({
     <article className="project-card">
       <div className="project-card-topline">
         <StatusPill project={project} locale={locale} />
-        <time dateTime={project.date}>{project.date}</time>
       </div>
       <p className="project-practice">
         {localized(practiceLabels[project.practice], locale)}
@@ -658,12 +657,12 @@ function ProjectPage({
               <dt>{content.role}</dt>
               <dd>{localized(project.role, locale)}</dd>
             </div>
-            <div>
-              <dt>{content.updated}</dt>
-              <dd>
-                <time dateTime={project.date}>{project.date}</time>
-              </dd>
-            </div>
+            {project.projectStart && (
+              <div>
+                <dt>{content.projectStart}</dt>
+                <dd>{localized(project.projectStart, locale)}</dd>
+              </div>
+            )}
           </dl>
         </div>
       </section>
