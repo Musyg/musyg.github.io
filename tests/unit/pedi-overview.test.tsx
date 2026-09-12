@@ -11,7 +11,7 @@ describe("Pedi-Sense visual overview", () => {
       expect(screen.getAllByRole("img")).toHaveLength(2);
       expect(screen.getAllByRole("listitem")).toHaveLength(3);
       expect(container.textContent).toContain("Shopify");
-      expect(container.textContent).toContain("Hermes");
+      expect(container.textContent).toContain("Talos");
       expect(container.textContent).toContain("Listmonk");
       expect(container.textContent).toContain(
         locale === "fr" ? "développés" : "developed",

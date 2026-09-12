@@ -26,7 +26,7 @@ const copy = {
           "Les API Shopify relient les informations produit et commande aux services métier.",
       },
       {
-        title: "Agent SAV Hermes",
+        title: "Agent SAV Talos",
         body: "Traitement des demandes d’assistance et accès aux informations utiles à la réponse.",
         detail:
           "Le parcours comprend des brouillons à valider et une transmission à un opérateur.",
@@ -64,7 +64,7 @@ const copy = {
           "Shopify APIs connect product and order information to the business services.",
       },
       {
-        title: "Hermes support agent",
+        title: "Talos support agent",
         body: "Support-request handling and access to the information needed for a reply.",
         detail:
           "The workflow includes draft responses for review and escalation to an operator.",

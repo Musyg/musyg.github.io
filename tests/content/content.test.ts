@@ -14,6 +14,16 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("uses only Talos as the public agency name across source and built pages", () => {
+    for (const directory of ["src", "public", "dist"]) {
+      for (const file of filesUnder(directory).filter((path) =>
+        /\.(tsx?|html|js|json|svg|txt)$/i.test(path),
+      )) {
+        expect(readFileSync(file, "utf8"), file).not.toMatch(/herm[eè]s/i);
+      }
+    }
+  });
+
   it("distinguishes Mika the real cat, the store assistant and separate SAV", () => {
     const project = projects.find((item) => item.id === "mikasshop")!;
     expect(project.status).toBe("store-and-integrations");
@@ -33,7 +43,7 @@ describe("portfolio content contract", () => {
         "Mika is the real cat",
       );
       expect(project.sections.architecture[locale].join(" ")).toContain(
-        "Hermes",
+        "Talos",
       );
       expect(project.sections.limitations[locale].join(" ")).toContain(
         locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
@@ -73,7 +83,7 @@ describe("portfolio content contract", () => {
     );
     for (const locale of ["en", "fr"] as const) {
       expect(project.sections.architecture[locale].join(" ")).toContain(
-        "Hermes",
+        "Talos",
       );
       expect(project.sections.architecture[locale].join(" ")).toContain(
         "Listmonk",

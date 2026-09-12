@@ -15,7 +15,7 @@ test("Pedi visual overview shows responsive captures and three implemented roles
       const overview = page.locator(".pedi-overview");
       await overview.scrollIntoViewIfNeeded();
       await expect(overview.locator(".pedi-system-nodes > li")).toHaveCount(3);
-      await expect(overview).toContainText("Hermes");
+      await expect(overview).toContainText("Talos");
       await expect(overview).toContainText("Listmonk");
       await expect(overview).toContainText(
         locale === "fr" ? "développés" : "developed",
@@ -165,7 +165,7 @@ test("Mika's Shop presents AI chat and separate SAV without runtime claims", asy
   }
 });
 
-test("Pedi-Sense distinguishes the storefront from implemented Hermes integrations", async ({
+test("Pedi-Sense distinguishes the storefront from implemented Talos integrations", async ({
   page,
 }) => {
   for (const locale of ["en", "fr"]) {

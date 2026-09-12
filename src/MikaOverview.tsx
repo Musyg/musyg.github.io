@@ -29,7 +29,7 @@ const copy = {
         relation: "Le chat consulte les contenus de la boutique.",
       },
       {
-        title: "SAV Hermes",
+        title: "SAV Talos",
         body: "Parcours d’assistance séparé : demandes, réponses, validations et transmission à un opérateur.",
         relation: "Le SAV traite les demandes d’assistance.",
       },
@@ -63,7 +63,7 @@ const copy = {
         relation: "The chat consults store content.",
       },
       {
-        title: "Hermes customer support",
+        title: "Talos customer support",
         body: "A separate support workflow: requests, replies, approvals and operator escalation.",
         relation: "Customer support handles assistance requests.",
       },

@@ -19,7 +19,7 @@ cart action, checkout or purchase was submitted. Screenshots contain only
 the public header and product hero, not customer reviews or account data.
 
 The captures illustrate the frontend, not product efficacy or health claims.
-The diagram summarizes the implemented Shopify, Hermes support, email and
+The diagram summarizes the implemented Shopify, Talos support, email and
 ecommerce-event components already documented in the case study. Current
 backend activation remains unverified; no private code or customer data is
 included. Inaricom and its ongoing rebuild are outside this visual update.

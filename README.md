@@ -26,7 +26,7 @@ Hostinger currently serves an uploaded production build. Its automatic GitHub
 deployment remains disabled while the provider's pnpm launcher failure is unresolved.
 The existing GitHub Pages publication remains available separately; the domain's
 registrar, DNS, and mail services remain with Infomaniak. Backend services and
-Hermes integration are separate future work, not part of this static deployment.
+Talos integration are separate future work, not part of this static deployment.
 
 Every production page, section, card, panel, navigation element, and footer uses black
 or a near-black neutral as its background. White and other light backgrounds are not

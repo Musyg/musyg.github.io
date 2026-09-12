@@ -621,18 +621,18 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Mika is the real cat at the heart of the Mika's Shop brand. The Shopify pet-products store also includes a custom AI shopping assistant and customer-support services developed in Hermes. Visitors can browse by cat profile or product category; the assistant is designed to guide them using the catalogue and site content.",
+          "Mika is the real cat at the heart of the Mika's Shop brand. The Shopify pet-products store also includes a custom AI shopping assistant and customer-support services developed in Talos. Visitors can browse by cat profile or product category; the assistant is designed to guide them using the catalogue and site content.",
         ],
         fr: [
-          "Mika est le vrai chat qui incarne la marque Mika's Shop. La boutique Shopify pour animaux de compagnie intègre également un assistant conversationnel IA sur mesure et des services SAV développés dans Hermes. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant est conçu pour guider les visiteurs à partir du catalogue et des contenus du site.",
+          "Mika est le vrai chat qui incarne la marque Mika's Shop. La boutique Shopify pour animaux de compagnie intègre également un assistant conversationnel IA sur mesure et des services SAV développés dans Talos. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant est conçu pour guider les visiteurs à partir du catalogue et des contenus du site.",
         ],
       },
       role: {
         en: [
-          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and the store's integration with the Hermes customer-support agent.",
+          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and the store's integration with the Talos customer-support agent.",
         ],
         fr: [
-          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de la boutique à l’agent SAV Hermes.",
+          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de la boutique à l’agent SAV Talos.",
         ],
       },
       problem: {
@@ -646,11 +646,11 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "Shopify provides hosted commerce, catalogue, localization, cart, and checkout. The storefront theme organizes collections by product type and cat profile, multilingual content, editorial pages, and customer information.",
-          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate Hermes SAV service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
+          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate Talos SAV service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
         ],
         fr: [
           "Shopify fournit le commerce hébergé, le catalogue, la localisation, le panier et le passage en caisse. Le thème de la vitrine organise les collections par type de produit et profil de chat, les contenus multilingues, les pages éditoriales et les informations clients.",
-          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV Hermes distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
+          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV Talos distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
         ],
       },
       decisions: {
@@ -745,18 +745,18 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Pedi-Sense combines a Shopify storefront with custom services developed within Hermes: customer support, email workflows and ecommerce event analysis. The work covers both the customer-facing store and the integrations behind it.",
+          "Pedi-Sense combines a Shopify storefront with custom services developed within Talos: customer support, email workflows and ecommerce event analysis. The work covers both the customer-facing store and the integrations behind it.",
         ],
         fr: [
-          "Pedi-Sense associe une boutique Shopify à des services sur mesure développés dans Hermes : SAV, parcours email et analyse des événements e-commerce. Le travail couvre à la fois la boutique visible par les clients et les intégrations qui l’accompagnent.",
+          "Pedi-Sense associe une boutique Shopify à des services sur mesure développés dans Talos : SAV, parcours email et analyse des événements e-commerce. Le travail couvre à la fois la boutique visible par les clients et les intégrations qui l’accompagnent.",
         ],
       },
       role: {
         en: [
-          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed the Pedi-Sense integrations within Hermes, including customer-support workflows, branded emails and storefront event collection.",
+          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed the Pedi-Sense integrations within Talos, including customer-support workflows, branded emails and storefront event collection.",
         ],
         fr: [
-          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations Pedi-Sense dans Hermes, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
+          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations Pedi-Sense dans Talos, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
         ],
       },
       problem: {
@@ -769,10 +769,10 @@ export const projects: Project[] = [
       },
       architecture: {
         en: [
-          "Shopify handles the catalogue, accounts, cart and checkout. Separate Hermes services provide a multi-store support agent, connections to order and product information, email delivery through Listmonk, and event collection and attribution. Python services, Shopify APIs and MQTT connect these components.",
+          "Shopify handles the catalogue, accounts, cart and checkout. Separate Talos services provide a multi-store support agent, connections to order and product information, email delivery through Listmonk, and event collection and attribution. Python services, Shopify APIs and MQTT connect these components.",
         ],
         fr: [
-          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Hermes distincts apportent un agent SAV multi-boutiques, l’accès aux informations de commande et de produit, l’envoi d’emails via Listmonk ainsi que la collecte et l’attribution des événements. Des services Python, les API Shopify et MQTT relient ces composants.",
+          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Talos distincts apportent un agent SAV multi-boutiques, l’accès aux informations de commande et de produit, l’envoi d’emails via Listmonk ainsi que la collecte et l’attribution des événements. Des services Python, les API Shopify et MQTT relient ces composants.",
         ],
       },
       decisions: {
@@ -809,10 +809,10 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The public storefront and the dated bilingual GitHub case study document the storefront. The Hermes implementation was reviewed separately in the private source repository; its code and customer data are not published here.",
+          "The public storefront and the dated bilingual GitHub case study document the storefront. The Talos implementation was reviewed separately in the private source repository; its code and customer data are not published here.",
         ],
         fr: [
-          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. L’implémentation Hermes a été examinée séparément dans le dépôt source privé ; son code et les données clients ne sont pas publiés ici.",
+          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. L’implémentation Talos a été examinée séparément dans le dépôt source privé ; son code et les données clients ne sont pas publiés ici.",
         ],
       },
       limitations: {
@@ -995,8 +995,8 @@ export const practicePages: Record<
       },
       {
         label: {
-          en: "Talos (Hermes), since December 2024: public architecture and evaluation material; implementation remains private",
-          fr: "Talos (Hermes), depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
+          en: "Talos, since December 2024: public architecture and evaluation material; implementation remains private",
+          fr: "Talos, depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
         },
         url: "https://github.com/Musyg/talos",
       },
