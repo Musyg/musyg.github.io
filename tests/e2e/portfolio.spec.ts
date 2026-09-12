@@ -2,6 +2,71 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 
+test("Celo pilot offers an early result, accessible flow and working contents", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/celo-credentials/`,
+      );
+      await expect(page.locator(".celo-brief > div")).toHaveCount(3);
+      await expect(page.locator(".celo-flow li")).toHaveCount(4);
+      await expect(page.locator("#celo-credentials-results")).toContainText(
+        "Celo Sepolia",
+      );
+      await expect(
+        page.locator(".case-body #celo-credentials-results"),
+      ).toHaveCount(0);
+      await expect(page.locator(".case-toc a")).toHaveCount(9);
+      for (const link of await page.locator(".case-toc a").all()) {
+        const href = await link.getAttribute("href");
+        await expect(page.locator(href!)).toHaveCount(1);
+      }
+      await page
+        .locator('.case-toc a[href="#celo-credentials-architecture"]')
+        .click();
+      await expect(page).toHaveURL(/#celo-credentials-architecture$/);
+      expect(
+        await page
+          .locator("#celo-credentials-architecture")
+          .evaluate((el) => el.getBoundingClientRect().top),
+      ).toBeGreaterThanOrEqual(75);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+      expect(
+        await page
+          .locator(".celo-brief > div")
+          .first()
+          .evaluate((el) => getComputedStyle(el).borderTopColor),
+      ).toBe("rgb(0, 94, 255)");
+    }
+  }
+  await page.goto("/work/agent-resilience/");
+  await expect(page.locator(".celo-overview, .case-toc")).toHaveCount(0);
+  await expect(page.locator(".case-body > section")).toHaveCount(10);
+});
+
+test("Celo pilot accessibility @a11y", async ({ page }) => {
+  for (const path of [
+    "/work/celo-credentials/",
+    "/fr/realisations/celo-credentials/",
+  ]) {
+    await page.goto(path);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+});
+
 test("project history is distinct from evidence check dates", async ({
   page,
 }) => {

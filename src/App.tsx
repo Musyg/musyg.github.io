@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { aboutCopy } from "./content/about";
+import { CeloOverview } from "./CeloOverview";
 import {
   filterLabels,
   localized,
@@ -612,6 +613,10 @@ function ProjectPage({
   const content = ui[locale];
   const currentIndex = projects.findIndex((item) => item.id === project.id);
   const nextProject = projects[(currentIndex + 1) % projects.length];
+  const isCelo = project.id === "celo-credentials";
+  const visibleSections = isCelo
+    ? sectionOrder.filter((section) => section !== "results")
+    : sectionOrder;
 
   return (
     <>
@@ -667,6 +672,7 @@ function ProjectPage({
         </div>
       </section>
 
+      {isCelo && <CeloOverview locale={locale} project={project} />}
       <div className="case-layout">
         <aside className="case-stack" aria-label={content.stack}>
           <h2>{content.stack}</h2>
@@ -675,9 +681,30 @@ function ProjectPage({
               <li key={item}>{item}</li>
             ))}
           </ul>
+          {isCelo && (
+            <nav
+              className="case-toc"
+              aria-label={
+                locale === "fr"
+                  ? "Dans cette étude de cas"
+                  : "In this case study"
+              }
+            >
+              <h2>{locale === "fr" ? "Approfondir" : "Explore the details"}</h2>
+              <ul>
+                {visibleSections.map((section) => (
+                  <li key={section}>
+                    <a className="text-link" href={`#${project.id}-${section}`}>
+                      {localized(sectionLabels[section], locale)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
         </aside>
         <article className="case-body">
-          {sectionOrder.map((section, index) => (
+          {visibleSections.map((section, index) => (
             <section key={section} aria-labelledby={`${project.id}-${section}`}>
               <span className="section-number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}

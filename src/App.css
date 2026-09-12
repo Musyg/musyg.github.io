@@ -915,6 +915,115 @@
   min-width: 0;
 }
 
+.celo-overview {
+  padding-block: 48px 0;
+}
+
+.celo-overview > h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0 0 24px;
+}
+
+.celo-brief {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+  gap: 24px;
+}
+
+.celo-brief > div {
+  padding: 24px;
+  background: var(--surface);
+  border-top: 3px solid var(--accent);
+}
+
+.celo-overview h3,
+.celo-overview h4 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.celo-overview p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.celo-flow {
+  margin: 40px 0 0;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.celo-flow figcaption {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.celo-flow ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.celo-flow li {
+  position: relative;
+  padding: 20px 20px 0 0;
+  border-top: 2px solid var(--accent);
+}
+
+.celo-step {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+.case-toc {
+  margin-top: 32px;
+}
+
+.case-toc a {
+  display: block;
+  padding-block: 6px;
+  font-family: var(--sans);
+  line-height: 1.5;
+}
+
+.case-body h2[id^="celo-credentials-"],
+#celo-credentials-results {
+  scroll-margin-top: 110px;
+}
+
+@media (max-width: 1000px) {
+  .celo-brief {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .celo-flow ol {
+    grid-template-columns: 1fr;
+  }
+  .celo-flow li {
+    border-top: 0;
+    border-left: 2px solid var(--accent);
+    padding: 0 0 28px 20px;
+  }
+  .celo-flow li:last-child {
+    padding-bottom: 0;
+  }
+  .case-toc {
+    grid-column: 1 / -1;
+  }
+}
+
 .case-body > section {
   position: relative;
   padding: 0 0 72px 74px;
