@@ -595,8 +595,8 @@ export const projects: Project[] = [
     slug: { en: "mikasshop", fr: "mikasshop" },
     title: "Mika's Shop",
     summary: {
-      en: "Shopify storefront, Mika AI chat and customer-support integrations for a pet-products store.",
-      fr: "Boutique Shopify, chat IA Mika et intégrations SAV pour une enseigne dédiée aux animaux de compagnie.",
+      en: "Shopify storefront, AI shopping assistant and customer-support integrations for a pet-products store.",
+      fr: "Boutique Shopify, assistant conversationnel IA et intégrations SAV pour une enseigne dédiée aux animaux de compagnie.",
     },
     role: {
       en: "Storefront design, AI chat development and customer-support integrations",
@@ -621,18 +621,18 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Mika's Shop combines a Shopify pet-products store with Mika, a custom AI chat, and customer-support services developed in Hermes. Visitors can browse by cat profile or product category; the chat is designed to guide them using the catalogue and site content.",
+          "Mika is the real cat at the heart of the Mika's Shop brand. The Shopify pet-products store also includes a custom AI shopping assistant and customer-support services developed in Hermes. Visitors can browse by cat profile or product category; the assistant is designed to guide them using the catalogue and site content.",
         ],
         fr: [
-          "Mika's Shop associe une boutique Shopify pour animaux de compagnie à Mika, un chat IA sur mesure, et à des services SAV développés dans Hermes. La navigation propose des entrées par profil de chat ou catégorie de produits ; le chat est conçu pour guider les visiteurs à partir du catalogue et des contenus du site.",
+          "Mika est le vrai chat qui incarne la marque Mika's Shop. La boutique Shopify pour animaux de compagnie intègre également un assistant conversationnel IA sur mesure et des services SAV développés dans Hermes. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant est conçu pour guider les visiteurs à partir du catalogue et des contenus du site.",
         ],
       },
       role: {
         en: [
-          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed Mika's chat interface and backend, its catalogue and site-content tools, and the store's integration with the Hermes customer-support agent.",
+          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and the store's integration with the Hermes customer-support agent.",
         ],
         fr: [
-          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend du chat Mika, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de la boutique à l’agent SAV Hermes.",
+          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de la boutique à l’agent SAV Hermes.",
         ],
       },
       problem: {
@@ -646,19 +646,19 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "Shopify provides hosted commerce, catalogue, localization, cart, and checkout. The storefront theme organizes collections by product type and cat profile, multilingual content, editorial pages, and customer information.",
-          "Mika uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate Hermes SAV service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
+          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate Hermes SAV service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
         ],
         fr: [
           "Shopify fournit le commerce hébergé, le catalogue, la localisation, le panier et le passage en caisse. Le thème de la vitrine organise les collections par type de produit et profil de chat, les contenus multilingues, les pages éditoriales et les informations clients.",
-          "Mika s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV Hermes distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
+          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV Hermes distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
         ],
       },
       decisions: {
         en: [
-          "Shopify retains checkout and commerce while custom services handle guidance and support. Mika's tool set focuses on site information rather than order lookup or purchases. The SAV follows a separate workflow with configurable response routing and operator escalation; it is not the public shopping chat.",
+          "Shopify retains checkout and commerce while custom services handle guidance and support. The assistant’s tool set focuses on site information rather than order lookup or purchases. The SAV follows a separate workflow with configurable response routing and operator escalation; it is not the public shopping chat.",
         ],
         fr: [
-          "Shopify conserve le paiement et le commerce, tandis que les services sur mesure prennent en charge le conseil et l’assistance. Les outils de Mika portent sur les informations du site, pas sur le suivi de commandes ni les achats. Le SAV suit un parcours distinct, avec un mode de réponse configurable et une transmission à un opérateur ; il ne se confond pas avec le chat public.",
+          "Shopify conserve le paiement et le commerce, tandis que les services sur mesure prennent en charge le conseil et l’assistance. Les outils de l’assistant portent sur les informations du site, pas sur le suivi de commandes ni les achats. Le SAV suit un parcours distinct, avec un mode de réponse configurable et une transmission à un opérateur ; il ne se confond pas avec l’assistant public.",
         ],
       },
       security: {
@@ -687,10 +687,10 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The public storefront and dated bilingual GitHub case study document the shop. Mika's chat backend, browser widget and store-specific SAV integration were inspected separately in private source. No private code or customer data is published here.",
+          "The public storefront and dated bilingual GitHub case study document the shop. The AI assistant backend, browser widget and store-specific SAV integration were inspected separately in private source. No private code or customer data is published here.",
         ],
         fr: [
-          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. Le backend du chat Mika, son widget et l’intégration SAV propre à la boutique ont été examinés séparément dans le code privé. Aucun code privé ni donnée client n’est publié ici.",
+          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. Le backend de l’assistant conversationnel, son widget et l’intégration SAV propre à la boutique ont été examinés séparément dans le code privé. Aucun code privé ni donnée client n’est publié ici.",
         ],
       },
       limitations: {

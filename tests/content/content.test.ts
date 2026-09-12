@@ -14,7 +14,7 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
-  it("separates Mika AI chat and SAV from the storefront and unverified runtime", () => {
+  it("distinguishes Mika the real cat, the store assistant and separate SAV", () => {
     const project = projects.find((item) => item.id === "mikasshop")!;
     expect(project.status).toBe("store-and-integrations");
     expect(project.filters).toContain("ai");
@@ -23,7 +23,15 @@ describe("portfolio content contract", () => {
       expect.arrayContaining(["Python", "FastAPI", "SSE", "MQTT"]),
     );
     for (const locale of ["en", "fr"] as const) {
-      expect(project.sections.architecture[locale].join(" ")).toContain("Mika");
+      expect(JSON.stringify(project)).not.toMatch(
+        /chat IA Mika|Mika AI chat|Mika, a custom AI chat/,
+      );
+      expect(JSON.stringify(project.sections)).toContain(
+        "Mika est le vrai chat",
+      );
+      expect(JSON.stringify(project.sections)).toContain(
+        "Mika is the real cat",
+      );
       expect(project.sections.architecture[locale].join(" ")).toContain(
         "Hermes",
       );

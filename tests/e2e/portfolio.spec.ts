@@ -3,6 +3,71 @@ import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 import { securityReportSource } from "../../src/SecurityOverview";
 
+test("Mika visual overview preserves the real cat identity and responsive captures", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/mikasshop/`,
+      );
+      const overview = page.locator(".mika-overview");
+      await overview.scrollIntoViewIfNeeded();
+      await expect(overview).toContainText(
+        locale === "fr" ? "le vrai chat" : "the real cat",
+      );
+      await expect(overview.locator(".mika-system-nodes > li")).toHaveCount(3);
+      await expect(overview).not.toContainText("Chat IA Mika");
+      await expect(overview).not.toContainText("Mika AI chat");
+      const storefront = overview.locator("picture img");
+      await storefront.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          storefront.evaluate(
+            (element: HTMLImageElement) =>
+              element.complete && element.naturalWidth,
+          ),
+        )
+        .toBe(width <= 520 ? 375 : 1425);
+      expect(
+        await storefront.evaluate(
+          (element: HTMLImageElement) => element.currentSrc,
+        ),
+      ).toContain(
+        width <= 520 ? "mikasshop-mobile.jpg" : "mikasshop-desktop.jpg",
+      );
+      const assistant = overview.locator(".mika-capture-chat img");
+      await assistant.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          assistant.evaluate(
+            (element: HTMLImageElement) =>
+              element.complete && element.naturalWidth,
+          ),
+        )
+        .toBe(375);
+      await expect(
+        overview.locator(".mika-system-nodes > li").first(),
+      ).toHaveCSS("border-top-color", "rgb(0, 94, 255)");
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+  await page.goto("/fr/realisations/pedi-sense/");
+  await expect(page.locator(".mika-overview")).toHaveCount(0);
+});
+
+test("@a11y Mika visual overview in both languages", async ({ page }) => {
+  for (const path of ["/work/mikasshop/", "/fr/realisations/mikasshop/"]) {
+    await page.goto(path);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  }
+});
+
 test("Mika's Shop presents AI chat and separate SAV without runtime claims", async ({
   page,
 }) => {
@@ -13,7 +78,9 @@ test("Mika's Shop presents AI chat and separate SAV without runtime claims", asy
         `${locale === "fr" ? "/fr/realisations" : "/work"}/mikasshop/`,
       );
       await expect(page.locator(".case-hero .page-lead")).toContainText(
-        locale === "fr" ? "chat IA Mika" : "Mika AI chat",
+        locale === "fr"
+          ? "assistant conversationnel IA"
+          : "AI shopping assistant",
       );
       await expect(page.locator(".metadata-rail")).toContainText("2024");
       await expect(page.locator(".case-body")).toContainText("FastAPI");

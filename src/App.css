@@ -919,6 +919,127 @@
   padding-block: 48px 0;
 }
 
+.mika-overview > h2 {
+  margin-bottom: 1rem;
+}
+
+.mika-overview-lead,
+.mika-capture-note {
+  max-width: 76ch;
+}
+
+.mika-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.mika-capture {
+  min-width: 0;
+  margin: 0;
+  padding: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border-functional);
+  border-top: 3px solid #005eff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mika-capture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.mika-capture figcaption {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.mika-capture .text-link {
+  font-size: 0.875rem;
+}
+
+.mika-full-mobile {
+  display: none;
+}
+
+.mika-capture-note {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.mika-system {
+  margin-top: 3rem;
+}
+
+.mika-system-nodes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+.mika-system-nodes li {
+  min-width: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--border-functional);
+  border-top: 3px solid #005eff;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.mika-node-number {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  font-family: monospace;
+}
+
+.mika-system-nodes h4 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.mika-node-relation {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-functional);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 720px) {
+  .mika-gallery,
+  .mika-system-nodes {
+    grid-template-columns: 1fr;
+  }
+
+  .mika-capture-chat {
+    width: min(100%, 22rem);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .mika-capture-store {
+    width: min(100%, 22rem);
+    justify-self: center;
+  }
+
+  .mika-full-desktop {
+    display: none;
+  }
+
+  .mika-full-mobile {
+    display: inline-flex;
+  }
+}
+
 .security-overview {
   padding-block: 48px 0;
 }
