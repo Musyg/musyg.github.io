@@ -119,7 +119,7 @@ for (const route of publicRoutes) {
     await expect(page).toHaveTitle(route.title);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      new URL(route.path, "https://musyg.github.io").toString(),
+      new URL(route.path, "https://musyg.com").toString(),
     );
   });
 }
@@ -168,7 +168,7 @@ test("favicon and social-preview metadata are wired", async ({ page }) => {
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    "https://musyg.github.io/social-preview.png",
+    "https://musyg.com/social-preview.png",
   );
   await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute(
     "content",

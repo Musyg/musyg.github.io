@@ -283,7 +283,7 @@ export function contactPath(locale: Locale): string {
   return locale === "fr" ? "/fr/contact/" : "/contact/";
 }
 
-export const siteOrigin = "https://musyg.github.io";
+export const siteOrigin = "https://musyg.com";
 
 export function canonicalUrl(path: string): string {
   return new URL(path, siteOrigin).toString();

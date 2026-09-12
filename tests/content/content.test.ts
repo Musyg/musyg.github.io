@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { projects, sectionOrder } from "../../src/content/site";
-import { publicRoutes, routeFor } from "../../src/routes";
+import { canonicalUrl, publicRoutes, routeFor } from "../../src/routes";
 
 function filesUnder(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -13,6 +13,20 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("uses the custom domain for metadata and the sitemap", () => {
+    expect(canonicalUrl("/fr/")).toBe("https://musyg.com/fr/");
+    const prerender = readFileSync("scripts/prerender.mjs", "utf8");
+    expect(prerender).toContain('const siteOrigin = "https://musyg.com";');
+  });
+
+  it("serves prerendered directories and real errors on Hostinger", () => {
+    const config = readFileSync("public/.htaccess", "utf8");
+    expect(config).toContain("DirectoryIndex index.html");
+    expect(config).toContain("Options -Indexes");
+    expect(config).toContain("ErrorDocument 404 /404.html");
+    expect(config).not.toContain("RewriteRule");
+  });
+
   it("keeps six projects with complete bilingual case-study sections", () => {
     expect(projects).toHaveLength(6);
 
