@@ -3,7 +3,11 @@ export type Locale = "en" | "fr";
 export type Practice = "software" | "ai" | "security";
 
 export type ProjectStatus =
-  "stable-release" | "public-testnet" | "published-research" | "active-rebuild";
+  | "stable-release"
+  | "public-testnet"
+  | "published-research"
+  | "active-rebuild"
+  | "store-and-integrations";
 
 export type ProjectFilter = "all" | Practice | "web" | "blockchain";
 
@@ -43,7 +47,8 @@ export interface Project {
   status: ProjectStatus;
   practice: Practice;
   filters: ProjectFilter[];
-  date: string;
+  evidenceCheckedAt: string;
+  projectStart?: Bilingual;
   stack: string[];
   sections: Record<SectionKey, { en: string[]; fr: string[] }>;
   links: PublicLink[];
@@ -71,12 +76,19 @@ export const sectionLabels: Record<SectionKey, Bilingual> = {
   security: { en: "Security context", fr: "Contexte de sécurité" },
   testing: { en: "Testing and verification", fr: "Tests et vérification" },
   results: { en: "Public results", fr: "Résultats publics" },
-  evidence: { en: "Public evidence", fr: "Preuves publiques" },
-  limitations: { en: "Remaining limitations", fr: "Limites restantes" },
+  evidence: { en: "Resources and links", fr: "Ressources et liens" },
+  limitations: {
+    en: "Scope and current status",
+    fr: "Périmètre et état actuel",
+  },
 };
 
 export const statusLabels: Record<ProjectStatus, Bilingual> = {
   "stable-release": { en: "Stable release", fr: "Version stable" },
+  "store-and-integrations": {
+    en: "Public storefront; integrations developed",
+    fr: "Vitrine accessible ; intégrations développées",
+  },
   "public-testnet": {
     en: "Public testnet reference",
     fr: "Référence publique sur testnet",
@@ -119,7 +131,8 @@ export const projects: Project[] = [
     status: "public-testnet",
     practice: "software",
     filters: ["software", "blockchain"],
-    date: "2026-08-16",
+    evidenceCheckedAt: "2026-08-16",
+    projectStart: { en: "June 2026", fr: "Juin 2026" },
     stack: [
       "Solidity",
       "Foundry",
@@ -141,10 +154,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy designed and implemented the smart contract, deployment path, relayer backend, indexer boundary, frontend integration, tests, and public evidence manifest.",
+          "I designed and implemented the smart contract, deployment path, relayer backend, indexer boundary, frontend integration, tests, and public evidence manifest.",
         ],
         fr: [
-          "Gilles Musy a conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, la limite de l’indexeur, l’intégration frontend, les tests et le manifeste de preuves publiques.",
+          "J’ai conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, la limite de l’indexeur, l’intégration frontend, les tests et le manifeste de preuves publiques.",
         ],
       },
       problem: {
@@ -238,7 +251,7 @@ export const projects: Project[] = [
     status: "published-research",
     practice: "security",
     filters: ["security", "blockchain"],
-    date: "2026-08-24",
+    evidenceCheckedAt: "2026-08-24",
     stack: [
       "Solidity",
       "Vyper",
@@ -259,10 +272,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy reproduces the vulnerable behavior, documents impact and assumptions, implements or explains remediation, and keeps the evidence runnable in CI.",
+          "I reproduce the vulnerable behavior, document impact and assumptions, implement or explain remediation, and keep the evidence runnable in CI.",
         ],
         fr: [
-          "Gilles Musy reproduit le comportement vulnérable, documente l’impact et les hypothèses, met en œuvre ou explique la correction et maintient les preuves exécutables en CI.",
+          "Je reproduis le comportement vulnérable, documente l’impact et les hypothèses, mets en œuvre ou explique la correction et maintiens les preuves exécutables en CI.",
         ],
       },
       problem: {
@@ -359,7 +372,7 @@ export const projects: Project[] = [
     status: "stable-release",
     practice: "ai",
     filters: ["ai", "software"],
-    date: "2026-08-13",
+    evidenceCheckedAt: "2026-08-13",
     stack: ["Python", "Redis", "MQTT", "pytest", "GitHub Actions"],
     sections: {
       summary: {
@@ -372,10 +385,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy designed the package interfaces, implemented the failure modes, wrote the tests and usage examples, configured packaging and CI, and published v0.1.0.",
+          "I designed the package interfaces, implemented the failure modes, wrote the tests and usage examples, configured packaging and CI, and published v0.1.0.",
         ],
         fr: [
-          "Gilles Musy a conçu les interfaces du package, réalisé les modes de panne, écrit les tests et exemples d’utilisation, configuré le packaging et la CI, puis publié la version v0.1.0.",
+          "J’ai conçu les interfaces du package, réalisé les modes de panne, écrit les tests et exemples d’utilisation, configuré le packaging et la CI, puis publié la version v0.1.0.",
         ],
       },
       problem: {
@@ -459,8 +472,8 @@ export const projects: Project[] = [
     slug: { en: "inaricom", fr: "inaricom" },
     title: "Inaricom",
     summary: {
-      en: "A hybrid WordPress, WooCommerce, PHP, REST, React, and Vite rebuild in progress.",
-      fr: "Une refonte en cours associant WordPress, WooCommerce, PHP, REST, React et Vite.",
+      en: "Business website, custom backend and supplier integration for WooCommerce. Rebuild in progress.",
+      fr: "Site professionnel, backend sur mesure et intégration fournisseur pour WooCommerce. Refonte en cours.",
     },
     role: {
       en: "Website and backend development",
@@ -469,7 +482,8 @@ export const projects: Project[] = [
     status: "active-rebuild",
     practice: "software",
     filters: ["software", "web"],
-    date: "2026-08-24",
+    evidenceCheckedAt: "2026-09-12",
+    projectStart: { en: "2023", fr: "2023" },
     stack: [
       "WordPress",
       "WooCommerce",
@@ -490,10 +504,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy is responsible for the website and backend development, including the WordPress structure, WooCommerce integration, custom PHP and REST layer, React interfaces, content paths, and deployment work.",
+          "I develop the website and backend: WordPress content models, custom PHP plugins and REST endpoints, React interfaces, contact flows and deployment tooling. I also built a DigiKey integration to search and import product references into WooCommerce, enrich product information and update prices and availability.",
         ],
         fr: [
-          "Gilles Musy prend en charge le développement du site et du backend, notamment la structure WordPress, l’intégration WooCommerce, la couche PHP et REST dédiée, les interfaces React, les parcours de contenu et le déploiement.",
+          "Je développe le site et son backend : modèles de contenu WordPress, extensions PHP et points d’accès REST dédiés, interfaces React, parcours de contact et outils de déploiement. J’ai également créé une intégration DigiKey pour rechercher et importer des références dans WooCommerce, enrichir les fiches produits et mettre à jour les prix et disponibilités.",
         ],
       },
       problem: {
@@ -507,9 +521,11 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "A custom PHP plugin defines content models, taxonomies, structured data, REST endpoints, and conditional React mount points. Vite builds page-specific React 19 and TypeScript interfaces while WooCommerce retains catalogue and purchase flows.",
+          "A separate supplier integration connects the DigiKey API to WooCommerce products. It maps descriptions, images and technical attributes, with manual updates and a scheduled price and stock synchronisation mechanism. A custom contact endpoint connects the website form to WordPress mail handling.",
         ],
         fr: [
           "Une extension PHP dédiée définit les modèles de contenu, les taxonomies, les données structurées, les points d’accès REST et les points de montage conditionnels de React. Vite construit des interfaces React 19 et TypeScript propres à chaque page, tandis que WooCommerce conserve le catalogue et les parcours d’achat.",
+          "Une intégration fournisseur distincte relie l’API DigiKey aux produits WooCommerce. Elle associe descriptions, images et caractéristiques techniques, avec des mises à jour manuelles et un mécanisme de synchronisation programmé des prix et stocks. Un point d’accès dédié relie le formulaire de contact à l’envoi de courriels WordPress.",
         ],
       },
       decisions: {
@@ -530,10 +546,10 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "The public portfolio records only architecture already described publicly. End-to-end verification of the rebuilt site remains pending until the public relaunch.",
+          "Read-only source inspection confirmed the product-import, attribute-mapping and price/stock update implementation. This review did not execute supplier requests, import products or send messages. End-to-end verification of the rebuilt site remains pending until the public relaunch.",
         ],
         fr: [
-          "Le portfolio public reprend uniquement l’architecture déjà décrite publiquement. La vérification de bout en bout de la nouvelle version reste en attente jusqu’à la remise en ligne.",
+          "L’examen du code en lecture seule a confirmé l’implémentation de l’import produit, de la correspondance des attributs et de la mise à jour des prix et stocks. Cet examen n’a déclenché aucun appel fournisseur, import ni envoi de message. La vérification de bout en bout de la nouvelle version reste à réaliser lors de la remise en ligne.",
         ],
       },
       results: {
@@ -546,18 +562,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The project URL and bilingual public GitHub case study provide the attributable public evidence. No private source is copied into this portfolio.",
+          "The project URL and bilingual GitHub case study document the publicly described architecture. The supplier integration and contact implementation were reviewed separately in private source. This portfolio presents their role without publishing code or infrastructure details.",
         ],
         fr: [
-          "L’URL du projet et l’étude de cas GitHub publique et bilingue constituent les preuves publiques attribuables. Aucun code source privé n’est copié dans ce portfolio.",
+          "L’URL du projet et l’étude de cas GitHub bilingue documentent l’architecture déjà décrite publiquement. L’intégration fournisseur et le traitement du contact ont été examinés séparément dans le code privé. Le portfolio en présente le rôle sans publier le code ni les détails d’infrastructure.",
         ],
       },
       limitations: {
         en: [
-          "The rebuild is not a completed public release. Sales, traffic, infrastructure credentials, private source, and non-public business material are not exposed or claimed.",
+          "The rebuild remains in progress. Current production activation of the supplier integration and contact backend has not been verified. Sales, traffic and private business data are not published.",
         ],
         fr: [
-          "La refonte n’est pas une version publique terminée. Les ventes, l’audience, les identifiants d’infrastructure, le code source privé et les documents commerciaux non publics ne sont ni exposés ni revendiqués.",
+          "La refonte reste en cours. L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée. Les ventes, l’audience et les données commerciales privées ne sont pas publiées.",
         ],
       },
     },
@@ -579,38 +595,44 @@ export const projects: Project[] = [
     slug: { en: "mikasshop", fr: "mikasshop" },
     title: "Mika's Shop",
     summary: {
-      en: "End-to-end Shopify store design and implementation for cat and pet products.",
-      fr: "Conception et réalisation complète d’une boutique Shopify consacrée aux chats et aux animaux de compagnie.",
+      en: "Shopify storefront, AI shopping assistant and customer-support integrations for a pet-products store.",
+      fr: "Boutique Shopify, assistant conversationnel IA et intégrations SAV pour une enseigne dédiée aux animaux de compagnie.",
     },
     role: {
-      en: "Sole contributor for the Shopify store scope",
-      fr: "Seul intervenant sur le périmètre de la boutique Shopify",
+      en: "Storefront design, AI chat development and customer-support integrations",
+      fr: "Conception de la boutique, développement du chat IA et intégrations SAV",
     },
-    status: "stable-release",
+    status: "store-and-integrations",
     practice: "software",
-    filters: ["software", "web"],
-    date: "2026-08-14",
+    filters: ["software", "web", "ai"],
+    evidenceCheckedAt: "2026-09-12",
+    projectStart: { en: "2024", fr: "2024" },
     stack: [
       "Shopify",
       "Liquid theme configuration",
       "Shopify Markets",
       "Multilingual content",
+      "Python",
+      "FastAPI",
+      "Shopify APIs",
+      "SSE",
+      "MQTT",
     ],
     sections: {
       summary: {
         en: [
-          "Mika's Shop is a public Shopify store for cat and pet products. Its merchandising helps visitors browse by cat profile as well as by ordinary product category.",
+          "Mika is the real cat at the heart of the Mika's Shop brand. The Shopify pet-products store also includes a custom AI shopping assistant and customer-support services developed in Talos. Visitors can browse by cat profile or product category; the assistant is designed to guide them using the catalogue and site content.",
         ],
         fr: [
-          "Mika's Shop est une boutique Shopify publique consacrée aux produits pour chats et animaux de compagnie. Son marchandisage aide les visiteurs à parcourir le catalogue selon le profil du chat ainsi que par catégorie de produits.",
+          "Mika est le vrai chat qui incarne la marque Mika's Shop. La boutique Shopify pour animaux de compagnie intègre également un assistant conversationnel IA sur mesure et des services SAV développés dans Talos. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant est conçu pour guider les visiteurs à partir du catalogue et des contenus du site.",
         ],
       },
       role: {
         en: [
-          "Gilles Musy designed and implemented the full Shopify storefront scope, including structure, theme composition, navigation, collections, products, localization, purchase paths, policies, editorial content, and public launch.",
+          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and the store's integration with the Talos customer-support agent.",
         ],
         fr: [
-          "Gilles Musy a conçu et réalisé l’ensemble du périmètre de la vitrine Shopify, notamment la structure, la composition du thème, la navigation, les collections, les produits, la localisation, les parcours d’achat, les politiques, les contenus éditoriaux et la mise en ligne.",
+          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de la boutique à l’agent SAV Talos.",
         ],
       },
       problem: {
@@ -624,17 +646,19 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "Shopify provides hosted commerce, catalogue, localization, cart, and checkout. The storefront theme organizes collections by product type and cat profile, multilingual content, editorial pages, and customer information.",
+          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate Talos SAV service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
         ],
         fr: [
           "Shopify fournit le commerce hébergé, le catalogue, la localisation, le panier et le passage en caisse. Le thème de la vitrine organise les collections par type de produit et profil de chat, les contenus multilingues, les pages éditoriales et les informations clients.",
+          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV Talos distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
         ],
       },
       decisions: {
         en: [
-          "Using Shopify avoids an unnecessary custom backend. The implementation concentrates on information architecture, product discovery, localization, and a consistent purchase path.",
+          "Shopify retains checkout and commerce while custom services handle guidance and support. The assistant’s tool set focuses on site information rather than order lookup or purchases. The SAV follows a separate workflow with configurable response routing and operator escalation; it is not the public shopping chat.",
         ],
         fr: [
-          "L’utilisation de Shopify évite un backend sur mesure inutile. La réalisation se concentre sur l’architecture de l’information, la découverte des produits, la localisation et un parcours d’achat cohérent.",
+          "Shopify conserve le paiement et le commerce, tandis que les services sur mesure prennent en charge le conseil et l’assistance. Les outils de l’assistant portent sur les informations du site, pas sur le suivi de commandes ni les achats. Le SAV suit un parcours distinct, avec un mode de réponse configurable et une transmission à un opérateur ; il ne se confond pas avec l’assistant public.",
         ],
       },
       security: {
@@ -663,18 +687,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The live storefront and public bilingual GitHub case study provide the evidence for the implemented scope.",
+          "The public storefront and dated bilingual GitHub case study document the shop. The AI assistant backend, browser widget and store-specific SAV integration were inspected separately in private source. No private code or customer data is published here.",
         ],
         fr: [
-          "La boutique en ligne et l’étude de cas GitHub publique et bilingue fournissent les preuves du périmètre réalisé.",
+          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. Le backend de l’assistant conversationnel, son widget et l’intégration SAV propre à la boutique ont été examinés séparément dans le code privé. Aucun code privé ni donnée client n’est publié ici.",
         ],
       },
       limitations: {
         en: [
-          "Sales, conversion, traffic, and revenue are not public and are not claimed. Products, prices, and storefront content can change. Shopify remains the commerce backend.",
+          "The storefront is public. Current production operation of the chat and SAV services has not been verified for this case study; no live chat, ticket or purchase was submitted during the review. Sales, conversion, traffic and revenue are not claimed.",
         ],
         fr: [
-          "Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas publics et ne sont pas revendiqués. Les produits, les prix et les contenus peuvent évoluer. Shopify reste le backend commercial.",
+          "La vitrine est publique. Le fonctionnement actuel en production du chat et des services SAV n’a pas été vérifié pour cette étude de cas ; aucun message, ticket ni achat n’a été soumis pendant l’examen. Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas revendiqués.",
         ],
       },
     },
@@ -684,7 +708,7 @@ export const projects: Project[] = [
         url: "https://mikasshop.com",
       },
       {
-        label: { en: "Public case study", fr: "Étude de cas publique" },
+        label: { en: "Storefront case study", fr: "Étude de la vitrine" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/mikasshop.md",
         urlFr:
           "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/mikasshop.md",
@@ -696,38 +720,43 @@ export const projects: Project[] = [
     slug: { en: "pedi-sense", fr: "pedi-sense" },
     title: "Pedi-Sense",
     summary: {
-      en: "End-to-end Shopify store design and implementation for toe-separator socks.",
-      fr: "Conception et réalisation complète d’une boutique Shopify de chaussettes séparatrices d’orteils.",
+      en: "Shopify storefront, customer-support agent and custom ecommerce integrations.",
+      fr: "Boutique Shopify, agent SAV et intégrations e-commerce sur mesure.",
     },
     role: {
-      en: "Sole contributor for the Shopify store scope",
-      fr: "Seul intervenant sur le périmètre de la boutique Shopify",
+      en: "Storefront design, agent development and backend integrations",
+      fr: "Conception de la boutique, développement d’agents et intégrations backend",
     },
-    status: "stable-release",
+    status: "store-and-integrations",
     practice: "software",
-    filters: ["software", "web"],
-    date: "2026-08-14",
+    filters: ["software", "web", "ai"],
+    evidenceCheckedAt: "2026-09-12",
+    projectStart: { en: "Late 2022", fr: "Fin 2022" },
     stack: [
       "Shopify",
       "Liquid theme configuration",
       "Shopify Markets",
       "Localized metadata",
+      "Python",
+      "Shopify APIs",
+      "MQTT",
+      "Listmonk",
     ],
     sections: {
       summary: {
         en: [
-          "Pedi-Sense is a public Shopify store centered on toe-separator socks. It combines a focused product journey, color and bundle choices, brand content, support information, and localized editorial pages.",
+          "Pedi-Sense combines a Shopify storefront with custom services developed within Talos: customer support, email workflows and ecommerce event analysis. The work covers both the customer-facing store and the integrations behind it.",
         ],
         fr: [
-          "Pedi-Sense est une boutique Shopify publique centrée sur les chaussettes séparatrices d’orteils. Elle réunit un parcours produit ciblé, des choix de couleurs et de lots, des contenus de marque, des informations d’assistance et des pages éditoriales localisées.",
+          "Pedi-Sense associe une boutique Shopify à des services sur mesure développés dans Talos : SAV, parcours email et analyse des événements e-commerce. Le travail couvre à la fois la boutique visible par les clients et les intégrations qui l’accompagnent.",
         ],
       },
       role: {
         en: [
-          "Gilles Musy designed and implemented the complete Shopify storefront scope, including theme composition, navigation, product options, localization, cart and account paths, policies, FAQ, content, metadata, and launch.",
+          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed the Pedi-Sense integrations within Talos, including customer-support workflows, branded emails and storefront event collection.",
         ],
         fr: [
-          "Gilles Musy a conçu et réalisé l’ensemble du périmètre de la vitrine Shopify, notamment la composition du thème, la navigation, les options produit, la localisation, les parcours de panier et de compte, les politiques, la FAQ, les contenus, les métadonnées et la mise en ligne.",
+          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations Pedi-Sense dans Talos, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
         ],
       },
       problem: {
@@ -740,18 +769,18 @@ export const projects: Project[] = [
       },
       architecture: {
         en: [
-          "Shopify provides hosted catalogue, localization, account, cart, and checkout services. The storefront theme presents product options, bundle choices, brand and support pages, blog content, and localized search metadata.",
+          "Shopify handles the catalogue, accounts, cart and checkout. Separate Talos services provide a multi-store support agent, connections to order and product information, email delivery through Listmonk, and event collection and attribution. Python services, Shopify APIs and MQTT connect these components.",
         ],
         fr: [
-          "Shopify fournit le catalogue hébergé, la localisation, le compte, le panier et le passage en caisse. Le thème de la vitrine présente les options produit, les offres par lot, les pages de marque et d’assistance, le blog et les métadonnées de recherche localisées.",
+          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Talos distincts apportent un agent SAV multi-boutiques, l’accès aux informations de commande et de produit, l’envoi d’emails via Listmonk ainsi que la collecte et l’attribution des événements. Des services Python, les API Shopify et MQTT relient ces composants.",
         ],
       },
       decisions: {
         en: [
-          "The hosted commerce backend keeps product, order, localization, and checkout operations within standard Shopify flows. The custom work remains focused on presentation, content, navigation, and localized customer journeys.",
+          "I kept checkout within Shopify while developing business workflows separately. The support implementation includes draft responses for review and escalation to an operator. The email implementation includes templates for order confirmations, abandoned carts and shipping notifications; implementation and activation are tracked separately.",
         ],
         fr: [
-          "Le backend commercial hébergé conserve les produits, les commandes, la localisation et le passage en caisse dans les parcours standards de Shopify. Le travail réalisé se concentre sur la présentation, les contenus, la navigation et les parcours clients localisés.",
+          "J’ai conservé le paiement dans Shopify tout en développant les parcours métier séparément. Le SAV comprend des brouillons à valider et une transmission à un opérateur. La partie email comprend des modèles de confirmation de commande, de panier abandonné et d’expédition ; le développement et l’activation sont suivis séparément.",
         ],
       },
       security: {
@@ -780,18 +809,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The live storefront and public bilingual GitHub case study provide the evidence for the implemented scope.",
+          "The public storefront and the dated bilingual GitHub case study document the storefront. The Talos implementation was reviewed separately in the private source repository; its code and customer data are not published here.",
         ],
         fr: [
-          "La boutique en ligne et l’étude de cas GitHub publique et bilingue fournissent les preuves du périmètre réalisé.",
+          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. L’implémentation Talos a été examinée séparément dans le dépôt source privé ; son code et les données clients ne sont pas publiés ici.",
         ],
       },
       limitations: {
         en: [
-          "Sales, conversion, traffic, and revenue are not public and are not claimed. Product effects and customer statements are not treated as verified evidence. Shopify remains the commerce backend.",
+          "The storefront is publicly accessible. The backend implementation is private; its current production activation has not been verified for this case study. Sales, conversion, traffic and revenue are not claimed, and product effects and customer statements are not treated as verified evidence.",
         ],
         fr: [
-          "Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas publics et ne sont pas revendiqués. Les effets du produit et les témoignages clients ne sont pas considérés comme des preuves vérifiées. Shopify reste le backend commercial.",
+          "La vitrine est accessible publiquement. L’implémentation backend est privée ; son activation actuelle en production n’a pas été vérifiée pour cette étude de cas. Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas revendiqués, et les effets du produit comme les témoignages clients ne sont pas considérés comme des preuves vérifiées.",
         ],
       },
     },
@@ -801,7 +830,7 @@ export const projects: Project[] = [
         url: "https://pedi-sense.com",
       },
       {
-        label: { en: "Public case study", fr: "Étude de cas publique" },
+        label: { en: "Storefront case study", fr: "Étude de la vitrine" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/pedi-sense.md",
         urlFr:
           "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/pedi-sense.md",
@@ -876,8 +905,8 @@ export const practicePages: Record<
   software: {
     title: { en: "Software engineering", fr: "Ingénierie logicielle" },
     lead: {
-      en: "Backend, infrastructure, Web, product, blockchain, and open-source systems with explicit operational boundaries.",
-      fr: "Backend, infrastructure, Web, produit, blockchain et systèmes open source avec des limites opérationnelles explicites.",
+      en: "Backend services, infrastructure, web applications, blockchain, and open-source tools.",
+      fr: "Services backend, infrastructure, applications web, blockchain et outils open source.",
     },
     capabilities: {
       en: [
@@ -901,21 +930,21 @@ export const practicePages: Record<
         "Source-verified Celo Sepolia deployment and reproducible lifecycle",
         "Public Shopify storefronts with bilingual case studies",
         "Published Python packages, releases, tests, and CI",
-        "Inaricom architecture documented with an active-rebuild limitation",
+        "Documented Inaricom architecture, with the site currently being rebuilt",
       ],
       fr: [
         "Déploiement Celo Sepolia au code source vérifié et cycle reproductible",
         "Boutiques Shopify publiques avec études de cas bilingues",
         "Packages Python, releases, tests et CI publics",
-        "Architecture Inaricom documentée avec la limite de la refonte en cours",
+        "Architecture Inaricom documentée, avec un site en cours de refonte",
       ],
     },
   },
   ai: {
     title: { en: "Agentic AI engineering", fr: "Ingénierie IA agentique" },
     lead: {
-      en: "Agent orchestration, local-model operations, memory, resilience, observability, and evidence-led adoption.",
-      fr: "Orchestration d’agents, exploitation de modèles locaux, mémoire, résilience, observabilité et adoption fondée sur des preuves.",
+      en: "Agent orchestration, local-model operations, memory, resilience, observability, and AI adoption through pilot projects.",
+      fr: "Orchestration d’agents, exploitation de modèles locaux, mémoire, résilience, observabilité et adoption de l’IA par des projets pilotes.",
     },
     capabilities: {
       en: [
@@ -966,8 +995,8 @@ export const practicePages: Record<
       },
       {
         label: {
-          en: "Talos: public architecture and evaluation material; implementation remains private",
-          fr: "Talos : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
+          en: "Talos, since December 2024: public architecture and evaluation material; implementation remains private",
+          fr: "Talos, depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
         },
         url: "https://github.com/Musyg/talos",
       },
@@ -1033,11 +1062,11 @@ export const ui = {
     language: "Français",
     languageLabel: "View this page in French",
     viewCaseStudy: "View case study",
-    viewEvidence: "View public evidence",
+    viewEvidence: "Explore the resource",
     status: "Status",
     role: "Role",
     stack: "Stack",
-    updated: "Evidence date",
+    projectStart: "Project started",
     selected: "Selected",
     filters: "Filter work",
     noProjects: "No project matches this filter.",
@@ -1065,11 +1094,11 @@ export const ui = {
     language: "English",
     languageLabel: "View this page in English",
     viewCaseStudy: "Voir l’étude de cas",
-    viewEvidence: "Voir les preuves publiques",
+    viewEvidence: "Consulter la ressource",
     status: "État",
     role: "Rôle",
     stack: "Technologies",
-    updated: "Date des preuves",
+    projectStart: "Début du projet",
     selected: "Sélectionné",
     filters: "Filtrer les réalisations",
     noProjects: "Aucun projet ne correspond à ce filtre.",

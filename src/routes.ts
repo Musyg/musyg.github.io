@@ -145,7 +145,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "about",
     title: `About | ${siteName}`,
     description:
-      "Professional scope, working method, and evidence boundaries for Gilles Musy.",
+      "Why I build software, explore AI, and research security: curiosity, practical experience, and an understanding of their limits.",
   },
   {
     path: "/fr/a-propos/",
@@ -154,7 +154,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "about",
     title: `À propos | ${siteName}`,
     description:
-      "Périmètre professionnel, méthode de travail et limites des preuves de Gilles Musy.",
+      "Ce qui m’anime en développement, en IA et en recherche en sécurité : la curiosité, la pratique et la compréhension de leurs limites.",
   },
   {
     path: "/contact/",
@@ -283,7 +283,7 @@ export function contactPath(locale: Locale): string {
   return locale === "fr" ? "/fr/contact/" : "/contact/";
 }
 
-export const siteOrigin = "https://musyg.github.io";
+export const siteOrigin = "https://musyg.com";
 
 export function canonicalUrl(path: string): string {
   return new URL(path, siteOrigin).toString();

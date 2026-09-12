@@ -1,4 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { aboutCopy } from "./content/about";
+import { CeloOverview } from "./CeloOverview";
+import { SecurityOverview } from "./SecurityOverview";
+import { MikaOverview } from "./MikaOverview";
+import { PediOverview } from "./PediOverview";
 import {
   filterLabels,
   localized,
@@ -254,7 +259,6 @@ function ProjectCard({
     <article className="project-card">
       <div className="project-card-topline">
         <StatusPill project={project} locale={locale} />
-        <time dateTime={project.date}>{project.date}</time>
       </div>
       <p className="project-practice">
         {localized(practiceLabels[project.practice], locale)}
@@ -359,7 +363,6 @@ function HomePage({ locale }: { locale: Locale }) {
           />
         </svg>
         <div className="hero-content">
-          <p className="eyebrow">{ui[locale].roleLine}</p>
           <h1 id="hero-title" aria-label={heroLines.join(" ")}>
             {heroLines.map((line) => (
               <span key={line}>{line}</span>
@@ -399,13 +402,13 @@ function HomePage({ locale }: { locale: Locale }) {
           </p>
           <h2 id="expertise-title">
             {isFrench
-              ? "Un portfolio, des frontières professionnelles claires."
-              : "One portfolio, clear professional boundaries."}
+              ? "Des approches distinctes, des projets concrets."
+              : "Distinct approaches, practical projects."}
           </h2>
           <p>
             {isFrench
-              ? "L’ingénierie, l’IA et la recherche en sécurité sont présentées séparément, avec des preuves publiques et des limites explicites."
-              : "Engineering, AI, and security research are presented separately, with public evidence and explicit limitations."}
+              ? "Découvrez mes projets et contributions en ingénierie logicielle, en IA et en recherche en sécurité, avec une approche propre à chaque pratique."
+              : "Explore my projects and contributions in software engineering, AI, and security research, with a distinct approach to each practice."}
           </p>
         </div>
         <div className="practice-grid">
@@ -440,13 +443,13 @@ function HomePage({ locale }: { locale: Locale }) {
           </p>
           <h2 id="selected-title">
             {isFrench
-              ? "Des preuves avant les promesses."
-              : "Evidence before promises."}
+              ? "Du code, des systèmes et des applications."
+              : "Code, systems, and applications."}
           </h2>
           <p>
             {isFrench
-              ? "Chaque projet indique son état, mon rôle, les preuves disponibles et ses limites."
-              : "Each project states its status, my role, the available evidence, and its limitations."}
+              ? "Je présente ce que j’ai réalisé, les choix techniques et l’état de chaque projet, avec les liens pour l’explorer."
+              : "I describe what I built, the technical decisions, and each project’s status, with links to explore further."}
           </p>
         </div>
         <div className="project-grid">
@@ -464,13 +467,11 @@ function HomePage({ locale }: { locale: Locale }) {
 
       <section className="evidence-band" aria-labelledby="evidence-title">
         <div className="evidence-heading">
-          <p className="eyebrow">
-            {isFrench ? "Preuves publiques" : "Public evidence"}
-          </p>
+          <p className="eyebrow">{isFrench ? "Ressources" : "Resources"}</p>
           <h2 id="evidence-title">
             {isFrench
-              ? "Des signaux vérifiables."
-              : "Signals that can be checked."}
+              ? "Rapports, code et versions publiées."
+              : "Reports, code, and releases."}
           </h2>
         </div>
         <div className="evidence-grid">
@@ -564,15 +565,11 @@ function WorkPage({ locale }: { locale: Locale }) {
     <>
       <PageIntro
         eyebrow={isFrench ? "Index des réalisations" : "Work index"}
-        title={
-          isFrench
-            ? "Des réalisations documentées."
-            : "Work with evidence attached."
-        }
+        title={isFrench ? "Des réalisations documentées." : "Documented work."}
         lead={
           isFrench
-            ? "Chaque entrée indique le rôle, l’état, les technologies, les preuves publiques et les limites restantes."
-            : "Every entry states the role, status, technology, public evidence, and remaining limitations."
+            ? "Retrouvez mon rôle, les technologies utilisées et l’état de chaque projet, ainsi que les dépôts, études de cas et démonstrations disponibles."
+            : "Explore my role, the technologies used, and each project’s status, alongside available repositories, case studies, and demos."
         }
       />
       <section
@@ -619,6 +616,10 @@ function ProjectPage({
   const content = ui[locale];
   const currentIndex = projects.findIndex((item) => item.id === project.id);
   const nextProject = projects[(currentIndex + 1) % projects.length];
+  const isCelo = project.id === "celo-credentials";
+  const visibleSections = isCelo
+    ? sectionOrder.filter((section) => section !== "results")
+    : sectionOrder;
 
   return (
     <>
@@ -664,16 +665,22 @@ function ProjectPage({
               <dt>{content.role}</dt>
               <dd>{localized(project.role, locale)}</dd>
             </div>
-            <div>
-              <dt>{content.updated}</dt>
-              <dd>
-                <time dateTime={project.date}>{project.date}</time>
-              </dd>
-            </div>
+            {project.projectStart && (
+              <div>
+                <dt>{content.projectStart}</dt>
+                <dd>{localized(project.projectStart, locale)}</dd>
+              </div>
+            )}
           </dl>
         </div>
       </section>
 
+      {isCelo && <CeloOverview locale={locale} project={project} />}
+      {project.id === "security-reviews" && (
+        <SecurityOverview locale={locale} />
+      )}
+      {project.id === "mikasshop" && <MikaOverview locale={locale} />}
+      {project.id === "pedi-sense" && <PediOverview locale={locale} />}
       <div className="case-layout">
         <aside className="case-stack" aria-label={content.stack}>
           <h2>{content.stack}</h2>
@@ -682,9 +689,30 @@ function ProjectPage({
               <li key={item}>{item}</li>
             ))}
           </ul>
+          {isCelo && (
+            <nav
+              className="case-toc"
+              aria-label={
+                locale === "fr"
+                  ? "Dans cette étude de cas"
+                  : "In this case study"
+              }
+            >
+              <h2>{locale === "fr" ? "Approfondir" : "Explore the details"}</h2>
+              <ul>
+                {visibleSections.map((section) => (
+                  <li key={section}>
+                    <a className="text-link" href={`#${project.id}-${section}`}>
+                      {localized(sectionLabels[section], locale)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
         </aside>
         <article className="case-body">
-          {sectionOrder.map((section, index) => (
+          {visibleSections.map((section, index) => (
             <section key={section} aria-labelledby={`${project.id}-${section}`}>
               <span className="section-number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
@@ -756,10 +784,12 @@ function PracticePage({
           </ul>
         </div>
         <div className="evidence-list">
-          <p className="eyebrow">
-            {isFrench ? "Base publique" : "Public basis"}
-          </p>
-          <h2>{isFrench ? "Preuves et limites" : "Evidence and boundaries"}</h2>
+          <p className="eyebrow">{isFrench ? "En pratique" : "In practice"}</p>
+          <h2>
+            {isFrench
+              ? "Projets et contributions"
+              : "Projects and contributions"}
+          </h2>
           <ul>
             {Array.isArray(page.evidence)
               ? page.evidence.map((link) => (
@@ -848,13 +878,13 @@ function WritingPage({ locale }: { locale: Locale }) {
         eyebrow={isFrench ? "Publications techniques" : "Technical writing"}
         title={
           isFrench
-            ? "Écrire pour rendre les choix vérifiables."
-            : "Writing that makes decisions inspectable."
+            ? "Partager les choix et les méthodes."
+            : "Sharing decisions and methods."
         }
         lead={
           isFrench
-            ? "Les publications relient les choix d’architecture, les contrôles, les preuves et les limites au lieu de présenter une simple opinion."
-            : "Publications connect architecture decisions, controls, evidence, and limitations instead of presenting an unsupported opinion."
+            ? "J’y partage des méthodes, des choix d’architecture et des retours techniques pour passer d’une idée à sa mise en œuvre."
+            : "I share methods, architecture decisions, and technical insights to help move from an idea to implementation."
         }
       />
       <section className="publication-feature">
@@ -894,15 +924,16 @@ function WritingPage({ locale }: { locale: Locale }) {
 
 function AboutPage({ locale }: { locale: Locale }) {
   const isFrench = locale === "fr";
+  const biography = aboutCopy[locale];
   const principles = isFrench
     ? [
         [
           "Périmètre",
-          "Je précise mon rôle, les limites de contribution et l’état réel du projet.",
+          "Je précise mon rôle, ce que j’ai réalisé et l’état du projet.",
         ],
         [
-          "Preuves",
-          "Je relie les affirmations aux dépôts, releases, tests, déploiements et profils publics.",
+          "Documentation",
+          "Je donne accès aux dépôts, versions publiées, tests et démonstrations disponibles.",
         ],
         [
           "Séparation",
@@ -912,11 +943,11 @@ function AboutPage({ locale }: { locale: Locale }) {
     : [
         [
           "Scope",
-          "I state my role, contribution boundaries, and the project’s actual status.",
+          "I describe my role, what I contributed, and the project’s status.",
         ],
         [
-          "Evidence",
-          "I connect claims to public repositories, releases, tests, deployments, and profiles.",
+          "Documentation",
+          "I link to available repositories, releases, tests, and demos.",
         ],
         [
           "Separation",
@@ -928,17 +959,14 @@ function AboutPage({ locale }: { locale: Locale }) {
     <>
       <PageIntro
         eyebrow={isFrench ? "À propos" : "About"}
-        title={
-          isFrench
-            ? "Gilles Musy, basé en Suisse."
-            : "Gilles Musy, based in Switzerland."
-        }
-        lead={
-          isFrench
-            ? "Je travaille à l’intersection de l’ingénierie logicielle, des systèmes d’IA agentiques et de la recherche en sécurité, sans confondre leurs méthodes ni leurs preuves."
-            : "I work across software engineering, agentic AI systems, and security research without conflating their methods or evidence."
-        }
+        title="Gilles Musy"
+        lead={biography.introduction}
       />
+      <div className="section-shell about-narrative">
+        {biography.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
       <section className="section-shell principles-grid">
         {principles.map(([title, text], index) => (
           <article key={title}>
