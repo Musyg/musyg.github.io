@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { projects, sectionOrder } from "../../src/content/site";
+import { aboutCopy } from "../../src/content/about";
 import { canonicalUrl, publicRoutes, routeFor } from "../../src/routes";
 
 function filesUnder(directory: string): string[] {
@@ -13,6 +14,30 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("uses a personal bilingual About and first-person contribution descriptions", () => {
+    expect(aboutCopy.fr.introduction).toMatch(/^Je suis Gilles Musy/);
+    expect(aboutCopy.en.introduction).toMatch(/^I’m Gilles Musy/);
+    for (const locale of ["fr", "en"] as const) {
+      expect(aboutCopy[locale].paragraphs).toHaveLength(5);
+      for (const paragraph of aboutCopy[locale].paragraphs) {
+        expect(paragraph).not.toContain("—");
+      }
+      for (const project of projects) {
+        for (const section of sectionOrder) {
+          for (const paragraph of project.sections[section][locale]) {
+            expect(paragraph).not.toContain("Gilles Musy");
+          }
+        }
+      }
+    }
+    expect(aboutCopy.fr.paragraphs[3]).toContain(
+      "leurs méthodes et leurs responsabilités propres",
+    );
+    expect(aboutCopy.en.paragraphs[3]).toContain(
+      "its own methods and responsibilities",
+    );
+  });
+
   it("uses the custom domain for metadata and the sitemap", () => {
     expect(canonicalUrl("/fr/")).toBe("https://musyg.com/fr/");
     const prerender = readFileSync("scripts/prerender.mjs", "utf8");

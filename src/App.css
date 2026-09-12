@@ -1040,6 +1040,12 @@
   border-bottom: 1px solid var(--line);
 }
 
+.about-narrative p {
+  max-width: 72ch;
+  margin: 0 0 1.5em;
+  line-height: 1.8;
+}
+
 .principles-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;

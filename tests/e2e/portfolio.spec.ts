@@ -359,6 +359,20 @@ test("the review identity appears only on the bilingual Security Reviews case st
   );
 });
 
+test("the bilingual About renders the personal narrative", async ({ page }) => {
+  for (const [path, introduction, ending] of [
+    ["/fr/a-propos/", "Je suis Gilles Musy", "ce qui reste à explorer"],
+    ["/about/", "I’m Gilles Musy", "what I’m still exploring"],
+  ]) {
+    await page.goto(path);
+    await expect(page.locator(".page-lead")).toContainText(introduction);
+    await expect(page.locator(".about-narrative p")).toHaveCount(5);
+    await expect(page.locator(".about-narrative p").last()).toContainText(
+      ending,
+    );
+  }
+});
+
 test("the bilingual About principles keep spacing outside the divider surface", async ({
   page,
 }) => {

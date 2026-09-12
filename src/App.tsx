@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { aboutCopy } from "./content/about";
 import {
   filterLabels,
   localized,
@@ -894,6 +895,7 @@ function WritingPage({ locale }: { locale: Locale }) {
 
 function AboutPage({ locale }: { locale: Locale }) {
   const isFrench = locale === "fr";
+  const biography = aboutCopy[locale];
   const principles = isFrench
     ? [
         [
@@ -928,17 +930,14 @@ function AboutPage({ locale }: { locale: Locale }) {
     <>
       <PageIntro
         eyebrow={isFrench ? "À propos" : "About"}
-        title={
-          isFrench
-            ? "Gilles Musy, basé en Suisse."
-            : "Gilles Musy, based in Switzerland."
-        }
-        lead={
-          isFrench
-            ? "Je travaille à l’intersection de l’ingénierie logicielle, des systèmes d’IA agentiques et de la recherche en sécurité, sans confondre leurs méthodes ni leurs preuves."
-            : "I work across software engineering, agentic AI systems, and security research without conflating their methods or evidence."
-        }
+        title="Gilles Musy"
+        lead={biography.introduction}
       />
+      <div className="section-shell about-narrative">
+        {biography.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
       <section className="section-shell principles-grid">
         {principles.map(([title, text], index) => (
           <article key={title}>

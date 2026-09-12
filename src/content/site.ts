@@ -141,10 +141,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy designed and implemented the smart contract, deployment path, relayer backend, indexer boundary, frontend integration, tests, and public evidence manifest.",
+          "I designed and implemented the smart contract, deployment path, relayer backend, indexer boundary, frontend integration, tests, and public evidence manifest.",
         ],
         fr: [
-          "Gilles Musy a conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, la limite de l’indexeur, l’intégration frontend, les tests et le manifeste de preuves publiques.",
+          "J’ai conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, la limite de l’indexeur, l’intégration frontend, les tests et le manifeste de preuves publiques.",
         ],
       },
       problem: {
@@ -259,10 +259,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy reproduces the vulnerable behavior, documents impact and assumptions, implements or explains remediation, and keeps the evidence runnable in CI.",
+          "I reproduce the vulnerable behavior, document impact and assumptions, implement or explain remediation, and keep the evidence runnable in CI.",
         ],
         fr: [
-          "Gilles Musy reproduit le comportement vulnérable, documente l’impact et les hypothèses, met en œuvre ou explique la correction et maintient les preuves exécutables en CI.",
+          "Je reproduis le comportement vulnérable, documente l’impact et les hypothèses, mets en œuvre ou explique la correction et maintiens les preuves exécutables en CI.",
         ],
       },
       problem: {
@@ -372,10 +372,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy designed the package interfaces, implemented the failure modes, wrote the tests and usage examples, configured packaging and CI, and published v0.1.0.",
+          "I designed the package interfaces, implemented the failure modes, wrote the tests and usage examples, configured packaging and CI, and published v0.1.0.",
         ],
         fr: [
-          "Gilles Musy a conçu les interfaces du package, réalisé les modes de panne, écrit les tests et exemples d’utilisation, configuré le packaging et la CI, puis publié la version v0.1.0.",
+          "J’ai conçu les interfaces du package, réalisé les modes de panne, écrit les tests et exemples d’utilisation, configuré le packaging et la CI, puis publié la version v0.1.0.",
         ],
       },
       problem: {
@@ -490,10 +490,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy is responsible for the website and backend development, including the WordPress structure, WooCommerce integration, custom PHP and REST layer, React interfaces, content paths, and deployment work.",
+          "I am responsible for the website and backend development, including the WordPress structure, WooCommerce integration, custom PHP and REST layer, React interfaces, content paths, and deployment work.",
         ],
         fr: [
-          "Gilles Musy prend en charge le développement du site et du backend, notamment la structure WordPress, l’intégration WooCommerce, la couche PHP et REST dédiée, les interfaces React, les parcours de contenu et le déploiement.",
+          "Je prends en charge le développement du site et du backend, notamment la structure WordPress, l’intégration WooCommerce, la couche PHP et REST dédiée, les interfaces React, les parcours de contenu et le déploiement.",
         ],
       },
       problem: {
@@ -607,10 +607,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy designed and implemented the full Shopify storefront scope, including structure, theme composition, navigation, collections, products, localization, purchase paths, policies, editorial content, and public launch.",
+          "I designed and implemented the full Shopify storefront scope, including structure, theme composition, navigation, collections, products, localization, purchase paths, policies, editorial content, and public launch.",
         ],
         fr: [
-          "Gilles Musy a conçu et réalisé l’ensemble du périmètre de la vitrine Shopify, notamment la structure, la composition du thème, la navigation, les collections, les produits, la localisation, les parcours d’achat, les politiques, les contenus éditoriaux et la mise en ligne.",
+          "J’ai conçu et réalisé l’ensemble du périmètre de la vitrine Shopify, notamment la structure, la composition du thème, la navigation, les collections, les produits, la localisation, les parcours d’achat, les politiques, les contenus éditoriaux et la mise en ligne.",
         ],
       },
       problem: {
@@ -724,10 +724,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "Gilles Musy designed and implemented the complete Shopify storefront scope, including theme composition, navigation, product options, localization, cart and account paths, policies, FAQ, content, metadata, and launch.",
+          "I designed and implemented the complete Shopify storefront scope, including theme composition, navigation, product options, localization, cart and account paths, policies, FAQ, content, metadata, and launch.",
         ],
         fr: [
-          "Gilles Musy a conçu et réalisé l’ensemble du périmètre de la vitrine Shopify, notamment la composition du thème, la navigation, les options produit, la localisation, les parcours de panier et de compte, les politiques, la FAQ, les contenus, les métadonnées et la mise en ligne.",
+          "J’ai conçu et réalisé l’ensemble du périmètre de la vitrine Shopify, notamment la composition du thème, la navigation, les options produit, la localisation, les parcours de panier et de compte, les politiques, la FAQ, les contenus, les métadonnées et la mise en ligne.",
         ],
       },
       problem: {
