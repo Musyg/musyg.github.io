@@ -467,8 +467,24 @@ test("section landmarks and detached cards retain the exact blue on desktop and 
         const marker = page.locator(".expertise-section");
         expect(
           await marker.evaluate(
-            (element) => getComputedStyle(element, "::before").backgroundColor,
+            (element) => getComputedStyle(element, "::before").content,
           ),
+        ).toBe("none");
+        await expect(page.locator(".hero-section")).toHaveCSS(
+          "border-bottom-width",
+          "5px",
+        );
+        await expect(page.locator(".hero-section")).toHaveCSS(
+          "border-bottom-color",
+          "rgb(0, 94, 255)",
+        );
+        expect(
+          await page
+            .locator(".selected-section")
+            .evaluate(
+              (element) =>
+                getComputedStyle(element, "::before").backgroundColor,
+            ),
         ).toBe("rgb(0, 94, 255)");
         await marker.scrollIntoViewIfNeeded();
       }

@@ -445,9 +445,8 @@
   padding-block: clamp(48px, 7vw, 96px);
 }
 
-/* Major sections share a blue entry mark; internal rules stay quieter. */
+/* The hero border marks expertise; other major sections use a short blue mark. */
 :is(
-  .expertise-section,
   .selected-section,
   .evidence-band,
   .writing-preview,
@@ -462,7 +461,6 @@
 }
 
 :is(
-  .expertise-section,
   .selected-section,
   .evidence-band,
   .writing-preview,
