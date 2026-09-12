@@ -6,16 +6,27 @@ Bilingual professional portfolio for three distinct practices:
 - agentic AI engineering;
 - security research.
 
-The site uses React, TypeScript, and Vite. It is intended for static prerendering and
-deployment to GitHub Pages at <https://musyg.github.io/>.
+The site uses React, TypeScript, and Vite, with prerendered pages deployed to
+Hostinger at <https://musyg.com/>. The French version is at <https://musyg.com/fr/>.
 
 ## Current state
 
-The bilingual production site is published at <https://musyg.github.io/> with the final
+The bilingual production site is published at <https://musyg.com/> with the final
 black and `#005EFF` visual direction. It includes the full route set, static prerendering,
 responsive layouts, metadata, content guards, tests, accessibility checks, and GitHub
 Pages workflows. The initial release passed independent local review, CI, deployment,
 public route checks, and post-publication verification.
+
+The 2026-09-12 Hostinger publication passed independent HTTPS checks for all 28
+routes, all 39 public files, the real 404 response, robots.txt, and the sitemap.
+The `www` hostname is not yet validated: its TLS certificate must be corrected
+before the canonical redirect can be verified. Use the root-domain links above.
+
+Hostinger currently serves an uploaded production build. Its automatic GitHub
+deployment remains disabled while the provider's pnpm launcher failure is unresolved.
+The existing GitHub Pages publication remains available separately; the domain's
+registrar, DNS, and mail services remain with Infomaniak. Backend services and
+Hermes integration are separate future work, not part of this static deployment.
 
 Every production page, section, card, panel, navigation element, and footer uses black
 or a near-black neutral as its background. White and other light backgrounds are not
