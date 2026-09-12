@@ -71,8 +71,11 @@ export const sectionLabels: Record<SectionKey, Bilingual> = {
   security: { en: "Security context", fr: "Contexte de sécurité" },
   testing: { en: "Testing and verification", fr: "Tests et vérification" },
   results: { en: "Public results", fr: "Résultats publics" },
-  evidence: { en: "Public evidence", fr: "Preuves publiques" },
-  limitations: { en: "Remaining limitations", fr: "Limites restantes" },
+  evidence: { en: "Resources and links", fr: "Ressources et liens" },
+  limitations: {
+    en: "Scope and current status",
+    fr: "Périmètre et état actuel",
+  },
 };
 
 export const statusLabels: Record<ProjectStatus, Bilingual> = {
@@ -876,8 +879,8 @@ export const practicePages: Record<
   software: {
     title: { en: "Software engineering", fr: "Ingénierie logicielle" },
     lead: {
-      en: "Backend, infrastructure, Web, product, blockchain, and open-source systems with explicit operational boundaries.",
-      fr: "Backend, infrastructure, Web, produit, blockchain et systèmes open source avec des limites opérationnelles explicites.",
+      en: "Backend services, infrastructure, web applications, blockchain, and open-source tools.",
+      fr: "Services backend, infrastructure, applications web, blockchain et outils open source.",
     },
     capabilities: {
       en: [
@@ -901,21 +904,21 @@ export const practicePages: Record<
         "Source-verified Celo Sepolia deployment and reproducible lifecycle",
         "Public Shopify storefronts with bilingual case studies",
         "Published Python packages, releases, tests, and CI",
-        "Inaricom architecture documented with an active-rebuild limitation",
+        "Documented Inaricom architecture, with the site currently being rebuilt",
       ],
       fr: [
         "Déploiement Celo Sepolia au code source vérifié et cycle reproductible",
         "Boutiques Shopify publiques avec études de cas bilingues",
         "Packages Python, releases, tests et CI publics",
-        "Architecture Inaricom documentée avec la limite de la refonte en cours",
+        "Architecture Inaricom documentée, avec un site en cours de refonte",
       ],
     },
   },
   ai: {
     title: { en: "Agentic AI engineering", fr: "Ingénierie IA agentique" },
     lead: {
-      en: "Agent orchestration, local-model operations, memory, resilience, observability, and evidence-led adoption.",
-      fr: "Orchestration d’agents, exploitation de modèles locaux, mémoire, résilience, observabilité et adoption fondée sur des preuves.",
+      en: "Agent orchestration, local-model operations, memory, resilience, observability, and AI adoption through pilot projects.",
+      fr: "Orchestration d’agents, exploitation de modèles locaux, mémoire, résilience, observabilité et adoption de l’IA par des projets pilotes.",
     },
     capabilities: {
       en: [
@@ -1033,7 +1036,7 @@ export const ui = {
     language: "Français",
     languageLabel: "View this page in French",
     viewCaseStudy: "View case study",
-    viewEvidence: "View public evidence",
+    viewEvidence: "Explore the resource",
     status: "Status",
     role: "Role",
     stack: "Stack",
@@ -1065,7 +1068,7 @@ export const ui = {
     language: "English",
     languageLabel: "View this page in English",
     viewCaseStudy: "Voir l’étude de cas",
-    viewEvidence: "Voir les preuves publiques",
+    viewEvidence: "Consulter la ressource",
     status: "État",
     role: "Rôle",
     stack: "Technologies",

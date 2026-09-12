@@ -2,6 +2,62 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 
+test("editorial tone keeps project context without repetitive caveat slogans", async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const route of publicRoutes.filter((route) =>
+    ["home", "work", "practice", "writing", "about"].includes(route.kind),
+  )) {
+    await page.goto(route.path);
+    await expect(page.locator("main")).not.toContainText(
+      /preuves et limites|evidence and boundaries|limites explicites|explicit limitations|limites opérationnelles|operational boundaries/i,
+    );
+    if (route.kind === "practice") {
+      await expect(
+        page.getByRole("heading", {
+          name:
+            route.locale === "fr"
+              ? "Projets et contributions"
+              : "Projects and contributions",
+          exact: true,
+        }),
+      ).toBeVisible();
+    }
+  }
+  for (const path of [
+    "/work/celo-credentials/",
+    "/fr/realisations/celo-credentials/",
+  ]) {
+    await page.goto(path);
+    await expect(
+      page.getByRole("heading", {
+        name: path.startsWith("/fr/")
+          ? "Périmètre et état actuel"
+          : "Scope and current status",
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(page.locator("main")).toContainText(/testnet/i);
+    await expect(page.locator(".evidence-links a").first()).toBeVisible();
+  }
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/engineering/", "/fr/ingenierie/"]) {
+      await page.goto(path);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+      ).toBeLessThanOrEqual(width);
+      await page.screenshot({
+        fullPage: true,
+        path: testInfo.outputPath(
+          `editorial-${width}-${path.includes("/fr/") ? "fr" : "en"}.png`,
+        ),
+      });
+    }
+  }
+});
+
 test("homepage introduces its domains without a duplicate role line", async ({
   page,
 }, testInfo) => {
