@@ -14,6 +14,14 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("keeps the report preview identical to the documented public source rendering", () => {
+    const preview = readFileSync("public/stvault-report-cover.png");
+    expect(createHash("sha256").update(preview).digest("hex")).toBe(
+      "2455d96387bad36a01e3d29c06bd90b34ff1fd1f23c1a63977a8587c189679e0",
+    );
+    expect(preview.length).toBeLessThan(250_000);
+  });
+
   it("uses a personal bilingual About and first-person contribution descriptions", () => {
     expect(aboutCopy.fr.introduction).toMatch(/^Je suis Gilles Musy/);
     expect(aboutCopy.en.introduction).toMatch(/^I’m Gilles Musy/);

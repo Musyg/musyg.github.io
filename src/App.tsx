@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { aboutCopy } from "./content/about";
 import { CeloOverview } from "./CeloOverview";
+import { SecurityOverview } from "./SecurityOverview";
 import {
   filterLabels,
   localized,
@@ -673,6 +674,9 @@ function ProjectPage({
       </section>
 
       {isCelo && <CeloOverview locale={locale} project={project} />}
+      {project.id === "security-reviews" && (
+        <SecurityOverview locale={locale} />
+      )}
       <div className="case-layout">
         <aside className="case-stack" aria-label={content.stack}>
           <h2>{content.stack}</h2>

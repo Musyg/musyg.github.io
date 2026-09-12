@@ -1,6 +1,75 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
+import { securityReportSource } from "../../src/SecurityOverview";
+
+test("Security Reviews presents a real report and clearly labels the demonstration", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 720, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/security-reviews/`,
+      );
+      const overview = page.locator(".security-overview");
+      await overview.scrollIntoViewIfNeeded();
+      await expect(overview.locator(".security-report-context")).toContainText(
+        locale === "fr"
+          ? "ne correspond pas à une mission client"
+          : "not a client engagement",
+      );
+      const preview = overview.locator("img");
+      await preview.scrollIntoViewIfNeeded();
+      await expect(preview).toHaveAttribute("alt", /StVault/);
+      await expect
+        .poll(() =>
+          preview.evaluate((img: HTMLImageElement) => img.naturalWidth),
+        )
+        .toBe(679);
+      await expect(
+        overview.locator(
+          `a[href="${securityReportSource}/StVault_Security_Review.pdf"]`,
+        ),
+      ).toHaveCount(1);
+      await expect(
+        overview.locator(`a[href="${securityReportSource}/REPORT.md"]`),
+      ).toHaveCount(1);
+      await expect(
+        overview.locator('a[href="https://github.com/Musyg/stvault-audit"]'),
+      ).toHaveCount(1);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+      expect(
+        await overview
+          .locator("figure")
+          .evaluate((el) => getComputedStyle(el).borderTopColor),
+      ).toBe("rgb(0, 94, 255)");
+      await expect(page.locator(".case-body > section")).toHaveCount(10);
+    }
+  }
+  await page.goto("/work/celo-credentials/");
+  await expect(page.locator(".security-overview")).toHaveCount(0);
+});
+
+test("Security report overview accessibility @a11y", async ({ page }) => {
+  for (const path of [
+    "/work/security-reviews/",
+    "/fr/realisations/security-reviews/",
+  ]) {
+    await page.goto(path);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+});
 
 test("numbered case headings keep breathing room in both languages", async ({
   page,

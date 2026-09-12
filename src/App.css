@@ -919,6 +919,100 @@
   padding-block: 48px 0;
 }
 
+.security-overview {
+  padding-block: 48px 0;
+}
+
+.security-overview > h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0 0 20px;
+}
+
+.security-overview-lead {
+  max-width: 800px;
+  margin: 0 0 32px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.security-report-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.security-report-preview {
+  margin: 0;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  border-radius: 12px;
+}
+
+.security-report-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Hide only the blank printer margin; preserve the original report artwork. */
+  clip-path: inset(1%);
+}
+
+.security-report-preview figcaption {
+  margin-top: 16px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.security-report-details {
+  min-width: 0;
+}
+
+.security-report-details h3 {
+  margin: 0 0 16px;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+.security-report-context,
+.security-report-details dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.security-report-details dl {
+  margin: 28px 0;
+}
+
+.security-report-details dl > div + div {
+  margin-top: 24px;
+}
+
+.security-report-details dt {
+  margin-bottom: 8px;
+  font-weight: 650;
+}
+
+.security-report-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+@media (max-width: 720px) {
+  .security-report-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .security-report-preview {
+    max-width: 280px;
+    grid-row: 2;
+  }
+}
+
 .celo-overview > h2 {
   font-size: clamp(1.5rem, 3vw, 2rem);
   margin: 0 0 24px;
