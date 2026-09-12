@@ -1026,8 +1026,16 @@
 
 .case-body > section {
   position: relative;
-  padding: 0 0 72px 74px;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 24px;
+  padding: 0 0 72px 24px;
   border-left: 1px solid var(--line);
+}
+
+.case-body > section > :not(.section-number) {
+  grid-column: 2;
+  min-width: 0;
 }
 
 .case-body > section:last-child {
@@ -1052,9 +1060,10 @@
 }
 
 .case-body .section-number {
-  position: absolute;
-  top: 5px;
-  left: 24px;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  margin-top: 5px;
 }
 
 .case-body h2 {
@@ -1371,11 +1380,8 @@
   }
 
   .case-body > section {
-    padding: 0 0 64px 44px;
-  }
-
-  .case-body .section-number {
-    left: 12px;
+    column-gap: 20px;
+    padding: 0 0 64px 12px;
   }
 
   .case-stack {

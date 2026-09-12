@@ -2,6 +2,64 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 
+test("numbered case headings keep breathing room in both languages", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const width of [1440, 720, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const locale of ["en", "fr"]) {
+      for (const slug of [
+        "celo-credentials",
+        "security-reviews",
+        "agent-resilience",
+        "inaricom",
+        "mikasshop",
+        "pedi-sense",
+      ]) {
+        await page.goto(
+          `${locale === "fr" ? "/fr/realisations" : "/work"}/${slug}/`,
+        );
+        const gaps = await page
+          .locator(".case-body > section")
+          .evaluateAll((sections) =>
+            sections.map((section) => {
+              const number = section
+                .querySelector(".section-number")!
+                .getBoundingClientRect();
+              const title = section
+                .querySelector("h2")!
+                .getBoundingClientRect();
+              return title.left - number.right;
+            }),
+          );
+        expect(gaps.length).toBeGreaterThan(0);
+        for (const gap of gaps) expect(gap).toBeGreaterThanOrEqual(19.5);
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+        ).toBeTruthy();
+      }
+      await page.goto(locale === "fr" ? "/fr/a-propos/" : "/about/");
+      const verticalGaps = await page
+        .locator(".principles-grid article")
+        .evaluateAll((cards) =>
+          cards.map((card) => {
+            const number = card
+              .querySelector(".section-number")!
+              .getBoundingClientRect();
+            return (
+              card.querySelector("h2")!.getBoundingClientRect().top -
+              number.bottom
+            );
+          }),
+        );
+      for (const gap of verticalGaps) expect(gap).toBeGreaterThanOrEqual(24);
+    }
+  }
+});
+
 test("Celo pilot offers an early result, accessible flow and working contents", async ({
   page,
 }) => {
