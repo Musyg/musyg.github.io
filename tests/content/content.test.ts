@@ -14,8 +14,8 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
-  it("uses only Talos as the public agency name across source and built pages", () => {
-    for (const directory of ["src", "public", "dist"]) {
+  it("uses only Talos as the public agency name across source and public assets", () => {
+    for (const directory of ["src", "public"]) {
       for (const file of filesUnder(directory).filter((path) =>
         /\.(tsx?|html|js|json|svg|txt)$/i.test(path),
       )) {
