@@ -23,7 +23,8 @@ The `www` hostname is not yet validated: its TLS certificate must be corrected
 before the canonical redirect can be verified. Use the root-domain links above.
 
 Hostinger currently serves an uploaded production build. Its automatic GitHub
-deployment remains disabled while the provider's pnpm launcher failure is unresolved.
+deployment remains disabled following the provider's pnpm launcher failure. This
+branch migrates the build to npm; Hostinger compatibility is not yet verified.
 The existing GitHub Pages publication remains available separately; the domain's
 registrar, DNS, and mail services remain with Infomaniak. Backend services and
 Talos integration are separate future work, not part of this static deployment.
@@ -35,11 +36,17 @@ part of the portfolio identity.
 ## Local development
 
 ```bash
-pnpm install
-pnpm dev
-pnpm lint
-pnpm build
+npm ci
+npm run dev
+npm run lint
+npm run build
 ```
+
+Use Node.js 24 and npm 11.6.0 (the CI version). `package-lock.json` is the sole
+dependency lockfile. Run `npm run verify` for the full validation suite.
+Hostinger must use npm, the complete `npm run build` command, and `dist` output.
+Do not redeploy the older `main` branch or enable automatic deployment until the
+current release and prerendered routes have been verified on Hostinger.
 
 ## Content boundaries
 
