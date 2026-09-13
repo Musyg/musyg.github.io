@@ -4,6 +4,7 @@ import { CeloOverview } from "./CeloOverview";
 import { SecurityOverview } from "./SecurityOverview";
 import { MikaOverview } from "./MikaOverview";
 import { PediOverview } from "./PediOverview";
+import { ContactForm } from "./ContactForm";
 import {
   filterLabels,
   localized,
@@ -989,17 +990,14 @@ function ContactPage({ locale }: { locale: Locale }) {
     <>
       <PageIntro
         eyebrow={isFrench ? "Contact professionnel" : "Professional contact"}
-        title={
-          isFrench
-            ? "Utiliser un profil public vérifié."
-            : "Use a verified public profile."
-        }
+        title={isFrench ? "Prenons contact." : "Get in touch."}
         lead={
           isFrench
-            ? "Cette première version n’expose aucune adresse email et n’affiche aucun faux formulaire. Les profils ci-dessous constituent les canaux publics disponibles."
-            : "This first release exposes no email address and renders no simulated form. The profiles below are the available public channels."
+            ? "Pour échanger sur un projet, une opportunité ou mes travaux."
+            : "For a conversation about a project, an opportunity or my work."
         }
       />
+      <ContactForm locale={locale} />
       <section
         className="profile-section contact-profiles"
         aria-label={isFrench ? "Canaux publics" : "Public channels"}
