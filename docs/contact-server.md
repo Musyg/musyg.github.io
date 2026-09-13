@@ -14,7 +14,7 @@ static fallback, not an email backend.
 
 Provider support confirmed output directory `release` and entry file
 `server/index.mjs` (relative to that output, not `release/server/index.mjs`).
-Use `npm run build:release`. It retains `release/server/` and `release/dist/`
+Use `npm run build` (`build:release` is an alias). It retains `release/server/` and `release/dist/`
 as siblings and bundles the pinned, dependency-free Nodemailer package under
 `release/node_modules/`, without copying environment files or repository sources.
 The runtime package lists Nodemailer in production dependencies as well.
