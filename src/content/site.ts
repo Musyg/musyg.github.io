@@ -86,12 +86,12 @@ export const sectionLabels: Record<SectionKey, Bilingual> = {
 export const statusLabels: Record<ProjectStatus, Bilingual> = {
   "stable-release": { en: "Stable release", fr: "Version stable" },
   "store-and-integrations": {
-    en: "Public storefront; integrations developed",
-    fr: "Vitrine accessible ; intégrations développées",
+    en: "Online store",
+    fr: "Boutique en ligne",
   },
   "public-testnet": {
-    en: "Public testnet reference",
-    fr: "Référence publique sur testnet",
+    en: "Testnet deployment",
+    fr: "Déploiement testnet",
   },
   "published-research": {
     en: "Published research",
@@ -154,10 +154,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "I designed and implemented the smart contract, deployment path, relayer backend, indexer boundary, frontend integration, tests, and public evidence manifest.",
+          "I designed and implemented the smart contract, deployment workflow, relayer backend, frontend integration, and tests.",
         ],
         fr: [
-          "J’ai conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, la limite de l’indexeur, l’intégration frontend, les tests et le manifeste de preuves publiques.",
+          "J’ai conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, l’intégration frontend et les tests.",
         ],
       },
       problem: {
@@ -185,12 +185,8 @@ export const projects: Project[] = [
         ],
       },
       security: {
-        en: [
-          "These controls are security design for a self-authored application. They are not presented as an external audit of the system.",
-        ],
-        fr: [
-          "Ces contrôles relèvent de la conception de la sécurité d’une application réalisée par son auteur. Ils ne sont pas présentés comme un audit externe du système.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
         en: [
@@ -209,12 +205,8 @@ export const projects: Project[] = [
         ],
       },
       evidence: {
-        en: [
-          "The repository, verified contract, deployment transaction, lifecycle transactions, and machine-readable deployment manifest are public.",
-        ],
-        fr: [
-          "Le dépôt, le contrat vérifié, la transaction de déploiement, les transactions du cycle de vie et le manifeste de déploiement lisible par machine sont publics.",
-        ],
+        en: [],
+        fr: [],
       },
       limitations: {
         en: [
@@ -295,12 +287,8 @@ export const projects: Project[] = [
         ],
       },
       decisions: {
-        en: [
-          "The portfolio names the vulnerability classes and public programs involved, but does not publish private report details, unsupported severity claims, or finding counts as a credibility shortcut.",
-        ],
-        fr: [
-          "Le portfolio nomme les classes de vulnérabilités et les programmes publics concernés, mais ne publie ni détails privés, ni gravité non étayée, ni nombre de constats comme raccourci de crédibilité.",
-        ],
+        en: [],
+        fr: [],
       },
       security: {
         en: [
@@ -327,19 +315,13 @@ export const projects: Project[] = [
         ],
       },
       evidence: {
-        en: [
-          "The catalogue and linked repositories are public. HackerOne, Gray Swan Arena, Cantina, and Code4rena provide separate public professional profiles.",
-        ],
-        fr: [
-          "Le catalogue et les dépôts liés sont publics. HackerOne, Gray Swan Arena, Cantina et Code4rena fournissent des profils professionnels publics distincts.",
-        ],
+        en: [],
+        fr: [],
       },
       limitations: {
-        en: [
-          "Only attributable public evidence appears here. Private submissions, unpublished technical details, and non-public program information remain excluded.",
-        ],
+        en: ["Confidential submissions are not included in this catalogue."],
         fr: [
-          "Seules les preuves publiques et attribuables apparaissent ici. Les soumissions privées, les détails techniques non publiés et les informations non publiques des programmes restent exclus.",
+          "Les signalements confidentiels ne figurent pas dans ce catalogue.",
         ],
       },
     },
@@ -416,12 +398,8 @@ export const projects: Project[] = [
         ],
       },
       security: {
-        en: [
-          "This project demonstrates reliability engineering for agent infrastructure. It is not presented as a security audit or as proof that an integrated application is secure.",
-        ],
-        fr: [
-          "Ce projet démontre une ingénierie de fiabilité pour l’infrastructure d’agents. Il n’est pas présenté comme un audit de sécurité ni comme la preuve qu’une application intégrée est sécurisée.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
         en: [
@@ -440,12 +418,8 @@ export const projects: Project[] = [
         ],
       },
       evidence: {
-        en: [
-          "The source repository, release, package metadata, tests, and CI configuration are public.",
-        ],
-        fr: [
-          "Le dépôt source, la release, les métadonnées du package, les tests et la configuration de CI sont publics.",
-        ],
+        en: [],
+        fr: [],
       },
       limitations: {
         en: [
@@ -537,43 +511,35 @@ export const projects: Project[] = [
         ],
       },
       security: {
-        en: [
-          "This is a Web development case study. Security controls applied during implementation remain engineering work, and the project is not presented as having received an external security audit.",
-        ],
-        fr: [
-          "Il s’agit d’une étude de cas de développement Web. Les contrôles de sécurité appliqués pendant la réalisation restent des travaux d’ingénierie et le projet n’est pas présenté comme ayant reçu un audit de sécurité externe.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
         en: [
-          "Read-only source inspection confirmed the product-import, attribute-mapping and price/stock update implementation. This review did not execute supplier requests, import products or send messages. End-to-end verification of the rebuilt site remains pending until the public relaunch.",
+          "End-to-end validation of product imports, attribute mapping, and price and stock updates is pending during the rebuild.",
         ],
         fr: [
-          "L’examen du code en lecture seule a confirmé l’implémentation de l’import produit, de la correspondance des attributs et de la mise à jour des prix et stocks. Cet examen n’a déclenché aucun appel fournisseur, import ni envoi de message. La vérification de bout en bout de la nouvelle version reste à réaliser lors de la remise en ligne.",
+          "La validation de bout en bout de l’import de produits, de la correspondance des attributs et des mises à jour des prix et stocks reste à finaliser dans le cadre de la refonte.",
         ],
       },
       results: {
-        en: [
-          "The current hybrid architecture and contributor scope are documented. On 2026-08-24 the public URL still returned HTTP 503, which matches the active construction state rather than a completed release.",
-        ],
-        fr: [
-          "L’architecture hybride actuelle et le périmètre de contribution sont documentés. Le 24 août 2026, l’URL publique répondait encore en HTTP 503, ce qui correspond à l’état de construction et non à une version terminée.",
-        ],
+        en: [],
+        fr: [],
       },
       evidence: {
         en: [
-          "The project URL and bilingual GitHub case study document the publicly described architecture. The supplier integration and contact implementation were reviewed separately in private source. This portfolio presents their role without publishing code or infrastructure details.",
+          "Explore the project and its architecture in the linked case study. Integration source code is private.",
         ],
         fr: [
-          "L’URL du projet et l’étude de cas GitHub bilingue documentent l’architecture déjà décrite publiquement. L’intégration fournisseur et le traitement du contact ont été examinés séparément dans le code privé. Le portfolio en présente le rôle sans publier le code ni les détails d’infrastructure.",
+          "Le projet et son architecture sont présentés dans l’étude de cas ci-dessous. Le code des intégrations est privé.",
         ],
       },
       limitations: {
         en: [
-          "The rebuild remains in progress. Current production activation of the supplier integration and contact backend has not been verified. Sales, traffic and private business data are not published.",
+          "The rebuild is in progress. Current production activation of the supplier integration and contact backend has not been verified.",
         ],
         fr: [
-          "La refonte reste en cours. L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée. Les ventes, l’audience et les données commerciales privées ne sont pas publiées.",
+          "La refonte est en cours. L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée.",
         ],
       },
     },
@@ -662,20 +628,12 @@ export const projects: Project[] = [
         ],
       },
       security: {
-        en: [
-          "Checkout and payment processing use Shopify-managed flows. This case study does not claim a custom payment system or an external security audit.",
-        ],
-        fr: [
-          "Le passage en caisse et le traitement des paiements utilisent les parcours gérés par Shopify. Cette étude de cas ne revendique ni système de paiement personnalisé ni audit de sécurité externe.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
-        en: [
-          "Public verification covered the homepage, product, brand, blog, guide, localization, cart-related controls, shipping information, returns information, and policy paths. No test purchase was made.",
-        ],
-        fr: [
-          "La vérification publique a couvert l’accueil, les produits, la marque, le blog, le guide, la localisation, les contrôles liés au panier, la livraison, les retours et les politiques. Aucun achat de test n’a été effectué.",
-        ],
+        en: [],
+        fr: [],
       },
       results: {
         en: [
@@ -687,18 +645,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The public storefront and dated bilingual GitHub case study document the shop. The AI assistant backend, browser widget and store-specific SAV integration were inspected separately in private source. No private code or customer data is published here.",
+          "Explore the storefront and its case study. The assistant and support integrations use private source code.",
         ],
         fr: [
-          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. Le backend de l’assistant conversationnel, son widget et l’intégration SAV propre à la boutique ont été examinés séparément dans le code privé. Aucun code privé ni donnée client n’est publié ici.",
+          "Découvrez la boutique et son étude de cas. Le code de l’assistant et des intégrations SAV est privé.",
         ],
       },
       limitations: {
         en: [
-          "The storefront is public. Current production operation of the chat and SAV services has not been verified for this case study; no live chat, ticket or purchase was submitted during the review. Sales, conversion, traffic and revenue are not claimed.",
+          "The store is online. The assistant and support integrations have been developed; their current production operation has not been verified for this case study.",
         ],
         fr: [
-          "La vitrine est publique. Le fonctionnement actuel en production du chat et des services SAV n’a pas été vérifié pour cette étude de cas ; aucun message, ticket ni achat n’a été soumis pendant l’examen. Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas revendiqués.",
+          "La boutique est en ligne. L’assistant et les intégrations SAV sont développés ; leur fonctionnement actuel en production n’a pas été vérifié pour cette étude de cas.",
         ],
       },
     },
@@ -777,27 +735,19 @@ export const projects: Project[] = [
       },
       decisions: {
         en: [
-          "I kept checkout within Shopify while developing business workflows separately. The support implementation includes draft responses for review and escalation to an operator. The email implementation includes templates for order confirmations, abandoned carts and shipping notifications; implementation and activation are tracked separately.",
+          "I kept checkout within Shopify while developing business workflows separately. Support includes draft responses for review and escalation to an operator. Email templates cover order confirmations, abandoned carts and shipping notifications.",
         ],
         fr: [
-          "J’ai conservé le paiement dans Shopify tout en développant les parcours métier séparément. Le SAV comprend des brouillons à valider et une transmission à un opérateur. La partie email comprend des modèles de confirmation de commande, de panier abandonné et d’expédition ; le développement et l’activation sont suivis séparément.",
+          "J’ai conservé le paiement dans Shopify tout en développant les parcours métier séparément. Le SAV comprend des brouillons à valider et une transmission à un opérateur. Les modèles d’emails couvrent les confirmations de commande, les paniers abandonnés et les expéditions.",
         ],
       },
       security: {
-        en: [
-          "Payments and checkout remain Shopify-managed. This development case study does not claim a custom payment service, an external security audit, or independent validation of product and health statements.",
-        ],
-        fr: [
-          "Les paiements et le passage en caisse restent gérés par Shopify. Cette étude de cas de développement ne revendique ni service de paiement personnalisé, ni audit de sécurité externe, ni validation des affirmations relatives au produit ou à la santé.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
-        en: [
-          "Public verification covered the home, product, brand, FAQ, contact, policy, blog, language, region, product-option, cart, and metadata surfaces. No test purchase was made.",
-        ],
-        fr: [
-          "La vérification publique a couvert l’accueil, le produit, la marque, la FAQ, le contact, les politiques, le blog, les langues, les régions, les options produit, le panier et les métadonnées. Aucun achat de test n’a été effectué.",
-        ],
+        en: [],
+        fr: [],
       },
       results: {
         en: [
@@ -809,18 +759,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The public storefront and the dated bilingual GitHub case study document the storefront. The Talos implementation was reviewed separately in the private source repository; its code and customer data are not published here.",
+          "Explore the storefront and its case study. The Talos integrations use private source code.",
         ],
         fr: [
-          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. L’implémentation Talos a été examinée séparément dans le dépôt source privé ; son code et les données clients ne sont pas publiés ici.",
+          "Découvrez la boutique et son étude de cas. Le code des intégrations Talos est privé.",
         ],
       },
       limitations: {
         en: [
-          "The storefront is publicly accessible. The backend implementation is private; its current production activation has not been verified for this case study. Sales, conversion, traffic and revenue are not claimed, and product effects and customer statements are not treated as verified evidence.",
+          "The store is online. Backend integrations have been developed; their current production activation has not been verified for this case study. This project covers software development, not an assessment of the product’s health benefits.",
         ],
         fr: [
-          "La vitrine est accessible publiquement. L’implémentation backend est privée ; son activation actuelle en production n’a pas été vérifiée pour cette étude de cas. Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas revendiqués, et les effets du produit comme les témoignages clients ne sont pas considérés comme des preuves vérifiées.",
+          "La boutique est en ligne. Les intégrations backend sont développées ; leur activation actuelle en production n’a pas été vérifiée pour cette étude de cas. Le projet porte sur le développement logiciel, pas sur l’évaluation des effets du produit sur la santé.",
         ],
       },
     },
@@ -1074,7 +1024,7 @@ export const ui = {
     externalLinks: "Public links",
     nextProject: "Next case study",
     notFoundTitle: "Page not found",
-    notFoundText: "The requested page is not part of the public portfolio.",
+    notFoundText: "This page could not be found.",
     homeAction: "Return home",
   },
   fr: {
@@ -1106,7 +1056,7 @@ export const ui = {
     externalLinks: "Liens publics",
     nextProject: "Étude de cas suivante",
     notFoundTitle: "Page introuvable",
-    notFoundText: "La page demandée ne fait pas partie du portfolio public.",
+    notFoundText: "Cette page est introuvable.",
     homeAction: "Retour à l’accueil",
   },
 } as const;

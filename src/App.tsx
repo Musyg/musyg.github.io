@@ -60,7 +60,7 @@ const evidenceItems = {
   en: [
     {
       title: "StVault v1.1.0",
-      text: "Synchronized public report and PDF, current Foundry baseline, and green tests on both canonical branches.",
+      text: "Review report, fixes, and Foundry tests.",
       url: "https://github.com/Musyg/stvault-audit",
     },
     {
@@ -77,7 +77,7 @@ const evidenceItems = {
   fr: [
     {
       title: "StVault v1.1.0",
-      text: "Rapport public et PDF synchronisés, environnement Foundry actuel et tests réussis sur les deux branches canoniques.",
+      text: "Rapport de revue, corrections et tests Foundry.",
       url: "https://github.com/Musyg/stvault-audit",
     },
     {
@@ -396,21 +396,10 @@ function HomePage({ locale }: { locale: Locale }) {
         aria-labelledby="expertise-title"
       >
         <div className="section-heading">
-          <p className="eyebrow">
-            {isFrench
-              ? "Trois pratiques distinctes"
-              : "Three distinct practices"}
-          </p>
+          <p className="eyebrow">{isFrench ? "Expertises" : "Expertise"}</p>
           <h2 id="expertise-title">
-            {isFrench
-              ? "Des approches distinctes, des projets concrets."
-              : "Distinct approaches, practical projects."}
+            {isFrench ? "Domaines d’expertise" : "Areas of expertise"}
           </h2>
-          <p>
-            {isFrench
-              ? "Découvrez mes projets et contributions en ingénierie logicielle, en IA et en recherche en sécurité, avec une approche propre à chaque pratique."
-              : "Explore my projects and contributions in software engineering, AI, and security research, with a distinct approach to each practice."}
-          </p>
         </div>
         <div className="practice-grid">
           {(["software", "ai", "security"] as Practice[]).map(
@@ -449,8 +438,8 @@ function HomePage({ locale }: { locale: Locale }) {
           </h2>
           <p>
             {isFrench
-              ? "Je présente ce que j’ai réalisé, les choix techniques et l’état de chaque projet, avec les liens pour l’explorer."
-              : "I describe what I built, the technical decisions, and each project’s status, with links to explore further."}
+              ? "Applications web, outils open source et travaux de recherche."
+              : "Web applications, open-source tools, and research."}
           </p>
         </div>
         <div className="project-grid">
@@ -618,9 +607,11 @@ function ProjectPage({
   const currentIndex = projects.findIndex((item) => item.id === project.id);
   const nextProject = projects[(currentIndex + 1) % projects.length];
   const isCelo = project.id === "celo-credentials";
-  const visibleSections = isCelo
-    ? sectionOrder.filter((section) => section !== "results")
-    : sectionOrder;
+  const visibleSections = sectionOrder.filter(
+    (section) =>
+      !(isCelo && section === "results") &&
+      (section === "evidence" || project.sections[section][locale].length > 0),
+  );
 
   return (
     <>
@@ -845,15 +836,8 @@ function SecurityProfiles({ locale }: { locale: Locale }) {
           {isFrench ? "Profils publics" : "Public profiles"}
         </p>
         <h2 id="security-profiles-title">
-          {isFrench
-            ? "Associations attribuables."
-            : "Attributable associations."}
+          {isFrench ? "Profils et contributions" : "Profiles and contributions"}
         </h2>
-        <p>
-          {isFrench
-            ? "Les plateformes sont présentées sans nombre de constats, gravité ni détail technique non public."
-            : "Platforms are presented without finding counts, severity, or non-public technical detail."}
-        </p>
       </div>
       <div className="profile-list">
         {profiles.map((profile) => (
@@ -891,7 +875,7 @@ function WritingPage({ locale }: { locale: Locale }) {
       <section className="publication-feature">
         <div>
           <p className="eyebrow">
-            {isFrench ? "Guide interactif public" : "Public interactive guide"}
+            {isFrench ? "Guide interactif" : "Interactive guide"}
           </p>
           <h2>AI Adoption Playbook</h2>
           <p>
@@ -1003,16 +987,7 @@ function ContactPage({ locale }: { locale: Locale }) {
         aria-label={isFrench ? "Canaux publics" : "Public channels"}
       >
         <div>
-          <h2>
-            {isFrench
-              ? "Choisir le contexte adapté."
-              : "Choose the relevant context."}
-          </h2>
-          <p>
-            {isFrench
-              ? "GitHub convient aux projets et au code public. Les autres plateformes documentent les activités de recherche en sécurité qui leur sont propres."
-              : "GitHub is appropriate for projects and public code. The other platforms document their respective security-research activity."}
-          </p>
+          <h2>{isFrench ? "Me retrouver ailleurs" : "Find me elsewhere"}</h2>
         </div>
         <div className="profile-list">
           {professionalProfiles.map((profile) => (

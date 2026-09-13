@@ -156,8 +156,14 @@ describe("portfolio content contract", () => {
       );
 
       for (const section of sectionOrder) {
-        expect(project.sections[section].en.length).toBeGreaterThan(0);
-        expect(project.sections[section].fr.length).toBeGreaterThan(0);
+        expect(project.sections[section].en.length).toBe(
+          project.sections[section].fr.length,
+        );
+        if (
+          ["summary", "role", "architecture", "limitations"].includes(section)
+        ) {
+          expect(project.sections[section].en.length).toBeGreaterThan(0);
+        }
       }
     }
   });

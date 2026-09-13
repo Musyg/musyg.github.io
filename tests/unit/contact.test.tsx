@@ -73,10 +73,10 @@ describe("protected contact", () => {
     mock.token();
     fireEvent.submit(form);
     expect(
-      await screen.findByText(/transmis au service d’envoi/),
+      await screen.findByText(/Votre message a été envoyé/),
     ).toBeInTheDocument();
     mock.token();
-    expect(screen.getByText(/transmis au service d’envoi/)).toBeInTheDocument();
+    expect(screen.getByText(/Votre message a été envoyé/)).toBeInTheDocument();
     const payload = JSON.parse(mock.fetchMock.mock.calls[1][1].body);
     expect(payload.locale).toBe("fr");
     expect(payload.to).toBeUndefined();

@@ -31,7 +31,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "home",
     title: `${siteName} | Security, AI and software engineering`,
     description:
-      "Public portfolio of Gilles Musy across security research, agentic AI engineering, and software systems.",
+      "Gilles Musy: security research, agentic AI engineering, and software systems.",
   },
   {
     path: "/fr/",
@@ -40,7 +40,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "home",
     title: `${siteName} | Sécurité, IA et ingénierie logicielle`,
     description:
-      "Portfolio public de Gilles Musy consacré à la recherche en sécurité, à l’ingénierie IA agentique et aux systèmes logiciels.",
+      "Gilles Musy : recherche en sécurité, ingénierie IA agentique et systèmes logiciels.",
   },
   {
     path: "/work/",
@@ -49,7 +49,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "work",
     title: `Work | ${siteName}`,
     description:
-      "Evidence-backed software, AI, Web, blockchain, and security work by Gilles Musy.",
+      "Software, AI, Web, blockchain, and security projects by Gilles Musy.",
   },
   {
     path: "/fr/realisations/",
@@ -58,7 +58,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "work",
     title: `Réalisations | ${siteName}`,
     description:
-      "Réalisations documentées de Gilles Musy en logiciel, IA, Web, blockchain et sécurité.",
+      "Réalisations de Gilles Musy en logiciel, IA, Web, blockchain et sécurité.",
   },
   {
     path: "/engineering/",
@@ -127,7 +127,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "writing",
     title: `Writing | ${siteName}`,
     description:
-      "Public technical writing by Gilles Musy, including the evidence-led AI Adoption Playbook.",
+      "Technical writing by Gilles Musy, including the AI Adoption Playbook.",
   },
   {
     path: "/fr/publications/",
@@ -136,7 +136,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "writing",
     title: `Publications | ${siteName}`,
     description:
-      "Publications techniques de Gilles Musy, dont le guide AI Adoption Playbook fondé sur les preuves.",
+      "Publications techniques de Gilles Musy, dont le guide AI Adoption Playbook.",
   },
   {
     path: "/about/",

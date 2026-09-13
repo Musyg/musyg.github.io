@@ -27,6 +27,16 @@ for (const locale of ["fr", "en"]) {
     await page.goto(locale === "fr" ? "/fr/contact/" : "/contact/");
     const form = page.getByRole("form");
     await expect(form).toBeVisible();
+    const privacy = page.locator(".contact-privacy-details");
+    await expect(privacy).not.toHaveAttribute("open");
+    await expect(page.locator("#contact-privacy")).not.toContainText("Brevo");
+    await privacy.locator("summary").focus();
+    await page.keyboard.press("Enter");
+    await expect(privacy).toHaveAttribute("open", "");
+    await expect(privacy.getByText(/Brevo/)).toBeVisible();
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    await privacy.locator("summary").click();
+    await expect(privacy).not.toHaveAttribute("open");
     await page
       .getByLabel(locale === "fr" ? "Nom" : "Name", { exact: true })
       .fill("Test User");
@@ -66,8 +76,8 @@ for (const locale of ["fr", "en"]) {
     await submit.click();
     await expect(page.getByRole("status")).toContainText(
       locale === "fr"
-        ? "transmis au service d’envoi"
-        : "accepted by the sending service",
+        ? "Votre message a été envoyé"
+        : "Your message has been sent",
     );
     expect(sends).toBe(1);
   });

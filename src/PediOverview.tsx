@@ -14,7 +14,7 @@ const copy = {
     open: "Agrandir la capture",
     desktopLink: "Voir aussi la capture sur ordinateur",
     capture:
-      "Vues de la boutique française, capturées le 12 septembre 2026. Le carrousel affiche deux visuels différents ; les couleurs et les contenus de la boutique sont conservés.",
+      "Boutique française sur ordinateur et mobile. Captures du 12 septembre 2026.",
     system: "La boutique, le SAV et les intégrations",
     systemLead:
       "Les composants développés dans ce projet et leurs responsabilités respectives.",
@@ -52,7 +52,7 @@ const copy = {
     open: "View full-size screenshot",
     desktopLink: "View the desktop screenshot too",
     capture:
-      "Views of the French storefront, captured on 12 September 2026. The carousel shows two different slides; the store’s original colors and content are preserved.",
+      "French storefront on desktop and mobile. Screenshots taken on 12 September 2026.",
     system: "Storefront, support and integrations",
     systemLead:
       "The components developed for this project and their respective responsibilities.",

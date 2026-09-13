@@ -12,11 +12,10 @@ const copy = {
     chatAlt:
       "Interface mobile de l’assistant de Mika’s Shop ouverte sur son message d’accueil, sans conversation et avec un champ de saisie vide",
     capture:
-      "Captures réelles de la version française, le 12 septembre 2026. Le chat a été ouvert sans envoyer de message ; son interface est visible, mais les réponses du service n’ont pas été testées.",
+      "Boutique et interface de l’assistant. Captures du 12 septembre 2026.",
     open: "Agrandir la capture",
     system: "Trois rôles, des responsabilités distinctes",
-    systemLead:
-      "Schéma de l’implémentation décrite dans cette étude de cas, pas un indicateur d’activité des services.",
+    systemLead: "Comment la boutique, l’assistant et le SAV s’articulent.",
     nodes: [
       {
         title: "Boutique Shopify",
@@ -46,11 +45,11 @@ const copy = {
     chatAlt:
       "Mika’s Shop mobile assistant interface showing its welcome message, no conversation and an empty input field",
     capture:
-      "Actual screenshots of the French storefront, captured on 12 September 2026. The chat was opened without sending a message; its interface is visible, but service responses were not tested.",
+      "Storefront and assistant interface. Screenshots taken on 12 September 2026.",
     open: "View full-size screenshot",
     system: "Three roles, distinct responsibilities",
     systemLead:
-      "A diagram of the implementation described in this case study, not a live service-status display.",
+      "How the storefront, shopping assistant and customer support fit together.",
     nodes: [
       {
         title: "Shopify storefront",

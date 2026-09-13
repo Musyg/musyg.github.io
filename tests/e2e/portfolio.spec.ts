@@ -2,6 +2,43 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 import { securityReportSource } from "../../src/SecurityOverview";
+import { projects, sectionOrder } from "../../src/content/site";
+
+test("case studies omit empty sections but keep resource links and continuous numbering", async ({
+  page,
+}) => {
+  for (const route of publicRoutes.filter(
+    (route) => route.kind === "project",
+  )) {
+    const project = projects.find((item) => item.id === route.projectId)!;
+    const visible = sectionOrder.filter(
+      (section) =>
+        !(project.id === "celo-credentials" && section === "results") &&
+        (section === "evidence" ||
+          project.sections[section][route.locale].length > 0),
+    );
+    await page.goto(route.path);
+    await expect(page.locator(".case-body > section")).toHaveCount(
+      visible.length,
+    );
+    for (const section of sectionOrder.filter(
+      (key) => !visible.includes(key),
+    )) {
+      await expect(
+        page.locator(`.case-body #${project.id}-${section}`),
+      ).toHaveCount(0);
+    }
+    await expect(
+      page.locator(".case-body > section > .section-number"),
+    ).toHaveText(visible.map((_, index) => String(index + 1).padStart(2, "0")));
+    await expect(page.locator(".evidence-links a")).toHaveCount(
+      project.links.length,
+    );
+    await expect(page.locator("main")).not.toContainText(
+      /read-only source inspection|examen du code en lecture seule|No test purchase was made|Aucun achat de test|credibility shortcut|raccourci de crédibilité/,
+    );
+  }
+});
 
 test("Pedi visual overview shows responsive captures and three implemented roles", async ({
   page,
@@ -178,7 +215,7 @@ test("Pedi-Sense distinguishes the storefront from implemented Talos integration
         locale === "fr" ? "agent SAV" : "customer-support agent",
       );
       await expect(page.locator(".metadata-rail")).toContainText(
-        locale === "fr" ? "intégrations développées" : "integrations developed",
+        locale === "fr" ? "Boutique en ligne" : "Online store",
       );
       await expect(page.locator(".case-body")).toContainText("Listmonk");
       await expect(page.locator(".case-body")).toContainText(
@@ -252,7 +289,7 @@ test("Security Reviews presents a real report and clearly labels the demonstrati
           .locator("figure")
           .evaluate((el) => getComputedStyle(el).borderTopColor),
       ).toBe("rgb(0, 94, 255)");
-      await expect(page.locator(".case-body > section")).toHaveCount(10);
+      await expect(page.locator(".case-body > section")).toHaveCount(9);
     }
   }
   await page.goto("/work/celo-credentials/");
@@ -350,7 +387,7 @@ test("Celo pilot offers an early result, accessible flow and working contents", 
       await expect(
         page.locator(".case-body #celo-credentials-results"),
       ).toHaveCount(0);
-      await expect(page.locator(".case-toc a")).toHaveCount(9);
+      await expect(page.locator(".case-toc a")).toHaveCount(8);
       for (const link of await page.locator(".case-toc a").all()) {
         const href = await link.getAttribute("href");
         await expect(page.locator(href!)).toHaveCount(1);
@@ -379,7 +416,7 @@ test("Celo pilot offers an early result, accessible flow and working contents", 
   }
   await page.goto("/work/agent-resilience/");
   await expect(page.locator(".celo-overview, .case-toc")).toHaveCount(0);
-  await expect(page.locator(".case-body > section")).toHaveCount(10);
+  await expect(page.locator(".case-body > section")).toHaveCount(9);
 });
 
 test("Celo pilot accessibility @a11y", async ({ page }) => {

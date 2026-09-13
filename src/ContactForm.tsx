@@ -191,7 +191,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
         verification:
           "La vérification anti-spam doit être relancée avant l’envoi.",
         accepted:
-          "Votre message a été transmis au service d’envoi. Merci pour votre prise de contact.",
+          "Votre message a été envoyé. Merci pour votre prise de contact.",
         limited:
           "Trop de tentatives rapprochées. Merci de réessayer plus tard.",
         uncertain:
@@ -202,8 +202,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
         unavailable:
           "The form is temporarily unavailable. The profiles below remain accessible.",
         verification: "Please restart the spam check before sending.",
-        accepted:
-          "Your message was accepted by the sending service. Thank you for getting in touch.",
+        accepted: "Your message has been sent. Thank you for getting in touch.",
         limited: "Too many attempts in a short period. Please try again later.",
         uncertain:
           "Sending could not be confirmed. To avoid a duplicate, please do not immediately send the same message again.",
@@ -309,13 +308,21 @@ export function ContactForm({ locale }: { locale: Locale }) {
           </fieldset>
           <p id="contact-privacy">
             {fr
-              ? "Vos informations servent à traiter votre demande. L’acheminement utilise Brevo et la réception ma messagerie professionnelle. N’envoyez ni mot de passe, ni document confidentiel. La protection anti-spam utilise "
-              : "Your information is used to respond to your enquiry. Delivery uses Brevo and my professional mailbox. Do not send passwords or confidential documents. Spam protection uses "}
-            <a href="https://www.cloudflare.com/privacypolicy/">
-              Cloudflare Turnstile
-            </a>
-            .
+              ? "Vos coordonnées servent à répondre à votre demande. Merci de ne pas transmettre d’informations confidentielles."
+              : "I’ll use your details to respond to your enquiry. Please do not include confidential information."}
           </p>
+          <details className="contact-privacy-details">
+            <summary>{fr ? "Confidentialité" : "Privacy"}</summary>
+            <p>
+              {fr
+                ? "Le formulaire transmet votre nom, votre adresse email et votre message via Brevo à ma messagerie professionnelle pour traiter votre demande. Ces informations ne sont pas enregistrées dans les journaux de l’application. Les prestataires et la messagerie appliquent leurs propres règles de conservation. La protection anti-spam utilise "
+                : "The form sends your name, email address and message through Brevo to my professional mailbox to handle your enquiry. This information is not recorded in application logs. The providers and mailbox apply their own retention rules. Spam protection uses "}
+              <a href="https://www.cloudflare.com/privacypolicy/">
+                Cloudflare Turnstile
+              </a>
+              .
+            </p>
+          </details>
           <div ref={widget} className="contact-widget" />
           {state === "verification" && (
             <button
