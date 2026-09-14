@@ -6,16 +6,21 @@ Bilingual professional portfolio for three distinct practices:
 - agentic AI engineering;
 - security research.
 
-The site uses React, TypeScript, and Vite. It is intended for static prerendering and
-deployment to GitHub Pages at <https://musyg.github.io/>.
+The site uses React, TypeScript, and Vite, with prerendered pages.
+
+**Portfolio:** <https://musyg.com/> · [Français](https://musyg.com/fr/)
 
 ## Current state
 
-The bilingual production site is published at <https://musyg.github.io/> with the final
+The bilingual production site is published on Hostinger at <https://musyg.com/> with the final
 black and `#005EFF` visual direction. It includes the full route set, static prerendering,
 responsive layouts, metadata, content guards, tests, accessibility checks, and GitHub
 Pages workflows. The initial release passed independent local review, CI, deployment,
 public route checks, and post-publication verification.
+
+Production is maintained on `feature/contact-protected`. The `main` branch and its
+GitHub Pages publication at <https://musyg.github.io/> remain separate; the local
+development commands below apply to this branch.
 
 Every production page, section, card, panel, navigation element, and footer uses black
 or a near-black neutral as its background. White and other light backgrounds are not
