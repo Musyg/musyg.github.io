@@ -583,6 +583,7 @@ export const projects: Project[] = [
     filters: ["software", "web", "ai"],
     evidenceCheckedAt: "2026-09-12",
     projectStart: { en: "2024", fr: "2024" },
+    cardStack: ["Shopify", "Python", "FastAPI", "Shopify APIs", "SSE", "MQTT"],
     stack: [
       "Shopify",
       "Liquid theme configuration",
@@ -700,6 +701,7 @@ export const projects: Project[] = [
     filters: ["software", "web", "ai"],
     evidenceCheckedAt: "2026-09-12",
     projectStart: { en: "Late 2022", fr: "Fin 2022" },
+    cardStack: ["Shopify", "Python", "Shopify APIs", "MQTT", "Listmonk"],
     stack: [
       "Shopify",
       "Liquid theme configuration",
@@ -903,11 +905,12 @@ export const practicePages: Record<
   ai: {
     title: { en: "Agentic AI engineering", fr: "Ingénierie IA agentique" },
     lead: {
-      en: "Agent orchestration, local-model operations, memory, resilience, observability, and AI adoption through pilot projects.",
-      fr: "Orchestration d’agents, exploitation de modèles locaux, mémoire, résilience, observabilité et adoption de l’IA par des projets pilotes.",
+      en: "AI shopping assistants, customer-support agents and the infrastructure behind them: orchestration, memory, resilience and observability.",
+      fr: "Assistants conversationnels de conseil produit, agents SAV et infrastructure associée : orchestration, mémoire, résilience et observabilité.",
     },
     capabilities: {
       en: [
+        "Python services connected to ecommerce APIs for product advice and customer support, with operator review and escalation in the support workflows",
         "Capability-based multi-agent routing and tool-enabled workflows",
         "Circuit breakers, dead-letter queues, offline buffers, and recovery",
         "Local LLM routing, GGUF operations, and resource-aware model loading",
@@ -915,6 +918,7 @@ export const practicePages: Record<
         "Pilot design, controls, evidence, and governance for AI adoption",
       ],
       fr: [
+        "Services Python reliés aux API e-commerce pour le conseil produit et le SAV, avec validation et transmission à un opérateur dans les parcours SAV",
         "Routage multi-agent fondé sur les capacités et workflows avec outils",
         "Circuit breakers, files de messages en échec, tampons hors ligne et reprise",
         "Routage de LLM locaux, exploitation de GGUF et chargement adapté aux ressources",
@@ -922,7 +926,7 @@ export const practicePages: Record<
         "Conception de pilotes, contrôles, preuves et gouvernance pour l’adoption de l’IA",
       ],
     },
-    projectIds: ["agent-resilience"],
+    projectIds: ["agent-resilience", "mikasshop", "pedi-sense"],
     evidence: [
       {
         label: {
