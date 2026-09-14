@@ -50,6 +50,7 @@ export interface Project {
   evidenceCheckedAt: string;
   projectStart?: Bilingual;
   stack: string[];
+  cardStack?: string[];
   sections: Record<SectionKey, { en: string[]; fr: string[] }>;
   links: PublicLink[];
 }
@@ -446,8 +447,8 @@ export const projects: Project[] = [
     slug: { en: "inaricom", fr: "inaricom" },
     title: "Inaricom",
     summary: {
-      en: "Business website, custom backend and supplier integration for WooCommerce. Rebuild in progress.",
-      fr: "Site professionnel, backend sur mesure et intégration fournisseur pour WooCommerce. Refonte en cours.",
+      en: "WordPress/WooCommerce website with React interfaces, a custom PHP backend and supplier integration. Rebuild in progress.",
+      fr: "Site WordPress/WooCommerce avec interfaces React, backend PHP sur mesure et intégration fournisseur. Refonte en cours.",
     },
     role: {
       en: "Website and backend development",
@@ -458,6 +459,15 @@ export const projects: Project[] = [
     filters: ["software", "web"],
     evidenceCheckedAt: "2026-09-12",
     projectStart: { en: "2023", fr: "2023" },
+    cardStack: [
+      "WordPress",
+      "WooCommerce",
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "PHP",
+      "REST",
+    ],
     stack: [
       "WordPress",
       "WooCommerce",

@@ -275,7 +275,9 @@ function ProjectCard({
         </div>
         <div>
           <dt>{content.stack}</dt>
-          <dd>{project.stack.slice(0, 4).join(" · ")}</dd>
+          <dd>
+            {(project.cardStack ?? project.stack.slice(0, 4)).join(" · ")}
+          </dd>
         </div>
       </dl>
       <a className="text-link" href={projectPath(project.id, locale)}>

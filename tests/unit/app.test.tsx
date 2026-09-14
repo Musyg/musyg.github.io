@@ -3,6 +3,28 @@ import { describe, expect, it } from "vitest";
 import App from "../../src/App";
 
 describe("App", () => {
+  it.each(["/engineering/", "/fr/ingenierie/"])(
+    "shows Inaricom's frontend and backend stack on %s",
+    (pathname) => {
+      const { container } = render(<App pathname={pathname} />);
+      const card = Array.from(container.querySelectorAll(".project-card")).find(
+        (element) => element.querySelector("h3")?.textContent === "Inaricom",
+      );
+      expect(card).toBeDefined();
+      for (const technology of [
+        "WordPress",
+        "WooCommerce",
+        "React",
+        "TypeScript",
+        "Vite",
+        "PHP",
+        "REST",
+      ]) {
+        expect(card).toHaveTextContent(technology);
+      }
+    },
+  );
+
   it("renders the English homepage and its French counterpart", () => {
     render(<App pathname="/" />);
     expect(
