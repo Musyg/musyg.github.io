@@ -1477,7 +1477,7 @@
 
 .profile-list a {
   display: grid;
-  grid-template-columns: minmax(140px, 0.42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(180px, 0.42fr) minmax(0, 1fr);
   gap: 24px;
   align-items: center;
   min-height: 86px;
@@ -1486,13 +1486,56 @@
   text-decoration: none;
 }
 
-.profile-list a:hover {
+.profile-list a:hover,
+.profile-list a:focus-visible {
   background: var(--surface);
+  box-shadow: inset 3px 0 var(--accent);
 }
 
-.profile-list a > span:first-child {
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.profile-identity-text {
   display: grid;
   gap: 4px;
+  min-width: 0;
+}
+
+.platform-logo {
+  display: block;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0) invert(0.84);
+}
+
+/* Keep the cube's facets legible rather than flattening its silhouette. */
+.platform-logo--code4rena {
+  filter: grayscale(1) brightness(1.7);
+}
+
+.platform-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  text-underline-offset: 5px;
+  text-decoration-color: transparent;
+}
+
+.platform-link .platform-logo {
+  width: 22px;
+  height: 22px;
+}
+
+.platform-link:hover,
+.platform-link:focus-visible {
+  text-decoration-color: var(--accent);
 }
 
 .profile-list small,

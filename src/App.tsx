@@ -5,6 +5,7 @@ import { SecurityOverview } from "./SecurityOverview";
 import { MikaOverview } from "./MikaOverview";
 import { PediOverview } from "./PediOverview";
 import { ContactForm } from "./ContactForm";
+import { PlatformLogo } from "./PlatformLogo";
 import {
   filterLabels,
   localized,
@@ -230,8 +231,9 @@ function Footer({ locale }: { locale: Locale }) {
         }
       >
         {professionalProfiles.map((profile) => (
-          <a href={profile.url} key={profile.name}>
-            {profile.name}
+          <a className="platform-link" href={profile.url} key={profile.name}>
+            <PlatformLogo platform={profile.platform} />
+            <span>{profile.name}</span>
           </a>
         ))}
       </nav>
@@ -844,9 +846,12 @@ function SecurityProfiles({ locale }: { locale: Locale }) {
       <div className="profile-list">
         {profiles.map((profile) => (
           <a href={profile.url} key={profile.name}>
-            <span>
-              <strong>{profile.name}</strong>
-              <small>{profile.handle}</small>
+            <span className="profile-identity">
+              <PlatformLogo platform={profile.platform} />
+              <span className="profile-identity-text">
+                <strong>{profile.name}</strong>
+                <small>{profile.handle}</small>
+              </span>
             </span>
             <span>{localized(profile.association, locale)}</span>
           </a>
@@ -994,9 +999,12 @@ function ContactPage({ locale }: { locale: Locale }) {
         <div className="profile-list">
           {professionalProfiles.map((profile) => (
             <a href={profile.url} key={profile.name}>
-              <span>
-                <strong>{profile.name}</strong>
-                <small>{profile.handle}</small>
+              <span className="profile-identity">
+                <PlatformLogo platform={profile.platform} />
+                <span className="profile-identity-text">
+                  <strong>{profile.name}</strong>
+                  <small>{profile.handle}</small>
+                </span>
               </span>
               <span>{localized(profile.association, locale)}</span>
             </a>

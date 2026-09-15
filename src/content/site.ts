@@ -801,7 +801,11 @@ export const projects: Project[] = [
   },
 ];
 
+export type PlatformId =
+  "github" | "gray-swan" | "hackerone" | "cantina" | "code4rena";
+
 export const professionalProfiles: Array<{
+  platform: PlatformId;
   name: string;
   handle: string;
   association: Bilingual;
@@ -809,6 +813,7 @@ export const professionalProfiles: Array<{
 }> = [
   {
     name: "GitHub",
+    platform: "github",
     handle: "Musyg",
     association: {
       en: "Public repositories and releases",
@@ -818,6 +823,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "Gray Swan Arena",
+    platform: "gray-swan",
     handle: "GilMu",
     association: {
       en: "Indirect prompt injection research and adversarial AI evaluation",
@@ -827,6 +833,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "HackerOne",
+    platform: "hackerone",
     handle: "@gilmu",
     association: {
       en: "Treasury Board of Canada Secretariat",
@@ -836,6 +843,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "Cantina",
+    platform: "cantina",
     handle: "@GilMu",
     association: {
       en: "Reserve Protocol and Revert Finance",
@@ -845,6 +853,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "Code4rena",
+    platform: "code4rena",
     handle: "@GiMu84",
     association: {
       en: "Chainlink Payment Abstraction V2 and K2",
