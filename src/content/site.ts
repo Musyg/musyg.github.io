@@ -131,8 +131,8 @@ export const projects: Project[] = [
       fr: "VPN auto-hébergé en Rust pour Windows et Linux, avec WireGuard, kill switch et contrôles anti-fuite.",
     },
     role: {
-      en: "Systems and network engineering, security-product development",
-      fr: "Ingénierie système et réseau, développement d’un produit de cybersécurité",
+      en: "Systems and network design and development",
+      fr: "Conception et développement système et réseau",
     },
     status: "public-mvp",
     practice: "software",
@@ -151,18 +151,18 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Bifrost is a self-hosted VPN for Windows 11 and Linux. Its public MVP provides a background service and command-line client, focused on the tunnel lifecycle and preventing traffic from escaping outside it.",
+          "Bifrost is a self-hosted VPN for Windows 11 and Linux, written in Rust. Its public MVP provides a background service and command-line client, focused on the tunnel lifecycle and preventing traffic from escaping outside it.",
         ],
         fr: [
-          "Bifrost est un VPN auto-hébergé pour Windows 11 et Linux. Son MVP public comprend un service système et un client en ligne de commande, centrés sur le cycle de vie du tunnel et la prévention des sorties de trafic hors de celui-ci.",
+          "Bifrost est un VPN auto-hébergé pour Windows 11 et Linux, développé en Rust. Son MVP public comprend un service système et un client en ligne de commande, centrés sur le cycle de vie du tunnel et la prévention des sorties de trafic hors de celui-ci.",
         ],
       },
       role: {
         en: [
-          "I develop Bifrost as a systems and network engineering project: tunnel orchestration, firewall policies, DNS handling, service integration, and test tooling. This is security-product development, distinct from my vulnerability research and red teaming work.",
+          "I design and develop Bifrost: tunnel orchestration, traffic filtering, DNS handling, system integration, and test tooling.",
         ],
         fr: [
-          "Je développe Bifrost comme un projet d’ingénierie système et réseau : orchestration du tunnel, politiques de pare-feu, gestion DNS, intégration aux services système et outils de test. Il s’agit de développer un produit de cybersécurité, une activité distincte de mes recherches de vulnérabilités et de mon red teaming.",
+          "Je conçois et développe Bifrost : orchestration du tunnel, filtrage réseau, gestion DNS, intégration système et outils de test.",
         ],
       },
       problem: {

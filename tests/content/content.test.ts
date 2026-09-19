@@ -196,6 +196,19 @@ describe("portfolio content contract", () => {
     expect(project.status).toBe("public-mvp");
     expect(project.practice).toBe("software");
     expect(project.filters).toEqual(["software"]);
+    expect(project.role.fr).toBe(
+      "Conception et développement système et réseau",
+    );
+    expect(project.role.en).toBe("Systems and network design and development");
+    expect(JSON.stringify(project)).not.toMatch(
+      /produit de cybersécurité|security-product/,
+    );
+    expect(project.sections.role.fr[0]).toBe(
+      "Je conçois et développe Bifrost : orchestration du tunnel, filtrage réseau, gestion DNS, intégration système et outils de test.",
+    );
+    expect(project.sections.role.en[0]).toBe(
+      "I design and develop Bifrost: tunnel orchestration, traffic filtering, DNS handling, system integration, and test tooling.",
+    );
     expect(project.projectStart).toBeUndefined();
     expect(project.links[0].url).toBe("https://github.com/Musyg/bifrost-vpn");
     expect(practicePages.software.projectIds).toContain(project.id);
