@@ -547,8 +547,8 @@ test("homepage introduces its domains without a duplicate role line", async ({
       }
       await expect(hero.locator(".hero-lead")).toHaveText(
         path === "/fr/"
-          ? "Je travaille sur la sécurité applicative et les smart contracts, les systèmes d’IA agentiques et le développement full-stack."
-          : "I work across application and smart-contract security, agentic AI systems, and full-stack development.",
+          ? "Je mène des recherches en cybersécurité et du red teaming sur le Web, les applications, les protocoles crypto et l’IA. Je développe aussi des systèmes d’IA agentiques et des logiciels full-stack."
+          : "I work on cybersecurity research and red teaming across the web, applications, crypto protocols, and AI. I also build agentic AI systems and full-stack software.",
       );
       await expect(hero.locator(".hero-actions a")).toHaveCount(2);
       expect(

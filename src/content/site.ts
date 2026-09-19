@@ -3,6 +3,7 @@ export type Locale = "en" | "fr";
 export type Practice = "software" | "ai" | "security";
 
 export type ProjectStatus =
+  | "public-mvp"
   | "stable-release"
   | "public-testnet"
   | "published-research"
@@ -85,6 +86,10 @@ export const sectionLabels: Record<SectionKey, Bilingual> = {
 };
 
 export const statusLabels: Record<ProjectStatus, Bilingual> = {
+  "public-mvp": {
+    en: "Public MVP, in development",
+    fr: "MVP public, en développement",
+  },
   "stable-release": { en: "Stable release", fr: "Version stable" },
   "store-and-integrations": {
     en: "Online store",
@@ -117,6 +122,111 @@ export const filterLabels: Record<ProjectFilter, Bilingual> = {
 };
 
 export const projects: Project[] = [
+  {
+    id: "bifrost-vpn",
+    slug: { en: "bifrost-vpn", fr: "bifrost-vpn" },
+    title: "Bifrost",
+    summary: {
+      en: "Self-hosted VPN in Rust for Windows and Linux, with WireGuard, a kill switch, and leak-prevention checks.",
+      fr: "VPN auto-hébergé en Rust pour Windows et Linux, avec WireGuard, kill switch et contrôles anti-fuite.",
+    },
+    role: {
+      en: "Systems and network engineering, security-product development",
+      fr: "Ingénierie système et réseau, développement d’un produit de cybersécurité",
+    },
+    status: "public-mvp",
+    practice: "software",
+    filters: ["software"],
+    evidenceCheckedAt: "2026-09-16",
+    stack: [
+      "Rust",
+      "WireGuard",
+      "Windows Filtering Platform",
+      "nftables",
+      "Tokio",
+      "Linux",
+      "Windows",
+    ],
+    cardStack: ["Rust", "WireGuard", "WFP", "nftables"],
+    sections: {
+      summary: {
+        en: [
+          "Bifrost is a self-hosted VPN for Windows 11 and Linux. Its public MVP provides a background service and command-line client, focused on the tunnel lifecycle and preventing traffic from escaping outside it.",
+        ],
+        fr: [
+          "Bifrost est un VPN auto-hébergé pour Windows 11 et Linux. Son MVP public comprend un service système et un client en ligne de commande, centrés sur le cycle de vie du tunnel et la prévention des sorties de trafic hors de celui-ci.",
+        ],
+      },
+      role: {
+        en: [
+          "I develop Bifrost as a systems and network engineering project: tunnel orchestration, firewall policies, DNS handling, service integration, and test tooling. This is security-product development, distinct from my vulnerability research and red teaming work.",
+        ],
+        fr: [
+          "Je développe Bifrost comme un projet d’ingénierie système et réseau : orchestration du tunnel, politiques de pare-feu, gestion DNS, intégration aux services système et outils de test. Il s’agit de développer un produit de cybersécurité, une activité distincte de mes recherches de vulnérabilités et de mon red teaming.",
+        ],
+      },
+      problem: {
+        en: [
+          "A tunnel can stop, reconnect, or encounter a DNS failure. The system must coordinate these transitions with traffic filtering, rather than treating a successful connection as sufficient protection.",
+        ],
+        fr: [
+          "Un tunnel peut s’interrompre, se reconnecter ou rencontrer une panne DNS. Le système doit coordonner ces transitions avec le filtrage du trafic, plutôt que de considérer une connexion réussie comme une protection suffisante.",
+        ],
+      },
+      architecture: {
+        en: [
+          "The Rust workspace separates the state machine, privileged daemon, CLI, authenticated IPC, firewall, DNS, and secret storage. WireGuard integrates with the Linux kernel and WireGuardNT on Windows; filtering uses nftables and Windows Filtering Platform respectively.",
+        ],
+        fr: [
+          "L’espace de travail Rust sépare la machine à états, le daemon privilégié, la CLI, les communications IPC authentifiées, le pare-feu, le DNS et le stockage des secrets. WireGuard s’intègre au noyau Linux et à WireGuardNT sous Windows ; le filtrage repose respectivement sur nftables et Windows Filtering Platform.",
+        ],
+      },
+      decisions: {
+        en: [
+          "The state machine produces actions without making system calls. Firewall policies are represented as data, allowing their behavior to be tested separately from privileged execution. The kill switch is designed to remain armed across connection failures and reconnects.",
+        ],
+        fr: [
+          "La machine à états produit des actions sans effectuer d’appels système. Les politiques de pare-feu sont représentées sous forme de données, ce qui permet de les tester séparément de leur exécution privilégiée. Le kill switch est conçu pour rester armé lors des échecs de connexion et des reconnexions.",
+        ],
+      },
+      security: { en: [], fr: [] },
+      testing: {
+        en: [
+          "The public repository includes leak-test benches and automated Linux and Windows checks. The CI run linked below passed its Linux and Windows jobs, leak suite, dependency audit, and software-component inventory generation. Tests that cannot run in a given environment are tracked separately.",
+        ],
+        fr: [
+          "Le dépôt public comprend des bancs anti-fuite et des contrôles automatisés Linux et Windows. L’exécution CI liée ci-dessous a réussi ses contrôles Linux et Windows, sa suite anti-fuite, son audit des dépendances et la génération de l’inventaire des composants logiciels. Les tests qui ne peuvent pas tourner dans un environnement donné sont suivis séparément.",
+        ],
+      },
+      results: { en: [], fr: [] },
+      evidence: { en: [], fr: [] },
+      limitations: {
+        en: [
+          "The project remains in development. The public version provides a daemon and CLI; the graphical interface is not yet published, and no GitHub release is available. Anti-censorship transports and OS telemetry reduction are ongoing work: DNS filtering is implemented, while some Windows layers remain unfinished. This MVP does not guarantee leak-free operation or anonymity in every environment.",
+        ],
+        fr: [
+          "Le projet reste en développement. La version publique fournit un daemon et une CLI ; l’interface graphique n’est pas encore publiée et aucune release GitHub n’est disponible. Les transports anti-censure et la réduction de la télémétrie de l’OS sont en cours : le filtrage DNS est implémenté, tandis que certaines couches Windows restent à terminer. Ce MVP ne constitue pas une garantie universelle d’absence de fuite ou d’anonymat.",
+        ],
+      },
+    },
+    links: [
+      {
+        label: { en: "Public repository", fr: "Dépôt public" },
+        url: "https://github.com/Musyg/bifrost-vpn",
+      },
+      {
+        label: {
+          en: "Documented project status",
+          fr: "État documenté du projet",
+        },
+        url: "https://github.com/Musyg/bifrost-vpn/blob/2f3a995842a44dd8b4476b11e42354acff4399d2/ETAT.md",
+      },
+      {
+        label: { en: "Linux and Windows CI", fr: "CI Linux et Windows" },
+        url: "https://github.com/Musyg/bifrost-vpn/actions/runs/34884823744",
+      },
+    ],
+  },
   {
     id: "celo-credentials",
     slug: { en: "celo-credentials", fr: "celo-credentials" },
@@ -895,7 +1005,13 @@ export const practicePages: Record<
         "Packaging, CI, publication de versions et documentation d’exploitation",
       ],
     },
-    projectIds: ["celo-credentials", "inaricom", "mikasshop", "pedi-sense"],
+    projectIds: [
+      "bifrost-vpn",
+      "celo-credentials",
+      "inaricom",
+      "mikasshop",
+      "pedi-sense",
+    ],
     evidence: {
       en: [
         "Source-verified Celo Sepolia deployment and reproducible lifecycle",
@@ -976,24 +1092,29 @@ export const practicePages: Record<
     ],
   },
   security: {
-    title: { en: "Security research", fr: "Recherche en sécurité" },
+    title: {
+      en: "Cybersecurity and red teaming",
+      fr: "Cybersécurité et red teaming",
+    },
     lead: {
-      en: "Web and application security, smart contracts, ZK and applied cryptography, and agentic AI attack paths.",
-      fr: "Sécurité Web et applicative, smart contracts, ZK et cryptographie appliquée, ainsi que chaînes d’attaque sur les IA agentiques.",
+      en: "I research vulnerabilities and test how systems withstand adversarial scenarios: websites, applications and APIs, crypto protocols and smart contracts, and agentic AI systems.",
+      fr: "Je recherche des vulnérabilités et j’évalue la résistance des systèmes à des scénarios adversariaux : sites Web, applications et API, protocoles crypto et smart contracts, systèmes d’IA agentiques.",
     },
     capabilities: {
       en: [
-        "Web applications, APIs, access control, business logic, and integrations",
+        "Vulnerability research and red teaming within authorized scopes",
+        "Websites, applications, APIs, access control, business logic, and integrations",
         "Solidity and Vyper contracts with executable exploit proofs",
         "Circuits, verifiers, proof systems, and formal verification",
-        "Indirect prompt injection, tool misuse, and adversarial evaluation",
+        "AI red teaming: indirect prompt injection, tool misuse, and adversarial evaluation",
         "Reports that separate public evidence from private program details",
       ],
       fr: [
-        "Applications Web, API, contrôle d’accès, logique métier et intégrations",
+        "Recherche de vulnérabilités et red teaming dans des périmètres autorisés",
+        "Sites Web, applications, API, contrôle d’accès, logique métier et intégrations",
         "Contrats Solidity et Vyper avec preuves d’exploitation exécutables",
         "Circuits, vérificateurs, systèmes de preuve et vérification formelle",
-        "Injection indirecte de prompts, usage abusif d’outils et évaluation adversariale",
+        "Red teaming IA : injection indirecte de prompts, usage abusif d’outils et évaluation adversariale",
         "Rapports séparant les preuves publiques des détails privés des programmes",
       ],
     },

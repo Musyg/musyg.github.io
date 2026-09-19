@@ -32,7 +32,7 @@ test("HTTP serves prerendered routes and protects API boundaries", async (t) => 
   const routes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
     (match) => new URL(match[1]).pathname,
   );
-  assert.equal(routes.length, 28);
+  assert.equal(routes.length, 30);
   for (const path of routes) {
     const response = await fetch(base + path);
     assert.equal(response.status, 200, path);

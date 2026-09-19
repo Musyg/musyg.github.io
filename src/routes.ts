@@ -106,9 +106,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "security",
-    title: `Security research | ${siteName}`,
+    title: `Cybersecurity and red teaming | ${siteName}`,
     description:
-      "Web, application, smart-contract, ZK, applied-cryptography, and agentic AI security research.",
+      "Vulnerability research and red teaming across websites, applications, APIs, crypto protocols, smart contracts, and AI systems.",
   },
   {
     path: "/fr/recherche-securite/",
@@ -116,9 +116,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "security",
-    title: `Recherche en sécurité | ${siteName}`,
+    title: `Cybersécurité et red teaming | ${siteName}`,
     description:
-      "Recherche sur la sécurité Web, applicative, des smart contracts, ZK et des systèmes d’IA agentiques.",
+      "Recherche de vulnérabilités et red teaming : Web, applications, API, protocoles crypto, smart contracts et systèmes IA.",
   },
   {
     path: "/writing/",

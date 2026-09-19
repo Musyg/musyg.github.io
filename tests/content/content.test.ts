@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { projects, sectionOrder } from "../../src/content/site";
+import { practicePages, projects, sectionOrder } from "../../src/content/site";
 import { aboutCopy } from "../../src/content/about";
 import { canonicalUrl, publicRoutes, routeFor } from "../../src/routes";
 
@@ -131,6 +131,29 @@ describe("portfolio content contract", () => {
     );
   });
 
+  it("makes cybersecurity and red teaming explicit without merging engineering roles", () => {
+    for (const locale of ["fr", "en"] as const) {
+      const security = practicePages.security;
+      expect(security.title[locale]).toContain("red teaming");
+      expect(aboutCopy[locale].paragraphs[2]).toContain("red teaming");
+      for (const term of ["crypto", "smart contracts", "applications", "API"]) {
+        expect(security.lead[locale]).toContain(term);
+        expect(aboutCopy[locale].paragraphs[2]).toContain(term);
+      }
+      expect(security.capabilities[locale].join(" ")).toContain("Circuits");
+    }
+    expect(aboutCopy.fr.paragraphs[0]).toContain("Ce qui m’anime");
+    expect(aboutCopy.fr.paragraphs[2]).toContain("commet une erreur");
+    expect(aboutCopy.fr.paragraphs[2]).not.toContain("se trompe");
+    const app = readFileSync("src/App.tsx", "utf8");
+    expect(app).toContain(
+      "Je distingue mes travaux de recherche et de red teaming",
+    );
+    expect(app).toContain("I distinguish my research and red teaming work");
+    expect(routeFor("/fr/recherche-securite/").title).toContain("red teaming");
+    expect(routeFor("/security-research/").title).toContain("red teaming");
+  });
+
   it("uses the custom domain for metadata and the sitemap", () => {
     expect(canonicalUrl("/fr/")).toBe("https://musyg.com/fr/");
     const prerender = readFileSync("scripts/prerender.mjs", "utf8");
@@ -145,8 +168,8 @@ describe("portfolio content contract", () => {
     expect(config).not.toContain("RewriteRule");
   });
 
-  it("keeps six projects with complete bilingual case-study sections", () => {
-    expect(projects).toHaveLength(6);
+  it("keeps seven projects with complete bilingual case-study sections", () => {
+    expect(projects).toHaveLength(7);
 
     for (const project of projects) {
       expect(project.links.length).toBeGreaterThan(0);
@@ -166,6 +189,24 @@ describe("portfolio content contract", () => {
         }
       }
     }
+  });
+
+  it("presents Bifrost as a public software MVP without inventing its start date", () => {
+    const project = projects.find((item) => item.id === "bifrost-vpn")!;
+    expect(project.status).toBe("public-mvp");
+    expect(project.practice).toBe("software");
+    expect(project.filters).toEqual(["software"]);
+    expect(project.projectStart).toBeUndefined();
+    expect(project.links[0].url).toBe("https://github.com/Musyg/bifrost-vpn");
+    expect(practicePages.software.projectIds).toContain(project.id);
+    expect(practicePages.security.projectIds).not.toContain(project.id);
+    expect(practicePages.ai.projectIds).not.toContain(project.id);
+    expect(project.sections.limitations.fr[0]).toContain(
+      "l’interface graphique n’est pas encore publiée",
+    );
+    expect(project.sections.limitations.en[0]).toContain(
+      "the graphical interface is not yet published",
+    );
   });
 
   it("keeps every public route unique and paired with its locale counterpart", () => {
