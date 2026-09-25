@@ -14,6 +14,29 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("presents Talos and broader AI engineering before commerce use cases", () => {
+    const ai = practicePages.ai;
+    for (const locale of ["en", "fr"] as const) {
+      expect(ai.title[locale]).toMatch(/multi-agent/);
+      expect(ai.lead[locale]).toContain("Talos");
+      expect(ai.lead[locale]).not.toMatch(/shopping|conseil produit|SAV/);
+      expect(ai.capabilities[locale][0]).toMatch(/multi-agent/);
+      expect(ai.capabilities[locale].join(" ")).toMatch(/simulat/);
+      expect(ai.capabilities[locale].join(" ")).toContain("Python");
+      expect(ai.capabilities[locale].join(" ")).toContain("commerce");
+    }
+    expect(ai.lead.fr).toContain("tout en explorant la prédiction");
+    expect(ai.lead.en).toContain("while exploring prediction");
+    expect(Array.isArray(ai.evidence) && ai.evidence[0].url).toBe(
+      "https://github.com/Musyg/talos",
+    );
+    for (const path of ["/ai-systems/", "/fr/systemes-ia/"]) {
+      const route = routeFor(path);
+      expect(route.title).toMatch(/multi-agent/);
+      expect(route.description).toContain("Talos");
+    }
+  });
+
   it("uses only Talos as the public agency name across source and public assets", () => {
     for (const directory of ["src", "public"]) {
       for (const file of filesUnder(directory).filter((path) =>

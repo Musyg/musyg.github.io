@@ -1030,31 +1030,45 @@ export const practicePages: Record<
     },
   },
   ai: {
-    title: { en: "Agentic AI engineering", fr: "Ingénierie IA agentique" },
+    title: {
+      en: "AI engineering and multi-agent systems",
+      fr: "Ingénierie IA et systèmes multi-agents",
+    },
     lead: {
-      en: "AI shopping assistants, customer-support agents and the infrastructure behind them: orchestration, memory, resilience and observability.",
-      fr: "Assistants conversationnels de conseil produit, agents SAV et infrastructure associée : orchestration, mémoire, résilience et observabilité.",
+      en: "I design AI systems that bring together specialized agents, language models, memory and tools. With Talos, I develop their orchestration and their capabilities for analysis, automation and interaction, while exploring prediction and decision support through machine learning.",
+      fr: "Je conçois des systèmes d’IA qui associent agents spécialisés, modèles de langage, mémoire et outils. Avec Talos, je développe leur orchestration et leurs capacités d’analyse, d’automatisation et d’interaction, tout en explorant la prédiction et l’aide à la décision par l’apprentissage automatique.",
     },
     capabilities: {
       en: [
-        "Python services connected to ecommerce APIs for product advice and customer support, with operator review and escalation in the support workflows",
-        "Capability-based multi-agent routing and tool-enabled workflows",
-        "Circuit breakers, dead-letter queues, offline buffers, and recovery",
+        "Distributed multi-agent orchestration, capability-based routing and tool-enabled Python workflows",
         "Local LLM routing, GGUF operations, and resource-aware model loading",
         "Graph and vector memory, event buses, and real-time interaction",
+        "Predictive experimentation, forecasting and simulated decision support",
+        "Voice and multimodal interaction: streaming speech, vision and document processing",
+        "Observability, circuit breakers, dead-letter queues, offline buffers and recovery",
+        "Applications include commerce and customer support: Python services connected to business APIs, with operator review and escalation in support workflows",
         "Pilot design, controls, evidence, and governance for AI adoption",
       ],
       fr: [
-        "Services Python reliés aux API e-commerce pour le conseil produit et le SAV, avec validation et transmission à un opérateur dans les parcours SAV",
-        "Routage multi-agent fondé sur les capacités et workflows avec outils",
-        "Circuit breakers, files de messages en échec, tampons hors ligne et reprise",
+        "Orchestration multi-agent distribuée, routage fondé sur les capacités et workflows Python avec outils",
         "Routage de LLM locaux, exploitation de GGUF et chargement adapté aux ressources",
         "Mémoire graphe et vectorielle, bus d’événements et interaction en temps réel",
+        "Expérimentation prédictive, prévision et aide à la décision en simulation",
+        "Interaction vocale et multimodale : parole en flux continu, vision et traitement de documents",
+        "Observabilité, circuit breakers, files de messages en échec, tampons hors ligne et reprise",
+        "Applications au commerce et au SAV : services Python reliés aux API métier, avec validation et transmission à un opérateur dans les parcours SAV",
         "Conception de pilotes, contrôles, preuves et gouvernance pour l’adoption de l’IA",
       ],
     },
     projectIds: ["agent-resilience", "mikasshop", "pedi-sense"],
     evidence: [
+      {
+        label: {
+          en: "Talos, since December 2024: public architecture and evaluation material; implementation remains private",
+          fr: "Talos, depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
+        },
+        url: "https://github.com/Musyg/talos",
+      },
       {
         label: {
           en: "Agent Resilience: public source, tests, packaging, and CI",
@@ -1083,13 +1097,6 @@ export const practicePages: Record<
         },
         url: "https://musyg.github.io/ai-adoption-playbook/",
         urlFr: "https://musyg.github.io/ai-adoption-playbook/fr/",
-      },
-      {
-        label: {
-          en: "Talos, since December 2024: public architecture and evaluation material; implementation remains private",
-          fr: "Talos, depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
-        },
-        url: "https://github.com/Musyg/talos",
       },
     ],
   },

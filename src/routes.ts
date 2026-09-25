@@ -86,9 +86,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "ai",
-    title: `Agentic AI engineering | ${siteName}`,
+    title: `AI engineering and multi-agent systems | ${siteName}`,
     description:
-      "Agent orchestration, resilience, local-model operations, memory, observability, and AI adoption.",
+      "AI engineering with Talos: multi-agent orchestration, local models, memory, automation and predictive experimentation. By Gilles Musy.",
   },
   {
     path: "/fr/systemes-ia/",
@@ -96,9 +96,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "ai",
-    title: `Ingénierie IA agentique | ${siteName}`,
+    title: `Ingénierie IA et systèmes multi-agents | ${siteName}`,
     description:
-      "Orchestration, résilience, modèles locaux, mémoire, observabilité et adoption de l’IA.",
+      "Ingénierie IA avec Talos : orchestration multi-agent, modèles locaux, mémoire, automatisation et expérimentation prédictive. Par Gilles Musy.",
   },
   {
     path: "/security-research/",
