@@ -260,6 +260,17 @@ function ProjectCard({
 
   return (
     <article className="project-card">
+      {project.brandImage && (
+        <img
+          className="project-brand-image"
+          src={project.brandImage}
+          alt=""
+          width="1448"
+          height="1086"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
       <div className="project-card-topline">
         <StatusPill project={project} locale={locale} />
       </div>
@@ -638,6 +649,16 @@ function ProjectPage({
                 aria-hidden="true"
               />
             ) : null}
+            {project.brandImage && (
+              <img
+                className="case-brand-image"
+                src={project.brandImage}
+                alt=""
+                width="1448"
+                height="1086"
+                decoding="async"
+              />
+            )}
             <h1>{project.title}</h1>
             <p className="page-lead">{localized(project.summary, locale)}</p>
             <nav className="case-actions" aria-label={content.externalLinks}>

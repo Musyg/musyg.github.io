@@ -52,6 +52,7 @@ export interface Project {
   projectStart?: Bilingual;
   stack: string[];
   cardStack?: string[];
+  brandImage?: string;
   sections: Record<SectionKey, { en: string[]; fr: string[] }>;
   links: PublicLink[];
 }
@@ -126,6 +127,7 @@ export const projects: Project[] = [
     id: "bifrost-vpn",
     slug: { en: "bifrost-vpn", fr: "bifrost-vpn" },
     title: "Bifrost",
+    brandImage: "/brands/bifrost/bifrost-fond-sombre.png",
     summary: {
       en: "Self-hosted VPN in Rust for Windows and Linux, with WireGuard, a kill switch, and leak-prevention checks.",
       fr: "VPN auto-hébergé en Rust pour Windows et Linux, avec WireGuard, kill switch et contrôles anti-fuite.",

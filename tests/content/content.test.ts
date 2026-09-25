@@ -289,13 +289,38 @@ describe("portfolio content contract", () => {
     expect(preview.readUInt32BE(20)).toBe(630);
   });
 
-  it("keeps email addresses out of every public asset", () => {
+  it("keeps email addresses out of public assets except pinned image signing certificates", () => {
     const publicDirectory = join(process.cwd(), "public");
+    // The approved originals retain their C2PA signing certificates. Only
+    // these exact files may contain the certificate authority's public email.
+    const signedImages = new Map([
+      [
+        join(publicDirectory, "brands/bifrost/bifrost-fond-sombre.png"),
+        "86af83c5bed458506d349041d7a3c5ab86f92c1f1a9d8cc6f88d7fc42199169f",
+      ],
+      [
+        join(publicDirectory, "brands/bifrost/bifrost-icone.png"),
+        "3137510510e9641b3fe90cf5c4d8bb30370daca9ac5686be74dcd5233190ade8",
+      ],
+    ]);
 
     for (const asset of filesUnder(publicDirectory)) {
-      expect(readFileSync(asset).toString("latin1"), asset).not.toMatch(
-        /[\w.+-]+@[\w.-]+\.[a-z]{2,}/iu,
-      );
+      const bytes = readFileSync(asset);
+      const emails = [
+        ...new Set(
+          bytes.toString("latin1").match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/giu) ??
+            [],
+        ),
+      ];
+      const approvedHash = signedImages.get(asset);
+      if (approvedHash) {
+        expect(createHash("sha256").update(bytes).digest("hex"), asset).toBe(
+          approvedHash,
+        );
+        expect(emails, asset).toEqual(["ca@trufo.ai"]);
+      } else {
+        expect(emails, asset).toEqual([]);
+      }
     }
   });
 

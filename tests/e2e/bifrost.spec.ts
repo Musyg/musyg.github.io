@@ -13,6 +13,13 @@ for (const locale of ["en", "fr"] as const) {
       await expect(
         page.getByRole("heading", { level: 1, name: "Bifrost", exact: true }),
       ).toBeVisible();
+      const logo = page.locator(".case-brand-image");
+      await expect(logo).toBeVisible();
+      await expect(logo).toHaveAttribute(
+        "src",
+        "/brands/bifrost/bifrost-fond-sombre.png",
+      );
+      await expect(logo).toHaveJSProperty("naturalWidth", 1448);
       await expect(page.locator(".case-hero .metadata-rail")).toContainText(
         locale === "fr"
           ? "MVP public, en développement"
@@ -36,12 +43,14 @@ for (const locale of ["en", "fr"] as const) {
     }
     const work = locale === "fr" ? "/fr/realisations/" : "/work/";
     await page.goto(`${work}?filter=software`);
+    await expect(page.locator(".project-brand-image")).toHaveCount(1);
     await expect(
       page.locator(".project-card").filter({
         has: page.getByRole("heading", { name: "Bifrost", exact: true }),
       }),
     ).toBeVisible();
     await page.goto(`${work}?filter=security`);
+    await expect(page.locator(".project-brand-image")).toHaveCount(0);
     await expect(
       page.locator(".project-card").filter({
         has: page.getByRole("heading", { name: "Bifrost", exact: true }),
