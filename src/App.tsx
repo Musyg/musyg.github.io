@@ -242,6 +242,7 @@ function Footer({ locale }: { locale: Locale }) {
 }
 
 function StatusPill({ project, locale }: { project: Project; locale: Locale }) {
+  if (!project.status) return null;
   return (
     <span className="status-pill">
       {localized(statusLabels[project.status], locale)}
@@ -674,10 +675,12 @@ function ProjectPage({
             </nav>
           </div>
           <dl className="metadata-rail">
-            <div>
-              <dt>{content.status}</dt>
-              <dd>{localized(statusLabels[project.status], locale)}</dd>
-            </div>
+            {project.status && (
+              <div>
+                <dt>{content.status}</dt>
+                <dd>{localized(statusLabels[project.status], locale)}</dd>
+              </div>
+            )}
             <div>
               <dt>{content.role}</dt>
               <dd>{localized(project.role, locale)}</dd>

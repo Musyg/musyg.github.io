@@ -7,7 +7,6 @@ export type ProjectStatus =
   | "stable-release"
   | "public-testnet"
   | "published-research"
-  | "active-rebuild"
   | "store-and-integrations";
 
 export type ProjectFilter = "all" | Practice | "web" | "blockchain";
@@ -45,7 +44,7 @@ export interface Project {
   title: string;
   summary: Bilingual;
   role: Bilingual;
-  status: ProjectStatus;
+  status?: ProjectStatus;
   practice: Practice;
   filters: ProjectFilter[];
   evidenceCheckedAt: string;
@@ -104,7 +103,6 @@ export const statusLabels: Record<ProjectStatus, Bilingual> = {
     en: "Published research",
     fr: "Recherche publiée",
   },
-  "active-rebuild": { en: "Active rebuild", fr: "Refonte en cours" },
 };
 
 export const practiceLabels: Record<Practice, Bilingual> = {
@@ -559,17 +557,16 @@ export const projects: Project[] = [
     slug: { en: "inaricom", fr: "inaricom" },
     title: "Inaricom",
     summary: {
-      en: "WordPress/WooCommerce website with React interfaces, a custom PHP backend and supplier integration. Rebuild in progress.",
-      fr: "Site WordPress/WooCommerce avec interfaces React, backend PHP sur mesure et intégration fournisseur. Refonte en cours.",
+      en: "WordPress/WooCommerce website with React interfaces, a custom PHP backend and supplier integration.",
+      fr: "Site WordPress/WooCommerce avec interfaces React, backend PHP sur mesure et intégration fournisseur.",
     },
     role: {
       en: "Website and backend development",
       fr: "Développement du site et du backend",
     },
-    status: "active-rebuild",
     practice: "software",
     filters: ["software", "web"],
-    evidenceCheckedAt: "2026-09-12",
+    evidenceCheckedAt: "2026-10-02",
     projectStart: { en: "2023", fr: "2023" },
     cardStack: [
       "WordPress",
@@ -592,10 +589,10 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Inaricom is a business, services, publishing, and commerce site under active rebuild. The implementation keeps WordPress and WooCommerce as the publishing and commerce backend while adding page-specific React interfaces.",
+          "Inaricom is a business, services, publishing, and commerce website. The implementation keeps WordPress and WooCommerce as the publishing and commerce backend while adding page-specific React interfaces.",
         ],
         fr: [
-          "Inaricom est un site professionnel de services, de publication et de commerce en cours de refonte. L’implémentation conserve WordPress et WooCommerce comme backend éditorial et commercial tout en ajoutant des interfaces React propres à chaque page.",
+          "Inaricom est un site professionnel de services, de publication et de commerce. L’implémentation conserve WordPress et WooCommerce comme backend éditorial et commercial tout en ajoutant des interfaces React propres à chaque page.",
         ],
       },
       role: {
@@ -608,10 +605,10 @@ export const projects: Project[] = [
       },
       problem: {
         en: [
-          "The rebuild must combine service content, technical publishing, contact and quote paths, and e-commerce without replacing the established content and commerce backend with an unnecessary custom engine.",
+          "The goal is to combine service content, technical publishing, contact and quote paths, and e-commerce while retaining the established content and commerce backend.",
         ],
         fr: [
-          "La refonte doit réunir les contenus de services, la publication technique, les parcours de contact et de devis ainsi que l’e-commerce sans remplacer le backend éditorial et commercial par un moteur sur mesure inutile.",
+          "L’objectif est de réunir les contenus de services, la publication technique, les parcours de contact et de devis ainsi que l’e-commerce en conservant le backend éditorial et commercial existant.",
         ],
       },
       architecture: {
@@ -637,12 +634,8 @@ export const projects: Project[] = [
         fr: [],
       },
       testing: {
-        en: [
-          "End-to-end validation of product imports, attribute mapping, and price and stock updates is pending during the rebuild.",
-        ],
-        fr: [
-          "La validation de bout en bout de l’import de produits, de la correspondance des attributs et des mises à jour des prix et stocks reste à finaliser dans le cadre de la refonte.",
-        ],
+        en: [],
+        fr: [],
       },
       results: {
         en: [],
@@ -658,10 +651,10 @@ export const projects: Project[] = [
       },
       limitations: {
         en: [
-          "The rebuild is in progress. Current production activation of the supplier integration and contact backend has not been verified.",
+          "Current production activation of the supplier integration and contact backend has not been verified.",
         ],
         fr: [
-          "La refonte est en cours. L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée.",
+          "L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée.",
         ],
       },
     },
@@ -1019,13 +1012,13 @@ export const practicePages: Record<
         "Source-verified Celo Sepolia deployment and reproducible lifecycle",
         "Public Shopify storefronts with bilingual case studies",
         "Published Python packages, releases, tests, and CI",
-        "Documented Inaricom architecture, with the site currently being rebuilt",
+        "Inaricom website with documented WordPress, WooCommerce and React architecture",
       ],
       fr: [
         "Déploiement Celo Sepolia au code source vérifié et cycle reproductible",
         "Boutiques Shopify publiques avec études de cas bilingues",
         "Packages Python, releases, tests et CI publics",
-        "Architecture Inaricom documentée, avec un site en cours de refonte",
+        "Site Inaricom avec architecture WordPress, WooCommerce et React documentée",
       ],
     },
   },

@@ -76,9 +76,16 @@ describe("portfolio content contract", () => {
     expect(project.links[1].label.fr).toBe("Étude de la vitrine");
   });
 
-  it("describes Inaricom supplier integration without claiming a completed rebuild", () => {
+  it("presents Inaricom without an availability badge or verified integration claim", () => {
     const project = projects.find((item) => item.id === "inaricom")!;
-    expect(project.status).toBe("active-rebuild");
+    expect(project.status).toBeUndefined();
+    expect(project.evidenceCheckedAt).toBe("2026-10-02");
+    expect(JSON.stringify(project)).not.toMatch(
+      /refonte|rebuild|site en ligne|website live|rouvert|reopened/i,
+    );
+    expect(JSON.stringify(practicePages.software.evidence)).not.toMatch(
+      /refonte|rebuilt/i,
+    );
     expect(project.projectStart).toEqual({ en: "2023", fr: "2023" });
     expect(project.filters).toEqual(["software", "web"]);
     for (const locale of ["en", "fr"] as const) {
