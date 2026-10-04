@@ -3,7 +3,7 @@
 export const aboutCopy = {
   fr: {
     introduction:
-      "Je suis Gilles Musy, développeur, ingénieur IA et chercheur en sécurité, basé en Suisse.",
+      "Je suis Gilles Musy, aussi connu sous le nom Musyg, développeur, ingénieur IA et chercheur en sécurité. Basé en Suisse, j’interviens en freelance partout dans le monde.",
     paragraphs: [
       "Ce qui m’anime dans le développement, c’est de pouvoir partir d’une idée et en faire quelque chose qui fonctionne, que l’on peut utiliser, améliorer et partager. J’aime comprendre comment les choses marchent, et apprendre en les construisant.",
       "L’IA nourrit particulièrement cette curiosité. Les possibilités qu’elle ouvre m’enthousiasment : expérimenter autrement, rendre certains projets accessibles, imaginer de nouveaux outils. J’ai envie d’explorer ce qu’on peut réellement en faire, au-delà des démonstrations.",
@@ -14,7 +14,7 @@ export const aboutCopy = {
   },
   en: {
     introduction:
-      "I’m Gilles Musy, a developer, AI engineer, and security researcher based in Switzerland.",
+      "I’m Gilles Musy, also known as Musyg, a developer, AI engineer, and security researcher. Based in Switzerland, I work worldwide as a freelancer.",
     paragraphs: [
       "What I enjoy about development is turning an idea into something that works, something people can use, improve, and share. I like understanding how things work and learning by building them.",
       "AI gives me plenty to explore. I’m excited by the possibilities it opens up: new ways to experiment, projects that become achievable, and tools we haven’t thought of yet. I want to find out what we can actually do with it beyond the demos.",

@@ -31,7 +31,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "home",
     title: `${siteName} | Security, AI and software engineering`,
     description:
-      "Gilles Musy: security research, agentic AI engineering, and software systems.",
+      "Gilles Musy (Musyg), freelance developer, AI engineer and security researcher. AI agents, full-stack development and red teaming. Worldwide engagements.",
   },
   {
     path: "/fr/",
@@ -40,7 +40,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "home",
     title: `${siteName} | Sécurité, IA et ingénierie logicielle`,
     description:
-      "Gilles Musy : recherche en sécurité, ingénierie IA agentique et systèmes logiciels.",
+      "Gilles Musy (Musyg), développeur freelance, ingénieur IA et chercheur en sécurité. Agents IA, développement full-stack et red teaming. Missions internationales.",
   },
   {
     path: "/work/",
@@ -66,9 +66,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "software",
-    title: `Software engineering | ${siteName}`,
+    title: `Freelance full-stack developer | ${siteName}`,
     description:
-      "Backend, infrastructure, Web, product, blockchain, and open-source engineering by Gilles Musy.",
+      "Gilles Musy, freelance full-stack developer: React, TypeScript, Python, PHP, WordPress and custom backend integrations. Working with teams worldwide.",
   },
   {
     path: "/fr/ingenierie/",
@@ -76,9 +76,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "software",
-    title: `Ingénierie logicielle | ${siteName}`,
+    title: `Développeur full-stack freelance | ${siteName}`,
     description:
-      "Ingénierie backend, infrastructure, Web, produit, blockchain et open source par Gilles Musy.",
+      "Gilles Musy, développeur full-stack freelance : React, TypeScript, Python, PHP, WordPress et intégrations backend sur mesure. Missions dans le monde entier.",
   },
   {
     path: "/ai-systems/",
@@ -86,9 +86,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "ai",
-    title: `AI engineering and multi-agent systems | ${siteName}`,
+    title: `Freelance AI engineer, multi-agent systems | ${siteName}`,
     description:
-      "AI engineering with Talos: multi-agent orchestration, local models, memory, automation and predictive experimentation. By Gilles Musy.",
+      "Freelance AI engineering by Gilles Musy: Python agents, multi-agent orchestration, API integrations and Talos. Worldwide engagements.",
   },
   {
     path: "/fr/systemes-ia/",
@@ -96,9 +96,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "ai",
-    title: `Ingénierie IA et systèmes multi-agents | ${siteName}`,
+    title: `Ingénieur IA freelance, systèmes multi-agents | ${siteName}`,
     description:
-      "Ingénierie IA avec Talos : orchestration multi-agent, modèles locaux, mémoire, automatisation et expérimentation prédictive. Par Gilles Musy.",
+      "Gilles Musy, ingénieur IA freelance : agents Python, orchestration multi-agent, intégrations API et Talos. Missions dans le monde entier.",
   },
   {
     path: "/security-research/",
@@ -106,9 +106,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "security",
-    title: `Cybersecurity and red teaming | ${siteName}`,
+    title: `AI agent security and red teaming | ${siteName}`,
     description:
-      "Vulnerability research and red teaming across websites, applications, APIs, crypto protocols, smart contracts, and AI systems.",
+      "Gilles Musy: freelance AI agent security testing, indirect prompt injection (IPI) and red teaming. Web, API and smart contract research. Worldwide.",
   },
   {
     path: "/fr/recherche-securite/",
@@ -116,9 +116,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "security",
-    title: `Cybersécurité et red teaming | ${siteName}`,
+    title: `Sécurité des agents IA et red teaming | ${siteName}`,
     description:
-      "Recherche de vulnérabilités et red teaming : Web, applications, API, protocoles crypto, smart contracts et systèmes IA.",
+      "Gilles Musy : tests de sécurité des agents IA, injection indirecte de prompts (IPI) et red teaming. Recherche Web, API et smart contracts. Freelance international.",
   },
   {
     path: "/writing/",
@@ -163,7 +163,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "contact",
     title: `Contact | ${siteName}`,
     description:
-      "Verified public professional profiles for contacting Gilles Musy without exposing a public email address.",
+      "Contact Gilles Musy (Musyg) for freelance development, AI engineering or security testing. Working with teams worldwide.",
   },
   {
     path: "/fr/contact/",
@@ -172,7 +172,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "contact",
     title: `Contact | ${siteName}`,
     description:
-      "Profils professionnels publics vérifiés pour contacter Gilles Musy sans exposer d’adresse email publique.",
+      "Contactez Gilles Musy (Musyg) pour une mission freelance en développement, ingénierie IA ou tests de sécurité, partout dans le monde.",
   },
 ];
 

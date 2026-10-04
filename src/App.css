@@ -1444,6 +1444,22 @@
   gap: 72px;
 }
 
+.engagement-scope {
+  margin-top: 24px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.engagement-section h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.engagement-section .button {
+  margin-top: 16px;
+  white-space: normal;
+}
+
 .capability-list ul {
   display: grid;
   gap: 1px;

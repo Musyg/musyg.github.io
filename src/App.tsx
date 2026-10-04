@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { aboutCopy } from "./content/about";
+import { engagements, engagementScope } from "./content/engagements";
 import { CeloOverview } from "./CeloOverview";
 import { SecurityOverview } from "./SecurityOverview";
 import { MikaOverview } from "./MikaOverview";
@@ -398,6 +399,7 @@ function HomePage({ locale }: { locale: Locale }) {
               {isFrench ? "Explorer les expertises" : "Explore expertise"}
             </a>
           </div>
+          <p className="engagement-scope">{engagementScope[locale]}</p>
         </div>
         <div className="hero-index" aria-hidden="true">
           <span>01</span>
@@ -781,6 +783,7 @@ function PracticePage({
   practice: Practice;
 }) {
   const page = practicePages[practice];
+  const engagement = engagements[practice][locale];
   const related = page.projectIds
     .map((id) => projectById(id))
     .filter((project): project is Project => Boolean(project));
@@ -793,6 +796,52 @@ function PracticePage({
         title={localized(page.title, locale)}
         lead={localized(page.lead, locale)}
       />
+      <section
+        className="section-shell practice-details engagement-section"
+        aria-labelledby="engagement-title"
+      >
+        <div className="capability-list">
+          <p className="eyebrow">
+            {isFrench ? "Missions freelance" : "Freelance engagements"}
+          </p>
+          <h2 id="engagement-title">{engagement.title}</h2>
+          <p>{engagement.introduction}</p>
+          <ul>
+            {engagement.needs.map((need) => (
+              <li key={need}>{need}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>
+            {isFrench ? "Méthode et livrables" : "Approach and deliverables"}
+          </h3>
+          <p>{engagement.method}</p>
+          <p>{engagement.deliverables}</p>
+          <p>{engagementScope[locale]}</p>
+          <a className="button button-primary" href={contactPath(locale)}>
+            {engagement.action}
+          </a>
+          {practice === "ai" ? (
+            <p>
+              <a className="text-link" href={practicePath("security", locale)}>
+                {isFrench
+                  ? "Faire évaluer la sécurité de vos agents IA"
+                  : "Assess your AI agents’ security"}
+              </a>
+            </p>
+          ) : null}
+          {practice === "security" ? (
+            <p>
+              <a className="text-link" href={practicePath("ai", locale)}>
+                {isFrench
+                  ? "Découvrir mon travail d’ingénierie IA"
+                  : "Explore my AI engineering work"}
+              </a>
+            </p>
+          ) : null}
+        </div>
+      </section>
       <section className="section-shell practice-details">
         <div className="capability-list">
           <p className="eyebrow">{isFrench ? "Périmètre" : "Scope"}</p>
@@ -1008,8 +1057,8 @@ function ContactPage({ locale }: { locale: Locale }) {
         title={isFrench ? "Prenons contact." : "Get in touch."}
         lead={
           isFrench
-            ? "Pour échanger sur un projet, une opportunité ou mes travaux."
-            : "For a conversation about a project, an opportunity or my work."
+            ? "Développement, ingénierie IA ou tests de sécurité : décrivez votre besoin. Je travaille en freelance avec des équipes partout dans le monde."
+            : "Development, AI engineering or security testing: tell me about your needs. I work with teams worldwide as a freelancer."
         }
       />
       <ContactForm locale={locale} />
