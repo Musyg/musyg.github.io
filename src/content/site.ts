@@ -3,6 +3,7 @@ export type Locale = "en" | "fr";
 export type Practice = "software" | "ai" | "security";
 
 export type ProjectStatus =
+  | "public-alpha"
   | "public-mvp"
   | "stable-release"
   | "public-testnet"
@@ -86,6 +87,7 @@ export const sectionLabels: Record<SectionKey, Bilingual> = {
 };
 
 export const statusLabels: Record<ProjectStatus, Bilingual> = {
+  "public-alpha": { en: "Public alpha", fr: "Version alpha publique" },
   "public-mvp": {
     en: "Public MVP, in development",
     fr: "MVP public, en développement",
@@ -121,6 +123,134 @@ export const filterLabels: Record<ProjectFilter, Bilingual> = {
 };
 
 export const projects: Project[] = [
+  {
+    id: "talos-memory",
+    slug: {
+      en: "talos-memory",
+      fr: "talos-memory",
+    },
+    title: "Talos Memory",
+    summary: {
+      en: "Open-source Python memory with versioned evidence, revocation checks, typed retrieval and an optional policy registry.",
+      fr: "Mémoire Python open source avec preuves versionnées, contrôle des retraits, recherche typée et registre de politiques facultatif.",
+    },
+    role: {
+      en: "Memory architecture, Python libraries and reproducible validation",
+      fr: "Architecture mémoire, bibliothèques Python et validation reproductible",
+    },
+    status: "public-alpha",
+    practice: "ai",
+    filters: ["software", "ai"],
+    evidenceCheckedAt: "2026-10-04",
+    stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
+    cardStack: ["Python", "SQLite", "FTS5", "MCP"],
+    sections: {
+      summary: {
+        en: [
+          "Talos Memory packages a versioned memory core and a separate policy registry. Applications can trace a derived result to its source versions, check whether that evidence is still usable, and assemble typed context within an explicit budget. The MIT-licensed alpha runs on Linux without a model or external database.",
+        ],
+        fr: [
+          "Talos Memory réunit un noyau de mémoire versionnée et un registre de politiques indépendant. Une application peut relier un résultat dérivé aux versions de ses sources, vérifier si ces preuves restent utilisables et composer un contexte typé sous un budget explicite. Cette version alpha sous licence MIT fonctionne sous Linux sans modèle ni base externe.",
+        ],
+      },
+      role: {
+        en: [
+          "I design the storage and retrieval contracts, implement the Python libraries and interfaces, and build synthetic tests for failure, concurrency, withdrawal and recovery. I extracted the reusable components into a dedicated public repository with bilingual documentation and standalone examples.",
+        ],
+        fr: [
+          "Je conçois les contrats de stockage et de recherche, développe les bibliothèques et interfaces Python, et construis les tests synthétiques de panne, concurrence, retrait et reprise. Les composants réutilisables sont extraits dans un dépôt public dédié, avec documentation bilingue et exemples autonomes.",
+        ],
+      },
+      problem: {
+        en: [
+          "A search index or restored backup can still contain evidence that was corrected or withdrawn. A useful memory system must distinguish current evidence, outdated versions and unavailable validation before returning context to an application.",
+        ],
+        fr: [
+          "Un index de recherche ou une sauvegarde restaurée peut encore contenir des preuves corrigées ou retirées. La mémoire doit distinguer les preuves actuelles, les versions périmées et une validation indisponible avant de fournir du contexte à une application.",
+        ],
+      },
+      architecture: {
+        en: [
+          "SQLite stores immutable versions and explicit dependency references. A separate authority and freshness witness govern admissibility; disposable FTS5 indexes propose candidates that are revalidated on read. Typed envelopes distinguish documents, observations, hypotheses, procedures, tasks and feedback. Python, CLI, optional HTTP and MCP interfaces expose the contracts.",
+        ],
+        fr: [
+          "SQLite conserve des versions immuables et des références explicites aux dépendances. Une autorité séparée et un témoin de fraîcheur déterminent leur admissibilité ; les index FTS5 reconstruisibles proposent des candidats revalidés à la lecture. Les enveloppes typées distinguent documents, observations, hypothèses, procédures, tâches et feedback. Les contrats sont accessibles en Python, en CLI et via des interfaces HTTP ou MCP facultatives.",
+        ],
+      },
+      decisions: {
+        en: [
+          "The index is a projection, not the authority. Writes use compare-and-swap; recovery from an old content snapshot begins in quarantine against a retained current authority. The optional registry separates policy proposal, evidence, admission and rollback, without activating policies or granting permissions.",
+        ],
+        fr: [
+          "L’index reste une projection : il ne décide pas de la validité des preuves. Les écritures utilisent un contrôle compare-and-swap ; la reprise d’une ancienne sauvegarde de contenu commence en quarantaine face à une autorité actuelle conservée. Le registre facultatif sépare proposition de politique, preuves, admission et rollback, sans activer de politique ni accorder de droits.",
+        ],
+      },
+      security: {
+        en: [],
+        fr: [],
+      },
+      testing: {
+        en: [
+          "The public release contains 122 memory tests and 36 policy-registry tests. CI passed on Python 3.11 through 3.14. Released distributions were also downloaded anonymously, installed outside the source tree and checked with all 158 tests and synthetic demos on Linux.",
+        ],
+        fr: [
+          "La version publiée contient 122 tests mémoire et 36 tests du registre de politiques. La CI a réussi sous Python 3.11 à 3.14. Les distributions publiées ont aussi été téléchargées sans authentification, installées hors de l’arbre source et vérifiées sous Linux avec les 158 tests et les démonstrations synthétiques.",
+        ],
+      },
+      results: {
+        en: [
+          "Version v0.2.0a1 is available with wheels, source distributions, checksums and EN/FR documentation. The two-actor demo withdraws one source, denies its dependent result, preserves an unrelated source and verifies recovery from an old content backup. These checks demonstrate library contracts on synthetic data.",
+        ],
+        fr: [
+          "La version v0.2.0a1 fournit wheels, distributions source, sommes de contrôle et documentation EN/FR. La démonstration à deux acteurs retire une source, refuse son résultat dérivé, conserve une source indépendante et vérifie la reprise d’une ancienne sauvegarde de contenu. Ces contrôles démontrent les contrats de la bibliothèque sur des données synthétiques.",
+        ],
+      },
+      evidence: {
+        en: [],
+        fr: [],
+      },
+      limitations: {
+        en: [
+          "The frozen R3 retrieval policy improved evidence selection in a bounded synthetic comparison but missed its relative latency gate. No production speed gain is claimed. Recovery requires a current authority and freshness witness outside the restored content snapshot; rolling all three back together is outside the guarantee. Revocation controls future library reads, not copies already exported or model unlearning.",
+        ],
+        fr: [
+          "La politique de recherche R3 figée a amélioré la sélection de preuves dans une comparaison synthétique bornée, mais n’a pas respecté son seuil relatif de latence. Aucun gain de vitesse en production n’est annoncé. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée ; leur retour arrière conjoint sort de la garantie. Le retrait contrôle les futures lectures de la bibliothèque, pas les copies déjà exportées ni le désapprentissage d’un modèle.",
+        ],
+      },
+    },
+    links: [
+      {
+        label: {
+          en: "Public repository and documentation",
+          fr: "Dépôt public et documentation",
+        },
+        url: "https://github.com/Musyg/talos-memory",
+        urlFr:
+          "https://github.com/Musyg/talos-memory/blob/v0.2.0a1/README.fr.md",
+      },
+      {
+        label: {
+          en: "Alpha release and installation files",
+          fr: "Version alpha et fichiers d’installation",
+        },
+        url: "https://github.com/Musyg/talos-memory/releases/tag/v0.2.0a1",
+      },
+      {
+        label: {
+          en: "Python 3.11–3.14 CI",
+          fr: "CI Python 3.11–3.14",
+        },
+        url: "https://github.com/Musyg/talos-memory/actions/runs/37225751710",
+      },
+      {
+        label: {
+          en: "Recovery contract",
+          fr: "Contrat de reprise",
+        },
+        url: "https://github.com/Musyg/talos-memory/blob/v0.2.0a1/docs/RECOVERY.md",
+      },
+    ],
+  },
   {
     id: "bifrost-vpn",
     slug: { en: "bifrost-vpn", fr: "bifrost-vpn" },
@@ -1001,6 +1131,7 @@ export const practicePages: Record<
       ],
     },
     projectIds: [
+      "talos-memory",
       "bifrost-vpn",
       "celo-credentials",
       "inaricom",
@@ -1053,7 +1184,7 @@ export const practicePages: Record<
         "Conception de pilotes, contrôles, preuves et gouvernance pour l’adoption de l’IA",
       ],
     },
-    projectIds: ["agent-resilience", "mikasshop", "pedi-sense"],
+    projectIds: ["talos-memory", "agent-resilience", "mikasshop", "pedi-sense"],
     evidence: [
       {
         label: {

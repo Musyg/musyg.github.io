@@ -468,7 +468,9 @@ test("project history is distinct from evidence check dates", async ({
       );
     }
     await page.goto(locale === "fr" ? "/fr/systemes-ia/" : "/ai-systems/");
-    await expect(page.getByRole("link", { name: /Talos/ })).toContainText(
+    await expect(
+      page.locator('a[href="https://github.com/Musyg/talos"]'),
+    ).toContainText(
       locale === "fr" ? "depuis décembre 2024" : "since December 2024",
     );
   }

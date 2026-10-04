@@ -198,8 +198,8 @@ describe("portfolio content contract", () => {
     expect(config).not.toContain("RewriteRule");
   });
 
-  it("keeps seven projects with complete bilingual case-study sections", () => {
-    expect(projects).toHaveLength(7);
+  it("keeps eight projects with complete bilingual case-study sections", () => {
+    expect(projects).toHaveLength(8);
 
     for (const project of projects) {
       expect(project.links.length).toBeGreaterThan(0);
