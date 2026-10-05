@@ -59,7 +59,7 @@ test("isolated release starts with only bundled runtime and contact disabled", a
     const routes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
       (m) => new URL(m[1]).pathname,
     );
-    assert.equal(routes.length, 32);
+    assert.equal(routes.length, 34);
     for (const route of routes) {
       const response = await fetch(base + route);
       assert.equal(response.status, 200, route);

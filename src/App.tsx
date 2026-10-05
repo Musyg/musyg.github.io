@@ -7,6 +7,8 @@ import { MikaOverview } from "./MikaOverview";
 import { PediOverview } from "./PediOverview";
 import { ContactForm } from "./ContactForm";
 import { PlatformLogo } from "./PlatformLogo";
+import { IpiArticle } from "./IpiArticle";
+import { ipiArticle } from "./content/ipi-article";
 import {
   filterLabels,
   localized,
@@ -860,6 +862,15 @@ function PracticePage({
               : "Projects and contributions"}
           </h2>
           <ul>
+            {practice === "security" && (
+              <li>
+                <a className="text-link" href={ipiArticle[locale].path}>
+                  {isFrench
+                    ? "Injection indirecte : étude de cas Gray Swan"
+                    : "Indirect prompt injection: Gray Swan case study"}
+                </a>
+              </li>
+            )}
             {Array.isArray(page.evidence)
               ? page.evidence.map((link) => (
                   <li key={link.url}>
@@ -952,6 +963,25 @@ function WritingPage({ locale }: { locale: Locale }) {
             : "I share methods, architecture decisions, and technical insights to help move from an idea to implementation."
         }
       />
+      <section
+        className="publication-feature"
+        aria-labelledby="ipi-publication-title"
+      >
+        <div>
+          <p className="eyebrow">
+            {isFrench
+              ? "Étude de cas · Sécurité des agents IA"
+              : "Case study · AI agent security"}
+          </p>
+          <h2 id="ipi-publication-title">{ipiArticle[locale].title}</h2>
+          <p>{ipiArticle[locale].description}</p>
+        </div>
+        <div className="publication-actions">
+          <a className="button button-primary" href={ipiArticle[locale].path}>
+            {isFrench ? "Lire l’étude de cas" : "Read the case study"}
+          </a>
+        </div>
+      </section>
       <section className="publication-feature">
         <div>
           <p className="eyebrow">
@@ -1143,6 +1173,9 @@ export default function App({ pathname }: AppProps) {
       break;
     case "writing":
       page = <WritingPage locale={route.locale} />;
+      break;
+    case "article":
+      page = <IpiArticle locale={route.locale} />;
       break;
     case "about":
       page = <AboutPage locale={route.locale} />;

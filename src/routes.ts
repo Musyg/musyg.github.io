@@ -1,4 +1,5 @@
 import { projects, type Locale, type Practice } from "./content/site";
+import { ipiArticle } from "./content/ipi-article";
 
 export type RouteKind =
   | "home"
@@ -6,6 +7,7 @@ export type RouteKind =
   | "project"
   | "practice"
   | "writing"
+  | "article"
   | "about"
   | "contact"
   | "not-found";
@@ -202,7 +204,20 @@ const projectRoutes: RouteEntry[] = projects.flatMap((project) => {
   ];
 });
 
-export const publicRoutes: RouteEntry[] = [...fixedRoutes, ...projectRoutes];
+const articleRoutes: RouteEntry[] = (["en", "fr"] as const).map((locale) => ({
+  path: ipiArticle[locale].path,
+  counterpart: ipiArticle[locale === "fr" ? "en" : "fr"].path,
+  locale,
+  kind: "article",
+  title: `${ipiArticle[locale].title} | ${siteName}`,
+  description: ipiArticle[locale].description,
+}));
+
+export const publicRoutes: RouteEntry[] = [
+  ...fixedRoutes,
+  ...projectRoutes,
+  ...articleRoutes,
+];
 
 export function normalizePath(pathname: string): string {
   const clean = pathname.split(/[?#]/, 1)[0] || "/";

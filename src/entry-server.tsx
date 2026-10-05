@@ -3,6 +3,7 @@ import App from "./App";
 import { canonicalUrl, publicRoutes, routeFor } from "./routes";
 import { professionalProfiles } from "./content/site";
 import { engagements } from "./content/engagements";
+import { ipiArticle, ipiImage, ipiPublishedAt } from "./content/ipi-article";
 
 export const routePaths = publicRoutes.map((route) => route.path);
 
@@ -94,6 +95,24 @@ export function render(pathname: string) {
                 },
               ]
             : []),
+          ...(route.kind === "article"
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  "@id": `${canonical}#article`,
+                  headline: ipiArticle[route.locale].title,
+                  description: route.description,
+                  inLanguage: route.locale,
+                  datePublished: ipiPublishedAt,
+                  dateModified: ipiPublishedAt,
+                  author: { "@id": personId },
+                  publisher: { "@id": personId },
+                  mainEntityOfPage: { "@id": `${canonical}#webpage` },
+                  image: canonicalUrl(ipiImage),
+                },
+              ]
+            : []),
         ]
       : null;
 
@@ -104,7 +123,7 @@ export function render(pathname: string) {
     `<link rel="alternate" hreflang="en" href="${escapeAttribute(enUrl)}">`,
     `<link rel="alternate" hreflang="fr" href="${escapeAttribute(frUrl)}">`,
     `<link rel="alternate" hreflang="x-default" href="${escapeAttribute(enUrl)}">`,
-    '<meta property="og:type" content="website">',
+    `<meta property="og:type" content="${route.kind === "article" ? "article" : "website"}">`,
     `<meta property="og:title" content="${escapeAttribute(route.title)}">`,
     `<meta property="og:description" content="${escapeAttribute(route.description)}">`,
     `<meta property="og:url" content="${escapeAttribute(canonical)}">`,
