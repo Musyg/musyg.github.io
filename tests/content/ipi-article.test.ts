@@ -10,6 +10,20 @@ import {
 import { routeFor } from "../../src/routes";
 
 describe("published IPI case study", () => {
+  it("explains the five stages without repetitive caveats or review narration", () => {
+    for (const copy of Object.values(ipiArticle)) {
+      expect(copy.sections.slice(0, 5).map((section) => section.id)).toEqual([
+        "task",
+        "entry",
+        "authority",
+        "observation",
+        "verdict",
+      ]);
+      expect(JSON.stringify(copy)).not.toMatch(
+        /sans affirmer|without claiming|base réelle|real production|J’ai relu|I reviewed|Je ne reproduis|I am not reproducing/,
+      );
+    }
+  });
   for (const locale of ["en", "fr"] as const) {
     it(`renders a self-contained, indexable ${locale} article`, () => {
       const article = ipiArticle[locale];
