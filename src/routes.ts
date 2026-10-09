@@ -189,7 +189,7 @@ const projectRoutes: RouteEntry[] = projects.flatMap((project) => {
       locale: "en",
       kind: "project",
       projectId: project.id,
-      title: `${project.title} | ${siteName}`,
+      title: `${project.seoTitle?.en ?? project.title} | ${siteName}`,
       description: project.summary.en,
     },
     {
@@ -198,7 +198,7 @@ const projectRoutes: RouteEntry[] = projects.flatMap((project) => {
       locale: "fr",
       kind: "project",
       projectId: project.id,
-      title: `${project.title} | ${siteName}`,
+      title: `${project.seoTitle?.fr ?? project.title} | ${siteName}`,
       description: project.summary.fr,
     },
   ];

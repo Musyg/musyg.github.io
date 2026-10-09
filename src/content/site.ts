@@ -43,6 +43,7 @@ export interface Project {
   id: string;
   slug: Bilingual;
   title: string;
+  seoTitle?: Bilingual;
   summary: Bilingual;
   role: Bilingual;
   status?: ProjectStatus;
@@ -129,10 +130,14 @@ export const projects: Project[] = [
       en: "talos-memory",
       fr: "talos-memory",
     },
-    title: "Talos Memory",
+    title: "Persistent Memory",
+    seoTitle: {
+      en: "Persistent Memory for AI Agents",
+      fr: "Mémoire persistante pour agents IA",
+    },
     summary: {
-      en: "Open-source Python memory with versioned evidence, revocation checks, typed retrieval and an optional policy registry.",
-      fr: "Mémoire Python open source avec preuves versionnées, contrôle des retraits, recherche typée et registre de politiques facultatif.",
+      en: "Persistent memory for AI agents in Python, with versioned evidence, revocation checks, typed retrieval and an optional policy registry.",
+      fr: "Mémoire persistante pour agents IA en Python, avec preuves versionnées, contrôle des retraits, recherche typée et registre de politiques facultatif.",
     },
     role: {
       en: "Memory architecture, Python libraries and reproducible validation",
@@ -147,10 +152,10 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Talos Memory packages a versioned memory core and a separate policy registry. Applications can trace a derived result to its source versions, check whether that evidence is still usable, and assemble typed context within an explicit budget. The MIT-licensed alpha runs on Linux without a model or external database.",
+          "Persistent Memory packages a versioned memory core and a separate policy registry. Applications can trace a derived result to its source versions, check whether that evidence is still usable, and assemble typed context within an explicit budget. The MIT-licensed alpha runs on Linux without a model or external database.",
         ],
         fr: [
-          "Talos Memory réunit un noyau de mémoire versionnée et un registre de politiques indépendant. Une application peut relier un résultat dérivé aux versions de ses sources, vérifier si ces preuves restent utilisables et composer un contexte typé sous un budget explicite. Cette version alpha sous licence MIT fonctionne sous Linux sans modèle ni base externe.",
+          "Persistent Memory réunit un noyau de mémoire versionnée et un registre de politiques indépendant. Une application peut relier un résultat dérivé aux versions de ses sources, vérifier si ces preuves restent utilisables et composer un contexte typé sous un budget explicite. Cette version alpha sous licence MIT fonctionne sous Linux sans modèle ni base externe.",
         ],
       },
       role: {
@@ -224,30 +229,30 @@ export const projects: Project[] = [
           en: "Public repository and documentation",
           fr: "Dépôt public et documentation",
         },
-        url: "https://github.com/Musyg/talos-memory",
+        url: "https://github.com/Musyg/persistent-memory",
         urlFr:
-          "https://github.com/Musyg/talos-memory/blob/v0.2.0a1/README.fr.md",
+          "https://github.com/Musyg/persistent-memory/blob/v0.2.0a1/README.fr.md",
       },
       {
         label: {
           en: "Alpha release and installation files",
           fr: "Version alpha et fichiers d’installation",
         },
-        url: "https://github.com/Musyg/talos-memory/releases/tag/v0.2.0a1",
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.2.0a1",
       },
       {
         label: {
           en: "Python 3.11–3.14 CI",
           fr: "CI Python 3.11–3.14",
         },
-        url: "https://github.com/Musyg/talos-memory/actions/runs/37225751710",
+        url: "https://github.com/Musyg/persistent-memory/actions/runs/37225751710",
       },
       {
         label: {
           en: "Recovery contract",
           fr: "Contrat de reprise",
         },
-        url: "https://github.com/Musyg/talos-memory/blob/v0.2.0a1/docs/RECOVERY.md",
+        url: "https://github.com/Musyg/persistent-memory/blob/v0.2.0a1/docs/RECOVERY.md",
       },
     ],
   },
