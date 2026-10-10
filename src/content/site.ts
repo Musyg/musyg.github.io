@@ -146,7 +146,7 @@ export const projects: Project[] = [
     status: "public-alpha",
     practice: "ai",
     filters: ["software", "ai"],
-    evidenceCheckedAt: "2026-10-04",
+    evidenceCheckedAt: "2026-10-10",
     stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
     cardStack: ["Python", "SQLite", "FTS5", "MCP"],
     sections: {
@@ -176,10 +176,10 @@ export const projects: Project[] = [
       },
       architecture: {
         en: [
-          "SQLite stores immutable versions and explicit dependency references. A separate authority and freshness witness govern admissibility; disposable FTS5 indexes propose candidates that are revalidated on read. Typed envelopes distinguish documents, observations, hypotheses, procedures, tasks and feedback. Python, CLI, optional HTTP and MCP interfaces expose the contracts.",
+          "SQLite stores immutable versions and explicit dependency references. A separate authority and freshness witness govern admissibility; disposable FTS5 indexes propose candidates that are revalidated on read. Typed envelopes distinguish documents, observations, hypotheses, procedures, tasks and feedback. Python, CLI, optional HTTP and MCP interfaces expose the contracts. Opt-in structured output renders supplied reviewed facts through finite French templates, preserving source versions and spans and checking word limits. An optional admission boundary checks the host authority before preparation and handoff, compares the final buffer, and returns distinct notices for unknown, conflicting or withdrawn evidence.",
         ],
         fr: [
-          "SQLite conserve des versions immuables et des références explicites aux dépendances. Une autorité séparée et un témoin de fraîcheur déterminent leur admissibilité ; les index FTS5 reconstruisibles proposent des candidats revalidés à la lecture. Les enveloppes typées distinguent documents, observations, hypothèses, procédures, tâches et feedback. Les contrats sont accessibles en Python, en CLI et via des interfaces HTTP ou MCP facultatives.",
+          "SQLite conserve des versions immuables et des références explicites aux dépendances. Une autorité séparée et un témoin de fraîcheur déterminent leur admissibilité ; les index FTS5 reconstruisibles proposent des candidats revalidés à la lecture. Les enveloppes typées distinguent documents, observations, hypothèses, procédures, tâches et feedback. Les contrats sont accessibles en Python, en CLI et via des interfaces HTTP ou MCP facultatives. Le module de rendu structuré, à importer explicitement, produit des textes selon des formulations françaises prédéfinies à partir de faits fournis et déjà revus, en conservant les versions et passages sources et en contrôlant les bornes de longueur. Le module facultatif d’admission contrôle l’autorité de l’hôte avant préparation et remise, compare le tampon final et distingue les notices d’inconnue, de contradiction et de retrait.",
         ],
       },
       decisions: {
@@ -196,18 +196,18 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "The public release contains 122 memory tests and 36 policy-registry tests. CI passed on Python 3.11 through 3.14. Released distributions were also downloaded anonymously, installed outside the source tree and checked with all 158 tests and synthetic demos on Linux.",
+          "Linux qualification passed 145 memory tests and 36 policy-registry tests for each distribution format, wheel and source, with no failures or skipped tests. Public release verification installed both core distributions outside the checkout, discovered all 145 memory tests, and ran the 23 added test methods, including 45 package-boundary variants, plus eight synthetic demo outcomes per installation.",
         ],
         fr: [
-          "La version publiée contient 122 tests mémoire et 36 tests du registre de politiques. La CI a réussi sous Python 3.11 à 3.14. Les distributions publiées ont aussi été téléchargées sans authentification, installées hors de l’arbre source et vérifiées sous Linux avec les 158 tests et les démonstrations synthétiques.",
+          "La qualification Linux a réussi les 145 tests mémoire et les 36 tests du registre de politiques pour chacun des deux formats, wheel et distribution source, sans échec ni test ignoré. La vérification depuis la release publique a installé les deux distributions du noyau hors du checkout, recensé les 145 tests mémoire et exécuté les 23 nouvelles méthodes de test, dont 45 variantes de chargement et de distribution, ainsi que huit scénarios synthétiques de démonstration par installation.",
         ],
       },
       results: {
         en: [
-          "Version v0.2.0a1 is available with wheels, source distributions, checksums and EN/FR documentation. The two-actor demo withdraws one source, denies its dependent result, preserves an unrelated source and verifies recovery from an old content backup. These checks demonstrate library contracts on synthetic data.",
+          "Version v0.3.0a1 provides the core wheel and source distribution, checksums and EN/FR documentation; the separate policy registry remains at 0.1.0. The two-actor demo exercises withdrawal and recovery. The admission demo adds eight synthetic outcomes, including a notice after withdrawal, rejection of a changed buffer and an unknown delivery outcome after a consumer effect without acknowledgment, without retry. These checks demonstrate library contracts on synthetic data.",
         ],
         fr: [
-          "La version v0.2.0a1 fournit wheels, distributions source, sommes de contrôle et documentation EN/FR. La démonstration à deux acteurs retire une source, refuse son résultat dérivé, conserve une source indépendante et vérifie la reprise d’une ancienne sauvegarde de contenu. Ces contrôles démontrent les contrats de la bibliothèque sur des données synthétiques.",
+          "La version v0.3.0a1 fournit le wheel et la distribution source du noyau, les sommes de contrôle et la documentation EN/FR ; le registre de politiques indépendant reste en version 0.1.0. La démonstration à deux acteurs exerce le retrait et la reprise. Celle de l’admission ajoute huit scénarios synthétiques, dont une notice après retrait, le refus d’un tampon modifié et une remise au résultat inconnu après un effet chez le consommateur sans accusé de réception, sans nouvelle tentative. Ces contrôles démontrent les contrats de la bibliothèque sur des données synthétiques.",
         ],
       },
       evidence: {
@@ -216,10 +216,10 @@ export const projects: Project[] = [
       },
       limitations: {
         en: [
-          "The frozen R3 retrieval policy improved evidence selection in a bounded synthetic comparison but missed its relative latency gate. No production speed gain is claimed. Recovery requires a current authority and freshness witness outside the restored content snapshot; rolling all three back together is outside the guarantee. Revocation controls future library reads, not copies already exported or model unlearning.",
+          "The frozen R3 retrieval policy improved evidence selection in a bounded synthetic comparison but missed its relative latency gate. No production speed gain is claimed. Recovery requires a current authority and freshness witness outside the restored content snapshot; rolling all three back together is outside the guarantee. Revocation controls future library reads, not copies already exported or model unlearning. Structured rendering and admission require supplied reviewed facts and a trusted host dossier; they neither extract facts nor prove semantic support. The host must supply authenticated authority and manage callback deadlines and interruptions. An acknowledgment does not prove downstream consumption, and uncertain effects are not retried. No atomic authorization/publication, durable handoff journal or callback sandbox is provided.",
         ],
         fr: [
-          "La politique de recherche R3 figée a amélioré la sélection de preuves dans une comparaison synthétique bornée, mais n’a pas respecté son seuil relatif de latence. Aucun gain de vitesse en production n’est annoncé. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée ; leur retour arrière conjoint sort de la garantie. Le retrait contrôle les futures lectures de la bibliothèque, pas les copies déjà exportées ni le désapprentissage d’un modèle.",
+          "La politique de recherche R3 figée a amélioré la sélection de preuves dans une comparaison synthétique bornée, mais n’a pas respecté son seuil relatif de latence. Aucun gain de vitesse en production n’est annoncé. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée ; leur retour arrière conjoint sort de la garantie. Le retrait contrôle les futures lectures de la bibliothèque, pas les copies déjà exportées ni le désapprentissage d’un modèle. Le rendu structuré et l’admission nécessitent des faits fournis et revus ainsi qu’un dossier établi par un hôte de confiance ; ils n’extraient pas les faits et ne prouvent pas leur soutien sémantique. L’hôte doit fournir une autorité authentifiée et gérer les délais des callbacks et les interruptions. Un accusé de réception ne prouve pas la consommation en aval ; un effet incertain n’est pas retenté. Ces modules ne fournissent ni autorisation/publication atomique, ni journal durable de remise, ni isolation des callbacks.",
         ],
       },
     },
@@ -231,28 +231,37 @@ export const projects: Project[] = [
         },
         url: "https://github.com/Musyg/persistent-memory",
         urlFr:
-          "https://github.com/Musyg/persistent-memory/blob/v0.2.0a1/README.fr.md",
+          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/README.fr.md",
       },
       {
         label: {
           en: "Alpha release and installation files",
           fr: "Version alpha et fichiers d’installation",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.2.0a1",
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a1",
       },
       {
         label: {
           en: "Python 3.11–3.14 CI",
           fr: "CI Python 3.11–3.14",
         },
-        url: "https://github.com/Musyg/persistent-memory/actions/runs/37225751710",
+        url: "https://github.com/Musyg/persistent-memory/actions/runs/38006233487",
       },
       {
         label: {
           en: "Recovery contract",
           fr: "Contrat de reprise",
         },
-        url: "https://github.com/Musyg/persistent-memory/blob/v0.2.0a1/docs/RECOVERY.md",
+        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/docs/RECOVERY.md",
+      },
+      {
+        label: {
+          en: "Structured output and admission",
+          fr: "Rendu structuré et admission",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/docs/ADMISSION.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/docs/ADMISSION.fr.md",
       },
     ],
   },
