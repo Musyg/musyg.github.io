@@ -68,7 +68,7 @@ const fixedRoutes: RouteEntry[] = [
     practice: "software",
     title: `Software engineering | ${siteName}`,
     description:
-      "Backend, infrastructure, Web, product, blockchain, and open-source engineering by Gilles Musy.",
+      "Backend, infrastructure, Web, systems, blockchain, and open-source engineering by Gilles Musy.",
   },
   {
     path: "/fr/ingenierie/",
@@ -78,7 +78,7 @@ const fixedRoutes: RouteEntry[] = [
     practice: "software",
     title: `Ingénierie logicielle | ${siteName}`,
     description:
-      "Ingénierie backend, infrastructure, Web, produit, blockchain et open source par Gilles Musy.",
+      "Ingénierie backend, infrastructure, Web, systèmes, blockchain et open source par Gilles Musy.",
   },
   {
     path: "/ai-systems/",
