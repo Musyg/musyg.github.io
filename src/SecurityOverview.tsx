@@ -1,4 +1,5 @@
 import { type Locale } from "./content/site";
+import { ipiArticle } from "./content/ipi-article";
 
 export const securityReportSource =
   "https://github.com/Musyg/stvault-audit/blob/5558eba7d33808c56fcd83f95ea0f043af56f0d0";
@@ -49,56 +50,80 @@ const copy = {
 export function SecurityOverview({ locale }: { locale: Locale }) {
   const text = copy[locale];
   return (
-    <section
-      className="section-shell security-overview"
-      aria-labelledby="security-overview-title"
-    >
-      <h2 id="security-overview-title">{text.title}</h2>
-      <p className="security-overview-lead">{text.introduction}</p>
-      <div className="security-report-layout">
-        <figure className="security-report-preview">
-          <img
-            src="/stvault-report-cover.png"
-            alt={text.alt}
-            width="679"
-            height="960"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>{text.caption}</figcaption>
-        </figure>
-        <div className="security-report-details">
-          <h3>{text.example}</h3>
-          <p className="security-report-context">{text.context}</p>
-          <dl>
-            <div>
-              <dt>{text.inspect}</dt>
-              <dd>{text.inspectText}</dd>
-            </div>
-            <div>
-              <dt>{text.report}</dt>
-              <dd>{text.reportText}</dd>
-            </div>
-          </dl>
-          <nav aria-label={text.links} className="security-report-links">
-            <a
-              className="button button-secondary"
-              href={`${securityReportSource}/StVault_Security_Review.pdf`}
-            >
-              {text.pdf}
-            </a>
-            <a className="text-link" href={`${securityReportSource}/REPORT.md`}>
-              {text.markdown}
-            </a>
-            <a
-              className="text-link"
-              href="https://github.com/Musyg/stvault-audit"
-            >
-              {text.repository}
-            </a>
-          </nav>
+    <>
+      <section
+        className="publication-feature"
+        aria-labelledby="security-ipi-title"
+      >
+        <div>
+          <p className="eyebrow">
+            {locale === "fr"
+              ? "Étude de cas Gray Swan · Sécurité des agents IA"
+              : "Gray Swan case study · AI agent security"}
+          </p>
+          <h2 id="security-ipi-title">{ipiArticle[locale].title}</h2>
+          <p>{ipiArticle[locale].description}</p>
         </div>
-      </div>
-    </section>
+        <div className="publication-actions">
+          <a className="button button-primary" href={ipiArticle[locale].path}>
+            {locale === "fr" ? "Lire l’étude de cas" : "Read the case study"}
+          </a>
+        </div>
+      </section>
+      <section
+        className="section-shell security-overview"
+        aria-labelledby="security-overview-title"
+      >
+        <h2 id="security-overview-title">{text.title}</h2>
+        <p className="security-overview-lead">{text.introduction}</p>
+        <div className="security-report-layout">
+          <figure className="security-report-preview">
+            <img
+              src="/stvault-report-cover.png"
+              alt={text.alt}
+              width="679"
+              height="960"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>{text.caption}</figcaption>
+          </figure>
+          <div className="security-report-details">
+            <h3>{text.example}</h3>
+            <p className="security-report-context">{text.context}</p>
+            <dl>
+              <div>
+                <dt>{text.inspect}</dt>
+                <dd>{text.inspectText}</dd>
+              </div>
+              <div>
+                <dt>{text.report}</dt>
+                <dd>{text.reportText}</dd>
+              </div>
+            </dl>
+            <nav aria-label={text.links} className="security-report-links">
+              <a
+                className="button button-secondary"
+                href={`${securityReportSource}/StVault_Security_Review.pdf`}
+              >
+                {text.pdf}
+              </a>
+              <a
+                className="text-link"
+                href={`${securityReportSource}/REPORT.md`}
+              >
+                {text.markdown}
+              </a>
+              <a
+                className="text-link"
+                href="https://github.com/Musyg/stvault-audit"
+              >
+                {text.repository}
+              </a>
+            </nav>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

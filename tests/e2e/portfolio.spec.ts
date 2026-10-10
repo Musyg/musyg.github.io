@@ -2,6 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 import { securityReportSource } from "../../src/SecurityOverview";
+import { ipiArticle } from "../../src/content/ipi-article";
 import { projects, sectionOrder } from "../../src/content/site";
 
 test("case studies omit empty sections but keep resource links and continuous numbering", async ({
@@ -291,6 +292,16 @@ test("Security Reviews presents a real report and clearly labels the demonstrati
       ).toBe("rgb(0, 94, 255)");
       await expect(page.locator(".case-body > section")).toHaveCount(9);
     }
+    await page
+      .getByRole("link", {
+        name: locale === "fr" ? "Lire l’étude de cas" : "Read the case study",
+        exact: true,
+      })
+      .click();
+    await expect(page).toHaveURL(new RegExp(ipiArticle[locale].path));
+    await expect(
+      page.getByRole("heading", { level: 1, name: ipiArticle[locale].title }),
+    ).toBeVisible();
   }
   await page.goto("/work/celo-credentials/");
   await expect(page.locator(".security-overview")).toHaveCount(0);
