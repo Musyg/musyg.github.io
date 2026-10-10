@@ -603,6 +603,76 @@
   border-top: 1px solid var(--line);
 }
 
+.bifrost-spotlight {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  border-top: 1px solid rgba(0, 94, 255, 0.26);
+}
+
+.bifrost-spotlight-brand img {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  border: 1px solid rgba(0, 94, 255, 0.26);
+  border-radius: 12px;
+  box-shadow: 0 12px 48px rgba(0, 94, 255, 0.1);
+}
+
+.bifrost-spotlight-copy {
+  min-width: 0;
+}
+
+.bifrost-spotlight h2 {
+  margin: 0;
+  font-size: clamp(1.65rem, 2.6vw, 2.3rem);
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.bifrost-spotlight-copy > p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.bifrost-spotlight-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 24px 0;
+  list-style: none;
+}
+
+.bifrost-spotlight-topics li {
+  padding: 7px 12px;
+  border: 1px solid rgba(0, 94, 255, 0.26);
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+.bifrost-spotlight-status {
+  font-size: 0.8rem;
+  margin: 20px 0 0;
+}
+
+@media (max-width: 720px) {
+  .bifrost-spotlight {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bifrost-spotlight-brand {
+    order: 2;
+  }
+
+  .bifrost-spotlight-brand img {
+    max-width: 220px;
+  }
+}
+
 .compact-heading {
   margin-bottom: 40px;
 }

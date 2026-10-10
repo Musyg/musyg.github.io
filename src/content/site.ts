@@ -1131,6 +1131,7 @@ export const practicePages: Record<
     capabilities: {
       en: [
         "Backend APIs, asynchronous services, integrations, and observability",
+        "Rust systems software, Windows and Linux services, and network orchestration",
         "React and TypeScript interfaces connected to existing platforms",
         "WordPress, WooCommerce, Shopify, and localized commerce paths",
         "Smart-contract applications and public testnet deployments",
@@ -1138,6 +1139,7 @@ export const practicePages: Record<
       ],
       fr: [
         "API backend, services asynchrones, intégrations et observabilité",
+        "Logiciels système en Rust, services Windows et Linux et orchestration réseau",
         "Interfaces React et TypeScript reliées à des plateformes existantes",
         "WordPress, WooCommerce, Shopify et parcours commerciaux localisés",
         "Applications de smart contracts et déploiements publics sur testnet",

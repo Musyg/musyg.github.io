@@ -3,6 +3,7 @@ import { aboutCopy } from "./content/about";
 import { engagements, engagementScope } from "./content/engagements";
 import { CeloOverview } from "./CeloOverview";
 import { SecurityOverview } from "./SecurityOverview";
+import { BifrostSpotlight } from "./BifrostSpotlight";
 import { MikaOverview } from "./MikaOverview";
 import { PediOverview } from "./PediOverview";
 import { ContactForm } from "./ContactForm";
@@ -443,6 +444,8 @@ function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      <BifrostSpotlight locale={locale} />
+
       <section
         className="section-shell selected-section"
         aria-labelledby="selected-title"
@@ -798,6 +801,7 @@ function PracticePage({
         title={localized(page.title, locale)}
         lead={localized(page.lead, locale)}
       />
+      {practice === "software" && <BifrostSpotlight locale={locale} />}
       <section
         className="section-shell practice-details engagement-section"
         aria-labelledby="engagement-title"

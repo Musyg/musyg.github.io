@@ -66,4 +66,62 @@ for (const locale of ["en", "fr"] as const) {
     await page.goto(path);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   });
+
+  test(`Bifrost ${locale} is discoverable from home and software engineering`, async ({
+    page,
+  }, testInfo) => {
+    const entries =
+      locale === "fr" ? ["/fr/", "/fr/ingenierie/"] : ["/", "/engineering/"];
+    for (const entry of entries) {
+      for (const width of [320, 390, 1440]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(entry);
+        const spotlight = page.getByRole("region", { name: /Bifrost,/ });
+        await spotlight.scrollIntoViewIfNeeded();
+        await expect(spotlight).toBeVisible();
+        await expect(spotlight).toContainText(
+          locale === "fr"
+            ? "MVP public, en développement"
+            : "Public MVP, in development",
+        );
+        await expect(spotlight.locator("img")).toHaveJSProperty(
+          "naturalWidth",
+          1448,
+        );
+        await expect(
+          spotlight.getByRole("link", {
+            name: locale === "fr" ? "Explorer le code" : "Browse the code",
+          }),
+        ).toHaveAttribute("href", "https://github.com/Musyg/bifrost-vpn");
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+        ).toBe(true);
+        if (entry === entries[0]) {
+          await spotlight.screenshot({
+            path: testInfo.outputPath(`bifrost-spotlight-${width}.png`),
+          });
+        }
+        await spotlight
+          .getByRole("link", {
+            name: locale === "fr" ? "Découvrir Bifrost" : "Explore Bifrost",
+          })
+          .click();
+        await expect(page).toHaveURL(new RegExp(path));
+        await expect(
+          page.getByRole("heading", { level: 1, name: "Bifrost", exact: true }),
+        ).toBeVisible();
+      }
+    }
+  });
+
+  test(`@a11y Bifrost ${locale} spotlight`, async ({ page }) => {
+    for (const entry of locale === "fr"
+      ? ["/fr/", "/fr/ingenierie/"]
+      : ["/", "/engineering/"]) {
+      await page.goto(entry);
+      expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    }
+  });
 }
