@@ -77,7 +77,7 @@ const evidenceItems = {
     },
     {
       title: "Celo Credentials",
-      text: "Source-verified Celo Sepolia deployment, demonstrated credential lifecycle, and 11/11 Foundry tests.",
+      text: "Issuance, public verification and revocation of education credentials on Celo Sepolia, with a source-verified contract.",
       url: "https://github.com/Musyg/celo-credentials-dapp",
     },
   ],
@@ -94,7 +94,7 @@ const evidenceItems = {
     },
     {
       title: "Celo Credentials",
-      text: "Déploiement Celo Sepolia au code source vérifié, cycle d’attestation démontré et 11 tests Foundry réussis sur 11.",
+      text: "Émission, vérification publique et révocation d’attestations sur Celo Sepolia, avec un contrat au code source vérifié.",
       url: "https://github.com/Musyg/celo-credentials-dapp",
     },
   ],
@@ -556,7 +556,7 @@ function HomePage({ locale }: { locale: Locale }) {
             : "Discuss an engineering, AI, or security research project."}
         </h2>
         <a className="button button-primary" href={contactPath(locale)}>
-          {isFrench ? "Profils professionnels" : "Professional profiles"}
+          {isFrench ? "Me contacter" : "Get in touch"}
         </a>
       </section>
     </>

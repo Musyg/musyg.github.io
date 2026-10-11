@@ -11,23 +11,14 @@ Hostinger at <https://musyg.com/>. The French version is at <https://musyg.com/f
 
 ## Current state
 
-The bilingual production site is published at <https://musyg.com/> with the final
-black and `#005EFF` visual direction. It includes the full route set, static prerendering,
-responsive layouts, metadata, content guards, tests, accessibility checks, and GitHub
-Pages workflows. The initial release passed independent local review, CI, deployment,
-public route checks, and post-publication verification.
+The site presents software engineering, AI systems and security research in English
+and French. It includes project case studies, technical publications and a contact
+form, with black backgrounds and the identity blue `#005EFF`.
 
-The 2026-09-12 Hostinger publication passed independent HTTPS checks for all 28
-routes, all 39 public files, the real 404 response, robots.txt, and the sitemap.
-The `www` hostname is not yet validated: its TLS certificate must be corrected
-before the canonical redirect can be verified. Use the root-domain links above.
-
-Hostinger currently serves an uploaded production build. Its automatic GitHub
-deployment remains disabled following the provider's pnpm launcher failure. This
-branch migrates the build to npm; Hostinger compatibility is not yet verified.
-The existing GitHub Pages publication remains available separately; the domain's
-registrar, DNS, and mail services remain with Infomaniak. Each case study presents
-its own technical scope, without attributing it to another project or agency.
+Production is deployed automatically to Hostinger from `feature/contact-protected`.
+The build uses npm and packages prerendered pages together with the Node.js server.
+Each case study presents its own technical scope without attributing it to another
+project or agency.
 
 Every production page, section, card, panel, navigation element, and footer uses black
 or a near-black neutral as its background. White and other light backgrounds are not
@@ -44,9 +35,10 @@ npm run build
 
 Use Node.js 24 and npm 11.6.0 (the CI version). `package-lock.json` is the sole
 dependency lockfile. Run `npm run verify` for the full validation suite.
-Hostinger must use npm, the complete `npm run build` command, and `dist` output.
-Do not redeploy the older `main` branch or enable automatic deployment until the
-current release and prerendered routes have been verified on Hostinger.
+Hostinger uses npm and the complete `npm run build` command. Set the output directory
+to `release` and the entry file to `server/index.mjs`, relative to that directory.
+The server serves the sibling `dist` directory. The older `main` branch is not the
+production deployment branch.
 
 ## Content boundaries
 

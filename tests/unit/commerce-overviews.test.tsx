@@ -32,7 +32,7 @@ describe("project-specific agent overviews", () => {
         screen.getByRole("heading", {
           name:
             locale === "fr"
-              ? "Closing et documents commerciaux"
+              ? "Conclusion des ventes et documents commerciaux"
               : "Closing and commercial documents",
         }),
       ).toBeInTheDocument();

@@ -32,7 +32,9 @@ for (const locale of ["en", "fr"] as const) {
         for (const term of ["FAISS", "Qdrant", "MQTT", "KPI"])
           await expect(architecture).toContainText(term);
         if (project === "inaricom") {
-          await expect(cards.nth(2)).toContainText("Closing");
+          await expect(cards.nth(2)).toContainText(
+            locale === "fr" ? "Conclusion des ventes" : "Closing",
+          );
           await expect(cards.nth(3)).toContainText(
             locale === "fr"
               ? "Facturation et commandes"

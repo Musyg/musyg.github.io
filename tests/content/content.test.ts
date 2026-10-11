@@ -67,11 +67,14 @@ describe("portfolio content contract", () => {
       );
       expect(JSON.stringify(project)).not.toMatch(/talos/i);
       expect(project.sections.limitations[locale].join(" ")).toContain(
-        locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
+      );
+      expect(project.sections.limitations[locale].join(" ")).not.toMatch(
+        /active in production|deployed backend|actifs en production/i,
       );
     }
     expect(JSON.stringify(project)).not.toContain("hermes-agency");
-    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+    expect(project.links[1].label.fr).toBe("Étude de cas");
   });
 
   it("presents Inaricom without an availability badge or verified integration claim", () => {
@@ -93,7 +96,7 @@ describe("portfolio content contract", () => {
         "WooCommerce",
       );
       expect(project.sections.limitations[locale].join(" ")).toContain(
-        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+        locale === "fr" ? "en cours d’intégration" : "being integrated",
       );
     }
     expect(JSON.stringify(project)).not.toContain("github.com/Musyg/Inaricom");
@@ -116,14 +119,52 @@ describe("portfolio content contract", () => {
         "Listmonk",
       );
       expect(project.sections.limitations[locale].join(" ")).toContain(
-        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
+      );
+      expect(project.sections.limitations[locale].join(" ")).not.toMatch(
+        /active in production|deployed backend|actifs en production/i,
       );
     }
     expect(JSON.stringify(project)).not.toContain("hermes-agency");
     expect(JSON.stringify(project)).not.toContain(
       "5eb44f8839a3a457099df26bc784b67c4bbf151c",
     );
-    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+    expect(project.links[1].label.fr).toBe("Étude de cas");
+  });
+
+  it("keeps project work ahead of verification narration", () => {
+    expect(practicePages.software.projectIds).toContain("agent-resilience");
+    expect(practicePages.ai.projectIds).toContain("agent-resilience");
+    const memory = projects.find(
+      (project) => project.id === "persistent-memory",
+    )!;
+    for (const locale of ["en", "fr"] as const) {
+      for (const section of sectionOrder) {
+        for (const paragraph of memory.sections[section][locale]) {
+          expect(paragraph.split(/\s+/).length).toBeLessThan(95);
+        }
+      }
+      expect(memory.sections.limitations[locale].join(" ")).toMatch(
+        /authority|autorité/,
+      );
+      expect(memory.sections.limitations[locale].join(" ")).toMatch(/copies/);
+      expect(memory.sections.limitations[locale].join(" ")).toMatch(/alpha/);
+      for (const id of ["inaricom", "mikasshop", "pedi-sense"]) {
+        const project = projects.find((p) => p.id === id)!;
+        expect(
+          JSON.stringify(project.sections["limitations"][locale]),
+        ).not.toMatch(
+          /n’a pas été vérifié|has not been verified|health benefits|sur la santé/,
+        );
+      }
+    }
+    expect(
+      projects
+        .find((p) => p.id === "mikasshop")!
+        .sections.decisions.en.join(" "),
+    ).not.toMatch(/\bSAV\b/);
+    const app = readFileSync("src/App.tsx", "utf8");
+    expect(app).toContain('{isFrench ? "Me contacter" : "Get in touch"}');
   });
 
   it("describes each ecommerce project's own agents, retrieval and analytics", () => {

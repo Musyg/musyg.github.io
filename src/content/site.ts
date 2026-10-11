@@ -152,18 +152,18 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Persistent Memory packages a versioned memory core and a separate policy registry. Applications can trace a derived result to its source versions, check whether that evidence is still usable, and assemble typed context within an explicit budget. The MIT-licensed alpha runs on Linux without a model or external database.",
+          "Persistent Memory is a Python library for storing information used by AI agents, tracing it to its sources and excluding corrected or withdrawn evidence. It combines versioned memory with a separate policy registry. The MIT-licensed alpha runs on Linux without a model or external database.",
         ],
         fr: [
-          "Persistent Memory réunit un noyau de mémoire versionnée et un registre de politiques indépendant. Une application peut relier un résultat dérivé aux versions de ses sources, vérifier si ces preuves restent utilisables et composer un contexte typé sous un budget explicite. Cette version alpha sous licence MIT fonctionne sous Linux sans modèle ni base externe.",
+          "Persistent Memory est une bibliothèque Python pour conserver les informations utilisées par des agents IA, retrouver leurs sources et écarter celles qui ont été corrigées ou retirées. Elle associe une mémoire versionnée à un registre de politiques indépendant. Cette version alpha sous licence MIT fonctionne sous Linux sans modèle ni base externe.",
         ],
       },
       role: {
         en: [
-          "I design the storage and retrieval contracts, implement the Python libraries and interfaces, and build synthetic tests for failure, concurrency, withdrawal and recovery. I extracted the reusable components into a dedicated public repository with bilingual documentation and standalone examples.",
+          "I design and develop the storage, retrieval and recovery mechanisms, the Python interfaces and the optional HTTP and MCP integrations. I also maintain the public packages, bilingual documentation, standalone examples and tests for failures, concurrent access and evidence withdrawal.",
         ],
         fr: [
-          "Je conçois les contrats de stockage et de recherche, développe les bibliothèques et interfaces Python, et construis les tests synthétiques de panne, concurrence, retrait et reprise. Les composants réutilisables sont extraits dans un dépôt public dédié, avec documentation bilingue et exemples autonomes.",
+          "Je conçois et développe les mécanismes de stockage, de recherche et de reprise, les interfaces Python et les intégrations HTTP et MCP facultatives. Je maintiens aussi les packages publics, la documentation bilingue, les exemples autonomes et les tests de panne, d’accès concurrents et de retrait des informations.",
         ],
       },
       problem: {
@@ -176,10 +176,14 @@ export const projects: Project[] = [
       },
       architecture: {
         en: [
-          "SQLite stores immutable versions and explicit dependency references. A separate authority and freshness witness govern admissibility; disposable FTS5 indexes propose candidates that are revalidated on read. Typed envelopes distinguish documents, observations, hypotheses, procedures, tasks and feedback. Python, CLI, optional HTTP and MCP interfaces expose the contracts. Opt-in structured output renders supplied reviewed facts through finite French templates, preserving source versions and spans and checking word limits. An optional admission boundary checks the host authority before preparation and handoff, compares the final buffer, and returns distinct notices for unknown, conflicting or withdrawn evidence.",
+          "SQLite stores immutable versions and links between sources and derived information. A separate authority and freshness witness determine which evidence is still usable. Rebuildable FTS5 indexes find candidates, which are checked again before retrieval.",
+          "Typed records distinguish documents, observations, hypotheses, procedures, tasks and feedback. Applications can assemble context within an explicit budget through Python, the CLI or optional HTTP and MCP interfaces.",
+          "An optional renderer turns supplied, reviewed facts into text using predefined French templates, preserving source versions and passages. The admission module checks the host’s authority and the final output buffer, and reports unknown, conflicting or withdrawn evidence.",
         ],
         fr: [
-          "SQLite conserve des versions immuables et des références explicites aux dépendances. Une autorité séparée et un témoin de fraîcheur déterminent leur admissibilité ; les index FTS5 reconstruisibles proposent des candidats revalidés à la lecture. Les enveloppes typées distinguent documents, observations, hypothèses, procédures, tâches et feedback. Les contrats sont accessibles en Python, en CLI et via des interfaces HTTP ou MCP facultatives. Le module de rendu structuré, à importer explicitement, produit des textes selon des formulations françaises prédéfinies à partir de faits fournis et déjà revus, en conservant les versions et passages sources et en contrôlant les bornes de longueur. Le module facultatif d’admission contrôle l’autorité de l’hôte avant préparation et remise, compare le tampon final et distingue les notices d’inconnue, de contradiction et de retrait.",
+          "SQLite conserve des versions immuables et les liens entre les sources et les informations qui en découlent. Une autorité séparée et un témoin de fraîcheur déterminent quelles informations restent utilisables. Les index FTS5 reconstruisibles proposent des résultats, vérifiés à nouveau avant leur restitution.",
+          "Les enregistrements typés distinguent documents, observations, hypothèses, procédures, tâches et retours d’expérience. Les applications peuvent composer un contexte sous un budget explicite via Python, la CLI ou les interfaces HTTP et MCP facultatives.",
+          "Un module de rendu facultatif transforme des faits fournis et déjà revus en texte, à partir de formulations françaises prédéfinies, en conservant les versions et passages sources. Le module d’admission vérifie l’autorité de l’hôte et le tampon final, puis signale les informations inconnues, contradictoires ou retirées.",
         ],
       },
       decisions: {
@@ -196,18 +200,18 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "Linux qualification passed 145 memory tests and 36 policy-registry tests for each distribution format, wheel and source, with no failures or skipped tests. Public release verification installed both core distributions outside the checkout, discovered all 145 memory tests, and ran the 23 added test methods, including 45 package-boundary variants, plus eight synthetic demo outcomes per installation.",
+          "Tests cover concurrent access, evidence withdrawal, recovery from an older backup and package installation. Linux qualification passed 145 memory tests and 36 policy-registry tests for both wheel and source distributions, using synthetic data.",
         ],
         fr: [
-          "La qualification Linux a réussi les 145 tests mémoire et les 36 tests du registre de politiques pour chacun des deux formats, wheel et distribution source, sans échec ni test ignoré. La vérification depuis la release publique a installé les deux distributions du noyau hors du checkout, recensé les 145 tests mémoire et exécuté les 23 nouvelles méthodes de test, dont 45 variantes de chargement et de distribution, ainsi que huit scénarios synthétiques de démonstration par installation.",
+          "Les tests couvrent les accès concurrents, le retrait des informations, la reprise depuis une ancienne sauvegarde et l’installation des packages. La qualification Linux a réussi 145 tests mémoire et 36 tests du registre de politiques pour les formats wheel et distribution source, sur des données synthétiques.",
         ],
       },
       results: {
         en: [
-          "Version v0.3.0a1 provides the core wheel and source distribution, checksums and EN/FR documentation; the separate policy registry remains at 0.1.0. The two-actor demo exercises withdrawal and recovery. The admission demo adds eight synthetic outcomes, including a notice after withdrawal, rejection of a changed buffer and an unknown delivery outcome after a consumer effect without acknowledgment, without retry. These checks demonstrate library contracts on synthetic data.",
+          "Version v0.3.0a1 includes installable packages, checksums and English and French documentation; the separate policy registry remains at 0.1.0. Standalone demos show evidence withdrawal and recovery, rejection of a changed output buffer and handling of uncertain delivery outcomes.",
         ],
         fr: [
-          "La version v0.3.0a1 fournit le wheel et la distribution source du noyau, les sommes de contrôle et la documentation EN/FR ; le registre de politiques indépendant reste en version 0.1.0. La démonstration à deux acteurs exerce le retrait et la reprise. Celle de l’admission ajoute huit scénarios synthétiques, dont une notice après retrait, le refus d’un tampon modifié et une remise au résultat inconnu après un effet chez le consommateur sans accusé de réception, sans nouvelle tentative. Ces contrôles démontrent les contrats de la bibliothèque sur des données synthétiques.",
+          "La version v0.3.0a1 comprend les packages installables, les sommes de contrôle et la documentation française et anglaise ; le registre de politiques indépendant reste en version 0.1.0. Les démonstrations autonomes présentent le retrait des informations et la reprise, le refus d’un tampon de sortie modifié et la gestion d’une remise au résultat incertain.",
         ],
       },
       evidence: {
@@ -216,10 +220,14 @@ export const projects: Project[] = [
       },
       limitations: {
         en: [
-          "The frozen R3 retrieval policy improved evidence selection in a bounded synthetic comparison but missed its relative latency gate. No production speed gain is claimed. Recovery requires a current authority and freshness witness outside the restored content snapshot; rolling all three back together is outside the guarantee. Revocation controls future library reads, not copies already exported or model unlearning. Structured rendering and admission require supplied reviewed facts and a trusted host dossier; they neither extract facts nor prove semantic support. The host must supply authenticated authority and manage callback deadlines and interruptions. An acknowledgment does not prove downstream consumption, and uncertain effects are not retried. No atomic authorization/publication, durable handoff journal or callback sandbox is provided.",
+          "The library is in alpha. Recovery requires a current authority and freshness witness kept outside the restored content backup. Withdrawal affects future library reads, not exported copies or information already learned by a model.",
+          "Optional rendering and admission use supplied, reviewed facts and authenticated host authority. The host manages callback deadlines and interruptions. These modules do not extract or semantically verify facts, provide atomic authorization and publication, or replace a durable handoff journal or callback sandbox.",
+          "A delivery acknowledgment does not prove downstream consumption. Uncertain effects are not retried. The linked documentation describes the recovery and admission contracts in detail.",
         ],
         fr: [
-          "La politique de recherche R3 figée a amélioré la sélection de preuves dans une comparaison synthétique bornée, mais n’a pas respecté son seuil relatif de latence. Aucun gain de vitesse en production n’est annoncé. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée ; leur retour arrière conjoint sort de la garantie. Le retrait contrôle les futures lectures de la bibliothèque, pas les copies déjà exportées ni le désapprentissage d’un modèle. Le rendu structuré et l’admission nécessitent des faits fournis et revus ainsi qu’un dossier établi par un hôte de confiance ; ils n’extraient pas les faits et ne prouvent pas leur soutien sémantique. L’hôte doit fournir une autorité authentifiée et gérer les délais des callbacks et les interruptions. Un accusé de réception ne prouve pas la consommation en aval ; un effet incertain n’est pas retenté. Ces modules ne fournissent ni autorisation/publication atomique, ni journal durable de remise, ni isolation des callbacks.",
+          "La bibliothèque est en version alpha. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée. Le retrait concerne les futures lectures de la bibliothèque, pas les copies exportées ni les informations déjà apprises par un modèle.",
+          "Le rendu et l’admission facultatifs utilisent des faits fournis et revus, ainsi qu’une autorité d’hôte authentifiée. L’hôte gère les délais et interruptions des callbacks. Ces modules n’extraient ni ne vérifient le sens des faits, n’assurent pas une autorisation et une publication atomiques, et ne remplacent pas un journal durable de remise ou l’isolation des callbacks.",
+          "Un accusé de réception ne prouve pas la consommation en aval. Un effet incertain n’est pas retenté. La documentation liée détaille les contrats de reprise et d’admission.",
         ],
       },
     },
@@ -433,10 +441,10 @@ export const projects: Project[] = [
       },
       decisions: {
         en: [
-          "Gas sponsorship stays in a separate relayer, credentials cannot be transferred, nonces are single use, deadlines expire, and revocation is limited to the contract owner or the still-authorized original issuer.",
+          "Gas sponsorship stays in a separate relayer, credentials cannot be transferred, nonces are single use, vouchers have a validity period, and revocation is limited to the contract owner or the still-authorized original issuer.",
         ],
         fr: [
-          "La prise en charge des frais reste dans un relais séparé, les attestations ne peuvent pas être transférées, les nonces sont à usage unique, les échéances expirent et la révocation est limitée au propriétaire du contrat ou à l’émetteur d’origine encore autorisé.",
+          "La prise en charge des frais reste dans un relais séparé, les attestations ne peuvent pas être transférées, les nonces sont à usage unique, les autorisations ont une durée de validité et la révocation est limitée au propriétaire du contrat ou à l’émetteur d’origine encore autorisé.",
         ],
       },
       security: {
@@ -553,10 +561,10 @@ export const projects: Project[] = [
       },
       security: {
         en: [
-          "The research covers Web and application security, Solidity and Vyper contracts, ZK circuits, formal verification, and indirect prompt injection. Public platform associations include the Treasury Board of Canada Secretariat, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2, and K2.",
+          "The research covers Web and application security, Solidity and Vyper contracts, ZK circuits, formal verification, and indirect prompt injection. My public profiles document contributions involving the Treasury Board of Canada Secretariat, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2, and K2.",
         ],
         fr: [
-          "Les recherches couvrent la sécurité Web et applicative, les contrats Solidity et Vyper, les circuits ZK, la vérification formelle et l’injection indirecte de prompts. Les associations publiques comprennent le Secrétariat du Conseil du Trésor du Canada, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2 et K2.",
+          "Les recherches couvrent la sécurité Web et applicative, les contrats Solidity et Vyper, les circuits ZK, la vérification formelle et l’injection indirecte de prompts. Mes profils publics documentent des contributions concernant le Secrétariat du Conseil du Trésor du Canada, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2 et K2.",
         ],
       },
       testing: {
@@ -813,26 +821,24 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "Explore the project and its architecture in the linked case study. Integration source code is private.",
+          "Project documentation is available through the resources below. Integration source code is private.",
         ],
         fr: [
-          "Le projet et son architecture sont présentés dans l’étude de cas ci-dessous. Le code des intégrations est privé.",
+          "La documentation du projet est disponible dans les ressources ci-dessous. Le code des intégrations est privé.",
         ],
       },
       limitations: {
         en: [
-          "Current production activation of the supplier integration and contact backend has not been verified.",
-          "The sales-agent chain and its quote-to-invoice workflow are being integrated.",
+          "The supplier and contact-backend integrations are developed. The sales-agent chain and its quote-to-invoice workflow are being integrated.",
         ],
         fr: [
-          "L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée.",
-          "La chaîne d’agents commerciaux et son parcours devis-facturation sont en cours d’intégration.",
+          "Les intégrations fournisseur et backend de contact sont développées. La chaîne d’agents commerciaux et son parcours devis-facturation sont en cours d’intégration.",
         ],
       },
     },
     links: [
       {
-        label: { en: "Project URL", fr: "URL du projet" },
+        label: { en: "Visit Inaricom", fr: "Voir Inaricom" },
         url: "https://inaricom.com",
       },
       {
@@ -926,7 +932,7 @@ export const projects: Project[] = [
       },
       decisions: {
         en: [
-          "Shopify retains checkout and commerce while custom services handle guidance and support. The assistant’s tool set focuses on site information rather than order lookup or purchases. The SAV follows a separate workflow with configurable response routing and operator escalation; it is not the public shopping chat.",
+          "Shopify retains checkout and commerce while custom services handle guidance and support. The assistant’s tool set focuses on site information rather than order lookup or purchases. Customer support follows a separate workflow with configurable response routing and operator escalation; it is not the public shopping chat.",
         ],
         fr: [
           "Shopify conserve le paiement et le commerce, tandis que les services sur mesure prennent en charge le conseil et l’assistance. Les outils de l’assistant portent sur les informations du site, pas sur le suivi de commandes ni les achats. Le SAV suit un parcours distinct, avec un mode de réponse configurable et une transmission à un opérateur ; il ne se confond pas avec l’assistant public.",
@@ -958,10 +964,10 @@ export const projects: Project[] = [
       },
       limitations: {
         en: [
-          "The store is online. The assistant and support integrations have been developed; their current production operation has not been verified for this case study.",
+          "The store is online. The AI assistant and customer-support integrations are developed.",
         ],
         fr: [
-          "La boutique est en ligne. L’assistant et les intégrations SAV sont développés ; leur fonctionnement actuel en production n’a pas été vérifié pour cette étude de cas.",
+          "La boutique est en ligne. L’assistant IA et les intégrations SAV sont développés.",
         ],
       },
     },
@@ -971,7 +977,7 @@ export const projects: Project[] = [
         url: "https://mikasshop.com",
       },
       {
-        label: { en: "Storefront case study", fr: "Étude de la vitrine" },
+        label: { en: "Case study", fr: "Étude de cas" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/mikasshop.md",
         urlFr:
           "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/mikasshop.md",
@@ -984,7 +990,7 @@ export const projects: Project[] = [
     title: "Pedi-Sense",
     summary: {
       en: "Shopify storefront, customer-support agent, ecommerce agents, branded email workflows and event analytics.",
-      fr: "Boutique Shopify, agent SAV, agents e-commerce, parcours email de marque et analyse des événements.",
+      fr: "Boutique Shopify, agent SAV, agents e-commerce, automatisations email et analyse des événements.",
     },
     role: {
       en: "Storefront design, agent development and backend integrations",
@@ -1015,7 +1021,7 @@ export const projects: Project[] = [
           "Pedi-Sense combines a Shopify storefront with ecommerce and support agents, branded email workflows, catalogue retrieval and event analytics. The work covers the customer-facing store and the business workflows behind it.",
         ],
         fr: [
-          "Pedi-Sense associe une boutique Shopify à des agents e-commerce et SAV, des parcours email de marque, une recherche catalogue et l’analyse des événements. Le travail couvre la boutique visible par les clients et les parcours métier qui l’accompagnent.",
+          "Pedi-Sense associe une boutique Shopify à des agents e-commerce et SAV, des emails aux couleurs de la marque, une recherche catalogue et l’analyse des événements. Le travail couvre la boutique visible par les clients et les parcours métier qui l’accompagnent.",
         ],
       },
       role: {
@@ -1043,7 +1049,7 @@ export const projects: Project[] = [
           "The store’s custom pixel integration collects navigation and purchase-path events. Analytics services store, aggregate and attribute them, then publish KPI snapshots to Analytics Hub over MQTT. Events emitted by the business agents feed the analysis pipeline too.",
         ],
         fr: [
-          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Python relient les agents e-commerce et SAV aux informations de produit, de stock et de commande. Le SAV prépare les réponses à valider et les transmissions à un opérateur ; les parcours email de marque couvrent confirmations de commande, paniers abandonnés et expéditions via Listmonk.",
+          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Python relient les agents e-commerce et SAV aux informations de produit, de stock et de commande. Le SAV prépare les réponses à valider et les transmissions à un opérateur ; les automatisations email couvrent confirmations de commande, paniers abandonnés et expéditions via Listmonk.",
           "La recherche catalogue utilise FAISS, tandis que Qdrant apporte les connaissances e-commerce, les politiques et les FAQ de la boutique. Le parcours de contenu et de SEO comprend des consignes de tâche documentées sous forme de skills. Les faits du catalogue, les documents SAV et les méthodes éditoriales restent ainsi distincts.",
           "L’intégration du pixel maison collecte les événements de navigation et du parcours d’achat. Les services d’analyse les stockent, les agrègent et leur attribuent des canaux, puis publient des KPI vers l’Analytics Hub via MQTT. Les événements émis par les agents métier alimentent aussi la chaîne d’analyse.",
         ],
@@ -1082,10 +1088,10 @@ export const projects: Project[] = [
       },
       limitations: {
         en: [
-          "The store is online. Backend integrations have been developed; their current production activation has not been verified for this case study. This project covers software development, not an assessment of the product’s health benefits.",
+          "The store is online. The agent services and backend integrations are developed.",
         ],
         fr: [
-          "La boutique est en ligne. Les intégrations backend sont développées ; leur activation actuelle en production n’a pas été vérifiée pour cette étude de cas. Le projet porte sur le développement logiciel, pas sur l’évaluation des effets du produit sur la santé.",
+          "La boutique est en ligne. Les services d’agents et les intégrations backend sont développés.",
         ],
       },
     },
@@ -1095,7 +1101,7 @@ export const projects: Project[] = [
         url: "https://pedi-sense.com",
       },
       {
-        label: { en: "Storefront case study", fr: "Étude de la vitrine" },
+        label: { en: "Case study", fr: "Étude de cas" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/pedi-sense.md",
         urlFr:
           "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/pedi-sense.md",
@@ -1204,6 +1210,7 @@ export const practicePages: Record<
       "persistent-memory",
       "bifrost-vpn",
       "celo-credentials",
+      "agent-resilience",
       "inaricom",
       "mikasshop",
       "pedi-sense",

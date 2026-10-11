@@ -189,7 +189,7 @@ test("Mika's Shop presents AI chat and separate SAV without runtime claims", asy
       await expect(page.locator(".metadata-rail")).toContainText("2024");
       await expect(page.locator(".case-body")).toContainText("FastAPI");
       await expect(page.locator(".case-body")).toContainText(
-        locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
       );
       await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
       expect(
@@ -218,7 +218,7 @@ test("Pedi-Sense distinguishes the storefront from its business integrations", a
       );
       await expect(page.locator(".case-body")).toContainText("Listmonk");
       await expect(page.locator(".case-body")).toContainText(
-        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
       );
       await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
       expect(

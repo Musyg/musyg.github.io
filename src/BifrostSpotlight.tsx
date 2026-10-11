@@ -6,7 +6,7 @@ const copy = {
     eyebrow: "Open source · Ingénierie système et réseau",
     title: "Bifrost, un VPN auto-hébergé en Rust.",
     introduction:
-      "Je développe Bifrost pour Windows et Linux. Le travail ne s’arrête pas à établir un tunnel : il relie son cycle de vie au filtrage réseau, au DNS et aux services du système.",
+      "Je développe Bifrost pour Windows et Linux. J’y relie le cycle de vie du tunnel au filtrage réseau, au DNS et aux services du système.",
     focus:
       "Un projet qui réunit architecture logicielle, intégration aux systèmes d’exploitation et tests des interruptions, reconnexions et fuites de trafic.",
     topics: ["WireGuard", "Filtrage réseau et DNS", "Tests anti-fuite"],
@@ -17,7 +17,7 @@ const copy = {
     eyebrow: "Open source · Systems and network engineering",
     title: "Bifrost, a self-hosted VPN in Rust.",
     introduction:
-      "I develop Bifrost for Windows and Linux. The work goes beyond establishing a tunnel: it connects its lifecycle to traffic filtering, DNS and system services.",
+      "I develop Bifrost for Windows and Linux. I connect the tunnel lifecycle to traffic filtering, DNS and system services.",
     focus:
       "A project bringing together software architecture, operating-system integration and tests for interruptions, reconnects and traffic leaks.",
     topics: ["WireGuard", "Network and DNS filtering", "Leak-prevention tests"],

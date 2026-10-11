@@ -17,7 +17,7 @@ const copy = {
         detail: "Demande → qualification → négociation → closing.",
       },
       {
-        title: "Closing et documents commerciaux",
+        title: "Conclusion des ventes et documents commerciaux",
         body: "Préparation des devis et contrats, validation opérateur et suivi de l’acceptation du client. La chaîne est en cours d’intégration.",
         detail:
           "Le dossier conserve le contexte commercial et les étapes de validation.",
