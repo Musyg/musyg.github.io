@@ -90,7 +90,7 @@ const fixedRoutes: RouteEntry[] = [
     practice: "ai",
     title: `Freelance AI engineer, multi-agent systems | ${siteName}`,
     description:
-      "Freelance AI engineering by Gilles Musy: Python agents, multi-agent orchestration, API integrations and Talos. Worldwide engagements.",
+      "Freelance AI engineering by Gilles Musy: Python agents, multi-agent orchestration, API integrations and machine learning. Worldwide engagements.",
   },
   {
     path: "/fr/systemes-ia/",
@@ -100,7 +100,7 @@ const fixedRoutes: RouteEntry[] = [
     practice: "ai",
     title: `Ingénieur IA freelance, systèmes multi-agents | ${siteName}`,
     description:
-      "Gilles Musy, ingénieur IA freelance : agents Python, orchestration multi-agent, intégrations API et Talos. Missions dans le monde entier.",
+      "Gilles Musy, ingénieur IA freelance : agents Python, orchestration multi-agent, intégrations API et apprentissage automatique. Missions dans le monde entier.",
   },
   {
     path: "/security-research/",
@@ -219,6 +219,11 @@ export const publicRoutes: RouteEntry[] = [
   ...articleRoutes,
 ];
 
+export const routeAliases: Record<string, string> = {
+  "/work/talos-memory/": "/work/persistent-memory/",
+  "/fr/realisations/talos-memory/": "/fr/realisations/persistent-memory/",
+};
+
 export function normalizePath(pathname: string): string {
   const clean = pathname.split(/[?#]/, 1)[0] || "/";
 
@@ -231,7 +236,9 @@ export function normalizePath(pathname: string): string {
 
 export function routeFor(pathname: string): RouteEntry {
   const normalized = normalizePath(pathname);
-  const match = publicRoutes.find((route) => route.path === normalized);
+  const match = publicRoutes.find(
+    (route) => route.path === (routeAliases[normalized] ?? normalized),
+  );
 
   if (match) {
     return match;

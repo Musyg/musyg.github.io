@@ -33,6 +33,22 @@ test("HTTP serves prerendered routes and protects API boundaries", async (t) => 
     (match) => new URL(match[1]).pathname,
   );
   assert.equal(routes.length, 34);
+  assert.ok(routes.includes("/work/persistent-memory/"));
+  assert.ok(!sitemap.includes("talos-memory"));
+  for (const prefix of ["/work", "/fr/realisations"]) {
+    for (const suffix of ["", "/"]) {
+      const legacy = await fetch(
+        `${base}${prefix}/talos-memory${suffix}?source=old`,
+        { redirect: "manual" },
+      );
+      assert.equal(legacy.status, 308);
+      assert.equal(
+        legacy.headers.get("location"),
+        `${prefix}/persistent-memory/?source=old`,
+      );
+    }
+  }
+  assert.equal((await fetch(base + "/route-redirects.json")).status, 404);
   for (const path of routes) {
     const response = await fetch(base + path);
     assert.equal(response.status, 200, path);

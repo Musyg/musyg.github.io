@@ -33,6 +33,10 @@ export async function portfolioServer({ dist, contact }) {
     }
   }
   await collect(dist);
+  const redirects = JSON.parse(
+    files.get("/route-redirects.json")?.toString() ?? "{}",
+  );
+  files.delete("/route-redirects.json");
   if (!files.has("/404.html") || !files.has("/index.html"))
     throw new Error("Missing prerendered build");
   const server = createServer(async (req, res) => {
@@ -96,6 +100,13 @@ export async function portfolioServer({ dist, contact }) {
       if (!["GET", "HEAD"].includes(req.method)) {
         res.setHeader("Allow", "GET, HEAD");
         res.writeHead(405);
+        return res.end();
+      }
+      const redirectTarget = redirects[path.endsWith("/") ? path : `${path}/`];
+      if (redirectTarget) {
+        res.writeHead(308, {
+          Location: `${redirectTarget}${(req.url ?? "").includes("?") ? `?${req.url.split("?").slice(1).join("?")}` : ""}`,
+        });
         return res.end();
       }
       let file = path;

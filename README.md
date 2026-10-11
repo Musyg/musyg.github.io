@@ -26,8 +26,8 @@ Hostinger currently serves an uploaded production build. Its automatic GitHub
 deployment remains disabled following the provider's pnpm launcher failure. This
 branch migrates the build to npm; Hostinger compatibility is not yet verified.
 The existing GitHub Pages publication remains available separately; the domain's
-registrar, DNS, and mail services remain with Infomaniak. Backend services and
-Talos integration are separate future work, not part of this static deployment.
+registrar, DNS, and mail services remain with Infomaniak. Each case study presents
+its own technical scope, without attributing it to another project or agency.
 
 Every production page, section, card, panel, navigation element, and footer uses black
 or a near-black neutral as its background. White and other light backgrounds are not

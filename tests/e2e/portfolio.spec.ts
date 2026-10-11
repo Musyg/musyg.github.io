@@ -41,7 +41,7 @@ test("case studies omit empty sections but keep resource links and continuous nu
   }
 });
 
-test("Pedi visual overview shows responsive captures and three implemented roles", async ({
+test("Pedi visual overview shows responsive captures and four business workflows", async ({
   page,
 }) => {
   for (const locale of ["en", "fr"]) {
@@ -52,8 +52,8 @@ test("Pedi visual overview shows responsive captures and three implemented roles
       );
       const overview = page.locator(".pedi-overview");
       await overview.scrollIntoViewIfNeeded();
-      await expect(overview.locator(".pedi-system-nodes > li")).toHaveCount(3);
-      await expect(overview).toContainText("Talos");
+      await expect(overview.locator(".pedi-system-nodes > li")).toHaveCount(4);
+      await expect(overview).not.toContainText("Talos");
       await expect(overview).toContainText("Listmonk");
       await expect(overview).toContainText(
         locale === "fr" ? "développés" : "developed",
@@ -123,7 +123,7 @@ test("Mika visual overview preserves the real cat identity and responsive captur
       await expect(overview).toContainText(
         locale === "fr" ? "le vrai chat" : "the real cat",
       );
-      await expect(overview.locator(".mika-system-nodes > li")).toHaveCount(3);
+      await expect(overview.locator(".mika-system-nodes > li")).toHaveCount(4);
       await expect(overview).not.toContainText("Chat IA Mika");
       await expect(overview).not.toContainText("Mika AI chat");
       const storefront = overview.locator("picture img");
@@ -184,9 +184,7 @@ test("Mika's Shop presents AI chat and separate SAV without runtime claims", asy
         `${locale === "fr" ? "/fr/realisations" : "/work"}/mikasshop/`,
       );
       await expect(page.locator(".case-hero .page-lead")).toContainText(
-        locale === "fr"
-          ? "assistant conversationnel IA"
-          : "AI shopping assistant",
+        locale === "fr" ? "assistant conversationnel IA" : "AI store assistant",
       );
       await expect(page.locator(".metadata-rail")).toContainText("2024");
       await expect(page.locator(".case-body")).toContainText("FastAPI");
@@ -203,7 +201,7 @@ test("Mika's Shop presents AI chat and separate SAV without runtime claims", asy
   }
 });
 
-test("Pedi-Sense distinguishes the storefront from implemented Talos integrations", async ({
+test("Pedi-Sense distinguishes the storefront from its business integrations", async ({
   page,
 }) => {
   for (const locale of ["en", "fr"]) {

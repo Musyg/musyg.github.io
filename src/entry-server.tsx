@@ -6,6 +6,7 @@ import { engagements } from "./content/engagements";
 import { ipiArticle, ipiImage, ipiPublishedAt } from "./content/ipi-article";
 
 export const routePaths = publicRoutes.map((route) => route.path);
+export { routeAliases } from "./routes";
 
 function escapeAttribute(value: string): string {
   return value

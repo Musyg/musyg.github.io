@@ -125,10 +125,10 @@ export const filterLabels: Record<ProjectFilter, Bilingual> = {
 
 export const projects: Project[] = [
   {
-    id: "talos-memory",
+    id: "persistent-memory",
     slug: {
-      en: "talos-memory",
-      fr: "talos-memory",
+      en: "persistent-memory",
+      fr: "persistent-memory",
     },
     title: "Persistent Memory",
     seoTitle: {
@@ -710,16 +710,16 @@ export const projects: Project[] = [
     slug: { en: "inaricom", fr: "inaricom" },
     title: "Inaricom",
     summary: {
-      en: "WordPress/WooCommerce website with React interfaces, a custom PHP backend and supplier integration.",
-      fr: "Site WordPress/WooCommerce avec interfaces React, backend PHP sur mesure et intégration fournisseur.",
+      en: "WordPress/WooCommerce and React website, supplier integration, commerce and sales agents, quote and invoicing workflows, and event analytics.",
+      fr: "Site WordPress/WooCommerce et React, intégration fournisseur, agents e-commerce et commerciaux, parcours devis et facturation, analyse des événements.",
     },
     role: {
-      en: "Website and backend development",
-      fr: "Développement du site et du backend",
+      en: "Website, backend and business-agent development",
+      fr: "Développement du site, du backend et des agents métier",
     },
     practice: "software",
-    filters: ["software", "web"],
-    evidenceCheckedAt: "2026-10-02",
+    filters: ["software", "web", "ai"],
+    evidenceCheckedAt: "2026-10-11",
     projectStart: { en: "2023", fr: "2023" },
     cardStack: [
       "WordPress",
@@ -729,6 +729,7 @@ export const projects: Project[] = [
       "Vite",
       "PHP",
       "REST",
+      "Python",
     ],
     stack: [
       "WordPress",
@@ -738,22 +739,30 @@ export const projects: Project[] = [
       "React 19",
       "TypeScript",
       "Vite",
+      "Python",
+      "FastAPI",
+      "Qdrant",
+      "FAISS",
+      "MQTT",
+      "TimescaleDB",
     ],
     sections: {
       summary: {
         en: [
-          "Inaricom is a business, services, publishing, and commerce website. The implementation keeps WordPress and WooCommerce as the publishing and commerce backend while adding page-specific React interfaces.",
+          "Inaricom brings together services, technical publishing and commerce. I develop its WordPress/WooCommerce backend and React interfaces, alongside agents for ecommerce operations, customer support and sales workflows.",
         ],
         fr: [
-          "Inaricom est un site professionnel de services, de publication et de commerce. L’implémentation conserve WordPress et WooCommerce comme backend éditorial et commercial tout en ajoutant des interfaces React propres à chaque page.",
+          "Inaricom réunit services, publication technique et commerce. Je développe son backend WordPress/WooCommerce et ses interfaces React, ainsi que les agents destinés aux opérations e-commerce, au SAV et aux parcours commerciaux.",
         ],
       },
       role: {
         en: [
           "I develop the website and backend: WordPress content models, custom PHP plugins and REST endpoints, React interfaces, contact flows and deployment tooling. I also built a DigiKey integration to search and import product references into WooCommerce, enrich product information and update prices and availability.",
+          "I also develop Inaricom’s business services: ecommerce tools, document-grounded support and a sales-agent chain for prospecting, qualification, negotiation, closing and follow-up. The work includes quote and contract preparation, client acceptance and PDF invoicing modules linked to WooCommerce orders. I built a WooCommerce tracking pixel and the event-to-KPI pipeline feeding Analytics Hub.",
         ],
         fr: [
           "Je développe le site et son backend : modèles de contenu WordPress, extensions PHP et points d’accès REST dédiés, interfaces React, parcours de contact et outils de déploiement. J’ai également créé une intégration DigiKey pour rechercher et importer des références dans WooCommerce, enrichir les fiches produits et mettre à jour les prix et disponibilités.",
+          "Je développe aussi les services métier d’Inaricom : outils e-commerce, assistance fondée sur les documents et chaîne d’agents commerciaux pour la prospection, la qualification, la négociation, le closing et le suivi. Le travail comprend la préparation des devis et contrats, l’acceptation client et les modules de facturation PDF reliés aux commandes WooCommerce. J’ai créé un pixel de suivi WooCommerce et la chaîne d’événements et de KPI destinée à l’Analytics Hub.",
         ],
       },
       problem: {
@@ -768,18 +777,26 @@ export const projects: Project[] = [
         en: [
           "A custom PHP plugin defines content models, taxonomies, structured data, REST endpoints, and conditional React mount points. Vite builds page-specific React 19 and TypeScript interfaces while WooCommerce retains catalogue and purchase flows.",
           "A separate supplier integration connects the DigiKey API to WooCommerce products. It maps descriptions, images and technical attributes, with manual updates and a scheduled price and stock synchronisation mechanism. A custom contact endpoint connects the website form to WordPress mail handling.",
+          "Python/FastAPI services connect the ecommerce agent to WooCommerce catalogue, stock and order information. Catalogue retrieval uses FAISS; Qdrant provides ecommerce knowledge and store-specific support documents. These sources inform the support workflow and response preparation.",
+          "The sales-agent chain connects prospecting, qualification, negotiation and closing. The commercial case retains the quote, contract, operator approval and client acceptance. Dedicated PHP modules link PDF invoice generation and archiving to the accepted quote, WooCommerce order and payment receipt.",
+          "The tracking pixel collects storefront events; analytics services aggregate and attribute them before publishing KPI snapshots to Analytics Hub over MQTT. Business-agent events provide a second input to the analysis pipeline.",
         ],
         fr: [
           "Une extension PHP dédiée définit les modèles de contenu, les taxonomies, les données structurées, les points d’accès REST et les points de montage conditionnels de React. Vite construit des interfaces React 19 et TypeScript propres à chaque page, tandis que WooCommerce conserve le catalogue et les parcours d’achat.",
           "Une intégration fournisseur distincte relie l’API DigiKey aux produits WooCommerce. Elle associe descriptions, images et caractéristiques techniques, avec des mises à jour manuelles et un mécanisme de synchronisation programmé des prix et stocks. Un point d’accès dédié relie le formulaire de contact à l’envoi de courriels WordPress.",
+          "Des services Python/FastAPI relient l’agent e-commerce aux informations de catalogue, de stock et de commande de WooCommerce. La recherche dans le catalogue utilise FAISS ; Qdrant apporte les connaissances e-commerce et les documents SAV du site. Ces sources alimentent le parcours d’assistance et la préparation des réponses.",
+          "La chaîne d’agents commerciaux relie prospection, qualification, négociation et closing. Le dossier commercial conserve le devis, le contrat, la validation opérateur et l’acceptation du client. Des modules PHP dédiés relient la génération et l’archivage des factures PDF au devis accepté, à la commande WooCommerce et au reçu de paiement.",
+          "Le pixel collecte les événements du site ; les services d’analyse les agrègent et leur attribuent des canaux avant de transmettre les KPI à l’Analytics Hub via MQTT. Les événements des agents métier constituent une seconde entrée de la chaîne d’analyse.",
         ],
       },
       decisions: {
         en: [
           "React is loaded only where an interface needs it. Classic WordPress and WooCommerce pages remain available, and the custom layer focuses on services, content, structured data, and interactions rather than reimplementing commerce.",
+          "I separate catalogue retrieval, store documents and sales context so each workflow uses the appropriate source. Qualification and document preparation are distinct from approval, signature and payment.",
         ],
         fr: [
           "React n’est chargé que lorsqu’une interface en a besoin. Les pages WordPress et WooCommerce classiques restent disponibles et la couche dédiée se concentre sur les services, les contenus, les données structurées et les interactions plutôt que de réimplémenter le commerce.",
+          "Je distingue recherche catalogue, documents du site et contexte commercial pour fournir les bonnes sources à chaque parcours. La qualification et la préparation documentaire restent des étapes distinctes de la validation, de la signature et du paiement.",
         ],
       },
       security: {
@@ -805,9 +822,11 @@ export const projects: Project[] = [
       limitations: {
         en: [
           "Current production activation of the supplier integration and contact backend has not been verified.",
+          "The sales-agent chain and its quote-to-invoice workflow are being integrated.",
         ],
         fr: [
           "L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée.",
+          "La chaîne d’agents commerciaux et son parcours devis-facturation sont en cours d’intégration.",
         ],
       },
     },
@@ -829,19 +848,27 @@ export const projects: Project[] = [
     slug: { en: "mikasshop", fr: "mikasshop" },
     title: "Mika's Shop",
     summary: {
-      en: "Shopify storefront, AI shopping assistant and customer-support integrations for a pet-products store.",
-      fr: "Boutique Shopify, assistant conversationnel IA et intégrations SAV pour une enseigne dédiée aux animaux de compagnie.",
+      en: "Shopify storefront, AI store assistant, customer-support agents, content workflows and custom event analytics.",
+      fr: "Boutique Shopify, assistant conversationnel IA, agents SAV, parcours éditoriaux et analyse des événements sur mesure.",
     },
     role: {
-      en: "Storefront design, AI chat development and customer-support integrations",
-      fr: "Conception de la boutique, développement du chat IA et intégrations SAV",
+      en: "Storefront design, AI agents and ecommerce analytics",
+      fr: "Conception de la boutique, agents IA et analyse e-commerce",
     },
     status: "store-and-integrations",
     practice: "software",
     filters: ["software", "web", "ai"],
-    evidenceCheckedAt: "2026-09-12",
+    evidenceCheckedAt: "2026-10-11",
     projectStart: { en: "2024", fr: "2024" },
-    cardStack: ["Shopify", "Python", "FastAPI", "Shopify APIs", "SSE", "MQTT"],
+    cardStack: [
+      "Shopify",
+      "Python",
+      "FastAPI",
+      "Shopify APIs",
+      "Qdrant",
+      "SSE",
+      "MQTT",
+    ],
     stack: [
       "Shopify",
       "Liquid theme configuration",
@@ -852,22 +879,27 @@ export const projects: Project[] = [
       "Shopify APIs",
       "SSE",
       "MQTT",
+      "Qdrant",
+      "FAISS",
+      "TimescaleDB",
     ],
     sections: {
       summary: {
         en: [
-          "Mika is the real cat at the heart of the Mika's Shop brand. The Shopify pet-products store also includes a custom AI shopping assistant and customer-support services developed in Talos. Visitors can browse by cat profile or product category; the assistant is designed to guide them using the catalogue and site content.",
+          "Mika is the real cat at the heart of the Mika's Shop brand. Behind the Shopify storefront, I developed an AI store assistant, ecommerce and support agents, customer-relationship workflows and event analytics. Visitors can browse by cat profile or product category; the assistant guides them using catalogue and site information.",
         ],
         fr: [
-          "Mika est le vrai chat qui incarne la marque Mika's Shop. La boutique Shopify pour animaux de compagnie intègre également un assistant conversationnel IA sur mesure et des services SAV développés dans Talos. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant est conçu pour guider les visiteurs à partir du catalogue et des contenus du site.",
+          "Mika est le vrai chat qui incarne la marque Mika's Shop. Derrière la boutique Shopify, j’ai développé un assistant conversationnel IA, des agents e-commerce et SAV, des parcours de relation client et l’analyse des événements. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant guide les visiteurs à partir du catalogue et des contenus du site.",
         ],
       },
       role: {
         en: [
-          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and the store's integration with the Talos customer-support agent.",
+          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and its customer-support agent integration.",
+          "The work also includes branded customer-relationship workflows, a custom tracking pixel, KPI delivery to Analytics Hub and an editorial workflow that prepares French and English product-based drafts for review.",
         ],
         fr: [
-          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de la boutique à l’agent SAV Talos.",
+          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de l’agent SAV de la boutique.",
+          "Le travail comprend aussi les parcours de relation client aux couleurs de la marque, un pixel de suivi maison, la transmission de KPI à l’Analytics Hub et un parcours éditorial qui prépare des brouillons français et anglais à partir des produits, à relire avant publication.",
         ],
       },
       problem: {
@@ -881,11 +913,15 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "Shopify provides hosted commerce, catalogue, localization, cart, and checkout. The storefront theme organizes collections by product type and cat profile, multilingual content, editorial pages, and customer information.",
-          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate Talos SAV service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
+          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate customer-support service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
+          "The ecommerce backend supplies catalogue retrieval through FAISS and business knowledge and store policies through Qdrant. Product prices and availability come from dedicated Shopify-reading tools. The content workflow prepares product-based drafts; content and SEO skills document task-specific instructions and editorial methods.",
+          "The custom pixel collects storefront events such as product views, cart additions and purchase steps. The analytics pipeline stores, aggregates and attributes events, then sends KPI snapshots to Analytics Hub via MQTT. Support and ecommerce agents also emit business events for analysis.",
         ],
         fr: [
           "Shopify fournit le commerce hébergé, le catalogue, la localisation, le panier et le passage en caisse. Le thème de la vitrine organise les collections par type de produit et profil de chat, les contenus multilingues, les pages éditoriales et les informations clients.",
-          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV Talos distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
+          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
+          "Le backend e-commerce apporte la recherche catalogue via FAISS, ainsi que les connaissances métier et les politiques de la boutique via Qdrant. Les prix et disponibilités proviennent d’outils dédiés de lecture Shopify. Le parcours éditorial prépare des brouillons à partir des produits ; des skills de contenu et de SEO décrivent les consignes propres aux tâches et les méthodes éditoriales.",
+          "Le pixel maison collecte les événements de la boutique, notamment les vues produit, ajouts au panier et étapes d’achat. La chaîne d’analyse stocke, agrège et attribue ces événements, puis transmet des KPI à l’Analytics Hub via MQTT. Les agents SAV et e-commerce émettent également des événements métier destinés à l’analyse.",
         ],
       },
       decisions: {
@@ -947,8 +983,8 @@ export const projects: Project[] = [
     slug: { en: "pedi-sense", fr: "pedi-sense" },
     title: "Pedi-Sense",
     summary: {
-      en: "Shopify storefront, customer-support agent and custom ecommerce integrations.",
-      fr: "Boutique Shopify, agent SAV et intégrations e-commerce sur mesure.",
+      en: "Shopify storefront, customer-support agent, ecommerce agents, branded email workflows and event analytics.",
+      fr: "Boutique Shopify, agent SAV, agents e-commerce, parcours email de marque et analyse des événements.",
     },
     role: {
       en: "Storefront design, agent development and backend integrations",
@@ -957,7 +993,7 @@ export const projects: Project[] = [
     status: "store-and-integrations",
     practice: "software",
     filters: ["software", "web", "ai"],
-    evidenceCheckedAt: "2026-09-12",
+    evidenceCheckedAt: "2026-10-11",
     projectStart: { en: "Late 2022", fr: "Fin 2022" },
     cardStack: ["Shopify", "Python", "Shopify APIs", "MQTT", "Listmonk"],
     stack: [
@@ -969,22 +1005,27 @@ export const projects: Project[] = [
       "Shopify APIs",
       "MQTT",
       "Listmonk",
+      "Qdrant",
+      "FAISS",
+      "TimescaleDB",
     ],
     sections: {
       summary: {
         en: [
-          "Pedi-Sense combines a Shopify storefront with custom services developed within Talos: customer support, email workflows and ecommerce event analysis. The work covers both the customer-facing store and the integrations behind it.",
+          "Pedi-Sense combines a Shopify storefront with ecommerce and support agents, branded email workflows, catalogue retrieval and event analytics. The work covers the customer-facing store and the business workflows behind it.",
         ],
         fr: [
-          "Pedi-Sense associe une boutique Shopify à des services sur mesure développés dans Talos : SAV, parcours email et analyse des événements e-commerce. Le travail couvre à la fois la boutique visible par les clients et les intégrations qui l’accompagnent.",
+          "Pedi-Sense associe une boutique Shopify à des agents e-commerce et SAV, des parcours email de marque, une recherche catalogue et l’analyse des événements. Le travail couvre la boutique visible par les clients et les parcours métier qui l’accompagnent.",
         ],
       },
       role: {
         en: [
-          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed the Pedi-Sense integrations within Talos, including customer-support workflows, branded emails and storefront event collection.",
+          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed Pedi-Sense’s business integrations, including customer-support workflows, branded emails and storefront event collection.",
+          "I built the store’s tracking-pixel integration and the event-to-KPI path into Analytics Hub. The agent workflows also connect to semantic catalogue retrieval and ecommerce knowledge, with content and SEO workflows developed for the store.",
         ],
         fr: [
-          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations Pedi-Sense dans Talos, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
+          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations métier de Pedi-Sense, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
+          "J’ai développé l’intégration du pixel de suivi et le parcours des événements jusqu’aux KPI de l’Analytics Hub. Les agents sont aussi reliés à la recherche sémantique du catalogue et aux connaissances e-commerce, avec des parcours de contenu et de SEO développés pour la boutique.",
         ],
       },
       problem: {
@@ -997,10 +1038,14 @@ export const projects: Project[] = [
       },
       architecture: {
         en: [
-          "Shopify handles the catalogue, accounts, cart and checkout. Separate Talos services provide a multi-store support agent, connections to order and product information, email delivery through Listmonk, and event collection and attribution. Python services, Shopify APIs and MQTT connect these components.",
+          "Shopify handles the catalogue, accounts, cart and checkout. Python services connect ecommerce and support agents to product, stock and order information. The support workflow prepares responses for review and escalation; branded email workflows cover order confirmations, abandoned carts and shipping through Listmonk.",
+          "Catalogue retrieval uses FAISS, while Qdrant provides ecommerce knowledge and store-specific policies and FAQs. The content and SEO workflow includes task instructions documented as skills. This separates catalogue facts, support documents and editorial methods.",
+          "The store’s custom pixel integration collects navigation and purchase-path events. Analytics services store, aggregate and attribute them, then publish KPI snapshots to Analytics Hub over MQTT. Events emitted by the business agents feed the analysis pipeline too.",
         ],
         fr: [
-          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Talos distincts apportent un agent SAV multi-boutiques, l’accès aux informations de commande et de produit, l’envoi d’emails via Listmonk ainsi que la collecte et l’attribution des événements. Des services Python, les API Shopify et MQTT relient ces composants.",
+          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Python relient les agents e-commerce et SAV aux informations de produit, de stock et de commande. Le SAV prépare les réponses à valider et les transmissions à un opérateur ; les parcours email de marque couvrent confirmations de commande, paniers abandonnés et expéditions via Listmonk.",
+          "La recherche catalogue utilise FAISS, tandis que Qdrant apporte les connaissances e-commerce, les politiques et les FAQ de la boutique. Le parcours de contenu et de SEO comprend des consignes de tâche documentées sous forme de skills. Les faits du catalogue, les documents SAV et les méthodes éditoriales restent ainsi distincts.",
+          "L’intégration du pixel maison collecte les événements de navigation et du parcours d’achat. Les services d’analyse les stockent, les agrègent et leur attribuent des canaux, puis publient des KPI vers l’Analytics Hub via MQTT. Les événements émis par les agents métier alimentent aussi la chaîne d’analyse.",
         ],
       },
       decisions: {
@@ -1029,10 +1074,10 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "Explore the storefront and its case study. The Talos integrations use private source code.",
+          "Explore the storefront and its case study. The business integrations use private source code.",
         ],
         fr: [
-          "Découvrez la boutique et son étude de cas. Le code des intégrations Talos est privé.",
+          "Découvrez la boutique et son étude de cas. Le code des intégrations métier est privé.",
         ],
       },
       limitations: {
@@ -1156,7 +1201,7 @@ export const practicePages: Record<
       ],
     },
     projectIds: [
-      "talos-memory",
+      "persistent-memory",
       "bifrost-vpn",
       "celo-credentials",
       "inaricom",
@@ -1184,8 +1229,8 @@ export const practicePages: Record<
       fr: "Ingénierie IA et systèmes multi-agents",
     },
     lead: {
-      en: "I design AI systems that bring together specialized agents, language models, memory and tools. With Talos, I develop their orchestration and their capabilities for analysis, automation and interaction, while exploring prediction and decision support through machine learning.",
-      fr: "Je conçois des systèmes d’IA qui associent agents spécialisés, modèles de langage, mémoire et outils. Avec Talos, je développe leur orchestration et leurs capacités d’analyse, d’automatisation et d’interaction, tout en explorant la prédiction et l’aide à la décision par l’apprentissage automatique.",
+      en: "I design AI systems that bring together specialized agents, language models, memory and tools. I develop their orchestration and their capabilities for analysis, automation and interaction, while exploring prediction and decision support through machine learning.",
+      fr: "Je conçois des systèmes d’IA qui associent agents spécialisés, modèles de langage, mémoire et outils. Je développe leur orchestration et leurs capacités d’analyse, d’automatisation et d’interaction, tout en explorant la prédiction et l’aide à la décision par l’apprentissage automatique.",
     },
     capabilities: {
       en: [
@@ -1209,7 +1254,13 @@ export const practicePages: Record<
         "Conception de pilotes, contrôles, preuves et gouvernance pour l’adoption de l’IA",
       ],
     },
-    projectIds: ["talos-memory", "agent-resilience", "mikasshop", "pedi-sense"],
+    projectIds: [
+      "persistent-memory",
+      "agent-resilience",
+      "mikasshop",
+      "pedi-sense",
+      "inaricom",
+    ],
     evidence: [
       {
         label: {

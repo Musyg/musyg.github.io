@@ -14,11 +14,11 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
-  it("presents Talos and broader AI engineering before commerce use cases", () => {
+  it("presents broader AI engineering without tying other projects to Talos", () => {
     const ai = practicePages.ai;
     for (const locale of ["en", "fr"] as const) {
       expect(ai.title[locale]).toMatch(/multi-agent/);
-      expect(ai.lead[locale]).toContain("Talos");
+      expect(ai.lead[locale]).not.toContain("Talos");
       expect(ai.lead[locale]).not.toMatch(/shopping|conseil produit|SAV/);
       expect(ai.capabilities[locale][0]).toMatch(/multi-agent/);
       expect(ai.capabilities[locale].join(" ")).toMatch(/simulat/);
@@ -33,7 +33,7 @@ describe("portfolio content contract", () => {
     for (const path of ["/ai-systems/", "/fr/systemes-ia/"]) {
       const route = routeFor(path);
       expect(route.title).toMatch(/multi-agent/);
-      expect(route.description).toContain("Talos");
+      expect(route.description).not.toContain("Talos");
     }
   });
 
@@ -65,9 +65,7 @@ describe("portfolio content contract", () => {
       expect(JSON.stringify(project.sections)).toContain(
         "Mika is the real cat",
       );
-      expect(project.sections.architecture[locale].join(" ")).toContain(
-        "Talos",
-      );
+      expect(JSON.stringify(project)).not.toMatch(/talos/i);
       expect(project.sections.limitations[locale].join(" ")).toContain(
         locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
       );
@@ -79,7 +77,7 @@ describe("portfolio content contract", () => {
   it("presents Inaricom without an availability badge or verified integration claim", () => {
     const project = projects.find((item) => item.id === "inaricom")!;
     expect(project.status).toBeUndefined();
-    expect(project.evidenceCheckedAt).toBe("2026-10-02");
+    expect(project.evidenceCheckedAt).toBe("2026-10-11");
     expect(JSON.stringify(project)).not.toMatch(
       /refonte|rebuild|site en ligne|website live|rouvert|reopened/i,
     );
@@ -87,7 +85,8 @@ describe("portfolio content contract", () => {
       /refonte|rebuilt/i,
     );
     expect(project.projectStart).toEqual({ en: "2023", fr: "2023" });
-    expect(project.filters).toEqual(["software", "web"]);
+    expect(project.filters).toEqual(["software", "web", "ai"]);
+    expect(practicePages.ai.projectIds).toContain(project.id);
     for (const locale of ["en", "fr"] as const) {
       expect(project.sections.role[locale].join(" ")).toContain("DigiKey");
       expect(project.sections.architecture[locale].join(" ")).toContain(
@@ -112,9 +111,7 @@ describe("portfolio content contract", () => {
       expect.arrayContaining(["Shopify", "Python", "MQTT", "Listmonk"]),
     );
     for (const locale of ["en", "fr"] as const) {
-      expect(project.sections.architecture[locale].join(" ")).toContain(
-        "Talos",
-      );
+      expect(JSON.stringify(project)).not.toMatch(/talos/i);
       expect(project.sections.architecture[locale].join(" ")).toContain(
         "Listmonk",
       );
@@ -127,6 +124,83 @@ describe("portfolio content contract", () => {
       "5eb44f8839a3a457099df26bc784b67c4bbf151c",
     );
     expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+  });
+
+  it("describes each ecommerce project's own agents, retrieval and analytics", () => {
+    for (const id of ["inaricom", "mikasshop", "pedi-sense"]) {
+      const project = projects.find((item) => item.id === id)!;
+      expect(project.evidenceCheckedAt).toBe("2026-10-11");
+      expect(project.stack).toEqual(
+        expect.arrayContaining(["Python", "Qdrant", "FAISS", "MQTT"]),
+      );
+      for (const locale of ["en", "fr"] as const) {
+        const architecture = project.sections.architecture[locale].join(" ");
+        for (const term of ["Qdrant", "FAISS", "pixel", "KPI", "Analytics Hub"])
+          expect(architecture).toContain(term);
+        const copy = Object.values(project.sections)
+          .flatMap((section) => section[locale])
+          .join(" ");
+        expect(copy).not.toMatch(
+          /multi-store|multi-boutiques|mutualis|composants partagés|shared (?:components|infrastructure)/i,
+        );
+        expect(copy).not.toMatch(
+          /herm[eè]s|store_support_kb|hermes_business_kb|phoenix[235]|localhost/i,
+        );
+        if (id !== "inaricom") {
+          expect(architecture).toContain("skills");
+          expect(copy).not.toMatch(
+            /MEDDPICC|Sales Closing|agents commerciaux|sales-agent chain/,
+          );
+        }
+      }
+    }
+  });
+
+  it("distinguishes Inaricom sales agents from quote and invoicing modules", () => {
+    const project = projects.find((item) => item.id === "inaricom")!;
+    for (const locale of ["en", "fr"] as const) {
+      const architecture = project.sections.architecture[locale].join(" ");
+      expect(architecture).toContain("closing");
+      expect(architecture).toContain("PHP");
+      expect(architecture).toContain("PDF");
+      expect(architecture).toContain(
+        locale === "fr" ? "devis accepté" : "accepted quote",
+      );
+      expect(architecture).toContain(
+        locale === "fr" ? "reçu de paiement" : "payment receipt",
+      );
+      expect(project.summary[locale]).toContain(
+        locale === "fr" ? "facturation" : "invoicing",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "devis-facturation" : "quote-to-invoice",
+      );
+    }
+  });
+
+  it("presents every case independently of Talos, including memory and resilience", () => {
+    for (const project of projects) {
+      expect(JSON.stringify(project)).not.toMatch(/talos|herm[eè]s/i);
+    }
+    const memory = projects.find(
+      (project) => project.id === "persistent-memory",
+    )!;
+    expect(memory.slug).toEqual({
+      en: "persistent-memory",
+      fr: "persistent-memory",
+    });
+    expect(routeFor("/work/talos-memory/").path).toBe(
+      "/work/persistent-memory/",
+    );
+    expect(routeFor("/fr/realisations/talos-memory/").path).toBe(
+      "/fr/realisations/persistent-memory/",
+    );
+    expect(publicRoutes.map((route) => route.path).join(" ")).not.toContain(
+      "talos-memory",
+    );
+    for (const practice of Object.values(practicePages)) {
+      expect(practice.projectIds).not.toContain("talos-memory");
+    }
   });
 
   it("keeps the report preview identical to the documented public source rendering", () => {

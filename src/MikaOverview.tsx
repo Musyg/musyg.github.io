@@ -2,9 +2,9 @@ import { type Locale } from "./content/site";
 
 const copy = {
   fr: {
-    title: "La boutique et son assistant",
+    title: "La boutique et ses agents",
     introduction:
-      "Mika, le vrai chat qui incarne la marque, est au cœur de la boutique. Un assistant conversationnel accompagne le conseil produit, tandis que le SAV suit un parcours distinct.",
+      "Mika, le vrai chat qui incarne la marque, est au cœur de la boutique. J’ai développé le conseil produit, le SAV, les parcours de contenu et le suivi e-commerce qui accompagnent son activité.",
     storefront: "La boutique, sur ordinateur et mobile",
     storeAlt:
       "Accueil de Mika’s Shop : navigation, photo de Mika et sélection de produits selon le profil du chat",
@@ -14,30 +14,39 @@ const copy = {
     capture:
       "Boutique et interface de l’assistant. Captures du 12 septembre 2026.",
     open: "Agrandir la capture",
-    system: "Trois rôles, des responsabilités distinctes",
-    systemLead: "Comment la boutique, l’assistant et le SAV s’articulent.",
+    system: "Du conseil produit à l’analyse de la boutique",
+    systemLead: "Les parcours développés pour Mika’s Shop.",
     nodes: [
       {
-        title: "Boutique Shopify",
-        body: "Catalogue, panier et paiement. La vitrine présente les produits et leurs caractéristiques.",
-        relation: "Le catalogue alimente le conseil produit.",
+        title: "Boutique et agent e-commerce",
+        body: "Catalogue, stock et informations produit via les API Shopify. Le panier et le paiement restent dans la boutique.",
+        relation:
+          "La recherche catalogue fournit le contexte au conseil produit.",
       },
       {
         title: "Assistant conversationnel IA",
         body: "Widget et backend de conseil : recherche, informations produit et orientation dans le site.",
-        relation: "Le chat consulte les contenus de la boutique.",
+        relation:
+          "Les outils consultent produits, disponibilités, politiques et liens du site.",
       },
       {
-        title: "SAV Talos",
-        body: "Parcours d’assistance séparé : demandes, réponses, validations et transmission à un opérateur.",
-        relation: "Le SAV traite les demandes d’assistance.",
+        title: "SAV et contenus",
+        body: "Assistance, brouillons de réponse et transmission à un opérateur. Un parcours éditorial prépare aussi des contenus produit en français et en anglais.",
+        relation:
+          "Les documents de la boutique apportent le contexte ; les brouillons passent par une validation.",
+      },
+      {
+        title: "Pixel et Analytics Hub",
+        body: "Pixel de suivi maison, événements de la boutique et KPI pour l’analyse du parcours d’achat.",
+        relation:
+          "Événements de navigation et des agents → agrégation → Analytics Hub.",
       },
     ],
   },
   en: {
-    title: "The storefront and its assistant",
+    title: "The storefront and its agents",
     introduction:
-      "Mika, the real cat behind the brand, is at the heart of the storefront. An AI assistant provides product guidance, while customer support follows a separate workflow.",
+      "Mika, the real cat behind the brand, is at the heart of the storefront. I developed the product-guidance, support, content and ecommerce-tracking workflows behind the store.",
     storefront: "The storefront, on desktop and mobile",
     storeAlt:
       "Mika’s Shop homepage: navigation, Mika’s photo and product selection by cat profile",
@@ -47,24 +56,28 @@ const copy = {
     capture:
       "Storefront and assistant interface. Screenshots taken on 12 September 2026.",
     open: "View full-size screenshot",
-    system: "Three roles, distinct responsibilities",
-    systemLead:
-      "How the storefront, shopping assistant and customer support fit together.",
+    system: "From product guidance to store analytics",
+    systemLead: "The workflows developed for Mika’s Shop.",
     nodes: [
       {
-        title: "Shopify storefront",
-        body: "Catalogue, cart and checkout. The storefront presents products and their attributes.",
-        relation: "The catalogue informs product guidance.",
+        title: "Storefront and ecommerce agent",
+        body: "Catalogue, stock and product information through Shopify APIs. Cart and checkout remain in the storefront.",
+        relation: "Catalogue retrieval provides context for product guidance.",
       },
       {
-        title: "AI shopping assistant",
+        title: "AI store assistant",
         body: "Guidance widget and backend: search, product information and site navigation.",
-        relation: "The chat consults store content.",
+        relation: "Tools read products, availability, policies and site links.",
       },
       {
-        title: "Talos customer support",
-        body: "A separate support workflow: requests, replies, approvals and operator escalation.",
-        relation: "Customer support handles assistance requests.",
+        title: "Support and content",
+        body: "Support requests, draft replies and operator escalation. An editorial workflow also prepares French and English product-based content.",
+        relation: "Store documents provide context; drafts go through review.",
+      },
+      {
+        title: "Tracking pixel and Analytics Hub",
+        body: "Custom tracking pixel, storefront events and KPIs for purchase-path analysis.",
+        relation: "Storefront and agent events → aggregation → Analytics Hub.",
       },
     ],
   },

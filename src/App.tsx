@@ -7,6 +7,7 @@ import { SecurityProfiles } from "./SecurityProfiles";
 import { BifrostSpotlight } from "./BifrostSpotlight";
 import { MikaOverview } from "./MikaOverview";
 import { PediOverview } from "./PediOverview";
+import { InaricomOverview } from "./InaricomOverview";
 import { ContactForm } from "./ContactForm";
 import { PlatformLogo } from "./PlatformLogo";
 import { IpiArticle } from "./IpiArticle";
@@ -734,6 +735,7 @@ function ProjectPage({
       )}
       {project.id === "mikasshop" && <MikaOverview locale={locale} />}
       {project.id === "pedi-sense" && <PediOverview locale={locale} />}
+      {project.id === "inaricom" && <InaricomOverview locale={locale} />}
       <div className="case-layout">
         <aside className="case-stack" aria-label={content.stack}>
           <h2>{content.stack}</h2>
