@@ -488,18 +488,22 @@ export const projects: Project[] = [
     slug: { en: "security-reviews", fr: "security-reviews" },
     title: "Security Reviews",
     summary: {
-      en: "A public catalogue of reproducible smart-contract and applied-security research.",
-      fr: "Un catalogue public de travaux reproductibles sur les smart contracts et la sécurité appliquée.",
+      en: "Cybersecurity research across the web, applications, smart contracts and AI agents.",
+      fr: "Recherche en cybersécurité sur le Web, les applications, les smart contracts et les agents IA.",
     },
     role: {
-      en: "Security research, exploit reproduction, remediation, and reporting",
-      fr: "Recherche en sécurité, reproduction d’exploits, correction et rapports",
+      en: "Cybersecurity research, red teaming, code reviews and reports",
+      fr: "Recherche en cybersécurité, red teaming, revues de code et rapports",
     },
     status: "published-research",
     practice: "security",
-    filters: ["security", "blockchain"],
+    filters: ["security", "web", "blockchain"],
     evidenceCheckedAt: "2026-08-24",
+    cardStack: ["Web / API", "Solidity", "LLM / agents", "IPI"],
     stack: [
+      "Web / API",
+      "LLM / agents",
+      "IPI",
       "Solidity",
       "Vyper",
       "Foundry",
@@ -511,10 +515,12 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Security Reviews groups public, reproducible research by vulnerability class. Each review links a vulnerable target, an exploit proof of concept, a remediated branch, a report, and automated checks.",
+          "This page brings together published code reviews, an AI red teaming case study on Gray Swan, and my research profiles on HackerOne, Cantina and Code4rena.",
+          "The Security Reviews GitHub catalogue groups reproducible research by vulnerability class. Each review links a vulnerable target, an exploit proof of concept, a remediated branch, a report, and automated checks.",
         ],
         fr: [
-          "Security Reviews regroupe des recherches publiques et reproductibles par classe de vulnérabilité. Chaque revue relie une cible vulnérable, une preuve de concept d’exploitation, une branche corrigée, un rapport et des contrôles automatisés.",
+          "Cette page réunit les revues de code publiées, une étude de cas de red teaming IA menée sur Gray Swan et mes profils de recherche sur HackerOne, Cantina et Code4rena.",
+          "Le catalogue GitHub Security Reviews regroupe des recherches reproductibles par classe de vulnérabilité. Chaque revue relie une cible vulnérable, une preuve de concept d’exploitation, une branche corrigée, un rapport et des contrôles automatisés.",
         ],
       },
       role: {
@@ -589,8 +595,11 @@ export const projects: Project[] = [
         url: "https://github.com/Musyg/security-reviews",
       },
       {
-        label: { en: "HackerOne profile", fr: "Profil HackerOne" },
-        url: "https://hackerone.com/gilmu",
+        label: {
+          en: "Profiles and contributions",
+          fr: "Profils et contributions",
+        },
+        url: "#security-profiles-title",
       },
     ],
   },

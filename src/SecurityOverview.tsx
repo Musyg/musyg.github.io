@@ -1,5 +1,6 @@
 import { type Locale } from "./content/site";
 import { ipiArticle } from "./content/ipi-article";
+import { SecurityProfiles } from "./SecurityProfiles";
 
 export const securityReportSource =
   "https://github.com/Musyg/stvault-audit/blob/5558eba7d33808c56fcd83f95ea0f043af56f0d0";
@@ -70,6 +71,7 @@ export function SecurityOverview({ locale }: { locale: Locale }) {
           </a>
         </div>
       </section>
+      <SecurityProfiles locale={locale} />
       <section
         className="section-shell security-overview"
         aria-labelledby="security-overview-title"

@@ -3,6 +3,7 @@ import { aboutCopy } from "./content/about";
 import { engagements, engagementScope } from "./content/engagements";
 import { CeloOverview } from "./CeloOverview";
 import { SecurityOverview } from "./SecurityOverview";
+import { SecurityProfiles } from "./SecurityProfiles";
 import { BifrostSpotlight } from "./BifrostSpotlight";
 import { MikaOverview } from "./MikaOverview";
 import { PediOverview } from "./PediOverview";
@@ -499,6 +500,31 @@ function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      <section className="publication-feature" aria-labelledby="home-ipi-title">
+        <div>
+          <p className="eyebrow">
+            {isFrench
+              ? "Recherche publiée · Sécurité des agents IA"
+              : "Published research · AI agent security"}
+          </p>
+          <h2 id="home-ipi-title">{ipiArticle[locale].title}</h2>
+          <p>{ipiArticle[locale].description}</p>
+        </div>
+        <div className="publication-actions">
+          <a className="button button-primary" href={ipiArticle[locale].path}>
+            {isFrench ? "Lire l’étude de cas" : "Read the case study"}
+          </a>
+          <a
+            className="text-link"
+            href={projectPath("security-reviews", locale)}
+          >
+            {isFrench
+              ? "Explorer mes travaux en cybersécurité"
+              : "Explore my cybersecurity work"}
+          </a>
+        </div>
+      </section>
+
       <section
         className="section-shell writing-preview"
         aria-labelledby="writing-preview-title"
@@ -909,43 +935,6 @@ function PracticePage({
       </section>
       {practice === "security" ? <SecurityProfiles locale={locale} /> : null}
     </>
-  );
-}
-
-function SecurityProfiles({ locale }: { locale: Locale }) {
-  const isFrench = locale === "fr";
-  const profiles = professionalProfiles.filter(
-    (profile) => profile.name !== "GitHub",
-  );
-
-  return (
-    <section
-      className="profile-section"
-      aria-labelledby="security-profiles-title"
-    >
-      <div>
-        <p className="eyebrow">
-          {isFrench ? "Profils publics" : "Public profiles"}
-        </p>
-        <h2 id="security-profiles-title">
-          {isFrench ? "Profils et contributions" : "Profiles and contributions"}
-        </h2>
-      </div>
-      <div className="profile-list">
-        {profiles.map((profile) => (
-          <a href={profile.url} key={profile.name}>
-            <span className="profile-identity">
-              <PlatformLogo platform={profile.platform} />
-              <span className="profile-identity-text">
-                <strong>{profile.name}</strong>
-                <small>{profile.handle}</small>
-              </span>
-            </span>
-            <span>{localized(profile.association, locale)}</span>
-          </a>
-        ))}
-      </div>
-    </section>
   );
 }
 

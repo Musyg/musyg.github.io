@@ -7,6 +7,8 @@ for (const path of [
   "/fr/contact/",
   "/security-research/",
   "/fr/recherche-securite/",
+  "/work/security-reviews/",
+  "/fr/realisations/security-reviews/",
 ]) {
   test(`platform logos preserve profile links and spacing on ${path}`, async ({
     page,
