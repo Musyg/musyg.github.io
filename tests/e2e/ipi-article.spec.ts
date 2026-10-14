@@ -13,13 +13,15 @@ for (const locale of ["en", "fr"] as const) {
       );
       await page.locator("article figure").scrollIntoViewIfNeeded();
       await expect(page.locator("article img")).toBeVisible();
-      expect(
-        await page
-          .locator("article img")
-          .evaluate(
-            (el: HTMLImageElement) => el.complete && el.naturalWidth > 0,
-          ),
-      ).toBeTruthy();
+      await expect
+        .poll(() =>
+          page
+            .locator("article img")
+            .evaluate(
+              (el: HTMLImageElement) => el.complete && el.naturalWidth > 0,
+            ),
+        )
+        .toBeTruthy();
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= window.innerWidth,
