@@ -1,233 +1,685 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "library_version": "0.1.0",
-  "source_sha256": "8e55092547588491b3d7c56f2be93024081b529f37e4c88f6784a5f7085cebb3",
-  "recorded_at": "2026-10-14T07:50:12.990975+00:00",
-  "scenario": "serial local dependency failure and recovery",
-  "config": {
-    "failure_threshold": 3,
-    "recovery_timeout_s": 2
-  },
-  "events": [
-    {
-      "index": 0,
-      "elapsed_s": 0.0,
-      "phase": "initial",
-      "outcome": "ready",
-      "state": "closed",
-      "attempts": 0,
-      "upstream_calls": 0,
-      "blocked": 0,
-      "called": false,
-      "available": true,
-      "breaker": {
-        "name": "upstream",
-        "state": "closed",
-        "failure_count": 0,
-        "success_count": 0,
-        "total_trips": 0,
-        "last_failure_time": 0
-      }
+  "recorded_at": "2026-10-14T15:04:11.793116+00:00",
+  "scenarios": {
+    "circuit": {
+      "schema_version": 1,
+      "library_version": "0.1.0",
+      "source_sha256": "8e55092547588491b3d7c56f2be93024081b529f37e4c88f6784a5f7085cebb3",
+      "recorded_at": "2026-10-14T15:04:01.756181+00:00",
+      "scenario": "serial local dependency failure and recovery",
+      "config": {
+        "failure_threshold": 3,
+        "recovery_timeout_s": 2
+      },
+      "events": [
+        {
+          "index": 0,
+          "elapsed_s": 0.0,
+          "phase": "initial",
+          "outcome": "ready",
+          "state": "closed",
+          "attempts": 0,
+          "upstream_calls": 0,
+          "blocked": 0,
+          "called": false,
+          "available": true,
+          "breaker": {
+            "name": "upstream",
+            "state": "closed",
+            "failure_count": 0,
+            "success_count": 0,
+            "total_trips": 0,
+            "last_failure_time": 0
+          }
+        },
+        {
+          "index": 1,
+          "elapsed_s": 0.0,
+          "phase": "healthy",
+          "outcome": "success",
+          "state": "closed",
+          "attempts": 1,
+          "upstream_calls": 1,
+          "blocked": 0,
+          "called": true,
+          "available": true,
+          "breaker": {
+            "name": "upstream",
+            "state": "closed",
+            "failure_count": 0,
+            "success_count": 1,
+            "total_trips": 0,
+            "last_failure_time": 0
+          }
+        },
+        {
+          "index": 2,
+          "elapsed_s": 0.0,
+          "phase": "failure",
+          "outcome": "failure",
+          "state": "closed",
+          "attempts": 2,
+          "upstream_calls": 2,
+          "blocked": 0,
+          "called": true,
+          "available": false,
+          "breaker": {
+            "name": "upstream",
+            "state": "closed",
+            "failure_count": 1,
+            "success_count": 1,
+            "total_trips": 0,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 3,
+          "elapsed_s": 0.0,
+          "phase": "failure",
+          "outcome": "failure",
+          "state": "closed",
+          "attempts": 3,
+          "upstream_calls": 3,
+          "blocked": 0,
+          "called": true,
+          "available": false,
+          "breaker": {
+            "name": "upstream",
+            "state": "closed",
+            "failure_count": 2,
+            "success_count": 1,
+            "total_trips": 0,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 4,
+          "elapsed_s": 0.0,
+          "phase": "failure",
+          "outcome": "failure",
+          "state": "open",
+          "attempts": 4,
+          "upstream_calls": 4,
+          "blocked": 0,
+          "called": true,
+          "available": false,
+          "breaker": {
+            "name": "upstream",
+            "state": "open",
+            "failure_count": 3,
+            "success_count": 1,
+            "total_trips": 1,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 5,
+          "elapsed_s": 0.0,
+          "phase": "isolation",
+          "outcome": "blocked",
+          "state": "open",
+          "attempts": 5,
+          "upstream_calls": 4,
+          "blocked": 1,
+          "called": false,
+          "available": false,
+          "breaker": {
+            "name": "upstream",
+            "state": "open",
+            "failure_count": 3,
+            "success_count": 1,
+            "total_trips": 1,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 6,
+          "elapsed_s": 0.0,
+          "phase": "isolation",
+          "outcome": "blocked",
+          "state": "open",
+          "attempts": 6,
+          "upstream_calls": 4,
+          "blocked": 2,
+          "called": false,
+          "available": false,
+          "breaker": {
+            "name": "upstream",
+            "state": "open",
+            "failure_count": 3,
+            "success_count": 1,
+            "total_trips": 1,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 7,
+          "elapsed_s": 0.0,
+          "phase": "cooldown",
+          "outcome": "waiting",
+          "state": "open",
+          "attempts": 6,
+          "upstream_calls": 4,
+          "blocked": 2,
+          "called": false,
+          "available": false,
+          "breaker": {
+            "name": "upstream",
+            "state": "open",
+            "failure_count": 3,
+            "success_count": 1,
+            "total_trips": 1,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 8,
+          "elapsed_s": 2.063,
+          "phase": "probe",
+          "outcome": "allowed",
+          "state": "half_open",
+          "attempts": 7,
+          "upstream_calls": 4,
+          "blocked": 2,
+          "called": false,
+          "available": true,
+          "breaker": {
+            "name": "upstream",
+            "state": "half_open",
+            "failure_count": 3,
+            "success_count": 1,
+            "total_trips": 1,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 9,
+          "elapsed_s": 2.063,
+          "phase": "recovery",
+          "outcome": "success",
+          "state": "closed",
+          "attempts": 7,
+          "upstream_calls": 5,
+          "blocked": 2,
+          "called": true,
+          "available": true,
+          "breaker": {
+            "name": "upstream",
+            "state": "closed",
+            "failure_count": 0,
+            "success_count": 2,
+            "total_trips": 1,
+            "last_failure_time": 1791990239.7055182
+          }
+        },
+        {
+          "index": 10,
+          "elapsed_s": 2.063,
+          "phase": "resumed",
+          "outcome": "success",
+          "state": "closed",
+          "attempts": 8,
+          "upstream_calls": 6,
+          "blocked": 2,
+          "called": true,
+          "available": true,
+          "breaker": {
+            "name": "upstream",
+            "state": "closed",
+            "failure_count": 0,
+            "success_count": 3,
+            "total_trips": 1,
+            "last_failure_time": 1791990239.7055182
+          }
+        }
+      ]
     },
-    {
-      "index": 1,
-      "elapsed_s": 0.0,
-      "phase": "healthy",
-      "outcome": "success",
-      "state": "closed",
-      "attempts": 1,
-      "upstream_calls": 1,
-      "blocked": 0,
-      "called": true,
-      "available": true,
-      "breaker": {
-        "name": "upstream",
-        "state": "closed",
-        "failure_count": 0,
-        "success_count": 1,
-        "total_trips": 0,
-        "last_failure_time": 0
-      }
+    "dlq": {
+      "schema_version": 1,
+      "library_version": "0.1.0",
+      "source_sha256": "e342809780a66e015eab922b8437b632f6519e897f92eb4da4096fd735239d13",
+      "recorded_at": "2026-10-14T15:04:01.758203+00:00",
+      "scenario": "DLQ task failure and replay",
+      "environment": "Python DLQQueue with an in-memory Redis service adapter",
+      "config": {
+        "max_retries": 2
+      },
+      "events": [
+        {
+          "index": 0,
+          "elapsed_s": 0.0,
+          "phase": "queued",
+          "outcome": "enqueued",
+          "state": "queued",
+          "queue_size": 1,
+          "processing": 0,
+          "dlq_size": 0,
+          "worker_calls": 0,
+          "retry_count": 0,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 50,
+            "retry_count": 0,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": null
+          }
+        },
+        {
+          "index": 1,
+          "elapsed_s": 0.0,
+          "phase": "processing",
+          "outcome": "dequeued",
+          "state": "processing",
+          "queue_size": 0,
+          "processing": 1,
+          "dlq_size": 0,
+          "worker_calls": 0,
+          "retry_count": 0,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 50,
+            "retry_count": 0,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": null
+          }
+        },
+        {
+          "index": 2,
+          "elapsed_s": 0.0,
+          "phase": "retry",
+          "outcome": "failure",
+          "state": "queued",
+          "queue_size": 1,
+          "processing": 0,
+          "dlq_size": 0,
+          "worker_calls": 1,
+          "retry_count": 1,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 10,
+            "retry_count": 1,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": "local worker unavailable"
+          }
+        },
+        {
+          "index": 3,
+          "elapsed_s": 0.0,
+          "phase": "processing",
+          "outcome": "dequeued",
+          "state": "processing",
+          "queue_size": 0,
+          "processing": 1,
+          "dlq_size": 0,
+          "worker_calls": 1,
+          "retry_count": 1,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 10,
+            "retry_count": 1,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": "local worker unavailable"
+          }
+        },
+        {
+          "index": 4,
+          "elapsed_s": 0.0,
+          "phase": "quarantined",
+          "outcome": "failure",
+          "state": "dlq",
+          "queue_size": 0,
+          "processing": 0,
+          "dlq_size": 1,
+          "worker_calls": 2,
+          "retry_count": 2,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 10,
+            "retry_count": 2,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": "local worker unavailable"
+          }
+        },
+        {
+          "index": 5,
+          "elapsed_s": 0.0,
+          "phase": "inspected",
+          "outcome": "inspected",
+          "state": "dlq",
+          "queue_size": 0,
+          "processing": 0,
+          "dlq_size": 1,
+          "worker_calls": 2,
+          "retry_count": 2,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 10,
+            "retry_count": 2,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": "local worker unavailable"
+          }
+        },
+        {
+          "index": 6,
+          "elapsed_s": 0.0,
+          "phase": "replayed",
+          "outcome": "reenqueued",
+          "state": "queued",
+          "queue_size": 1,
+          "processing": 0,
+          "dlq_size": 0,
+          "worker_calls": 2,
+          "retry_count": 0,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 50,
+            "retry_count": 0,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": null
+          }
+        },
+        {
+          "index": 7,
+          "elapsed_s": 0.0,
+          "phase": "final_attempt",
+          "outcome": "dequeued",
+          "state": "processing",
+          "queue_size": 0,
+          "processing": 1,
+          "dlq_size": 0,
+          "worker_calls": 2,
+          "retry_count": 0,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 50,
+            "retry_count": 0,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": null
+          }
+        },
+        {
+          "index": 8,
+          "elapsed_s": 0.0,
+          "phase": "completed",
+          "outcome": "success",
+          "state": "completed",
+          "queue_size": 0,
+          "processing": 0,
+          "dlq_size": 0,
+          "worker_calls": 3,
+          "retry_count": 0,
+          "job": {
+            "id": "task-42",
+            "payload": {
+              "task": "summarize",
+              "document": "demo-note"
+            },
+            "metadata": {},
+            "priority": 50,
+            "retry_count": 0,
+            "max_retries": 2,
+            "scheduled_time": null,
+            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "error": null
+          }
+        }
+      ]
     },
-    {
-      "index": 2,
-      "elapsed_s": 0.0,
-      "phase": "failure",
-      "outcome": "failure",
-      "state": "closed",
-      "attempts": 2,
-      "upstream_calls": 2,
-      "blocked": 0,
-      "called": true,
-      "available": false,
-      "breaker": {
-        "name": "upstream",
-        "state": "closed",
-        "failure_count": 1,
-        "success_count": 1,
-        "total_trips": 0,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 3,
-      "elapsed_s": 0.0,
-      "phase": "failure",
-      "outcome": "failure",
-      "state": "closed",
-      "attempts": 3,
-      "upstream_calls": 3,
-      "blocked": 0,
-      "called": true,
-      "available": false,
-      "breaker": {
-        "name": "upstream",
-        "state": "closed",
-        "failure_count": 2,
-        "success_count": 1,
-        "total_trips": 0,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 4,
-      "elapsed_s": 0.0,
-      "phase": "failure",
-      "outcome": "failure",
-      "state": "open",
-      "attempts": 4,
-      "upstream_calls": 4,
-      "blocked": 0,
-      "called": true,
-      "available": false,
-      "breaker": {
-        "name": "upstream",
-        "state": "open",
-        "failure_count": 3,
-        "success_count": 1,
-        "total_trips": 1,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 5,
-      "elapsed_s": 0.0,
-      "phase": "isolation",
-      "outcome": "blocked",
-      "state": "open",
-      "attempts": 5,
-      "upstream_calls": 4,
-      "blocked": 1,
-      "called": false,
-      "available": false,
-      "breaker": {
-        "name": "upstream",
-        "state": "open",
-        "failure_count": 3,
-        "success_count": 1,
-        "total_trips": 1,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 6,
-      "elapsed_s": 0.0,
-      "phase": "isolation",
-      "outcome": "blocked",
-      "state": "open",
-      "attempts": 6,
-      "upstream_calls": 4,
-      "blocked": 2,
-      "called": false,
-      "available": false,
-      "breaker": {
-        "name": "upstream",
-        "state": "open",
-        "failure_count": 3,
-        "success_count": 1,
-        "total_trips": 1,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 7,
-      "elapsed_s": 0.0,
-      "phase": "cooldown",
-      "outcome": "waiting",
-      "state": "open",
-      "attempts": 6,
-      "upstream_calls": 4,
-      "blocked": 2,
-      "called": false,
-      "available": false,
-      "breaker": {
-        "name": "upstream",
-        "state": "open",
-        "failure_count": 3,
-        "success_count": 1,
-        "total_trips": 1,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 8,
-      "elapsed_s": 2.047,
-      "phase": "probe",
-      "outcome": "allowed",
-      "state": "half_open",
-      "attempts": 7,
-      "upstream_calls": 4,
-      "blocked": 2,
-      "called": false,
-      "available": true,
-      "breaker": {
-        "name": "upstream",
-        "state": "half_open",
-        "failure_count": 3,
-        "success_count": 1,
-        "total_trips": 1,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 9,
-      "elapsed_s": 2.047,
-      "phase": "recovery",
-      "outcome": "success",
-      "state": "closed",
-      "attempts": 7,
-      "upstream_calls": 5,
-      "blocked": 2,
-      "called": true,
-      "available": true,
-      "breaker": {
-        "name": "upstream",
-        "state": "closed",
-        "failure_count": 0,
-        "success_count": 2,
-        "total_trips": 1,
-        "last_failure_time": 1791964210.938236
-      }
-    },
-    {
-      "index": 10,
-      "elapsed_s": 2.047,
-      "phase": "resumed",
-      "outcome": "success",
-      "state": "closed",
-      "attempts": 8,
-      "upstream_calls": 6,
-      "blocked": 2,
-      "called": true,
-      "available": true,
-      "breaker": {
-        "name": "upstream",
-        "state": "closed",
-        "failure_count": 0,
-        "success_count": 3,
-        "total_trips": 1,
-        "last_failure_time": 1791964210.938236
-      }
+    "mqtt": {
+      "schema_version": 1,
+      "library_version": "0.1.0",
+      "source_sha256": "b1fce85a5fff50c5aa89fab2b08e7df906c13c47ee5174fbce7d3567f3f3bbbe",
+      "recorded_at": "2026-10-14T15:04:11.793116+00:00",
+      "scenario": "MQTT offline buffering and automatic flush",
+      "environment": "Python ResilientMQTTPublisher with a simulated local MQTT client",
+      "config": {
+        "messages": 3,
+        "flush_loop": "library background thread"
+      },
+      "events": [
+        {
+          "index": 0,
+          "elapsed_s": 0.0,
+          "phase": "offline",
+          "outcome": "disconnected",
+          "state": "offline",
+          "connected": false,
+          "buffered": 0,
+          "published_count": 0,
+          "produced": 0,
+          "messages": []
+        },
+        {
+          "index": 1,
+          "elapsed_s": 0.0,
+          "phase": "buffered",
+          "outcome": "retained",
+          "state": "buffered",
+          "connected": false,
+          "buffered": 1,
+          "published_count": 0,
+          "produced": 1,
+          "messages": []
+        },
+        {
+          "index": 2,
+          "elapsed_s": 0.0,
+          "phase": "buffered",
+          "outcome": "retained",
+          "state": "buffered",
+          "connected": false,
+          "buffered": 2,
+          "published_count": 0,
+          "produced": 2,
+          "messages": []
+        },
+        {
+          "index": 3,
+          "elapsed_s": 0.0,
+          "phase": "buffered",
+          "outcome": "retained",
+          "state": "buffered",
+          "connected": false,
+          "buffered": 3,
+          "published_count": 0,
+          "produced": 3,
+          "messages": []
+        },
+        {
+          "index": 4,
+          "elapsed_s": 0.0,
+          "phase": "reconnected",
+          "outcome": "connected",
+          "state": "connected",
+          "connected": true,
+          "buffered": 3,
+          "published_count": 0,
+          "produced": 3,
+          "messages": []
+        },
+        {
+          "index": 5,
+          "elapsed_s": 5.0,
+          "phase": "flushing",
+          "outcome": "published",
+          "state": "connected",
+          "connected": true,
+          "buffered": 0,
+          "published_count": 1,
+          "produced": 3,
+          "messages": [
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 1
+              },
+              "qos": 1,
+              "retain": false
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "elapsed_s": 5.015,
+          "phase": "flushing",
+          "outcome": "published",
+          "state": "connected",
+          "connected": true,
+          "buffered": 0,
+          "published_count": 2,
+          "produced": 3,
+          "messages": [
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 1
+              },
+              "qos": 1,
+              "retain": false
+            },
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 2
+              },
+              "qos": 1,
+              "retain": false
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "elapsed_s": 5.015,
+          "phase": "flushing",
+          "outcome": "published",
+          "state": "connected",
+          "connected": true,
+          "buffered": 0,
+          "published_count": 3,
+          "produced": 3,
+          "messages": [
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 1
+              },
+              "qos": 1,
+              "retain": false
+            },
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 2
+              },
+              "qos": 1,
+              "retain": false
+            },
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 3
+              },
+              "qos": 1,
+              "retain": false
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "elapsed_s": 5.015,
+          "phase": "drained",
+          "outcome": "success",
+          "state": "connected",
+          "connected": true,
+          "buffered": 0,
+          "published_count": 3,
+          "produced": 3,
+          "messages": [
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 1
+              },
+              "qos": 1,
+              "retain": false
+            },
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 2
+              },
+              "qos": 1,
+              "retain": false
+            },
+            {
+              "topic": "demo/events",
+              "payload": {
+                "sequence": 3
+              },
+              "qos": 1,
+              "retain": false
+            }
+          ]
+        }
+      ]
     }
-  ]
+  }
 }
