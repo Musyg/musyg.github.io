@@ -146,7 +146,7 @@ export const projects: Project[] = [
     status: "public-alpha",
     practice: "ai",
     filters: ["software", "ai"],
-    evidenceCheckedAt: "2026-10-10",
+    evidenceCheckedAt: "2026-10-14",
     stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
     cardStack: ["Python", "SQLite", "FTS5", "MCP"],
     sections: {
@@ -177,12 +177,12 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "SQLite stores immutable versions and links between sources and derived information. A separate authority and freshness witness determine which evidence is still usable. Rebuildable FTS5 indexes find candidates, which are checked again before retrieval.",
-          "Typed records distinguish documents, observations, hypotheses, procedures, tasks and feedback. Applications can assemble context within an explicit budget through Python, the CLI or optional HTTP and MCP interfaces.",
+          "Typed records distinguish documents, observations, hypotheses, procedures, tasks and feedback. Context can optionally include immutable source references; each complete text-and-reference item and the separators count towards the same budget. Plain text remains the default. The optional HTTP facade also offers a typed-only mode with a fixed workspace and token, configured by the host.",
           "An optional renderer turns supplied, reviewed facts into text using predefined French templates, preserving source versions and passages. The admission module checks the host’s authority and the final output buffer, and reports unknown, conflicting or withdrawn evidence.",
         ],
         fr: [
           "SQLite conserve des versions immuables et les liens entre les sources et les informations qui en découlent. Une autorité séparée et un témoin de fraîcheur déterminent quelles informations restent utilisables. Les index FTS5 reconstruisibles proposent des résultats, vérifiés à nouveau avant leur restitution.",
-          "Les enregistrements typés distinguent documents, observations, hypothèses, procédures, tâches et retours d’expérience. Les applications peuvent composer un contexte sous un budget explicite via Python, la CLI ou les interfaces HTTP et MCP facultatives.",
+          "Les enregistrements typés distinguent documents, observations, hypothèses, procédures, tâches et retours d’expérience. Le contexte peut inclure des références sources immuables : chaque ensemble complet texte-référence et les séparateurs comptent dans le même budget. Le texte seul reste le comportement par défaut. La façade HTTP facultative propose aussi un mode limité aux routes typées, avec un espace et un token fixes, configuré par l’hôte.",
           "Un module de rendu facultatif transforme des faits fournis et déjà revus en texte, à partir de formulations françaises prédéfinies, en conservant les versions et passages sources. Le module d’admission vérifie l’autorité de l’hôte et le tampon final, puis signale les informations inconnues, contradictoires ou retirées.",
         ],
       },
@@ -200,18 +200,18 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "Tests cover concurrent access, evidence withdrawal, recovery from an older backup and package installation. Linux qualification passed 145 memory tests and 36 policy-registry tests for both wheel and source distributions, using synthetic data.",
+          "Tests cover concurrent access, evidence withdrawal and recovery using synthetic data. For core 0.3.0a2, seven focused methods passed on the CI wheel and on a wheel rebuilt from its source archive, including source-reference budgets and the fixed-workspace/token HTTP boundary. CI passed on Python 3.11–3.14.",
         ],
         fr: [
-          "Les tests couvrent les accès concurrents, le retrait des informations, la reprise depuis une ancienne sauvegarde et l’installation des packages. La qualification Linux a réussi 145 tests mémoire et 36 tests du registre de politiques pour les formats wheel et distribution source, sur des données synthétiques.",
+          "Les tests couvrent les accès concurrents, le retrait des informations et la reprise sur des données synthétiques. Pour le noyau 0.3.0a2, sept méthodes ciblées ont réussi sur le wheel de la CI et sur un wheel reconstruit depuis son archive source, notamment pour le budget des références et la séparation HTTP par espace et token fixes. La CI a réussi sur Python 3.11–3.14.",
         ],
       },
       results: {
         en: [
-          "Version v0.3.0a1 includes installable packages, checksums and English and French documentation; the separate policy registry remains at 0.1.0. Standalone demos show evidence withdrawal and recovery, rejection of a changed output buffer and handling of uncertain delivery outcomes.",
+          "Core 0.3.0a2 includes installable packages, checksums and English and French documentation; the independent policy registry is version 0.2.0a1. Standalone demos show evidence withdrawal and recovery, rejection of a changed output buffer and handling of uncertain delivery outcomes.",
         ],
         fr: [
-          "La version v0.3.0a1 comprend les packages installables, les sommes de contrôle et la documentation française et anglaise ; le registre de politiques indépendant reste en version 0.1.0. Les démonstrations autonomes présentent le retrait des informations et la reprise, le refus d’un tampon de sortie modifié et la gestion d’une remise au résultat incertain.",
+          "Le noyau 0.3.0a2 comprend les packages installables, les sommes de contrôle et la documentation française et anglaise ; le registre de politiques indépendant est en version 0.2.0a1. Les démonstrations autonomes présentent le retrait des informations et la reprise, le refus d’un tampon de sortie modifié et la gestion d’une remise au résultat incertain.",
         ],
       },
       evidence: {
@@ -239,37 +239,37 @@ export const projects: Project[] = [
         },
         url: "https://github.com/Musyg/persistent-memory",
         urlFr:
-          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/README.fr.md",
+          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/README.fr.md",
       },
       {
         label: {
-          en: "Alpha release and installation files",
-          fr: "Version alpha et fichiers d’installation",
+          en: "Core alpha and installation files",
+          fr: "Noyau alpha et fichiers d’installation",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a1",
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a2",
       },
       {
         label: {
           en: "Python 3.11–3.14 CI",
           fr: "CI Python 3.11–3.14",
         },
-        url: "https://github.com/Musyg/persistent-memory/actions/runs/38006233487",
+        url: "https://github.com/Musyg/persistent-memory/actions/runs/38587598469",
       },
       {
         label: {
           en: "Recovery contract",
           fr: "Contrat de reprise",
         },
-        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/docs/RECOVERY.md",
+        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/docs/RECOVERY.md",
       },
       {
         label: {
           en: "Structured output and admission",
           fr: "Rendu structuré et admission",
         },
-        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/docs/ADMISSION.md",
+        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/docs/ADMISSION.md",
         urlFr:
-          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a1/docs/ADMISSION.fr.md",
+          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/docs/ADMISSION.fr.md",
       },
     ],
   },
