@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "library_version": "0.1.0",
+  "source_sha256": "8e55092547588491b3d7c56f2be93024081b529f37e4c88f6784a5f7085cebb3",
+  "recorded_at": "2026-10-14T07:50:12.990975+00:00",
+  "scenario": "serial local dependency failure and recovery",
+  "config": {
+    "failure_threshold": 3,
+    "recovery_timeout_s": 2
+  },
+  "events": [
+    {
+      "index": 0,
+      "elapsed_s": 0.0,
+      "phase": "initial",
+      "outcome": "ready",
+      "state": "closed",
+      "attempts": 0,
+      "upstream_calls": 0,
+      "blocked": 0,
+      "called": false,
+      "available": true,
+      "breaker": {
+        "name": "upstream",
+        "state": "closed",
+        "failure_count": 0,
+        "success_count": 0,
+        "total_trips": 0,
+        "last_failure_time": 0
+      }
+    },
+    {
+      "index": 1,
+      "elapsed_s": 0.0,
+      "phase": "healthy",
+      "outcome": "success",
+      "state": "closed",
+      "attempts": 1,
+      "upstream_calls": 1,
+      "blocked": 0,
+      "called": true,
+      "available": true,
+      "breaker": {
+        "name": "upstream",
+        "state": "closed",
+        "failure_count": 0,
+        "success_count": 1,
+        "total_trips": 0,
+        "last_failure_time": 0
+      }
+    },
+    {
+      "index": 2,
+      "elapsed_s": 0.0,
+      "phase": "failure",
+      "outcome": "failure",
+      "state": "closed",
+      "attempts": 2,
+      "upstream_calls": 2,
+      "blocked": 0,
+      "called": true,
+      "available": false,
+      "breaker": {
+        "name": "upstream",
+        "state": "closed",
+        "failure_count": 1,
+        "success_count": 1,
+        "total_trips": 0,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 3,
+      "elapsed_s": 0.0,
+      "phase": "failure",
+      "outcome": "failure",
+      "state": "closed",
+      "attempts": 3,
+      "upstream_calls": 3,
+      "blocked": 0,
+      "called": true,
+      "available": false,
+      "breaker": {
+        "name": "upstream",
+        "state": "closed",
+        "failure_count": 2,
+        "success_count": 1,
+        "total_trips": 0,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 4,
+      "elapsed_s": 0.0,
+      "phase": "failure",
+      "outcome": "failure",
+      "state": "open",
+      "attempts": 4,
+      "upstream_calls": 4,
+      "blocked": 0,
+      "called": true,
+      "available": false,
+      "breaker": {
+        "name": "upstream",
+        "state": "open",
+        "failure_count": 3,
+        "success_count": 1,
+        "total_trips": 1,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 5,
+      "elapsed_s": 0.0,
+      "phase": "isolation",
+      "outcome": "blocked",
+      "state": "open",
+      "attempts": 5,
+      "upstream_calls": 4,
+      "blocked": 1,
+      "called": false,
+      "available": false,
+      "breaker": {
+        "name": "upstream",
+        "state": "open",
+        "failure_count": 3,
+        "success_count": 1,
+        "total_trips": 1,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 6,
+      "elapsed_s": 0.0,
+      "phase": "isolation",
+      "outcome": "blocked",
+      "state": "open",
+      "attempts": 6,
+      "upstream_calls": 4,
+      "blocked": 2,
+      "called": false,
+      "available": false,
+      "breaker": {
+        "name": "upstream",
+        "state": "open",
+        "failure_count": 3,
+        "success_count": 1,
+        "total_trips": 1,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 7,
+      "elapsed_s": 0.0,
+      "phase": "cooldown",
+      "outcome": "waiting",
+      "state": "open",
+      "attempts": 6,
+      "upstream_calls": 4,
+      "blocked": 2,
+      "called": false,
+      "available": false,
+      "breaker": {
+        "name": "upstream",
+        "state": "open",
+        "failure_count": 3,
+        "success_count": 1,
+        "total_trips": 1,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 8,
+      "elapsed_s": 2.047,
+      "phase": "probe",
+      "outcome": "allowed",
+      "state": "half_open",
+      "attempts": 7,
+      "upstream_calls": 4,
+      "blocked": 2,
+      "called": false,
+      "available": true,
+      "breaker": {
+        "name": "upstream",
+        "state": "half_open",
+        "failure_count": 3,
+        "success_count": 1,
+        "total_trips": 1,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 9,
+      "elapsed_s": 2.047,
+      "phase": "recovery",
+      "outcome": "success",
+      "state": "closed",
+      "attempts": 7,
+      "upstream_calls": 5,
+      "blocked": 2,
+      "called": true,
+      "available": true,
+      "breaker": {
+        "name": "upstream",
+        "state": "closed",
+        "failure_count": 0,
+        "success_count": 2,
+        "total_trips": 1,
+        "last_failure_time": 1791964210.938236
+      }
+    },
+    {
+      "index": 10,
+      "elapsed_s": 2.047,
+      "phase": "resumed",
+      "outcome": "success",
+      "state": "closed",
+      "attempts": 8,
+      "upstream_calls": 6,
+      "blocked": 2,
+      "called": true,
+      "available": true,
+      "breaker": {
+        "name": "upstream",
+        "state": "closed",
+        "failure_count": 0,
+        "success_count": 3,
+        "total_trips": 1,
+        "last_failure_time": 1791964210.938236
+      }
+    }
+  ]
+}

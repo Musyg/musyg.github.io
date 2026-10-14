@@ -684,9 +684,11 @@ export const projects: Project[] = [
       results: {
         en: [
           "Version v0.1.0 is publicly released with documented installation and examples for each resilience component.",
+          "The circuit breaker demo follows a dependency outage, blocked requests and recovery: three failures open the circuit, two requests are rejected without calling upstream, then a successful probe restores normal flow.",
         ],
         fr: [
           "La version v0.1.0 est publiée avec une installation documentée et des exemples pour chaque composant de résilience.",
+          "La démo du circuit breaker suit une panne, le blocage des appels et la reprise : trois échecs ouvrent le circuit, deux demandes sont rejetées sans appeler la dépendance, puis une sonde réussie rétablit le flux normal.",
         ],
       },
       evidence: {
@@ -703,6 +705,11 @@ export const projects: Project[] = [
       },
     },
     links: [
+      {
+        label: { en: "Try the demo", fr: "Voir la démo" },
+        url: "/demos/agent-resilience/?lang=en",
+        urlFr: "/demos/agent-resilience/?lang=fr",
+      },
       {
         label: { en: "Public repository", fr: "Dépôt public" },
         url: "https://github.com/Musyg/agent-resilience",

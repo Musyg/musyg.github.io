@@ -70,6 +70,22 @@ test("isolated release starts with only bundled runtime and contact disabled", a
       );
     }
     for (const route of [
+      "/demos/agent-resilience/?lang=en",
+      "/demos/agent-resilience/?lang=fr",
+      "/demos/agent-resilience/trace.json",
+    ]) {
+      const response = await fetch(base + route);
+      assert.equal(response.status, 200, route);
+      assert.equal(response.headers.get("x-frame-options"), "DENY");
+      const relative = route.split("?")[0];
+      const file = relative.endsWith("/") ? `${relative}index.html` : relative;
+      assert.deepEqual(
+        Buffer.from(await response.arrayBuffer()),
+        await readFile(join(temporary, "dist", file)),
+        route,
+      );
+    }
+    for (const route of [
       "/.env",
       "/package.json",
       "/server/index.mjs",
