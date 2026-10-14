@@ -593,7 +593,16 @@ test("case-study evidence is available in the hero in both languages", async ({
         );
         const actions = page.locator(".case-hero .case-actions");
         const heroLinks = actions.locator("a");
-        await expect(heroLinks).toHaveCount(2);
+        await expect(heroLinks).toHaveCount(
+          slug === "agent-resilience" ? 3 : 2,
+        );
+        if (slug === "agent-resilience") {
+          await expect(
+            actions.getByRole("link", {
+              name: locale === "fr" ? "Voir la démo" : "Try the demo",
+            }),
+          ).toHaveAttribute("href", `/demos/agent-resilience/?lang=${locale}`);
+        }
         for (const link of await heroLinks.all()) {
           await expect(link).toBeVisible();
           const bounds = await link.boundingBox();
