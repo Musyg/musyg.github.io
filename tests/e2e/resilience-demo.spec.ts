@@ -71,6 +71,15 @@ for (const locale of ["en", "fr"]) {
         for (const [index, state] of scenario.states.entries()) {
           if (index) await page.locator("#next").click();
           await expect(page.locator("#state")).toHaveText(state);
+          await expect(page.locator("#step")).toHaveText(
+            new RegExp(
+              `^(Step|Étape) ${index + 1}/${scenario.states.length} · \\d+[.,]\\d{3} ms$`,
+            ),
+          );
+          await expect(page.locator("#step")).toHaveAttribute(
+            "title",
+            /depuis le début de l’exécution|since execution started/,
+          );
           expect(
             await page.evaluate(
               () => document.documentElement.scrollWidth <= innerWidth,

@@ -113,4 +113,62 @@ describe("Agent Resilience demo integration", () => {
       dom.window.close();
     }
   });
+
+  it.each([
+    ["fr", ["0,000 ms", "0,123 ms", "0,246 ms", "2050,123 ms", "< 0,001 ms"]],
+    ["en", ["0.000 ms", "0.123 ms", "0.246 ms", "2050.123 ms", "< 0.001 ms"]],
+  ] as const)(
+    "shows recorded elapsed milliseconds in %s",
+    (locale, expected) => {
+      const html = readFileSync(
+        "public/demos/agent-resilience/index.html",
+        "utf8",
+      );
+      const embedded = html.match(
+        /<script id="recorded-trace" type="application\/json">([\s\S]*?)<\/script>/,
+      )![1];
+      const trace = JSON.parse(embedded);
+      const times = [0, 0.000123, 0.000246, 2.050123, 0.0000004];
+      for (const scenario of Object.values(trace.scenarios) as {
+        events: { elapsed_s: number }[];
+      }[]) {
+        times.forEach((seconds, index) => {
+          scenario.events[index].elapsed_s = seconds;
+        });
+      }
+      const dom = new JSDOM(html.replace(embedded, JSON.stringify(trace)), {
+        runScripts: "dangerously",
+        url: `https://demo.invalid/?lang=${locale}`,
+      });
+      try {
+        const document = dom.window.document;
+        for (const scenario of ["circuit", "dlq", "mqtt"]) {
+          (
+            document.querySelector(
+              `[data-scenario="${scenario}"]`,
+            ) as HTMLElement
+          ).click();
+          for (const [index, formatted] of expected.entries()) {
+            if (index) (document.getElementById("next") as HTMLElement).click();
+            expect(document.getElementById("step")!.textContent).toContain(
+              ` · ${formatted}`,
+            );
+            expect(
+              document.querySelectorAll("#rows tr")[index].children[1]
+                .textContent,
+            ).toBe(formatted);
+          }
+          expect(document.getElementById("step")!.title).toMatch(
+            /depuis le début de l’exécution|since execution started/,
+          );
+        }
+        (document.getElementById("language") as HTMLElement).click();
+        expect(document.getElementById("step")!.textContent).toContain(
+          locale === "fr" ? "< 0.001 ms" : "< 0,001 ms",
+        );
+      } finally {
+        dom.window.close();
+      }
+    },
+  );
 });

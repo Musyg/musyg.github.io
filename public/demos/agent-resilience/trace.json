@@ -1,13 +1,13 @@
 {
   "schema_version": 2,
   "library_version": "0.1.0",
-  "recorded_at": "2026-10-14T15:04:11.793116+00:00",
+  "recorded_at": "2026-10-15T20:12:24.649403+00:00",
   "scenarios": {
     "circuit": {
       "schema_version": 1,
       "library_version": "0.1.0",
       "source_sha256": "8e55092547588491b3d7c56f2be93024081b529f37e4c88f6784a5f7085cebb3",
-      "recorded_at": "2026-10-14T15:04:01.756181+00:00",
+      "recorded_at": "2026-10-15T20:12:14.602448+00:00",
       "scenario": "serial local dependency failure and recovery",
       "config": {
         "failure_threshold": 3,
@@ -16,7 +16,7 @@
       "events": [
         {
           "index": 0,
-          "elapsed_s": 0.0,
+          "elapsed_s": 5e-06,
           "phase": "initial",
           "outcome": "ready",
           "state": "closed",
@@ -36,7 +36,7 @@
         },
         {
           "index": 1,
-          "elapsed_s": 0.0,
+          "elapsed_s": 7.8e-05,
           "phase": "healthy",
           "outcome": "success",
           "state": "closed",
@@ -56,7 +56,7 @@
         },
         {
           "index": 2,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.000127,
           "phase": "failure",
           "outcome": "failure",
           "state": "closed",
@@ -71,12 +71,12 @@
             "failure_count": 1,
             "success_count": 1,
             "total_trips": 0,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 3,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.000165,
           "phase": "failure",
           "outcome": "failure",
           "state": "closed",
@@ -91,12 +91,12 @@
             "failure_count": 2,
             "success_count": 1,
             "total_trips": 0,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 4,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.00048,
           "phase": "failure",
           "outcome": "failure",
           "state": "open",
@@ -111,12 +111,12 @@
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 5,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.00052,
           "phase": "isolation",
           "outcome": "blocked",
           "state": "open",
@@ -131,12 +131,12 @@
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 6,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.000553,
           "phase": "isolation",
           "outcome": "blocked",
           "state": "open",
@@ -151,12 +151,12 @@
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 7,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.000569,
           "phase": "cooldown",
           "outcome": "waiting",
           "state": "open",
@@ -171,12 +171,12 @@
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 8,
-          "elapsed_s": 2.063,
+          "elapsed_s": 2.051036,
           "phase": "probe",
           "outcome": "allowed",
           "state": "half_open",
@@ -191,12 +191,12 @@
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 9,
-          "elapsed_s": 2.063,
+          "elapsed_s": 2.051076,
           "phase": "recovery",
           "outcome": "success",
           "state": "closed",
@@ -211,12 +211,12 @@
             "failure_count": 0,
             "success_count": 2,
             "total_trips": 1,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         },
         {
           "index": 10,
-          "elapsed_s": 2.063,
+          "elapsed_s": 2.051102,
           "phase": "resumed",
           "outcome": "success",
           "state": "closed",
@@ -231,7 +231,7 @@
             "failure_count": 0,
             "success_count": 3,
             "total_trips": 1,
-            "last_failure_time": 1791990239.7055182
+            "last_failure_time": 1792095132.5514164
           }
         }
       ]
@@ -240,7 +240,7 @@
       "schema_version": 1,
       "library_version": "0.1.0",
       "source_sha256": "e342809780a66e015eab922b8437b632f6519e897f92eb4da4096fd735239d13",
-      "recorded_at": "2026-10-14T15:04:01.758203+00:00",
+      "recorded_at": "2026-10-15T20:12:14.610461+00:00",
       "scenario": "DLQ task failure and replay",
       "environment": "Python DLQQueue with an in-memory Redis service adapter",
       "config": {
@@ -249,7 +249,7 @@
       "events": [
         {
           "index": 0,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.000162,
           "phase": "queued",
           "outcome": "enqueued",
           "state": "queued",
@@ -269,13 +269,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": null
           }
         },
         {
           "index": 1,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.000378,
           "phase": "processing",
           "outcome": "dequeued",
           "state": "processing",
@@ -295,13 +295,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": null
           }
         },
         {
           "index": 2,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.000779,
           "phase": "retry",
           "outcome": "failure",
           "state": "queued",
@@ -321,13 +321,13 @@
             "retry_count": 1,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 3,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.001596,
           "phase": "processing",
           "outcome": "dequeued",
           "state": "processing",
@@ -347,13 +347,13 @@
             "retry_count": 1,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 4,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.002059,
           "phase": "quarantined",
           "outcome": "failure",
           "state": "dlq",
@@ -373,13 +373,13 @@
             "retry_count": 2,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 5,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.002305,
           "phase": "inspected",
           "outcome": "inspected",
           "state": "dlq",
@@ -399,13 +399,13 @@
             "retry_count": 2,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 6,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.002535,
           "phase": "replayed",
           "outcome": "reenqueued",
           "state": "queued",
@@ -425,13 +425,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": null
           }
         },
         {
           "index": 7,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.002715,
           "phase": "final_attempt",
           "outcome": "dequeued",
           "state": "processing",
@@ -451,13 +451,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": null
           }
         },
         {
           "index": 8,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.002768,
           "phase": "completed",
           "outcome": "success",
           "state": "completed",
@@ -477,7 +477,7 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-14T15:04:01.757216+00:00",
+            "created_at": "2026-10-15T20:12:14.607462+00:00",
             "error": null
           }
         }
@@ -487,7 +487,7 @@
       "schema_version": 1,
       "library_version": "0.1.0",
       "source_sha256": "b1fce85a5fff50c5aa89fab2b08e7df906c13c47ee5174fbce7d3567f3f3bbbe",
-      "recorded_at": "2026-10-14T15:04:11.793116+00:00",
+      "recorded_at": "2026-10-15T20:12:24.649403+00:00",
       "scenario": "MQTT offline buffering and automatic flush",
       "environment": "Python ResilientMQTTPublisher with a simulated local MQTT client",
       "config": {
@@ -497,7 +497,7 @@
       "events": [
         {
           "index": 0,
-          "elapsed_s": 0.0,
+          "elapsed_s": 1.6e-05,
           "phase": "offline",
           "outcome": "disconnected",
           "state": "offline",
@@ -509,7 +509,7 @@
         },
         {
           "index": 1,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.003595,
           "phase": "buffered",
           "outcome": "retained",
           "state": "buffered",
@@ -521,7 +521,7 @@
         },
         {
           "index": 2,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.003625,
           "phase": "buffered",
           "outcome": "retained",
           "state": "buffered",
@@ -533,7 +533,7 @@
         },
         {
           "index": 3,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.003641,
           "phase": "buffered",
           "outcome": "retained",
           "state": "buffered",
@@ -545,7 +545,7 @@
         },
         {
           "index": 4,
-          "elapsed_s": 0.0,
+          "elapsed_s": 0.003652,
           "phase": "reconnected",
           "outcome": "connected",
           "state": "connected",
@@ -557,7 +557,7 @@
         },
         {
           "index": 5,
-          "elapsed_s": 5.0,
+          "elapsed_s": 5.003639,
           "phase": "flushing",
           "outcome": "published",
           "state": "connected",
@@ -578,7 +578,7 @@
         },
         {
           "index": 6,
-          "elapsed_s": 5.015,
+          "elapsed_s": 5.014104,
           "phase": "flushing",
           "outcome": "published",
           "state": "connected",
@@ -607,7 +607,7 @@
         },
         {
           "index": 7,
-          "elapsed_s": 5.015,
+          "elapsed_s": 5.024606,
           "phase": "flushing",
           "outcome": "published",
           "state": "connected",
@@ -644,7 +644,7 @@
         },
         {
           "index": 8,
-          "elapsed_s": 5.015,
+          "elapsed_s": 5.024974,
           "phase": "drained",
           "outcome": "success",
           "state": "connected",
