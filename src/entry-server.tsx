@@ -8,6 +8,21 @@ import { ipiArticle, ipiImage, ipiPublishedAt } from "./content/ipi-article";
 export const routePaths = publicRoutes.map((route) => route.path);
 export { routeAliases } from "./routes";
 
+// Build-time metadata for generated discovery files (llms.txt).
+export const routeIndex = publicRoutes.map(
+  ({ path, counterpart, locale, kind, title, description }) => ({
+    path,
+    counterpart,
+    locale,
+    kind,
+    title,
+    description,
+  }),
+);
+export const profileLinks = professionalProfiles.map(
+  ({ name, handle, url }) => ({ name, handle, url }),
+);
+
 function escapeAttribute(value: string): string {
   return value
     .replaceAll("&", "&amp;")
