@@ -407,9 +407,9 @@ function HomePage({ locale }: { locale: Locale }) {
           <p className="engagement-scope">{engagementScope[locale]}</p>
         </div>
         <div className="hero-index" aria-hidden="true">
-          <span>01</span>
+          <span data-index="01" />
           <span className="hero-index-line" />
-          <span>03</span>
+          <span data-index="03" />
         </div>
       </section>
 
@@ -540,8 +540,15 @@ function HomePage({ locale }: { locale: Locale }) {
               ? "Un guide interactif pour choisir entre assistance IA, automatisation, aide à la décision et agents métier autonomes, avec des pilotes, des contrôles et des exigences de gouvernance."
               : "An interactive guide for choosing between AI assistance, workflow automation, decision support, and autonomous business agents, with pilots, controls, and governance requirements."}
           </p>
-          <a className="text-link" href={writingPath(locale)}>
-            {isFrench ? "Voir la publication" : "View the publication"}
+          <a
+            className="text-link"
+            href={
+              isFrench
+                ? "https://musyg.github.io/ai-adoption-playbook/fr/"
+                : "https://musyg.github.io/ai-adoption-playbook/"
+            }
+          >
+            {isFrench ? "Ouvrir le guide" : "Open the guide"}
           </a>
         </div>
       </section>

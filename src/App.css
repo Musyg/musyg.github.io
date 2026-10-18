@@ -416,6 +416,10 @@
   font-size: 0.8rem;
 }
 
+.hero-index [data-index]::before {
+  content: attr(data-index);
+}
+
 .hero-index-line,
 .evidence-marker,
 .practice-number {
