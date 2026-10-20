@@ -77,6 +77,11 @@ async function copyRegularTree(source, destination, publicOnly = false) {
 }
 
 await copyRegularTree(join(root, "dist"), join(release, "dist"), true);
+const apacheConfig = join(root, "dist", ".htaccess");
+const apacheConfigStat = await lstat(apacheConfig);
+if (!apacheConfigStat.isFile() || apacheConfigStat.isSymbolicLink())
+  throw new Error("Invalid Apache configuration source");
+await cp(apacheConfig, join(release, "dist", ".htaccess"));
 for (const required of ["index.html", "404.html"])
   await readFile(join(release, "dist", required));
 await mkdir(join(release, "server"));

@@ -24,6 +24,16 @@ test("isolated release starts with only bundled runtime and contact disabled", a
     assert.deepEqual(await readdir(join(temporary, "node_modules")), [
       "nodemailer",
     ]);
+    assert.deepEqual(
+      (await readdir(join(temporary, "dist"))).filter((name) =>
+        name.startsWith("."),
+      ),
+      [".htaccess"],
+    );
+    assert.deepEqual(
+      await readFile(join(temporary, "dist/.htaccess")),
+      await readFile(new URL("../../public/.htaccess", import.meta.url)),
+    );
     const allocator = createServer();
     await new Promise((resolve) => allocator.listen(0, "127.0.0.1", resolve));
     const port = allocator.address().port;
@@ -102,6 +112,7 @@ test("isolated release starts with only bundled runtime and contact disabled", a
     }
     for (const route of [
       "/.env",
+      "/.htaccess",
       "/package.json",
       "/server/index.mjs",
       "/node_modules/nodemailer/package.json",
