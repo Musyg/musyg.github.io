@@ -11,6 +11,17 @@ const embeddedTrace = (document: string) =>
   document.match(
     /<script id="recorded-trace" type="application\/json">([\s\S]*?)<\/script>/,
   )![1];
+const comparison = () =>
+  JSON.parse(readFileSync(`${prefix}comparison.json`, "utf8"));
+const embeddedComparison = (document: string) =>
+  document.match(
+    /<script id="recorded-comparison" type="application\/json">([\s\S]*?)<\/script>/,
+  )![1];
+const comparisonMoments = [
+  ["before_rebuild", "after_rebuild"],
+  ["after"],
+  ["after"],
+];
 const primaryRoles = ["date_v1", "brief_v1", "brief_v2", "brief_v2", "control"];
 
 describe("Persistent Memory recorded demonstration", () => {
@@ -54,6 +65,53 @@ describe("Persistent Memory recorded demonstration", () => {
       expect(trace.events[4].reads[role].allowed).toBe(false);
     }
     expect(html()).not.toMatch(/<script[^>]+src=|<iframe|__RECORDED_TRACE__/);
+    const recordedComparison = comparison();
+    expect(JSON.parse(embeddedComparison(html()))).toEqual(recordedComparison);
+    expect(recordedComparison.schema).toBe(
+      "persistent-memory.portfolio-demo.comparison.v1",
+    );
+    expect(
+      recordedComparison.cases.map((item: { phase: string }) => item.phase),
+    ).toEqual(["correct", "revoke", "restore"]);
+    expect(
+      Object.values(recordedComparison.assertions).every(
+        (value) => value === true,
+      ),
+    ).toBe(true);
+    expect(
+      recordedComparison.cases[0].reference.after_rebuild.brief.content,
+    ).toBe(
+      recordedComparison.cases[0].persistent_memory.after_rebuild.brief.content,
+    );
+    expect(
+      recordedComparison.cases[0].reference.before_rebuild.brief.content,
+    ).not.toBe(
+      recordedComparison.cases[0].reference.after_rebuild.brief.content,
+    );
+    expect(
+      recordedComparison.cases[0].persistent_memory.before_rebuild.brief
+        .allowed,
+    ).toBe(false);
+    expect(recordedComparison.cases[1].reference.after.date.allowed).toBe(
+      false,
+    );
+    expect(recordedComparison.cases[1].reference.after.brief.allowed).toBe(
+      true,
+    );
+    for (const role of ["date", "brief"])
+      expect(
+        recordedComparison.cases[2].persistent_memory.after[role].allowed,
+      ).toBe(false);
+    expect(
+      recordedComparison.cases[2].persistent_memory.after.language.allowed,
+    ).toBe(true);
+    expect(
+      recordedComparison.cases[2].persistent_memory.before_verification.language
+        .allowed,
+    ).toBe(false);
+    expect(html()).not.toMatch(
+      /__RECORDED_COMPARISON__|ROOT_PENDING_COMPARISON_COMMIT/,
+    );
   });
 
   it.each(["fr", "en"])(
@@ -81,6 +139,55 @@ describe("Persistent Memory recorded demonstration", () => {
         const text = (id: string) => document.getElementById(id)!.textContent;
         const click = (id: string) =>
           (document.getElementById(id) as HTMLButtonElement).click();
+        const recordedComparison = comparison();
+        expect(document.querySelectorAll("#comparison-rows > tr")).toHaveLength(
+          4,
+        );
+        expect(document.getElementById("comparison-results")).toHaveProperty(
+          "hidden",
+          false,
+        );
+        expect(JSON.parse(text("comparison-receipts")!)).toEqual(
+          recordedComparison,
+        );
+        for (const [index, item] of recordedComparison.cases.entries()) {
+          for (const moment of comparisonMoments[index]) {
+            const row = document.querySelector(
+              `#comparison-rows [data-comparison-phase="${item.phase}"][data-moment="${moment}"]`,
+            )!;
+            for (const branch of ["reference", "persistent_memory"]) {
+              for (const role of ["brief"]) {
+                const read = item[branch][moment][role];
+                const cell = row.querySelector(
+                  `[data-branch="${branch}"] [data-role="${role}"]`,
+                )!;
+                expect(cell).toHaveAttribute(
+                  "data-allowed",
+                  String(read.allowed),
+                );
+                expect(cell).toHaveAttribute("data-reason", read.reason);
+                expect(
+                  cell.querySelector(".comparison-content")?.textContent ??
+                    null,
+                ).toBe(read.allowed ? read.content : null);
+                if (read.allowed)
+                  expect(
+                    cell.querySelector(".comparison-content"),
+                  ).toHaveAttribute("lang", "fr");
+              }
+            }
+          }
+        }
+        expect(
+          document.getElementById("comparison-contract")!.textContent,
+        ).toContain(
+          locale === "fr" ? "reconstruction explicite" : "explicit rebuild",
+        );
+        expect(
+          document.getElementById("comparison-authority")!.textContent,
+        ).toContain(
+          locale === "fr" ? "témoin de fraîcheur" : "freshness witness",
+        );
         expect(document.getElementById("previous")).toHaveProperty(
           "disabled",
           true,
@@ -310,6 +417,62 @@ describe("Persistent Memory recorded demonstration", () => {
       ).toHaveAttribute("data-linked", "true");
     } finally {
       mismatched.window.close();
+    }
+    const unsafeComparison = comparison();
+    unsafeComparison.cases[0].reference.before_rebuild.brief.content = evidence;
+    const comparisonTextOnly = new JSDOM(
+      original.replace(
+        embeddedComparison(original),
+        JSON.stringify(unsafeComparison),
+      ),
+      {
+        runScripts: "dangerously",
+        url: "https://demo.invalid/?lang=en#comparison",
+      },
+    );
+    try {
+      const content = comparisonTextOnly.window.document.querySelector(
+        '[data-comparison-phase="correct"][data-moment="before_rebuild"] [data-branch="reference"] [data-role="brief"] .comparison-content',
+      );
+      expect(content!.textContent).toBe(evidence);
+      expect(
+        comparisonTextOnly.window.document.querySelectorAll("img"),
+      ).toHaveLength(0);
+    } finally {
+      comparisonTextOnly.window.close();
+    }
+    unsafeComparison.assertions = { verified: false };
+    const unverifiedComparison = new JSDOM(
+      original.replace(
+        embeddedComparison(original),
+        JSON.stringify(unsafeComparison),
+      ),
+      {
+        runScripts: "dangerously",
+        url: "https://demo.invalid/?lang=en#comparison",
+      },
+    );
+    try {
+      expect(
+        unverifiedComparison.window.document.getElementById(
+          "comparison-results",
+        ),
+      ).toHaveProperty("hidden", true);
+      expect(
+        unverifiedComparison.window.document.getElementById(
+          "comparison-unavailable",
+        )!.textContent,
+      ).toContain("No result is simulated");
+      expect(
+        unverifiedComparison.window.document.querySelectorAll(
+          "#comparison-rows > tr",
+        ),
+      ).toHaveLength(0);
+      expect(
+        unverifiedComparison.window.document.getElementById("demo"),
+      ).toHaveProperty("hidden", false);
+    } finally {
+      unverifiedComparison.window.close();
     }
     const withoutCurrentAuthority = recording();
     withoutCurrentAuthority.events[4].details.retained_current_authority = false;

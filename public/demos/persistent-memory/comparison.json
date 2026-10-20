@@ -1,0 +1,1417 @@
+{
+  "schema": "persistent-memory.portfolio-demo.comparison.v1",
+  "scenario": "project-atlas-deadline-v1",
+  "synthetic": true,
+  "generated_at_utc": "2026-10-20T18:46:47.247218Z",
+  "core_trace": {
+    "schema": "persistent-memory.portfolio-demo.trace.v1",
+    "scenario": "project-atlas-deadline-v1",
+    "synthetic": true,
+    "generated_at_utc": "2026-10-20T18:46:47.247218Z",
+    "provenance": {
+      "base_commit": "c2546be8abb05aadd518fb143d040cec0c4769a9",
+      "package": "hermes-memory-core",
+      "installed_version": "0.3.0a2",
+      "script_sha256": "3c3cbdbc3916d155d390c96aedef55043e077704593afdb59a2807f8d6501f3e",
+      "modules": {
+        "core.py": "5ad093031bb061360c616ed44ab321499f3765b7e887928d073ee20ed6a37bb0"
+      }
+    },
+    "events": [
+      {
+        "id": 1,
+        "phase": "admit",
+        "operations": [
+          "register_source",
+          "read"
+        ],
+        "refs": {
+          "date_v1": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+          },
+          "control": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "e33e752347fe441391e3089e53a835a0"
+          }
+        },
+        "reads": {
+          "date_v1": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+            },
+            "content": "Projet Atlas : livraison vendredi.",
+            "content_sha256": "4118120a9c8c4cb6c992bfed64e115841e4785381a9eee3c30997fe924967da2",
+            "reason": "allowed",
+            "alias": null
+          },
+          "control": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          }
+        },
+        "details": {},
+        "provenance": null
+      },
+      {
+        "id": 2,
+        "phase": "derive",
+        "operations": [
+          "derive",
+          "read",
+          "explain_artifact"
+        ],
+        "refs": {
+          "date_v1": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+          },
+          "control": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "e33e752347fe441391e3089e53a835a0"
+          },
+          "brief_v1": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "37c2519ef4f9406fb29a67910bf7a5a9"
+          }
+        },
+        "reads": {
+          "brief_v1": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "37c2519ef4f9406fb29a67910bf7a5a9"
+            },
+            "content": "Brief Atlas — Projet Atlas : livraison vendredi. Projet Atlas : langue de communication française.",
+            "content_sha256": "02fcca55c35bb4543d7ad8a41bebe444c115d0a1931e73ebdcc066e37e23ee5c",
+            "reason": "allowed",
+            "alias": null
+          }
+        },
+        "details": {},
+        "provenance": {
+          "root": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "37c2519ef4f9406fb29a67910bf7a5a9"
+          },
+          "nodes": [
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-brief",
+                "version_id": "37c2519ef4f9406fb29a67910bf7a5a9"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [
+                {
+                  "ref": {
+                    "artifact_id": "atlas-deadline",
+                    "version_id": "c290ec3322dc48bc8d4c042a5be45de7",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                },
+                {
+                  "ref": {
+                    "artifact_id": "atlas-language",
+                    "version_id": "e33e752347fe441391e3089e53a835a0",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                }
+              ],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-language",
+                "version_id": "e33e752347fe441391e3089e53a835a0",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-deadline",
+                "version_id": "c290ec3322dc48bc8d4c042a5be45de7",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            }
+          ],
+          "coverage": "known_dependencies_only"
+        }
+      },
+      {
+        "id": 3,
+        "phase": "correct",
+        "operations": [
+          "register_source",
+          "read",
+          "derive",
+          "open",
+          "backup",
+          "explain_artifact"
+        ],
+        "refs": {
+          "date_v1": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+          },
+          "date_v2": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+          },
+          "control": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "e33e752347fe441391e3089e53a835a0"
+          },
+          "brief_v1": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "37c2519ef4f9406fb29a67910bf7a5a9"
+          },
+          "brief_v2": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+          }
+        },
+        "reads": {
+          "old_date": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+            },
+            "reason": "version_not_current"
+          },
+          "old_brief_before_replacement": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "37c2519ef4f9406fb29a67910bf7a5a9"
+            },
+            "reason": "version_not_current"
+          },
+          "date_v2": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+            },
+            "content": "Projet Atlas : livraison lundi.",
+            "content_sha256": "642982ca12af2c09d877d5282c90717b65c047b89dad936b209bc967036d25ef",
+            "reason": "allowed",
+            "alias": null
+          },
+          "control": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          },
+          "brief_v2": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+            },
+            "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française.",
+            "content_sha256": "de5e8bef42b39887b94fbec8e734a598efc71c101ace4d1b0f3f314a5e8d8e38",
+            "reason": "allowed",
+            "alias": null
+          },
+          "reopened_brief": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+            },
+            "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française.",
+            "content_sha256": "de5e8bef42b39887b94fbec8e734a598efc71c101ace4d1b0f3f314a5e8d8e38",
+            "reason": "allowed",
+            "alias": null
+          }
+        },
+        "details": {
+          "expected_version": "c290ec3322dc48bc8d4c042a5be45de7",
+          "storage_reopened": true,
+          "backup_quarantined": true,
+          "backup_checkpoint": {
+            "generation": "5dc478b05a7142e79980345461d86877",
+            "epoch": 5,
+            "digest": "3448047c1e4fe199b6a34290979ef9830a1a4b3aa09839dc71ce50bde100398d"
+          }
+        },
+        "provenance": {
+          "root": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+          },
+          "nodes": [
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-brief",
+                "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [
+                {
+                  "ref": {
+                    "artifact_id": "atlas-deadline",
+                    "version_id": "0049ca5a203e4370a49c68bd1e9acd0e",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                },
+                {
+                  "ref": {
+                    "artifact_id": "atlas-language",
+                    "version_id": "e33e752347fe441391e3089e53a835a0",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                }
+              ],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-language",
+                "version_id": "e33e752347fe441391e3089e53a835a0",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-deadline",
+                "version_id": "0049ca5a203e4370a49c68bd1e9acd0e",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            }
+          ],
+          "coverage": "known_dependencies_only"
+        }
+      },
+      {
+        "id": 4,
+        "phase": "revoke",
+        "operations": [
+          "revoke_source",
+          "read",
+          "explain_artifact"
+        ],
+        "refs": {
+          "date_v2": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+          },
+          "control": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "e33e752347fe441391e3089e53a835a0"
+          },
+          "brief_v2": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+          }
+        },
+        "reads": {
+          "date_v2": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+            },
+            "reason": "source_revoked"
+          },
+          "brief_v2": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+            },
+            "reason": "source_revoked"
+          },
+          "control": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          }
+        },
+        "details": {
+          "withdrawal": {
+            "event_id": "atlas-withdraw-deadline",
+            "epoch": 6,
+            "registered": true,
+            "covered_reads_blocked": true,
+            "projection_purge": "pending",
+            "coverage": "known_dependencies_only",
+            "physical_erasure": false
+          }
+        },
+        "provenance": {
+          "root": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+          },
+          "nodes": [
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-brief",
+                "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+              },
+              "allowed": false,
+              "reason": "source_revoked",
+              "dependencies": [
+                {
+                  "ref": {
+                    "artifact_id": "atlas-deadline",
+                    "version_id": "0049ca5a203e4370a49c68bd1e9acd0e",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                },
+                {
+                  "ref": {
+                    "artifact_id": "atlas-language",
+                    "version_id": "e33e752347fe441391e3089e53a835a0",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                }
+              ],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-language",
+                "version_id": "e33e752347fe441391e3089e53a835a0",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-deadline",
+                "version_id": "0049ca5a203e4370a49c68bd1e9acd0e",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": false,
+              "reason": "source_revoked",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            }
+          ],
+          "coverage": "known_dependencies_only"
+        }
+      },
+      {
+        "id": 5,
+        "phase": "restore",
+        "operations": [
+          "open",
+          "read",
+          "restore_verify",
+          "explain_artifact"
+        ],
+        "refs": {
+          "date_v1": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+          },
+          "date_v2": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+          },
+          "control": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "e33e752347fe441391e3089e53a835a0"
+          },
+          "brief_v2": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+          }
+        },
+        "reads": {
+          "quarantined_control": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "reason": "authority_or_store_unavailable"
+          },
+          "date_v1": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+            },
+            "reason": "source_revoked"
+          },
+          "date_v2": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+            },
+            "reason": "source_revoked"
+          },
+          "brief_v2": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+            },
+            "reason": "source_revoked"
+          },
+          "control": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          }
+        },
+        "details": {
+          "retained_current_authority": true,
+          "restoration": {
+            "ready": true,
+            "checkpoint": {
+              "generation": "5dc478b05a7142e79980345461d86877",
+              "epoch": 6,
+              "digest": "fd3ee520ef86ef8feff58cb3d4db485b956602ee337cf93b5822999f64cac8f2"
+            },
+            "missing_current_content": [],
+            "blocked": [
+              {
+                "ref": {
+                  "workspace": "portfolio-atlas",
+                  "artifact_id": "atlas-deadline",
+                  "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+                },
+                "reason": "source_revoked"
+              },
+              {
+                "ref": {
+                  "workspace": "portfolio-atlas",
+                  "artifact_id": "atlas-brief",
+                  "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+                },
+                "reason": "source_revoked"
+              }
+            ],
+            "coverage": "known_dependencies_only"
+          }
+        },
+        "provenance": {
+          "root": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+          },
+          "nodes": [
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-brief",
+                "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+              },
+              "allowed": false,
+              "reason": "source_revoked",
+              "dependencies": [
+                {
+                  "ref": {
+                    "artifact_id": "atlas-deadline",
+                    "version_id": "0049ca5a203e4370a49c68bd1e9acd0e",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                },
+                {
+                  "ref": {
+                    "artifact_id": "atlas-language",
+                    "version_id": "e33e752347fe441391e3089e53a835a0",
+                    "workspace": "portfolio-atlas"
+                  },
+                  "relation": "derives"
+                }
+              ],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-language",
+                "version_id": "e33e752347fe441391e3089e53a835a0",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": true,
+              "reason": "allowed",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            },
+            {
+              "ref": {
+                "artifact_id": "atlas-deadline",
+                "version_id": "0049ca5a203e4370a49c68bd1e9acd0e",
+                "workspace": "portfolio-atlas"
+              },
+              "allowed": false,
+              "reason": "source_revoked",
+              "dependencies": [],
+              "provenance_known": true,
+              "producer": null,
+              "retention": {
+                "policy": "manual_indefinite",
+                "automatic_physical_purge": false
+              }
+            }
+          ],
+          "coverage": "known_dependencies_only"
+        }
+      }
+    ],
+    "assertions": {
+      "initial_sources_allowed": true,
+      "initial_brief_allowed": true,
+      "initial_exact_dependencies": true,
+      "correction_new_version": true,
+      "old_date_denied": true,
+      "old_brief_denied_before_replacement": true,
+      "corrected_date_and_control_allowed": true,
+      "corrected_brief_allowed_after_storage_reopen": true,
+      "withdrawn_date_denied": true,
+      "dependent_brief_denied": true,
+      "independent_control_preserved": true,
+      "old_content_restore_denied_before_verification": true,
+      "old_and_current_withdrawn_versions_stay_denied": true,
+      "restored_dependent_brief_stays_denied": true,
+      "restored_independent_control_allowed": true,
+      "no_missing_current_content": true
+    },
+    "boundaries": [
+      "synthetic_application_example_without_model_or_network_calls",
+      "storage_reopen_not_process_or_hardware_crash_simulation",
+      "known_declared_dependencies_only",
+      "current_authority_and_freshness_witness_retained_outside_content_backup",
+      "coordinated_authority_and_witness_rollback_not_covered",
+      "logical_read_revocation_not_physical_erasure_or_model_unlearning",
+      "recorded_run_not_a_reliability_or_latency_benchmark"
+    ]
+  },
+  "reference": {
+    "contract": {
+      "name": "key-value-cache-without-dependency-tracking",
+      "writes": "replace_the_addressed_key_only",
+      "briefs": "application_stores_the_same_explicitly_rebuilt_text_as_the_core",
+      "dependencies": "received_in_operation_receipts_but_not_stored_or_revalidated",
+      "withdrawal": "remove_the_addressed_source_key_only",
+      "recovery": "restore_all_cache_content_from_its_pre_withdrawal_json_snapshot",
+      "storage": "in_process_dictionary_with_real_json_snapshot_and_restore",
+      "authority": "no_separate_revocation_authority_or_freshness_witness"
+    },
+    "receipts": [
+      {
+        "id": 1,
+        "phase": "admit",
+        "operation": "put",
+        "inputs": {
+          "key": "atlas-deadline",
+          "content": "Projet Atlas : livraison vendredi.",
+          "declared_dependencies": []
+        },
+        "result": {
+          "replaced": false
+        },
+        "state_sha256": "81a9c2a9d0f7bd7d149cff6758578271098c878598d3ef21b8307eb8b21eae4e"
+      },
+      {
+        "id": 2,
+        "phase": "admit",
+        "operation": "put",
+        "inputs": {
+          "key": "atlas-language",
+          "content": "Projet Atlas : langue de communication française.",
+          "declared_dependencies": []
+        },
+        "result": {
+          "replaced": false
+        },
+        "state_sha256": "8dfd6b56dd8413f8d1c9128bf89306b5d575cf63c6c76bd13d8c3fa72f62b23f"
+      },
+      {
+        "id": 3,
+        "phase": "derive",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-deadline"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : livraison vendredi."
+        },
+        "state_sha256": "8dfd6b56dd8413f8d1c9128bf89306b5d575cf63c6c76bd13d8c3fa72f62b23f"
+      },
+      {
+        "id": 4,
+        "phase": "derive",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-brief"
+        },
+        "result": {
+          "allowed": false,
+          "reason": "cache_miss"
+        },
+        "state_sha256": "8dfd6b56dd8413f8d1c9128bf89306b5d575cf63c6c76bd13d8c3fa72f62b23f"
+      },
+      {
+        "id": 5,
+        "phase": "derive",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-language"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "8dfd6b56dd8413f8d1c9128bf89306b5d575cf63c6c76bd13d8c3fa72f62b23f"
+      },
+      {
+        "id": 6,
+        "phase": "derive",
+        "operation": "put",
+        "inputs": {
+          "key": "atlas-brief",
+          "content": "Brief Atlas — Projet Atlas : livraison vendredi. Projet Atlas : langue de communication française.",
+          "declared_dependencies": [
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-deadline",
+                "version_id": "c290ec3322dc48bc8d4c042a5be45de7"
+              },
+              "relation": "derives"
+            },
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-language",
+                "version_id": "e33e752347fe441391e3089e53a835a0"
+              },
+              "relation": "derives"
+            }
+          ]
+        },
+        "result": {
+          "replaced": false
+        },
+        "state_sha256": "73290e0d2186d154a7b1b68c2f97f7ae250e3aae0d9aafe0c4aa1f76c37313bd"
+      },
+      {
+        "id": 7,
+        "phase": "correct",
+        "operation": "put",
+        "inputs": {
+          "key": "atlas-deadline",
+          "content": "Projet Atlas : livraison lundi.",
+          "declared_dependencies": []
+        },
+        "result": {
+          "replaced": true
+        },
+        "state_sha256": "b7cce6c6f155453664c7680e778bb95f1f0ae133a55dcc10109f724ce9d3bb12"
+      },
+      {
+        "id": 8,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-deadline"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : livraison lundi."
+        },
+        "state_sha256": "b7cce6c6f155453664c7680e778bb95f1f0ae133a55dcc10109f724ce9d3bb12"
+      },
+      {
+        "id": 9,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-brief"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Brief Atlas — Projet Atlas : livraison vendredi. Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "b7cce6c6f155453664c7680e778bb95f1f0ae133a55dcc10109f724ce9d3bb12"
+      },
+      {
+        "id": 10,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-language"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "b7cce6c6f155453664c7680e778bb95f1f0ae133a55dcc10109f724ce9d3bb12"
+      },
+      {
+        "id": 11,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-deadline"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : livraison lundi."
+        },
+        "state_sha256": "b7cce6c6f155453664c7680e778bb95f1f0ae133a55dcc10109f724ce9d3bb12"
+      },
+      {
+        "id": 12,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-brief"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Brief Atlas — Projet Atlas : livraison vendredi. Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "b7cce6c6f155453664c7680e778bb95f1f0ae133a55dcc10109f724ce9d3bb12"
+      },
+      {
+        "id": 13,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-language"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "b7cce6c6f155453664c7680e778bb95f1f0ae133a55dcc10109f724ce9d3bb12"
+      },
+      {
+        "id": 14,
+        "phase": "correct",
+        "operation": "put",
+        "inputs": {
+          "key": "atlas-brief",
+          "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française.",
+          "declared_dependencies": [
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-deadline",
+                "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+              },
+              "relation": "derives"
+            },
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-language",
+                "version_id": "e33e752347fe441391e3089e53a835a0"
+              },
+              "relation": "derives"
+            }
+          ]
+        },
+        "result": {
+          "replaced": true
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 15,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-deadline"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : livraison lundi."
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 16,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-brief"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 17,
+        "phase": "correct",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-language"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 18,
+        "phase": "correct",
+        "operation": "backup",
+        "inputs": {},
+        "result": {
+          "content_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 19,
+        "phase": "revoke",
+        "operation": "remove",
+        "inputs": {
+          "key": "atlas-deadline"
+        },
+        "result": {
+          "removed": true
+        },
+        "state_sha256": "fa8444aea1295a7195465c3517e5c96e9ce80fa86578d4b77988a1afacc8e07e"
+      },
+      {
+        "id": 20,
+        "phase": "revoke",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-deadline"
+        },
+        "result": {
+          "allowed": false,
+          "reason": "cache_miss"
+        },
+        "state_sha256": "fa8444aea1295a7195465c3517e5c96e9ce80fa86578d4b77988a1afacc8e07e"
+      },
+      {
+        "id": 21,
+        "phase": "revoke",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-brief"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "fa8444aea1295a7195465c3517e5c96e9ce80fa86578d4b77988a1afacc8e07e"
+      },
+      {
+        "id": 22,
+        "phase": "revoke",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-language"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "fa8444aea1295a7195465c3517e5c96e9ce80fa86578d4b77988a1afacc8e07e"
+      },
+      {
+        "id": 23,
+        "phase": "restore",
+        "operation": "restore",
+        "inputs": {},
+        "result": {
+          "content_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 24,
+        "phase": "restore",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-deadline"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : livraison lundi."
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 25,
+        "phase": "restore",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-brief"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      },
+      {
+        "id": 26,
+        "phase": "restore",
+        "operation": "read",
+        "inputs": {
+          "key": "atlas-language"
+        },
+        "result": {
+          "allowed": true,
+          "reason": "cache_hit",
+          "content": "Projet Atlas : langue de communication française."
+        },
+        "state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+      }
+    ],
+    "final_state_sha256": "1cdf589e7391badf7d1c38af770df79b2fb4757f2d028eba9937696a8fc860d3"
+  },
+  "shared_inputs": {
+    "date_v1": "Projet Atlas : livraison vendredi.",
+    "date_v2": "Projet Atlas : livraison lundi.",
+    "language": "Projet Atlas : langue de communication française."
+  },
+  "cases": [
+    {
+      "phase": "correct",
+      "reference": {
+        "before_rebuild": {
+          "date": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Projet Atlas : livraison lundi."
+          },
+          "brief": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Brief Atlas — Projet Atlas : livraison vendredi. Projet Atlas : langue de communication française."
+          },
+          "language": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Projet Atlas : langue de communication française."
+          }
+        },
+        "after_rebuild": {
+          "date": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Projet Atlas : livraison lundi."
+          },
+          "brief": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française."
+          },
+          "language": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Projet Atlas : langue de communication française."
+          }
+        }
+      },
+      "persistent_memory": {
+        "event_id": 3,
+        "before_rebuild": {
+          "date": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+            },
+            "content": "Projet Atlas : livraison lundi.",
+            "content_sha256": "642982ca12af2c09d877d5282c90717b65c047b89dad936b209bc967036d25ef",
+            "reason": "allowed",
+            "alias": null
+          },
+          "brief": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "37c2519ef4f9406fb29a67910bf7a5a9"
+            },
+            "reason": "version_not_current"
+          },
+          "language": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          }
+        },
+        "after_rebuild": {
+          "date": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+            },
+            "content": "Projet Atlas : livraison lundi.",
+            "content_sha256": "642982ca12af2c09d877d5282c90717b65c047b89dad936b209bc967036d25ef",
+            "reason": "allowed",
+            "alias": null
+          },
+          "brief": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+            },
+            "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française.",
+            "content_sha256": "de5e8bef42b39887b94fbec8e734a598efc71c101ace4d1b0f3f314a5e8d8e38",
+            "reason": "allowed",
+            "alias": null
+          },
+          "language": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          }
+        }
+      }
+    },
+    {
+      "phase": "revoke",
+      "reference": {
+        "after": {
+          "date": {
+            "allowed": false,
+            "reason": "cache_miss"
+          },
+          "brief": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française."
+          },
+          "language": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Projet Atlas : langue de communication française."
+          }
+        }
+      },
+      "persistent_memory": {
+        "event_id": 4,
+        "after": {
+          "date": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+            },
+            "reason": "source_revoked"
+          },
+          "brief": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+            },
+            "reason": "source_revoked"
+          },
+          "language": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          }
+        }
+      }
+    },
+    {
+      "phase": "restore",
+      "reference": {
+        "after": {
+          "date": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Projet Atlas : livraison lundi."
+          },
+          "brief": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Brief Atlas — Projet Atlas : livraison lundi. Projet Atlas : langue de communication française."
+          },
+          "language": {
+            "allowed": true,
+            "reason": "cache_hit",
+            "content": "Projet Atlas : langue de communication française."
+          }
+        }
+      },
+      "persistent_memory": {
+        "event_id": 5,
+        "before_verification": {
+          "language": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "reason": "authority_or_store_unavailable"
+          }
+        },
+        "after": {
+          "date": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-deadline",
+              "version_id": "0049ca5a203e4370a49c68bd1e9acd0e"
+            },
+            "reason": "source_revoked"
+          },
+          "brief": {
+            "allowed": false,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "3438f9a4324d43db8a7170e5de3d4478"
+            },
+            "reason": "source_revoked"
+          },
+          "language": {
+            "allowed": true,
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-language",
+              "version_id": "e33e752347fe441391e3089e53a835a0"
+            },
+            "content": "Projet Atlas : langue de communication française.",
+            "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+            "reason": "allowed",
+            "alias": null
+          }
+        }
+      }
+    }
+  ],
+  "assertions": {
+    "same_brief_inputs_derive": true,
+    "same_brief_inputs_correct": true,
+    "cache_old_brief_readable_before_rebuild": true,
+    "core_old_brief_denied_before_rebuild": true,
+    "both_briefs_correct_after_rebuild": true,
+    "cache_source_removed": true,
+    "cache_brief_retained_after_source_removal": true,
+    "core_dependent_brief_denied_after_withdrawal": true,
+    "cache_snapshot_restores_date_and_brief": true,
+    "core_restored_date_and_brief_denied": true,
+    "both_keep_independent_language": true
+  },
+  "provenance": {
+    "fixture_sha256": "b0b3c92f53691c9284f55f21206cafb7812fc04d6a81dafa952cfdd27e9b8ce6",
+    "example_script_sha256": "3c3cbdbc3916d155d390c96aedef55043e077704593afdb59a2807f8d6501f3e",
+    "reference_receipts_sha256": "addee216a866ddecbfb0a621acfcf025d2d369d282b8c8ca4297c5378a0dd70a"
+  },
+  "boundaries": [
+    "synthetic_application_example_without_model_or_network_calls",
+    "storage_reopen_not_process_or_hardware_crash_simulation",
+    "known_declared_dependencies_only",
+    "current_authority_and_freshness_witness_retained_outside_content_backup",
+    "coordinated_authority_and_witness_rollback_not_covered",
+    "logical_read_revocation_not_physical_erasure_or_model_unlearning",
+    "recorded_run_not_a_reliability_or_latency_benchmark",
+    "illustrative_reference_contract_not_a_competitor_or_all_rag_systems",
+    "both_receive_same_source_facts_explicit_brief_rebuild_withdrawal_and_content_restore",
+    "core_retains_current_authority_and_witness_separately_reference_has_neither_by_contract",
+    "cache_can_be_made_correct_by_explicit_rebuild_or_invalidation",
+    "no_performance_durability_or_model_quality_comparison"
+  ]
+}

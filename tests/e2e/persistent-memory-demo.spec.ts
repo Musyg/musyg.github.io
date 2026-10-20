@@ -6,6 +6,23 @@ import { expect, test } from "@playwright/test";
 const trace = JSON.parse(
   readFileSync("public/demos/persistent-memory/trace.json", "utf8"),
 );
+type ComparisonRead = {
+  allowed: boolean;
+  reason: string;
+  content?: string | null;
+};
+type ComparisonCase = { phase: string } & Record<
+  "reference" | "persistent_memory",
+  Record<string, Record<string, ComparisonRead>>
+>;
+const comparison = JSON.parse(
+  readFileSync("public/demos/persistent-memory/comparison.json", "utf8"),
+);
+const comparisonMoments = [
+  ["before_rebuild", "after_rebuild"],
+  ["after"],
+  ["after"],
+];
 const roles = ["date_v1", "brief_v1", "brief_v2", "brief_v2", "control"];
 
 for (const locale of ["en", "fr"]) {
@@ -166,6 +183,72 @@ for (const locale of ["en", "fr"]) {
       });
       await page.keyboard.press("Enter");
       await expect(page.locator("#machine")).not.toBeVisible();
+      await expect(page.locator("#comparison-results")).toBeVisible();
+      await expect(page.locator("#comparison-rows > tr")).toHaveCount(4);
+      const observedComparison = await page
+        .locator("#comparison-rows")
+        .evaluate((table) =>
+          Array.from(table.querySelectorAll(".comparison-read")).map(
+            (element) => ({
+              phase: (element.closest("tr") as HTMLElement).dataset
+                .comparisonPhase,
+              moment: (element.closest("tr") as HTMLElement).dataset.moment,
+              branch: (element.closest("td") as HTMLElement).dataset.branch,
+              role: (element as HTMLElement).dataset.role,
+              allowed: (element as HTMLElement).dataset.allowed === "true",
+              content:
+                element.querySelector(".comparison-content")?.textContent ??
+                null,
+              reason: (element as HTMLElement).dataset.reason,
+            }),
+          ),
+        );
+      const expectedComparison = comparison.cases.flatMap(
+        (item: ComparisonCase, index: number) =>
+          comparisonMoments[index].flatMap((moment) =>
+            (["reference", "persistent_memory"] as const).flatMap((branch) =>
+              ["brief"].map((role) => {
+                const read = item[branch][moment][role];
+                return {
+                  phase: item.phase,
+                  moment,
+                  branch,
+                  role,
+                  allowed: read.allowed,
+                  content: read.allowed ? read.content : null,
+                  reason: read.reason,
+                };
+              }),
+            ),
+          ),
+      );
+      expect(observedComparison).toEqual(expectedComparison);
+      await expect(page.locator("#comparison-contract")).toContainText(
+        locale === "fr" ? "reconstruction explicite" : "explicit rebuild",
+      );
+      await expect(page.locator("#comparison-authority")).toContainText(
+        locale === "fr" ? "témoin de fraîcheur" : "freshness witness",
+      );
+      await expect(page.locator("#comparison-language")).toContainText(
+        locale === "fr" ? "français" : "French",
+      );
+      await page.locator("#comparison-proof > summary").focus();
+      await page.keyboard.press("Enter");
+      await expect(page.locator("#comparison-receipts")).toBeVisible();
+      expect(
+        JSON.parse((await page.locator("#comparison-receipts").textContent())!),
+      ).toEqual(comparison);
+      await expect(page.locator("#comparison-code")).toHaveAttribute(
+        "href",
+        /^https:\/\/github\.com\/Musyg\/persistent-memory\/blob\/[a-f0-9]{40}\/examples\/portfolio_demo\.py$/,
+      );
+      await page.keyboard.press("Enter");
+      await expect(page.locator("#comparison-receipts")).not.toBeVisible();
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
       if (width !== 390) {
         const scan = await new AxeBuilder({ page }).analyze();
         expect(scan.violations).toEqual([]);
