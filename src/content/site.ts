@@ -208,10 +208,10 @@ export const projects: Project[] = [
       },
       results: {
         en: [
-          "Core 0.3.0a2 includes installable packages, checksums and English and French documentation; the independent policy registry is version 0.2.0a1. Standalone demos show evidence withdrawal and recovery, rejection of a changed output buffer and handling of uncertain delivery outcomes.",
+          "Core 0.3.0a2 includes installable packages, checksums and English and French documentation; the independent policy registry is version 0.2.0a2. Standalone demos show evidence withdrawal and recovery, rejection of a changed output buffer and handling of uncertain delivery outcomes.",
         ],
         fr: [
-          "Le noyau 0.3.0a2 comprend les packages installables, les sommes de contrôle et la documentation française et anglaise ; le registre de politiques indépendant est en version 0.2.0a1. Les démonstrations autonomes présentent le retrait des informations et la reprise, le refus d’un tampon de sortie modifié et la gestion d’une remise au résultat incertain.",
+          "Le noyau 0.3.0a2 comprend les packages installables, les sommes de contrôle et la documentation française et anglaise ; le registre de politiques indépendant est en version 0.2.0a2. Les démonstrations autonomes présentent le retrait des informations et la reprise, le refus d’un tampon de sortie modifié et la gestion d’une remise au résultat incertain.",
         ],
       },
       evidence: {
