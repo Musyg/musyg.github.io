@@ -87,6 +87,8 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
 .label{font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin:0 0 14px}.evidence{margin-top:24px}.evidence-top .label{margin:0}.evidence-card{overflow-wrap:anywhere}.card-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-bottom:8px}.card-head strong{font-size:14px}.card-head span{color:var(--muted);font:12px ui-monospace,monospace}.evidence-card p{font-size:14px;margin:0}.ref{display:block;color:var(--muted);font:12px/1.8 ui-monospace,monospace;margin-top:10px}.control-group{display:flex;gap:10px;flex-wrap:wrap}.technical .tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}.tech-grid p,.technical>p{font-size:14px;color:var(--muted)}pre{max-height:300px;overflow:auto;margin:0;padding:14px;border:1px solid var(--line);border-radius:8px;font:12px/1.8 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.links{display:flex;flex-wrap:wrap;gap:10px 20px}.command{margin-bottom:12px}.command code{white-space:pre-wrap}.unavailable{border:1px solid var(--blue);padding:20px}
 @media(max-width:600px){main{padding:20px 18px 36px}.hero{padding-top:30px}.steps{gap:8px;font-size:11px}.steps button{padding:7px 8px}.panel{padding:20px}.details,.technical .tech-grid{grid-template-columns:1fr;gap:20px}.observation{min-height:156px}.controls button{padding:9px 12px;font-size:14px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+.scenario-question{font-size:18px;max-width:760px;margin-bottom:18px}.causal-map{display:grid;grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr) 24px minmax(0,1fr);align-items:center;gap:6px;margin:22px 0}.memory-node{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;min-height:98px;text-align:left;padding:12px;background:#000;border-color:var(--line)}.memory-node strong{font-size:14px}.memory-node span{font-size:12px;color:var(--muted);overflow-wrap:anywhere}.memory-node[data-state="available"]{border-color:var(--blue);background:rgba(0,94,255,.1)}.memory-node[data-state="blocked"]{border-color:var(--blue);border-style:dashed}.memory-node[aria-pressed="true"]{box-shadow:0 0 0 1px var(--blue)}.causal-edge{color:var(--blue);font-size:22px;text-align:center}.causal-edge[data-linked="false"]{visibility:hidden}.map-note,.recording-mode,.share-status{font-size:12px;color:var(--muted)}.change-strip{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid var(--line);padding-top:18px}.change-strip .label{margin-bottom:6px}.change-strip p{font-size:14px;margin:0}.preserved{font-size:13px;color:var(--muted);margin-top:14px}.restore-authority{border-left:3px solid var(--blue);padding-left:14px;font-size:14px;margin:18px 0}.recording-mode{margin:18px 0 0}.share-link{width:100%;margin-top:12px;padding:10px;color:var(--text);background:#000;border:1px solid var(--blue);font:12px ui-monospace,monospace}.share-status{margin-top:10px;overflow-wrap:anywhere}.inspector{margin-top:18px}.inspector h2{font-size:17px;margin-bottom:8px}.inspector p{font-size:14px;color:var(--muted)}.step-code{display:inline-block;font-size:13px;margin-top:12px}.technical .evidence{margin-top:20px}
+@media(max-width:600px){.causal-map{gap:3px;grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr) 16px minmax(0,1fr)}.memory-node{padding:9px 6px;min-height:106px}.memory-node strong{font-size:12px}.memory-node span{font-size:11px}.causal-edge{font-size:18px}.change-strip{gap:14px}.scenario-question{font-size:16px}}
 </style>
   </head>
   <body>
@@ -103,19 +105,29 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
       <div id="demo">
         <nav class="steps" id="steps" aria-label="Étapes de la démonstration"></nav>
         <section class="panel" aria-label="Recorded execution replay" id="workspace">
+          <p class="scenario-question" data-i18n="question"></p>
           <div class="status-line topline"><span class="status badge" id="status"></span><span class="step" id="position"></span></div>
           <div class="main-grid">
             <div class="outcome observation" aria-live="polite" aria-atomic="true">
               <h2 id="heading"></h2><p id="explanation"></p>
               <div class="answer overview" id="answer-box"><p class="label" data-i18n="retrieved"></p><p id="answer"></p></div>
             </div>
-            <div class="evidence"><div class="evidence-top"><p class="label" data-i18n="evidence"></p></div><div class="journey" id="evidence"></div></div>
+            <div class="causal-map" id="causal-map" role="group" aria-label="Sources et dépendances">
+              <button class="memory-node" id="node-date" type="button" data-artifact="atlas-deadline"><strong></strong><span></span></button><span class="causal-edge" id="edge-date" aria-hidden="true">→</span>
+              <button class="memory-node" id="node-brief" type="button" data-artifact="atlas-brief"><strong></strong><span></span></button><span class="causal-edge" id="edge-language" aria-hidden="true">←</span>
+              <button class="memory-node" id="node-language" type="button" data-artifact="atlas-language"><strong></strong><span></span></button>
+            </div>
+            <p class="map-note" data-i18n="mapNote"></p>
+            <div class="change-strip"><div><p class="label" data-i18n="before"></p><p id="change-before"></p></div><div><p class="label" data-i18n="after"></p><p id="change-after"></p></div></div>
+            <p class="preserved" id="preserved-language"></p><p class="restore-authority" id="restore-authority" hidden></p>
           </div>
-          <div class="controls"><div class="control-group"><button id="previous" type="button" data-i18n="previous"></button><button class="primary" id="next" type="button" data-i18n="next"></button></div><button id="restart" type="button" data-i18n="restart"></button></div>
+          <p class="recording-mode" id="recording-mode" data-i18n="recordingMode"></p>
+          <div class="controls"><div class="control-group"><button id="previous" type="button" data-i18n="previous"></button><button class="primary" id="next" type="button" data-i18n="next"></button></div><button id="restart" type="button" data-i18n="restart"></button><button id="share" type="button" data-i18n="share"></button></div>
+          <input class="share-link" id="share-link" type="text" readonly hidden aria-label="Lien de cette étape"><p class="share-status" id="share-status" role="status"></p>
         </section>
       </div>
       <section class="details"><div><h2 data-i18n="scopeTitle"></h2><p data-i18n="scope"></p><div class="links"><a id="source" href="https://github.com/Musyg/persistent-memory" data-i18n="source"></a><a href="trace.json" download="persistent-memory-trace.json" data-i18n="download"></a></div></div><div><h2 data-i18n="reproduce"></h2><p data-i18n="instructions"></p><div class="command"><code id="command"></code></div><a id="guide" href="https://github.com/Musyg/persistent-memory" data-i18n="guide"></a></div></section>
-      <details class="technical"><summary data-i18n="technical"></summary><div id="answer-meta"></div><div class="tech-grid"><div><p data-i18n="machine"></p><pre id="machine"></pre></div><div><p data-i18n="refs"></p><pre id="references"></pre></div></div><p data-i18n="limit"></p></details>
+      <details class="technical" id="technical"><summary data-i18n="technical"></summary><div class="inspector"><h2 id="inspector-title"></h2><p id="inspector-summary"></p><pre id="inspector-read"></pre><a class="step-code" id="step-code" href="https://github.com/Musyg/persistent-memory" data-i18n="stepCode"></a></div><div id="answer-meta"></div><div class="evidence"><div class="evidence-top"><p class="label" data-i18n="evidence"></p></div><div class="journey" id="evidence"></div></div><div class="tech-grid"><div><p data-i18n="machine"></p><pre id="machine"></pre></div><div><p data-i18n="refs"></p><pre id="references"></pre></div></div><p data-i18n="limit"></p></details>
       <footer id="provenance"></footer>
     </main>
     <script id="recorded-trace" type="application/json">{
@@ -857,26 +869,30 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
       const byId = (id) => document.getElementById(id);
       const query = new URLSearchParams(location.search);
       let language = query.get("lang") === "en" ? "en" : "fr";
-      let position = 0;
+      const readPosition = () => { const value = new URLSearchParams(location.search).get("step"); return /^[1-5]$/.test(value || "") ? Number(value) - 1 : 0; };
+      let position = readPosition();
+      let selectedArtifact = "atlas-deadline";
       const copy = {
-        fr: { eyebrow: "Démonstration technique / mémoire persistante", title: "Une information change. La mémoire aussi.", intro: "Une date est corrigée, puis retirée. Le résumé suit ces changements et l’ancienne sauvegarde ne rétablit pas l’information retirée.", recorded: "Exécution Python enregistrée", synthetic: "Données fictives", local: "Sans modèle ni clé API", back: "Retour au projet", outcome: "Résultat pratique", retrieved: "Contexte restitué", evidence: "Sources et provenance", observed: "OBSERVÉ EN PYTHON", previous: "Précédent", next: "Suivant", restart: "Recommencer", pace: "Explorez à votre rythme.", technical: "Trace et provenance", machine: "Résultat et raisons observés", refs: "Références de l’étape", scopeTitle: "Exécution Python", scope: "Noyau public exécuté localement sur les données fictives du projet Atlas. La trace enregistrée fournit les sources, les versions et les décisions de lecture.", limit: "La reprise conserve l’autorité actuelle hors de la sauvegarde restaurée. Le retrait contrôle les futures lectures ; il n’efface pas les copies exportées. Cette capture n’est pas un benchmark de fiabilité.", source: "Code de l’exemple", download: "Télécharger la trace JSON", reproduce: "Reproduire l’exécution", instructions: "Dans un clone du dépôt public, avec le package installé :", guide: "Instructions de reproduction", step: "Étape", empty: "Aucune preuve admissible", noEvidence: "Aucune source restituée à cette étape.", version: "Version", active: "Source retenue", excluded: "Source écartée", recordedAt: "Enregistré le", sourceHash: "SHA256 de l’exemple", unavailable: "La trace vérifiée n’est pas disponible. Aucun résultat n’est simulé.", nav: "Étapes de la démonstration", workspace: "Relecture de l’exécution enregistrée", elapsed: "Temps mesuré depuis le début de l’exécution" },
-        en: { eyebrow: "Technical demonstration / persistent memory", title: "Information changes. Memory follows.", intro: "A date is corrected, then withdrawn. The summary follows these changes, and an old backup does not restore the withdrawn information.", recorded: "Recorded Python execution", synthetic: "Fictional data", local: "No model or API key", back: "Back to the project", outcome: "Practical outcome", retrieved: "Retrieved context", evidence: "Sources and provenance", observed: "OBSERVED IN PYTHON", previous: "Previous", next: "Next", restart: "Restart", pace: "Explore at your own pace.", technical: "Trace and provenance", machine: "Observed result and reasons", refs: "References for this step", scopeTitle: "Python execution", scope: "The public core runs locally on fictional Project Atlas data. The recorded trace supplies the sources, versions and read decisions.", limit: "Recovery retains the current authority outside the restored backup. Withdrawal governs future reads; it does not erase exported copies. This recording is not a reliability benchmark.", source: "Example source code", download: "Download the JSON trace", reproduce: "Reproduce the execution", instructions: "From a public repository clone with the package installed:", guide: "Reproduction instructions", step: "Step", empty: "No admissible evidence", noEvidence: "No source is returned at this step.", version: "Version", active: "Included source", excluded: "Excluded source", recordedAt: "Recorded at", sourceHash: "Example SHA256", unavailable: "The verified recording is unavailable. No result is simulated.", nav: "Demonstration steps", workspace: "Recorded execution replay", elapsed: "Measured time since execution started" },
+        fr: { eyebrow: "Démonstration technique / mémoire persistante", title: "Une information change. La mémoire aussi.", intro: "Projet Atlas : deux sources, un résumé et une sauvegarde.", recorded: "Exécution Python enregistrée", synthetic: "Données fictives", local: "Sans modèle ni clé API", back: "Retour au projet", outcome: "Résultat pratique", retrieved: "Contexte restitué", evidence: "Sources et provenance", observed: "OBSERVÉ EN PYTHON", previous: "Précédent", next: "Suivant", restart: "Recommencer", pace: "Explorez à votre rythme.", technical: "Trace et provenance", machine: "Résultat et raisons observés", refs: "Références de l’étape", scopeTitle: "Exécution Python", scope: "Noyau public exécuté localement sur les données fictives du projet Atlas. La trace enregistrée fournit les sources, les versions et les décisions de lecture.", limit: "La reprise conserve l’autorité actuelle hors de la sauvegarde restaurée. Le retrait contrôle les futures lectures ; il n’efface pas les copies exportées. Cette capture n’est pas un benchmark de fiabilité.", source: "Code de l’exemple", download: "Télécharger la trace JSON", reproduce: "Reproduire l’exécution", instructions: "Dans un clone du dépôt public, avec le package installé :", guide: "Instructions de reproduction", step: "Étape", empty: "Aucune preuve admissible", noEvidence: "Aucune source restituée à cette étape.", version: "Version", active: "Source retenue", excluded: "Source écartée", recordedAt: "Enregistré le", sourceHash: "SHA256 de l’exemple", unavailable: "La trace vérifiée n’est pas disponible. Aucun résultat n’est simulé.", nav: "Étapes de la démonstration", workspace: "Relecture de l’exécution enregistrée", elapsed: "Temps mesuré depuis le début de l’exécution" },
+        en: { eyebrow: "Technical demonstration / persistent memory", title: "Information changes. Memory follows.", intro: "Project Atlas: two sources, a summary and a backup.", recorded: "Recorded Python execution", synthetic: "Fictional data", local: "No model or API key", back: "Back to the project", outcome: "Practical outcome", retrieved: "Retrieved context", evidence: "Sources and provenance", observed: "OBSERVED IN PYTHON", previous: "Previous", next: "Next", restart: "Restart", pace: "Explore at your own pace.", technical: "Trace and provenance", machine: "Observed result and reasons", refs: "References for this step", scopeTitle: "Python execution", scope: "The public core runs locally on fictional Project Atlas data. The recorded trace supplies the sources, versions and read decisions.", limit: "Recovery retains the current authority outside the restored backup. Withdrawal governs future reads; it does not erase exported copies. This recording is not a reliability benchmark.", source: "Example source code", download: "Download the JSON trace", reproduce: "Reproduce the execution", instructions: "From a public repository clone with the package installed:", guide: "Reproduction instructions", step: "Step", empty: "No admissible evidence", noEvidence: "No source is returned at this step.", version: "Version", active: "Included source", excluded: "Excluded source", recordedAt: "Recorded at", sourceHash: "Example SHA256", unavailable: "The verified recording is unavailable. No result is simulated.", nav: "Demonstration steps", workspace: "Recorded execution replay", elapsed: "Measured time since execution started" },
       };
+      Object.assign(copy.fr, { question: "Quelles informations peut-on encore utiliser pour Atlas ?", before: "Avant", after: "Après", mapNote: "Sélectionnez une source pour inspecter sa version et ses liens.", recordingMode: "Exécution enregistrée · données fictives", share: "Copier le lien", copied: "Lien copié.", manualCopy: "Copiez le lien ci-dessous.", linkLabel: "Lien vers cette étape", stepCode: "Voir cette opération dans le code Python", graph: "Sources et dépendances", date: "Date", brief: "Résumé", language: "Langue", available: "Utilisable", blocked: "Lecture bloquée", absent: "Pas encore créé", initial: "Pas encore de date enregistrée.", friday: "Livraison vendredi.", linked: "Date et langue conservées séparément.", derived: "Le résumé dépend de la date et de la langue.", oldFriday: "Date : vendredi. Résumé initial utilisable.", corrected: "Date : lundi. Ancien résumé bloqué avant remplacement ; résumé actualisé utilisable.", beforeWithdrawal: "Date de lundi et résumé actualisé utilisables.", withdrawn: "Date et résumé dépendant bloqués.", oldBackup: "Sauvegarde antérieure au retrait.", verifiedRestore: "Après vérification : date et résumé toujours bloqués.", preserved: "Langue : français, toujours utilisable.", registeredLanguage: "Langue : français, enregistrée séparément.", authority: "Le contenu de l’ancienne sauvegarde est vérifié face à l’autorité actuelle, conservée séparément et informée du retrait. La langue devient lisible après cette vérification.", noNode: "Cet objet n’a pas encore été créé à cette étape.", reasonAllowed: "Lecture autorisée.", reasonVersion: "Ancienne version : lecture bloquée.", reasonRevoked: "Source retirée : lecture bloquée.", reasonQuarantine: "Sauvegarde en quarantaine : vérification requise.", reasonDependency: "Une source a changé : résumé antérieur bloqué.", reasonOther: "Lecture refusée selon la règle enregistrée.", dependencyCount: "Dépendances déclarées", inspected: "Inspecter", selected: "Objet sélectionné" });
+      Object.assign(copy.en, { question: "Which information can still be used for Atlas?", before: "Before", after: "After", mapNote: "Select a source to inspect its version and links.", recordingMode: "Recorded execution · fictional data", share: "Copy link", copied: "Link copied.", manualCopy: "Copy the link below.", linkLabel: "Link to this step", stepCode: "View this operation in the Python source", graph: "Sources and dependencies", date: "Date", brief: "Summary", language: "Language", available: "Usable", blocked: "Read blocked", absent: "Not yet created", initial: "No date stored yet.", friday: "Delivery on Friday.", linked: "Date and language stored separately.", derived: "The summary depends on the date and language.", oldFriday: "Date: Friday. Original summary usable.", corrected: "Date: Monday. Previous summary blocked before replacement; updated summary usable.", beforeWithdrawal: "Monday date and updated summary usable.", withdrawn: "Date and dependent summary blocked.", oldBackup: "Content backup from before withdrawal.", verifiedRestore: "After verification: date and summary remain blocked.", preserved: "Language: French, still usable.", registeredLanguage: "Language: French, stored separately.", authority: "The old content backup is checked against the current authority, retained separately with the withdrawal recorded. Language becomes readable after that check.", noNode: "This object has not been created at this step.", reasonAllowed: "Read allowed.", reasonVersion: "Previous version: read blocked.", reasonRevoked: "Source withdrawn: read blocked.", reasonQuarantine: "Backup quarantined: verification required.", reasonDependency: "A source changed: previous summary blocked.", reasonOther: "Read refused under the recorded rule.", dependencyCount: "Declared dependencies", inspected: "Inspect", selected: "Selected object" });
       // Captions describe the observed operation; evidence values always come from the recording.
       const captions = {
         fr: {
-          admit: ["Conserver", "L’information entre en mémoire.", "La date de livraison et la langue de communication sont enregistrées comme deux sources distinctes, avec des références de version immuables."],
-          derive: ["Relier", "Le résumé garde ses sources.", "Le résumé reprend la date et la langue. Sa provenance relie les deux sources utilisées et leurs versions exactes."],
-          correct: ["Corriger", "La date corrigée devient la référence.", "La date passe de vendredi à lundi. Les lectures observent l’ancienne version et son résumé avant remplacement, puis la nouvelle version et le résumé actualisé, y compris après réouverture du stockage."],
-          revoke: ["Retirer", "Le retrait se propage aux dérivés.", "La source de la date est retirée. Les lectures de cette source et du résumé qui en dépend sont refusées ; la source indépendante sur la langue reste utilisable."],
-          restore: ["Reprendre", "L’ancienne sauvegarde ne rétablit pas la date.", "La sauvegarde de contenu est d’abord mise en quarantaine, puis vérifiée face à l’autorité actuelle conservée séparément. Le retrait reste appliqué et la langue de communication reste accessible."],
+          admit: ["Conserver", "Vendredi devient la date de référence.", "La date et la langue sont deux sources indépendantes."],
+          derive: ["Relier", "Le résumé garde ses sources.", "Chaque lien désigne la version exacte utilisée."],
+          correct: ["Corriger", "La mémoire utilise maintenant lundi.", "Le changement de source invalide l’ancien résumé avant son remplacement."],
+          revoke: ["Retirer", "La date retirée devient inutilisable.", "Le blocage atteint le résumé, sans toucher à la langue."],
+          restore: ["Reprendre", "La sauvegarde ne réautorise pas la date.", "Le contenu ancien est mis en quarantaine, puis contrôlé."],
         },
         en: {
-          admit: ["Store", "The information enters memory.", "The delivery date and communication language are recorded as two separate sources, each with immutable version references."],
-          derive: ["Link", "The summary keeps its sources.", "The summary uses the date and language. Its provenance links both sources and their exact versions."],
-          correct: ["Correct", "The corrected date becomes the reference.", "The date changes from Friday to Monday. Reads observe the old version and its summary before replacement, then the new version and updated summary, including after reopening storage."],
-          revoke: ["Withdraw", "Withdrawal reaches derived evidence.", "The date source is withdrawn. Reads of that source and its dependent summary are refused; the independent language source remains usable."],
-          restore: ["Recover", "The old backup does not restore the date.", "The content backup is first quarantined, then verified against the current authority retained separately. Withdrawal remains enforced and the communication language is still available."],
+          admit: ["Store", "Friday becomes the reference date.", "Date and language are two independent sources."],
+          derive: ["Link", "The summary keeps its sources.", "Each link identifies the exact version used."],
+          correct: ["Correct", "Memory now uses Monday.", "The source change invalidates the previous summary before its replacement."],
+          revoke: ["Withdraw", "The withdrawn date is no longer usable.", "The block reaches the summary without affecting language."],
+          restore: ["Recover", "The backup does not reauthorize the date.", "Old content is quarantined, then checked."],
         },
       };
       let trace;
@@ -913,7 +929,7 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
             const button = document.createElement("button"); button.type = "button"; button.dataset.step = String(index);
             const number = document.createElement("span"); number.className = "step-number"; number.textContent = String(index + 1).padStart(2, "0");
             const label = document.createElement("span"); label.className = "step-label";
-            button.append(number, label); button.addEventListener("click", () => { position = index; render(); }); byId("steps").append(button);
+            button.append(number, label); button.addEventListener("click", () => { position = index; navigate(); }); byId("steps").append(button);
           });
         }
         byId("steps").querySelectorAll("button").forEach((button, index) => {
@@ -921,7 +937,8 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
           button.setAttribute("aria-label", `${words.step} ${index + 1}: ${captions[language][phases[index]][0]}`);
           if (index === position) button.setAttribute("aria-current", "step"); else button.removeAttribute("aria-current");
         });
-        byId("status").textContent = event.phase.toUpperCase();
+        byId("status").textContent = caption[0];
+        byId("status").dataset.phase = event.phase;
         byId("position").textContent = `${words.step} ${position + 1} / ${trace.events.length}`;
         byId("heading").textContent = caption[1]; byId("explanation").textContent = caption[2];
         const primary = event.reads[primaryRoles[position]];
@@ -940,20 +957,108 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
         byId("evidence").replaceChildren(...cards);
         byId("machine").textContent = JSON.stringify({ operations: event.operations, reads: event.reads, details: event.details }, null, 2);
         byId("references").textContent = JSON.stringify({ refs: event.refs, provenance: event.provenance }, null, 2);
+        renderCausality(event, words);
+        byId("share-link").setAttribute("aria-label", words.linkLabel);
         byId("previous").disabled = position === 0;
         byId("next").disabled = position === trace.events.length - 1;
         // Root binds the published example commit before qualification. This is presentation metadata, not a modification of the recorded trace.
         const exampleCommit = "732f3f31a0b5def1a35833237dc08278ee3242b4";
         const pinnedBase = /^[a-f0-9]{40}$/.test(exampleCommit) ? `https://github.com/Musyg/persistent-memory/blob/${exampleCommit}` : null;
+        const sourceLines = ["L64-L73", "L75-L97", "L99-L130", "L132-L140", "L142-L161"];
+        byId("step-code").href = `${pinnedBase}/examples/portfolio_demo.py#${sourceLines[position]}`;
         byId("source").href = safeLink(trace.provenance.example_url, pinnedBase ? `${pinnedBase}/examples/portfolio_demo.py` : "https://github.com/Musyg/persistent-memory");
         byId("guide").href = safeLink(trace.provenance.guide_url, pinnedBase ? `${pinnedBase}/docs/PORTFOLIO-DEMO.md` : "https://github.com/Musyg/persistent-memory");
         byId("command").textContent = "mkdir demo-output\npython examples/portfolio_demo.py --directory demo-output/state --output demo-output/trace.json";
         byId("provenance").textContent = `${words.recordedAt} ${trace.generated_at_utc} · ${trace.provenance.package} ${trace.provenance.installed_version}\n${words.sourceHash}: ${trace.provenance.script_sha256}`;
       }
-      byId("previous").addEventListener("click", () => { position = Math.max(0, position - 1); render(); });
-      byId("next").addEventListener("click", () => { position = Math.min(phases.length - 1, position + 1); render(); });
-      byId("restart").addEventListener("click", () => { position = 0; render(); });
-      byId("language").addEventListener("click", () => { language = language === "fr" ? "en" : "fr"; render(); });
+      const artifactIds = ["atlas-deadline", "atlas-brief", "atlas-language"];
+      const nodeIds = ["node-date", "node-brief", "node-language"];
+      const names = ["date", "brief", "language"];
+      const sameRef = (a, b) => a && b && a.workspace === b.workspace && a.artifact_id === b.artifact_id && a.version_id === b.version_id;
+      function currentEvidence(event, artifact) {
+        const node = event.provenance?.nodes?.find((item) => item.ref.artifact_id === artifact) || null;
+        const reads = Object.entries(event.reads).filter(([, read]) => read.ref.artifact_id === artifact);
+        // Prefer the final read of the current graph version, never the pre-verification read.
+        const matching = reads.filter(([, read]) => !node || sameRef(read.ref, node.ref));
+        const entry = matching.at(-1) || null;
+        return { node, role: entry ? entry[0] : null, read: entry ? entry[1] : null, ref: node?.ref || entry?.[1].ref || null };
+      }
+      function humanReason(item, words) {
+        if (!item) return words.noNode;
+        if (item.allowed) return words.reasonAllowed;
+        return ({ version_not_current: words.reasonVersion, source_revoked: words.reasonRevoked, dependency_version_not_current: words.reasonDependency, content_quarantined: words.reasonQuarantine, restore_verification_required: words.reasonQuarantine, quarantined: words.reasonQuarantine })[item.reason] || words.reasonOther;
+      }
+      function renderInspector(event, words) {
+        const index = artifactIds.indexOf(selectedArtifact);
+        const selected = currentEvidence(event, selectedArtifact);
+        const observed = selected.read || selected.node;
+        const dependencies = selected.node?.dependencies || [];
+        byId("inspector-title").textContent = `${words.selected}: ${words[names[index]]}`;
+        byId("inspector-summary").textContent = `${humanReason(observed, words)}${observed ? ` ${words.dependencyCount}: ${dependencies.length}.` : ""}`;
+        byId("inspector-read").textContent = JSON.stringify({ ref: selected.ref, read_role: selected.role, read: selected.read, provenance_node: selected.node, dependencies }, null, 2);
+      }
+      function renderCausality(event, words) {
+        byId("causal-map").setAttribute("aria-label", words.graph);
+        artifactIds.forEach((artifact, index) => {
+          const evidence = currentEvidence(event, artifact);
+          const observed = evidence.read || evidence.node;
+          const state = !observed ? "absent" : observed.allowed ? "available" : "blocked";
+          const node = byId(nodeIds[index]);
+          node.dataset.state = state;
+          node.setAttribute("aria-pressed", String(artifact === selectedArtifact));
+          node.querySelector("strong").textContent = words[names[index]];
+          node.querySelector("span").textContent = words[state];
+          node.setAttribute("aria-label", `${words.inspected} ${words[names[index]]}: ${words[state]}`);
+        });
+        const brief = currentEvidence(event, "atlas-brief").node;
+        [["edge-date", "atlas-deadline"], ["edge-language", "atlas-language"]].forEach(([id, artifact]) => {
+          const source = currentEvidence(event, artifact).ref;
+          byId(id).dataset.linked = String(Boolean(source && brief?.dependencies?.some((dependency) => dependency.relation === "derives" && sameRef(dependency.ref, source))));
+        });
+        const transitions = [[words.initial, words.friday], [words.linked, words.derived], [words.oldFriday, words.corrected], [words.beforeWithdrawal, words.withdrawn], [words.oldBackup, words.verifiedRestore]];
+        byId("change-before").textContent = transitions[position][0];
+        byId("change-after").textContent = transitions[position][1];
+        const control = currentEvidence(event, "atlas-language");
+        byId("preserved-language").textContent = (control.read || control.node)?.allowed ? (position === 0 ? words.registeredLanguage : words.preserved) : humanReason(control.read || control.node, words);
+        byId("restore-authority").hidden = event.phase !== "restore";
+        byId("restore-authority").textContent = event.details.retained_current_authority === true ? words.authority : "";
+        renderInspector(event, words);
+      }
+      function updateUrl(replace = false) {
+        const url = new URL(location.href);
+        url.searchParams.set("lang", language);
+        url.searchParams.set("step", String(position + 1));
+        history[replace ? "replaceState" : "pushState"](null, "", url.href);
+      }
+      function navigate() {
+        byId("share-link").hidden = true;
+        byId("share-status").textContent = "";
+        updateUrl();
+        render();
+      }
+      nodeIds.forEach((id, index) => byId(id).addEventListener("click", () => {
+        selectedArtifact = artifactIds[index];
+        byId("technical").open = true;
+        render();
+        byId("technical").scrollIntoView({ block: "nearest" });
+      }));
+      byId("previous").addEventListener("click", () => { position = Math.max(0, position - 1); navigate(); });
+      byId("next").addEventListener("click", () => { position = Math.min(phases.length - 1, position + 1); navigate(); });
+      byId("restart").addEventListener("click", () => { position = 0; navigate(); });
+      byId("language").addEventListener("click", () => { language = language === "fr" ? "en" : "fr"; navigate(); });
+      byId("share").addEventListener("click", async () => {
+        const words = copy[language];
+        const url = new URL(location.href);
+        url.searchParams.set("lang", language); url.searchParams.set("step", String(position + 1));
+        // Manual copy is always available; never request clipboard permissions.
+        const fallback = () => { byId("share-link").value = url.href; byId("share-link").hidden = false; byId("share-status").textContent = words.manualCopy; byId("share-link").focus(); byId("share-link").select(); };
+        try {
+          if (!navigator.clipboard?.writeText) { fallback(); return; }
+          await navigator.clipboard.writeText(url.href);
+          byId("share-link").hidden = true; byId("share-status").textContent = words.copied;
+        } catch { fallback(); }
+      });
+      addEventListener("popstate", () => { language = new URLSearchParams(location.search).get("lang") === "en" ? "en" : "fr"; position = readPosition(); byId("share-link").hidden = true; byId("share-status").textContent = ""; render(); });
       render();
     </script>
   </body>

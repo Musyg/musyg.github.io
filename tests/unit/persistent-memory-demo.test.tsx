@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "../../src/App";
 
@@ -58,11 +58,23 @@ describe("Persistent Memory recorded demonstration", () => {
 
   it.each(["fr", "en"])(
     "lets a visitor inspect every exact observation in %s without losing focus",
-    (locale) => {
+    async (locale) => {
       const trace = recording();
       const dom = new JSDOM(html(), {
         runScripts: "dangerously",
-        url: `https://demo.invalid/?lang=${locale}`,
+        url: `https://demo.invalid/?lang=${locale}&step=1&campaign=portfolio#evidence`,
+        beforeParse(window) {
+          window.HTMLElement.prototype.scrollIntoView = () => {};
+          if (locale === "en") {
+            Object.defineProperty(window.navigator, "clipboard", {
+              value: {
+                writeText: async () => {
+                  throw new Error("Clipboard access denied");
+                },
+              },
+            });
+          }
+        },
       });
       try {
         const document = dom.window.document;
@@ -74,11 +86,15 @@ describe("Persistent Memory recorded demonstration", () => {
           true,
         );
         expect(document.querySelectorAll("[data-step]")).toHaveLength(5);
+        expect(document.querySelectorAll("#recording-mode")).toHaveLength(1);
         for (let index = 0; index < trace.events.length; index++) {
           if (index) click("next");
           const event = trace.events[index];
           const read = event.reads[primaryRoles[index]];
-          expect(text("status")).toBe(event.phase.toUpperCase());
+          expect(document.getElementById("status")).toHaveAttribute(
+            "data-phase",
+            event.phase,
+          );
           expect(text("answer")).toBe(
             read.allowed
               ? read.content
@@ -98,23 +114,66 @@ describe("Persistent Memory recorded demonstration", () => {
           expect(
             document.querySelector(`[data-step="${index}"]`),
           ).toHaveAttribute("aria-current", "step");
+          expect(document.getElementById("node-date")).toHaveAttribute(
+            "data-artifact",
+            "atlas-deadline",
+          );
+          expect(document.getElementById("node-language")).toHaveAttribute(
+            "data-state",
+            "available",
+          );
+          expect(document.getElementById("node-brief")).toHaveAttribute(
+            "data-state",
+            index === 0 ? "absent" : index < 3 ? "available" : "blocked",
+          );
+          for (const source of ["date", "language"]) {
+            expect(document.getElementById(`edge-${source}`)).toHaveAttribute(
+              "data-linked",
+              String(index !== 0),
+            );
+          }
+          expect(document.getElementById("restore-authority")).toHaveProperty(
+            "hidden",
+            index !== 4,
+          );
+          expect(
+            new URL(dom.window.location.href).searchParams.get("step"),
+          ).toBe(String(index + 1));
         }
         expect(document.getElementById("next")).toHaveProperty(
           "disabled",
           true,
         );
         click("previous");
-        expect(text("status")).toBe("REVOKE");
+        expect(document.getElementById("status")).toHaveAttribute(
+          "data-phase",
+          "revoke",
+        );
         const step = document.querySelector('[data-step="2"]') as HTMLElement;
         step.focus();
         step.click();
         expect(document.activeElement).toBe(step);
         expect(text("answer")).toBe(trace.events[2].reads.brief_v2.content);
+        const node = document.getElementById("node-language")!;
+        node.focus();
+        node.click();
+        expect(document.activeElement).toBe(node);
+        expect(document.querySelectorAll("details.technical")).toHaveLength(1);
+        expect(document.getElementById("technical")).toHaveProperty(
+          "open",
+          true,
+        );
+        expect(JSON.parse(text("inspector-read")!).read).toEqual(
+          trace.events[2].reads.control,
+        );
         click("language");
         expect(document.documentElement.lang).toBe(
           locale === "fr" ? "en" : "fr",
         );
-        expect(text("status")).toBe("CORRECT");
+        expect(document.getElementById("status")).toHaveAttribute(
+          "data-phase",
+          "correct",
+        );
         expect(text("answer")).toBe(trace.events[2].reads.brief_v2.content);
         expect(document.querySelector('[data-step="2"]')).toBe(step);
         expect(document.getElementById("back")).toHaveAttribute(
@@ -123,14 +182,53 @@ describe("Persistent Memory recorded demonstration", () => {
             ? "/work/persistent-memory/"
             : "/fr/realisations/persistent-memory/",
         );
+        const shared = new URL(dom.window.location.href);
+        expect(shared.searchParams.get("step")).toBe("3");
+        expect(shared.searchParams.get("lang")).toBe(
+          locale === "fr" ? "en" : "fr",
+        );
+        expect(shared.searchParams.get("campaign")).toBe("portfolio");
+        expect(shared.hash).toBe("#evidence");
+        click("share");
+        await waitFor(
+          () => {
+            expect(document.getElementById("share-link")).toHaveProperty(
+              "hidden",
+              false,
+            );
+            expect(document.getElementById("share-link")).toHaveProperty(
+              "value",
+              shared.href,
+            );
+          },
+          { timeout: 1000 },
+        );
         click("restart");
-        expect(text("status")).toBe("ADMIT");
+        expect(document.getElementById("status")).toHaveAttribute(
+          "data-phase",
+          "admit",
+        );
         expect(document.getElementById("previous")).toHaveProperty(
           "disabled",
           true,
         );
       } finally {
         dom.window.close();
+      }
+      for (const step of ["3", "5", "0", "6", "NaN", "2.5", "3x", "-1"]) {
+        const initial = new JSDOM(html(), {
+          runScripts: "dangerously",
+          url: `https://demo.invalid/?lang=${locale}&step=${step}`,
+        });
+        try {
+          const phase =
+            step === "3" ? "correct" : step === "5" ? "restore" : "admit";
+          expect(
+            initial.window.document.getElementById("status"),
+          ).toHaveAttribute("data-phase", phase);
+        } finally {
+          initial.window.close();
+        }
       }
     },
   );
@@ -168,6 +266,70 @@ describe("Persistent Memory recorded demonstration", () => {
       ).toContain("No result is simulated");
     } finally {
       unavailable.window.close();
+    }
+    const withoutDependencies = recording();
+    withoutDependencies.events[1].provenance.nodes[0].dependencies = [];
+    const unlinked = new JSDOM(
+      original.replace(
+        embeddedTrace(original),
+        JSON.stringify(withoutDependencies),
+      ),
+      {
+        runScripts: "dangerously",
+        url: "https://demo.invalid/?lang=en&step=2",
+      },
+    );
+    try {
+      for (const source of ["date", "language"]) {
+        expect(
+          unlinked.window.document.getElementById(`edge-${source}`),
+        ).toHaveAttribute("data-linked", "false");
+      }
+    } finally {
+      unlinked.window.close();
+    }
+    const mismatchedVersion = recording();
+    mismatchedVersion.events[1].provenance.nodes[0].dependencies[0].ref.version_id =
+      "not-the-recorded-date-version";
+    const mismatched = new JSDOM(
+      original.replace(
+        embeddedTrace(original),
+        JSON.stringify(mismatchedVersion),
+      ),
+      {
+        runScripts: "dangerously",
+        url: "https://demo.invalid/?lang=en&step=2",
+      },
+    );
+    try {
+      expect(
+        mismatched.window.document.getElementById("edge-date"),
+      ).toHaveAttribute("data-linked", "false");
+      expect(
+        mismatched.window.document.getElementById("edge-language"),
+      ).toHaveAttribute("data-linked", "true");
+    } finally {
+      mismatched.window.close();
+    }
+    const withoutCurrentAuthority = recording();
+    withoutCurrentAuthority.events[4].details.retained_current_authority = false;
+    const unretained = new JSDOM(
+      original.replace(
+        embeddedTrace(original),
+        JSON.stringify(withoutCurrentAuthority),
+      ),
+      {
+        runScripts: "dangerously",
+        url: "https://demo.invalid/?lang=en&step=5",
+      },
+    );
+    try {
+      expect(
+        unretained.window.document.getElementById("restore-authority")!
+          .textContent,
+      ).toBe("");
+    } finally {
+      unretained.window.close();
     }
   });
 });
