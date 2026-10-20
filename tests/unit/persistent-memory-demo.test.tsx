@@ -139,6 +139,47 @@ describe("Persistent Memory recorded demonstration", () => {
         const text = (id: string) => document.getElementById(id)!.textContent;
         const click = (id: string) =>
           (document.getElementById(id) as HTMLButtonElement).click();
+        const video = document.getElementById(
+          "walkthrough-video",
+        ) as HTMLVideoElement;
+        expect(video).toHaveAttribute("controls");
+        expect(video).toHaveAttribute("preload", "none");
+        expect(video).toHaveAttribute("playsinline");
+        expect(video).toHaveAttribute("poster", "walkthrough-poster.jpg");
+        for (const attribute of ["autoplay", "loop", "muted"])
+          expect(video).not.toHaveAttribute(attribute);
+        expect(video.querySelector("source")).toHaveAttribute(
+          "src",
+          "walkthrough.mp4",
+        );
+        expect(video.querySelector("source")).toHaveAttribute(
+          "type",
+          "video/mp4",
+        );
+        expect(video.querySelectorAll('track[kind="captions"]')).toHaveLength(
+          2,
+        );
+        for (const [lang, label] of [
+          ["fr", "Français"],
+          ["en", "English"],
+        ]) {
+          const track = document.getElementById(
+            `walkthrough-${lang}`,
+          ) as HTMLTrackElement;
+          expect(track).toHaveAttribute("srclang", lang);
+          expect(track).toHaveAttribute("label", label);
+          expect(track).toHaveAttribute("src", `walkthrough.${lang}.vtt`);
+          expect(track.default).toBe(lang === locale);
+        }
+        expect(
+          document.querySelectorAll("#walkthrough-transcript li"),
+        ).toHaveLength(6);
+        expect(
+          document.querySelector("#walkthrough a[download]"),
+        ).toHaveAttribute("href", "walkthrough.mp4");
+        expect(text("walkthrough-description")).toContain(
+          locale === "fr" ? "données fictives" : "fictional Atlas data",
+        );
         const recordedComparison = comparison();
         expect(document.querySelectorAll("#comparison-rows > tr")).toHaveLength(
           4,
@@ -273,6 +314,20 @@ describe("Persistent Memory recorded demonstration", () => {
         expect(JSON.parse(text("inspector-read")!).read).toEqual(
           trace.events[2].reads.control,
         );
+        click("language");
+        expect(
+          (
+            document.getElementById(
+              `walkthrough-${locale === "fr" ? "en" : "fr"}`,
+            ) as HTMLTrackElement
+          ).default,
+        ).toBe(true);
+        video.dispatchEvent(new dom.window.Event("pointerdown"));
+        const previousTrack = document.getElementById(
+          `walkthrough-${locale === "fr" ? "en" : "fr"}`,
+        ) as HTMLTrackElement;
+        click("language");
+        expect(previousTrack.default).toBe(true);
         click("language");
         expect(document.documentElement.lang).toBe(
           locale === "fr" ? "en" : "fr",

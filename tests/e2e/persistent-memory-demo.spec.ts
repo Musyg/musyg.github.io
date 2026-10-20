@@ -31,8 +31,11 @@ for (const locale of ["en", "fr"]) {
       page,
     }, testInfo) => {
       const externalRequests: string[] = [];
+      const videoRequests: string[] = [];
       const errors: string[] = [];
       page.on("request", (request) => {
+        if (new URL(request.url()).pathname.endsWith("/walkthrough.mp4"))
+          videoRequests.push(request.url());
         if (
           !new URL(request.url()).hostname.match(/^(127\.0\.0\.1|localhost)$/)
         ) {
@@ -52,6 +55,30 @@ for (const locale of ["en", "fr"]) {
         `/demos/persistent-memory/?lang=${locale}&campaign=portfolio#proof`,
       );
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
+      const video = page.locator("#walkthrough-video");
+      await expect(video).toHaveAttribute("preload", "none");
+      await expect(video).toHaveAttribute("controls", "");
+      await expect(video).toHaveAttribute("playsinline", "");
+      for (const attribute of ["autoplay", "loop", "muted"])
+        await expect(video).not.toHaveAttribute(attribute, /.*/);
+      await expect(video).toHaveAttribute("poster", "walkthrough-poster.jpg");
+      await expect(video.locator("source")).toHaveAttribute(
+        "src",
+        "walkthrough.mp4",
+      );
+      await expect(video.locator("source")).toHaveAttribute(
+        "type",
+        "video/mp4",
+      );
+      await expect(video.locator('track[kind="captions"]')).toHaveCount(2);
+      await expect(video.locator("track[default]")).toHaveAttribute(
+        "srclang",
+        locale,
+      );
+      await expect(page.locator("#walkthrough-description")).toContainText(
+        locale === "fr" ? "données fictives" : "fictional Atlas data",
+      );
+      await expect(page.locator("#walkthrough-transcript li")).toHaveCount(6);
       await expect(page.locator("#previous")).toBeDisabled();
       await expect(page.locator("[data-step]")).toHaveCount(5);
       for (const [index, event] of trace.events.entries()) {
@@ -146,11 +173,19 @@ for (const locale of ["en", "fr"]) {
         "lang",
         locale === "fr" ? "en" : "fr",
       );
+      await expect(video.locator("track[default]")).toHaveAttribute(
+        "srclang",
+        locale === "fr" ? "en" : "fr",
+      );
       await expect(page.locator("#status")).toHaveAttribute(
         "data-phase",
         "correct",
       );
       await page.locator("#language").click();
+      await expect(video.locator("track[default]")).toHaveAttribute(
+        "srclang",
+        locale,
+      );
       await expect(page.locator("#back")).toHaveAttribute(
         "href",
         locale === "fr"
@@ -263,6 +298,60 @@ for (const locale of ["en", "fr"]) {
           : testInfo.outputPath(screenshotName),
         fullPage: true,
       });
+      expect(videoRequests).toEqual([]);
+      await page.locator("#walkthrough-transcript > summary").focus();
+      await page.keyboard.press("Enter");
+      await expect(page.locator("#walkthrough-transcript ol")).toBeVisible();
+      await page.keyboard.press("Enter");
+      await expect(
+        page.locator("#walkthrough-transcript ol"),
+      ).not.toBeVisible();
+      await video.focus();
+      await expect(video).toBeFocused();
+      await video.evaluate(async (element: HTMLVideoElement) => {
+        element.dispatchEvent(new Event("pointerdown"));
+        await element.play();
+      });
+      await expect
+        .poll(() =>
+          video.evaluate((element: HTMLVideoElement) => element.currentTime),
+        )
+        .toBeGreaterThan(0);
+      expect(videoRequests.length).toBeGreaterThan(0);
+      const videoState = await video.evaluate((element: HTMLVideoElement) => {
+        element.pause();
+        return {
+          width: element.videoWidth,
+          height: element.videoHeight,
+          error: element.error?.code ?? null,
+          captions: Array.from(element.textTracks)
+            .filter((track) => track.mode === "showing")
+            .map((track) => track.language),
+        };
+      });
+      expect(videoState).toEqual({
+        width: 1440,
+        height: 900,
+        error: null,
+        captions: [locale],
+      });
+      const playbackPosition = await video.evaluate(
+        (element: HTMLVideoElement) => element.currentTime,
+      );
+      await page.locator("#language").click();
+      expect(
+        await video.evaluate(
+          (element: HTMLVideoElement) => element.currentTime,
+        ),
+      ).toBe(playbackPosition);
+      expect(
+        await video.evaluate((element: HTMLVideoElement) =>
+          Array.from(element.textTracks)
+            .filter((track) => track.mode === "showing")
+            .map((track) => track.language),
+        ),
+      ).toEqual([locale]);
+      await page.locator("#language").click();
       await page.locator("#restart").click();
       await expect(page.locator("#status")).toHaveAttribute(
         "data-phase",
