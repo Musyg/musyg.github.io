@@ -234,6 +234,14 @@ export const projects: Project[] = [
     links: [
       {
         label: {
+          en: "Try the demo",
+          fr: "Voir la démo",
+        },
+        url: "/demos/persistent-memory/?lang=en",
+        urlFr: "/demos/persistent-memory/?lang=fr",
+      },
+      {
+        label: {
           en: "Public repository and documentation",
           fr: "Dépôt public et documentation",
         },

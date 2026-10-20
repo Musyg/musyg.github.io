@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="Explore a recorded Python execution of versioned evidence, correction, withdrawal and recovery with Persistent Memory." />
+    <title>Persistent Memory: Evidence through change</title>
+    <style>
+      :root { color-scheme: dark; --bg: #05080e; --surface: #0a101b; --text: #edf2fa; --muted: #a8b5c9; --blue: #005eff; --line: #24334a; --good: #91e4c0; --warn: #f2cb89; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, sans-serif; }
+      main { width: min(1180px, 100%); margin: auto; padding: 28px 32px 48px; }
+      a { color: var(--text); text-underline-offset: 5px; }
+      a:hover { color: #94baff; }
+      button { font: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #86b3ff; outline-offset: 5px; }
+      button { border: 1px solid var(--line); border-radius: 8px; color: var(--text); background: transparent; padding: 10px 15px; cursor: pointer; }
+      button:hover:not(:disabled) { border-color: #7c9ac4; background: #101d31; }
+      button:disabled { color: #8390a4; cursor: default; }
+      header { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+      .brand { font-weight: 650; letter-spacing: -.015em; text-decoration: none; }
+      .brand::before { content: ""; display: inline-block; width: 9px; height: 9px; background: var(--blue); border-radius: 50%; margin-right: 11px; box-shadow: 0 0 22px #005eff70; }
+      .header-actions { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .header-actions a { color: var(--muted); }
+      #language { padding: 6px 12px; }
+      .hero { padding: 45px 0 30px; max-width: 900px; }
+      .eyebrow { color: #b4c9ee; text-transform: uppercase; font-size: 11px; letter-spacing: .16em; margin: 0 0 16px; }
+      h1 { font-size: clamp(32px, 4.3vw, 53px); line-height: 1.12; letter-spacing: -.045em; margin: 0 0 20px; max-width: 800px; font-weight: 620; }
+      .intro { color: var(--muted); max-width: 800px; margin: 0; font-size: 16px; }
+      .recorded { display: inline-flex; flex-wrap: wrap; gap: 8px 12px; margin-top: 20px; font: 11px/1.6 ui-monospace, monospace; color: var(--muted); }
+      .recorded span { border: 1px solid var(--line); border-radius: 4px; padding: 4px 8px; }
+      .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 0 0 22px; }
+      .steps button { padding: 14px; text-align: left; border-radius: 8px; min-width: 0; line-height: 1.35; }
+      .steps button[aria-current="step"] { background: #0b1b35; border-color: #638ed2; box-shadow: inset 0 2px 0 var(--blue); }
+      .step-number { display: block; font: 11px ui-monospace, monospace; color: var(--muted); margin-bottom: 9px; }
+      .step-label { font-size: 13px; }
+      .workspace { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+      .status-line { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 16px 25px; border-bottom: 1px solid var(--line); font: 11px/1.6 ui-monospace, monospace; color: var(--muted); }
+      .status { color: #c4d8fa; font-weight: 600; letter-spacing: .07em; }
+      .main-grid { display: grid; grid-template-columns: 1.15fr 1fr; }
+      .outcome { padding: 30px 28px; min-width: 0; border-right: 1px solid var(--line); }
+      .label { font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+      h2 { font-size: 25px; line-height: 1.25; letter-spacing: -.025em; font-weight: 600; margin: 0 0 16px; }
+      #explanation { color: var(--muted); font-size: 14px; margin: 0; }
+      .answer { border-left: 3px solid var(--blue); background: #08152a; margin-top: 25px; padding: 18px 20px; }
+      .answer[data-empty="true"] { border-left-color: var(--warn); background: #191710; }
+      #answer { font-size: 22px; line-height: 1.4; font-weight: 550; letter-spacing: -.015em; margin: 0; overflow-wrap: anywhere; }
+      #answer-meta { font: 11px/1.7 ui-monospace, monospace; color: #c0cfe4; margin-top: 12px; overflow-wrap: anywhere; }
+      .evidence { padding: 28px; min-width: 0; }
+      .evidence-top { display: flex; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+      .evidence-top .label { margin: 0; }
+      .proof { color: var(--good); font: 10px ui-monospace, monospace; white-space: nowrap; }
+      .evidence-card { border: 1px solid var(--line); border-radius: 7px; padding: 15px; margin-top: 12px; }
+      .card-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font: 11px/1.7 ui-monospace, monospace; color: #bacbe5; margin-bottom: 8px; }
+      .card-head strong { color: var(--text); font-weight: 500; }
+      .evidence-card p { font-size: 14px; margin: 0; overflow-wrap: anywhere; }
+      .ref { display: block; color: var(--muted); font: 10px/1.7 ui-monospace, monospace; overflow-wrap: anywhere; margin-top: 10px; }
+      .evidence-card[data-excluded="true"] { border-style: dashed; }
+      .evidence-card[data-excluded="true"] .card-head { color: var(--warn); }
+      .empty-evidence { font-size: 13px; color: var(--muted); }
+      .controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 18px 25px; border-top: 1px solid var(--line); }
+      .control-group { display: flex; flex-wrap: wrap; gap: 9px; }
+      .controls button { font-size: 13px; }
+      .controls .primary { background: #0056df; border-color: #397cff; }
+      .controls .primary:hover:not(:disabled) { background: #075ee8; }
+      #restart { color: var(--muted); }
+      .control-note { color: var(--muted); font-size: 11px; margin: 0; }
+      .technical { padding: 0 25px; border-top: 1px solid var(--line); }
+      summary { cursor: pointer; font-size: 12px; color: #bbcae1; padding: 17px 0; }
+      .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-bottom: 20px; }
+      .tech-grid p { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+      pre { max-height: 300px; overflow: auto; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 6px; font: 11px/1.7 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; color: #c4d8fa; }
+      .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding: 32px 0; }
+      .bottom-grid h2 { font-size: 15px; margin-bottom: 10px; letter-spacing: 0; }
+      .bottom-grid p { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
+      .bottom-grid a { font-size: 12px; }
+      .links { display: flex; flex-wrap: wrap; gap: 10px 20px; }
+      code { font: 11px/1.7 ui-monospace, monospace; overflow-wrap: anywhere; }
+      .command code { white-space: pre-wrap; }
+      .command { padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px; }
+      footer { border-top: 1px solid var(--line); padding-top: 20px; font: 10px/1.8 ui-monospace, monospace; color: var(--muted); overflow-wrap: anywhere; }
+      .unavailable { border: 1px solid var(--warn); padding: 20px; color: var(--warn); }
+      [hidden] { display: none !important; }
+      @media (max-width: 760px) { main { padding: 20px 18px 32px; } .hero { padding-top: 32px; } .header-actions { gap: 12px; } .header-actions a { display: none; } .steps { gap: 5px; } .steps button { padding: 12px 8px; } .step-label { font-size: 11px; } .main-grid { grid-template-columns: 1fr; } .outcome { border-right: 0; border-bottom: 1px solid var(--line); padding: 25px 21px; } .evidence { padding: 23px 21px; } .bottom-grid { gap: 25px; } .technical, .controls { padding-left: 20px; padding-right: 20px; } .status-line { padding: 14px 20px; } }
+      @media (max-width: 430px) { .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); } .steps button { padding: 10px 5px; text-align: center; } .step-number { margin-bottom: 6px; } .step-label { font-size: 10px; overflow-wrap: anywhere; } .bottom-grid, .tech-grid { grid-template-columns: 1fr; } .controls { gap: 12px; } .control-group { width: 100%; } .control-group button { flex: 1; padding: 10px 8px; } #restart { padding: 8px 0; } .answer { padding: 16px; } #answer { font-size: 20px; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <a class="brand" id="brand" href="/fr/realisations/persistent-memory/">Persistent Memory</a>
+        <div class="header-actions"><a id="back" href="/fr/realisations/persistent-memory/"></a><button id="language" type="button">English</button></div>
+      </header>
+      <section class="hero">
+        <p class="eyebrow" data-i18n="eyebrow"></p>
+        <h1 data-i18n="title"></h1>
+        <p class="intro" data-i18n="intro"></p>
+        <div class="recorded"><span data-i18n="recorded"></span><span data-i18n="synthetic"></span><span data-i18n="local"></span></div>
+      </section>
+      <p id="unavailable" class="unavailable" role="alert" hidden></p>
+      <div id="demo">
+        <nav class="steps" id="steps" aria-label="Étapes de la démonstration"></nav>
+        <section class="workspace" aria-label="Recorded execution replay" id="workspace">
+          <div class="status-line"><span class="status" id="status"></span><span id="position"></span></div>
+          <div class="main-grid">
+            <div class="outcome" aria-live="polite" aria-atomic="true">
+              <p class="label" data-i18n="outcome"></p><h2 id="heading"></h2><p id="explanation"></p>
+              <div class="answer" id="answer-box"><p class="label" data-i18n="retrieved"></p><p id="answer"></p><div id="answer-meta"></div></div>
+            </div>
+            <div class="evidence"><div class="evidence-top"><p class="label" data-i18n="evidence"></p><span class="proof" data-i18n="observed"></span></div><div id="evidence"></div></div>
+          </div>
+          <div class="controls"><div class="control-group"><button id="previous" type="button" data-i18n="previous"></button><button class="primary" id="next" type="button" data-i18n="next"></button></div><button id="restart" type="button" data-i18n="restart"></button><p class="control-note" data-i18n="pace"></p></div>
+          <details class="technical"><summary data-i18n="technical"></summary><div class="tech-grid"><div><p data-i18n="machine"></p><pre id="machine"></pre></div><div><p data-i18n="refs"></p><pre id="references"></pre></div></div></details>
+        </section>
+      </div>
+      <section class="bottom-grid"><div><h2 data-i18n="scopeTitle"></h2><p data-i18n="scope"></p><p data-i18n="limit"></p><div class="links"><a id="source" href="https://github.com/Musyg/persistent-memory" data-i18n="source"></a><a href="trace.json" download="persistent-memory-trace.json" data-i18n="download"></a></div></div><div><h2 data-i18n="reproduce"></h2><p data-i18n="instructions"></p><div class="command"><code id="command"></code></div><a id="guide" href="https://github.com/Musyg/persistent-memory" data-i18n="guide"></a></div></section>
+      <footer id="provenance"></footer>
+    </main>
+    <script id="recorded-trace" type="application/json">{
+  "schema": "persistent-memory.portfolio-demo.trace.v1",
+  "scenario": "project-atlas-deadline-v1",
+  "synthetic": true,
+  "generated_at_utc": "2026-10-20T16:07:16.254952Z",
+  "provenance": {
+    "base_commit": "c2546be8abb05aadd518fb143d040cec0c4769a9",
+    "package": "hermes-memory-core",
+    "installed_version": "0.3.0a2",
+    "script_sha256": "f144f969213d12a14042039a04e7df96ec5e11d980ebcb9ac6bcfdb21c2ced0d",
+    "modules": {
+      "core.py": "5ad093031bb061360c616ed44ab321499f3765b7e887928d073ee20ed6a37bb0"
+    }
+  },
+  "events": [
+    {
+      "id": 1,
+      "phase": "admit",
+      "operations": [
+        "register_source",
+        "read"
+      ],
+      "refs": {
+        "date_v1": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-deadline",
+          "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a"
+        },
+        "control": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-language",
+          "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+        }
+      },
+      "reads": {
+        "date_v1": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a"
+          },
+          "content": "Projet Atlas : livraison vendredi.",
+          "content_sha256": "4118120a9c8c4cb6c992bfed64e115841e4785381a9eee3c30997fe924967da2",
+          "reason": "allowed",
+          "alias": null
+        },
+        "control": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+          },
+          "content": "Projet Atlas : langue de communication française.",
+          "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+          "reason": "allowed",
+          "alias": null
+        }
+      },
+      "details": {},
+      "provenance": null
+    },
+    {
+      "id": 2,
+      "phase": "derive",
+      "operations": [
+        "derive",
+        "read",
+        "explain_artifact"
+      ],
+      "refs": {
+        "date_v1": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-deadline",
+          "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a"
+        },
+        "control": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-language",
+          "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+        },
+        "brief_v1": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "bd766800b4594423b39ab103f1aa3360"
+        }
+      },
+      "reads": {
+        "brief_v1": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "bd766800b4594423b39ab103f1aa3360"
+          },
+          "content": "Brief Atlas \u2014 Projet Atlas : livraison vendredi. Projet Atlas : langue de communication française.",
+          "content_sha256": "02fcca55c35bb4543d7ad8a41bebe444c115d0a1931e73ebdcc066e37e23ee5c",
+          "reason": "allowed",
+          "alias": null
+        }
+      },
+      "details": {},
+      "provenance": {
+        "root": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "bd766800b4594423b39ab103f1aa3360"
+        },
+        "nodes": [
+          {
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "bd766800b4594423b39ab103f1aa3360"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [
+              {
+                "ref": {
+                  "artifact_id": "atlas-deadline",
+                  "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              },
+              {
+                "ref": {
+                  "artifact_id": "atlas-language",
+                  "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              }
+            ],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-language",
+              "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-deadline",
+              "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          }
+        ],
+        "coverage": "known_dependencies_only"
+      }
+    },
+    {
+      "id": 3,
+      "phase": "correct",
+      "operations": [
+        "register_source",
+        "read",
+        "derive",
+        "open",
+        "backup",
+        "explain_artifact"
+      ],
+      "refs": {
+        "date_v1": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-deadline",
+          "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a"
+        },
+        "date_v2": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-deadline",
+          "version_id": "0dad322f87d14edf9d8651a528c02cb6"
+        },
+        "control": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-language",
+          "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+        },
+        "brief_v1": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "bd766800b4594423b39ab103f1aa3360"
+        },
+        "brief_v2": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "b240b3bbb1544e8598dedb1b30895880"
+        }
+      },
+      "reads": {
+        "old_date": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a"
+          },
+          "reason": "version_not_current"
+        },
+        "old_brief_before_replacement": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "bd766800b4594423b39ab103f1aa3360"
+          },
+          "reason": "version_not_current"
+        },
+        "date_v2": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "0dad322f87d14edf9d8651a528c02cb6"
+          },
+          "content": "Projet Atlas : livraison lundi.",
+          "content_sha256": "642982ca12af2c09d877d5282c90717b65c047b89dad936b209bc967036d25ef",
+          "reason": "allowed",
+          "alias": null
+        },
+        "control": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+          },
+          "content": "Projet Atlas : langue de communication française.",
+          "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+          "reason": "allowed",
+          "alias": null
+        },
+        "brief_v2": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "b240b3bbb1544e8598dedb1b30895880"
+          },
+          "content": "Brief Atlas \u2014 Projet Atlas : livraison lundi. Projet Atlas : langue de communication française.",
+          "content_sha256": "de5e8bef42b39887b94fbec8e734a598efc71c101ace4d1b0f3f314a5e8d8e38",
+          "reason": "allowed",
+          "alias": null
+        },
+        "reopened_brief": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "b240b3bbb1544e8598dedb1b30895880"
+          },
+          "content": "Brief Atlas \u2014 Projet Atlas : livraison lundi. Projet Atlas : langue de communication française.",
+          "content_sha256": "de5e8bef42b39887b94fbec8e734a598efc71c101ace4d1b0f3f314a5e8d8e38",
+          "reason": "allowed",
+          "alias": null
+        }
+      },
+      "details": {
+        "expected_version": "a111cb4d51ac4bf6b9f8b983f390ce9a",
+        "storage_reopened": true,
+        "backup_quarantined": true,
+        "backup_checkpoint": {
+          "generation": "45f8819f784444d7b00a605b0832d6c5",
+          "epoch": 5,
+          "digest": "d78c28b7a0cefcffc53168f80e573cfcd7475d369d6ed39452569b0a2fc4eba0"
+        }
+      },
+      "provenance": {
+        "root": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "b240b3bbb1544e8598dedb1b30895880"
+        },
+        "nodes": [
+          {
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "b240b3bbb1544e8598dedb1b30895880"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [
+              {
+                "ref": {
+                  "artifact_id": "atlas-deadline",
+                  "version_id": "0dad322f87d14edf9d8651a528c02cb6",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              },
+              {
+                "ref": {
+                  "artifact_id": "atlas-language",
+                  "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              }
+            ],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-language",
+              "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-deadline",
+              "version_id": "0dad322f87d14edf9d8651a528c02cb6",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          }
+        ],
+        "coverage": "known_dependencies_only"
+      }
+    },
+    {
+      "id": 4,
+      "phase": "revoke",
+      "operations": [
+        "revoke_source",
+        "read",
+        "explain_artifact"
+      ],
+      "refs": {
+        "date_v2": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-deadline",
+          "version_id": "0dad322f87d14edf9d8651a528c02cb6"
+        },
+        "control": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-language",
+          "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+        },
+        "brief_v2": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "b240b3bbb1544e8598dedb1b30895880"
+        }
+      },
+      "reads": {
+        "date_v2": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "0dad322f87d14edf9d8651a528c02cb6"
+          },
+          "reason": "source_revoked"
+        },
+        "brief_v2": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "b240b3bbb1544e8598dedb1b30895880"
+          },
+          "reason": "source_revoked"
+        },
+        "control": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+          },
+          "content": "Projet Atlas : langue de communication française.",
+          "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+          "reason": "allowed",
+          "alias": null
+        }
+      },
+      "details": {
+        "withdrawal": {
+          "event_id": "atlas-withdraw-deadline",
+          "epoch": 6,
+          "registered": true,
+          "covered_reads_blocked": true,
+          "projection_purge": "pending",
+          "coverage": "known_dependencies_only",
+          "physical_erasure": false
+        }
+      },
+      "provenance": {
+        "root": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "b240b3bbb1544e8598dedb1b30895880"
+        },
+        "nodes": [
+          {
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "b240b3bbb1544e8598dedb1b30895880"
+            },
+            "allowed": false,
+            "reason": "source_revoked",
+            "dependencies": [
+              {
+                "ref": {
+                  "artifact_id": "atlas-deadline",
+                  "version_id": "0dad322f87d14edf9d8651a528c02cb6",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              },
+              {
+                "ref": {
+                  "artifact_id": "atlas-language",
+                  "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              }
+            ],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-language",
+              "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-deadline",
+              "version_id": "0dad322f87d14edf9d8651a528c02cb6",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": false,
+            "reason": "source_revoked",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          }
+        ],
+        "coverage": "known_dependencies_only"
+      }
+    },
+    {
+      "id": 5,
+      "phase": "restore",
+      "operations": [
+        "open",
+        "read",
+        "restore_verify",
+        "explain_artifact"
+      ],
+      "refs": {
+        "date_v1": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-deadline",
+          "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a"
+        },
+        "date_v2": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-deadline",
+          "version_id": "0dad322f87d14edf9d8651a528c02cb6"
+        },
+        "control": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-language",
+          "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+        },
+        "brief_v2": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "b240b3bbb1544e8598dedb1b30895880"
+        }
+      },
+      "reads": {
+        "quarantined_control": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+          },
+          "reason": "authority_or_store_unavailable"
+        },
+        "date_v1": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "a111cb4d51ac4bf6b9f8b983f390ce9a"
+          },
+          "reason": "source_revoked"
+        },
+        "date_v2": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-deadline",
+            "version_id": "0dad322f87d14edf9d8651a528c02cb6"
+          },
+          "reason": "source_revoked"
+        },
+        "brief_v2": {
+          "allowed": false,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-brief",
+            "version_id": "b240b3bbb1544e8598dedb1b30895880"
+          },
+          "reason": "source_revoked"
+        },
+        "control": {
+          "allowed": true,
+          "ref": {
+            "workspace": "portfolio-atlas",
+            "artifact_id": "atlas-language",
+            "version_id": "6150e9ad527c4089a1d51b414f75ce7f"
+          },
+          "content": "Projet Atlas : langue de communication française.",
+          "content_sha256": "8741943a03fa36d8d9eabfb540f080934cc4b79ecea11e830bd410744190abda",
+          "reason": "allowed",
+          "alias": null
+        }
+      },
+      "details": {
+        "retained_current_authority": true,
+        "restoration": {
+          "ready": true,
+          "checkpoint": {
+            "generation": "45f8819f784444d7b00a605b0832d6c5",
+            "epoch": 6,
+            "digest": "93021665f05106fb8e0ed9958546e31c0fe53820a29f5c5516e053086dc155f6"
+          },
+          "missing_current_content": [],
+          "blocked": [
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-deadline",
+                "version_id": "0dad322f87d14edf9d8651a528c02cb6"
+              },
+              "reason": "source_revoked"
+            },
+            {
+              "ref": {
+                "workspace": "portfolio-atlas",
+                "artifact_id": "atlas-brief",
+                "version_id": "b240b3bbb1544e8598dedb1b30895880"
+              },
+              "reason": "source_revoked"
+            }
+          ],
+          "coverage": "known_dependencies_only"
+        }
+      },
+      "provenance": {
+        "root": {
+          "workspace": "portfolio-atlas",
+          "artifact_id": "atlas-brief",
+          "version_id": "b240b3bbb1544e8598dedb1b30895880"
+        },
+        "nodes": [
+          {
+            "ref": {
+              "workspace": "portfolio-atlas",
+              "artifact_id": "atlas-brief",
+              "version_id": "b240b3bbb1544e8598dedb1b30895880"
+            },
+            "allowed": false,
+            "reason": "source_revoked",
+            "dependencies": [
+              {
+                "ref": {
+                  "artifact_id": "atlas-deadline",
+                  "version_id": "0dad322f87d14edf9d8651a528c02cb6",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              },
+              {
+                "ref": {
+                  "artifact_id": "atlas-language",
+                  "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+                  "workspace": "portfolio-atlas"
+                },
+                "relation": "derives"
+              }
+            ],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-language",
+              "version_id": "6150e9ad527c4089a1d51b414f75ce7f",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": true,
+            "reason": "allowed",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          },
+          {
+            "ref": {
+              "artifact_id": "atlas-deadline",
+              "version_id": "0dad322f87d14edf9d8651a528c02cb6",
+              "workspace": "portfolio-atlas"
+            },
+            "allowed": false,
+            "reason": "source_revoked",
+            "dependencies": [],
+            "provenance_known": true,
+            "producer": null,
+            "retention": {
+              "policy": "manual_indefinite",
+              "automatic_physical_purge": false
+            }
+          }
+        ],
+        "coverage": "known_dependencies_only"
+      }
+    }
+  ],
+  "assertions": {
+    "initial_sources_allowed": true,
+    "initial_brief_allowed": true,
+    "initial_exact_dependencies": true,
+    "correction_new_version": true,
+    "old_date_denied": true,
+    "old_brief_denied_before_replacement": true,
+    "corrected_date_and_control_allowed": true,
+    "corrected_brief_allowed_after_storage_reopen": true,
+    "withdrawn_date_denied": true,
+    "dependent_brief_denied": true,
+    "independent_control_preserved": true,
+    "old_content_restore_denied_before_verification": true,
+    "old_and_current_withdrawn_versions_stay_denied": true,
+    "restored_dependent_brief_stays_denied": true,
+    "restored_independent_control_allowed": true,
+    "no_missing_current_content": true
+  },
+  "boundaries": [
+    "synthetic_application_example_without_model_or_network_calls",
+    "storage_reopen_not_process_or_hardware_crash_simulation",
+    "known_declared_dependencies_only",
+    "current_authority_and_freshness_witness_retained_outside_content_backup",
+    "coordinated_authority_and_witness_rollback_not_covered",
+    "logical_read_revocation_not_physical_erasure_or_model_unlearning",
+    "recorded_run_not_a_reliability_or_latency_benchmark"
+  ]
+}
+</script>
+    <script>
+      "use strict";
+      // The recording is embedded at publication time. Reading the demo makes no network request.
+      const byId = (id) => document.getElementById(id);
+      const query = new URLSearchParams(location.search);
+      let language = query.get("lang") === "en" ? "en" : "fr";
+      let position = 0;
+      const copy = {
+        fr: { eyebrow: "Démonstration / mémoire persistante pour agents IA", title: "Une information change. La mémoire aussi.", intro: "Suivez une information, sa correction et son retrait, puis la restauration d’une ancienne sauvegarde. À chaque étape, découvrez ce que la mémoire peut encore restituer et sur quelles preuves elle s’appuie.", recorded: "Exécution Python enregistrée", synthetic: "Données fictives", local: "Sans modèle ni clé API", back: "Retour au projet", outcome: "Résultat pratique", retrieved: "Contexte restitué", evidence: "Sources et provenance", observed: "OBSERVÉ EN PYTHON", previous: "Précédent", next: "Suivant", restart: "Recommencer", pace: "Explorez à votre rythme.", technical: "Examiner les preuves techniques", machine: "Résultat et raisons observés", refs: "Références de l’étape", scopeTitle: "Ce que montre cette démonstration", scope: "Cette page rejoue une exécution locale du noyau public, à partir d’un scénario fictif. Les états et résultats proviennent du code Python ; la navigation permet de les examiner sans lancer un agent.", limit: "Le retrait affecte les futures lectures, pas les copies déjà exportées. La reprise conserve une autorité actuelle hors de la sauvegarde restaurée. Cette démonstration ne mesure pas la fiabilité générale du système.", source: "Code de l’exemple", download: "Télécharger la trace JSON", reproduce: "Reproduire l’exécution", instructions: "Dans un clone du dépôt public, avec le package installé. Aucune donnée privée ni service externe n’est nécessaire.", guide: "Instructions de reproduction", step: "Étape", empty: "Aucune preuve admissible", noEvidence: "Aucune source restituée à cette étape.", version: "Version", active: "Source retenue", excluded: "Source écartée", recordedAt: "Enregistré le", sourceHash: "SHA256 de l’exemple", unavailable: "La trace vérifiée n’est pas disponible. Aucun résultat n’est simulé.", nav: "Étapes de la démonstration", workspace: "Relecture de l’exécution enregistrée", elapsed: "Temps mesuré depuis le début de l’exécution" },
+        en: { eyebrow: "Demonstration / persistent memory for AI agents", title: "Information changes. Memory follows.", intro: "Follow a piece of information through correction, withdrawal and recovery from an old backup. At each step, see what the memory can still return and the evidence behind that decision.", recorded: "Recorded Python execution", synthetic: "Fictional data", local: "No model or API key", back: "Back to the project", outcome: "Practical outcome", retrieved: "Retrieved context", evidence: "Sources and provenance", observed: "OBSERVED IN PYTHON", previous: "Previous", next: "Next", restart: "Restart", pace: "Explore at your own pace.", technical: "Inspect the technical evidence", machine: "Observed result and reasons", refs: "References for this step", scopeTitle: "What this demonstration shows", scope: "This page replays a local execution of the public core using a fictional scenario. States and results come from the Python code; navigation lets you inspect them without running an agent.", limit: "Withdrawal affects future reads, not copies already exported. Recovery retains a current authority outside the restored backup. This demonstration does not measure general system reliability.", source: "Example source code", download: "Download the JSON trace", reproduce: "Reproduce the execution", instructions: "From a public repository clone with the package installed. No private data or external service is required.", guide: "Reproduction instructions", step: "Step", empty: "No admissible evidence", noEvidence: "No source is returned at this step.", version: "Version", active: "Included source", excluded: "Excluded source", recordedAt: "Recorded at", sourceHash: "Example SHA256", unavailable: "The verified recording is unavailable. No result is simulated.", nav: "Demonstration steps", workspace: "Recorded execution replay", elapsed: "Measured time since execution started" },
+      };
+      // Captions describe the observed operation; evidence values always come from the recording.
+      const captions = {
+        fr: {
+          admit: ["Conserver", "L’information entre en mémoire.", "La date de livraison et la langue de communication sont enregistrées comme deux sources distinctes, avec des références de version immuables."],
+          derive: ["Relier", "Le résumé garde ses sources.", "Un résumé déterministe reprend les informations fournies. Sa provenance relie explicitement les deux sources utilisées ; aucun modèle n’intervient."],
+          correct: ["Corriger", "La date corrigée devient la référence.", "La date passe de vendredi à lundi. Les lectures observent l’ancienne version et son résumé avant remplacement, puis la nouvelle version et le résumé actualisé, y compris après réouverture du stockage."],
+          revoke: ["Retirer", "Le retrait se propage aux dérivés.", "La source de la date est retirée. Les lectures de cette source et du résumé qui en dépend sont refusées ; la source indépendante sur la langue reste utilisable."],
+          restore: ["Reprendre", "L’ancienne sauvegarde ne rétablit pas la date.", "La sauvegarde de contenu est d’abord mise en quarantaine, puis vérifiée face à l’autorité actuelle conservée séparément. Le retrait reste appliqué et la langue de communication reste accessible."],
+        },
+        en: {
+          admit: ["Store", "The information enters memory.", "The delivery date and communication language are recorded as two separate sources, each with immutable version references."],
+          derive: ["Link", "The summary keeps its sources.", "A deterministic summary uses the supplied information. Its provenance explicitly links both sources; no model is involved."],
+          correct: ["Correct", "The corrected date becomes the reference.", "The date changes from Friday to Monday. Reads observe the old version and its summary before replacement, then the new version and updated summary, including after reopening storage."],
+          revoke: ["Withdraw", "Withdrawal reaches derived evidence.", "The date source is withdrawn. Reads of that source and its dependent summary are refused; the independent language source remains usable."],
+          restore: ["Recover", "The old backup does not restore the date.", "The content backup is first quarantined, then verified against the current authority retained separately. Withdrawal remains enforced and the communication language is still available."],
+        },
+      };
+      let trace;
+      try { trace = JSON.parse(byId("recorded-trace").textContent); } catch { trace = null; }
+      const phases = ["admit", "derive", "correct", "revoke", "restore"];
+      const primaryRoles = ["date_v1", "brief_v1", "brief_v2", "brief_v2", "control"];
+      const roleLabels = {
+        fr: { date_v1: "Date initiale", date_v2: "Date corrigée", control: "Langue de communication", brief_v1: "Résumé initial", brief_v2: "Résumé actualisé", old_date: "Ancienne date", old_brief_before_replacement: "Ancien résumé avant remplacement", reopened_brief: "Résumé après réouverture", quarantined_control: "Langue pendant la quarantaine" },
+        en: { date_v1: "Original date", date_v2: "Corrected date", control: "Communication language", brief_v1: "Original summary", brief_v2: "Updated summary", old_date: "Previous date", old_brief_before_replacement: "Previous summary before replacement", reopened_brief: "Summary after reopening", quarantined_control: "Language while quarantined" },
+      };
+      const safeLink = (value, fallback) => {
+        try { const url = new URL(value); return url.protocol === "https:" && url.hostname === "github.com" && url.pathname.startsWith("/Musyg/persistent-memory/") ? url.href : fallback; } catch { return fallback; }
+      };
+      const refText = (ref) => ref ? `${ref.workspace} / ${ref.artifact_id} @ ${ref.version_id}` : "";
+      const valid = trace && trace.schema === "persistent-memory.portfolio-demo.trace.v1" && trace.synthetic === true && Array.isArray(trace.events) && trace.events.length === phases.length && trace.events.every((event, index) => event.id === index + 1 && event.phase === phases[index] && event.reads && Object.hasOwn(event.reads, primaryRoles[index]) && Object.values(event.reads).every((read) => typeof read.allowed === "boolean" && typeof read.reason === "string" && read.ref && (read.allowed === false || typeof read.content === "string"))) && trace.assertions && Object.keys(trace.assertions).length > 0 && Object.values(trace.assertions).every((value) => value === true) && trace.provenance;
+      function render() {
+        const words = copy[language];
+        document.documentElement.lang = language;
+        document.title = language === "fr" ? "Persistent Memory: Une mémoire qui suit les changements" : "Persistent Memory: Evidence through change";
+        document.querySelectorAll("[data-i18n]").forEach((element) => { element.textContent = words[element.dataset.i18n]; });
+        const project = language === "fr" ? "/fr/realisations/persistent-memory/" : "/work/persistent-memory/";
+        byId("back").textContent = words.back;
+        byId("back").href = project;
+        byId("brand").href = project;
+        byId("language").textContent = language === "fr" ? "English" : "Français";
+        byId("steps").setAttribute("aria-label", words.nav);
+        byId("workspace").setAttribute("aria-label", words.workspace);
+        if (!valid) { byId("demo").hidden = true; byId("unavailable").hidden = false; byId("unavailable").textContent = words.unavailable; byId("command").textContent = ""; return; }
+        const event = trace.events[position];
+        const caption = captions[language][event.phase];
+        // Preserve button nodes and focus while changing step or language.
+        if (!byId("steps").children.length) {
+          phases.forEach((phase, index) => {
+            const button = document.createElement("button"); button.type = "button"; button.dataset.step = String(index);
+            const number = document.createElement("span"); number.className = "step-number"; number.textContent = String(index + 1).padStart(2, "0");
+            const label = document.createElement("span"); label.className = "step-label";
+            button.append(number, label); button.addEventListener("click", () => { position = index; render(); }); byId("steps").append(button);
+          });
+        }
+        byId("steps").querySelectorAll("button").forEach((button, index) => {
+          button.querySelector(".step-label").textContent = captions[language][phases[index]][0];
+          button.setAttribute("aria-label", `${words.step} ${index + 1}: ${captions[language][phases[index]][0]}`);
+          if (index === position) button.setAttribute("aria-current", "step"); else button.removeAttribute("aria-current");
+        });
+        byId("status").textContent = event.phase.toUpperCase();
+        byId("position").textContent = `${words.step} ${position + 1} / ${trace.events.length}`;
+        byId("heading").textContent = caption[1]; byId("explanation").textContent = caption[2];
+        const primary = event.reads[primaryRoles[position]];
+        byId("answer").textContent = primary.allowed ? primary.content : words.empty;
+        byId("answer-box").dataset.empty = String(!primary.allowed);
+        byId("answer-meta").textContent = `${primary.reason} · ${refText(primary.ref)}`;
+        const cards = Object.entries(event.reads).map(([role, read]) => {
+          const card = document.createElement("div"); card.className = "evidence-card"; card.dataset.role = role; card.dataset.excluded = String(!read.allowed);
+          const heading = document.createElement("div"); heading.className = "card-head";
+          const name = document.createElement("strong"); name.textContent = roleLabels[language][role] || role;
+          const decision = document.createElement("span"); decision.textContent = read.allowed ? words.active : words.excluded;
+          heading.append(name, decision);
+          const content = document.createElement("p"); content.textContent = read.allowed ? read.content : read.reason;
+          const ref = document.createElement("code"); ref.className = "ref"; ref.textContent = refText(read.ref);
+          card.append(heading, content, ref); return card;
+        });
+        byId("evidence").replaceChildren(...cards);
+        byId("machine").textContent = JSON.stringify({ operations: event.operations, reads: event.reads, details: event.details }, null, 2);
+        byId("references").textContent = JSON.stringify({ refs: event.refs, provenance: event.provenance }, null, 2);
+        byId("previous").disabled = position === 0;
+        byId("next").disabled = position === trace.events.length - 1;
+        // Root binds the published example commit before qualification. This is presentation metadata, not a modification of the recorded trace.
+        const exampleCommit = "732f3f31a0b5def1a35833237dc08278ee3242b4";
+        const pinnedBase = /^[a-f0-9]{40}$/.test(exampleCommit) ? `https://github.com/Musyg/persistent-memory/blob/${exampleCommit}` : null;
+        byId("source").href = safeLink(trace.provenance.example_url, pinnedBase ? `${pinnedBase}/examples/portfolio_demo.py` : "https://github.com/Musyg/persistent-memory");
+        byId("guide").href = safeLink(trace.provenance.guide_url, pinnedBase ? `${pinnedBase}/docs/PORTFOLIO-DEMO.md` : "https://github.com/Musyg/persistent-memory");
+        byId("command").textContent = "mkdir demo-output\npython examples/portfolio_demo.py --directory demo-output/state --output demo-output/trace.json";
+        byId("provenance").textContent = `${words.recordedAt} ${trace.generated_at_utc} · ${trace.provenance.package} ${trace.provenance.installed_version}\n${words.sourceHash}: ${trace.provenance.script_sha256}`;
+      }
+      byId("previous").addEventListener("click", () => { position = Math.max(0, position - 1); render(); });
+      byId("next").addEventListener("click", () => { position = Math.min(phases.length - 1, position + 1); render(); });
+      byId("restart").addEventListener("click", () => { position = 0; render(); });
+      byId("language").addEventListener("click", () => { language = language === "fr" ? "en" : "fr"; render(); });
+      render();
+    </script>
+  </body>
+</html>

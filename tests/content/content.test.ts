@@ -38,11 +38,31 @@ describe("portfolio content contract", () => {
   });
 
   it("uses only Talos as the public agency name across source and public assets", () => {
+    // Published technical package identifiers retain their names; agency copy does not.
+    const agencyCopy = (value: string) =>
+      value.replace(
+        /(?<![\p{L}\p{N}_.-])(?:hermes-memory-core|hermes-policy-registry)(?![\p{L}\p{N}_.-])/gu,
+        "",
+      );
+    expect(
+      agencyCopy('"hermes-memory-core" "hermes-policy-registry"'),
+    ).not.toMatch(/herm[eè]s/i);
+    expect(agencyCopy("Hermes agency Hermès")).toMatch(/herm[eè]s/i);
+    expect(
+      [
+        "prefix-hermes-memory-core",
+        "hermes-memory-core-suffix",
+        "prefix-hermes-policy-registry",
+        "hermes-policy-registry-suffix",
+      ].every((value) => /herm[eè]s/i.test(agencyCopy(value))),
+    ).toBe(true);
     for (const directory of ["src", "public"]) {
       for (const file of filesUnder(directory).filter((path) =>
         /\.(tsx?|html|js|json|svg|txt)$/i.test(path),
       )) {
-        expect(readFileSync(file, "utf8"), file).not.toMatch(/herm[eè]s/i);
+        expect(agencyCopy(readFileSync(file, "utf8")), file).not.toMatch(
+          /herm[eè]s/i,
+        );
       }
     }
   });
