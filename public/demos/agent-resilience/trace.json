@@ -1,13 +1,13 @@
 {
   "schema_version": 2,
   "library_version": "0.1.0",
-  "recorded_at": "2026-10-15T20:12:24.649403+00:00",
+  "recorded_at": "2026-10-20T16:02:10.213834+00:00",
   "scenarios": {
     "circuit": {
       "schema_version": 1,
       "library_version": "0.1.0",
       "source_sha256": "8e55092547588491b3d7c56f2be93024081b529f37e4c88f6784a5f7085cebb3",
-      "recorded_at": "2026-10-15T20:12:14.602448+00:00",
+      "recorded_at": "2026-10-20T16:01:58.122675+00:00",
       "scenario": "serial local dependency failure and recovery",
       "config": {
         "failure_threshold": 3,
@@ -16,7 +16,7 @@
       "events": [
         {
           "index": 0,
-          "elapsed_s": 5e-06,
+          "elapsed_s": 2e-06,
           "phase": "initial",
           "outcome": "ready",
           "state": "closed",
@@ -25,6 +25,7 @@
           "blocked": 0,
           "called": false,
           "available": true,
+          "input_id": null,
           "breaker": {
             "name": "upstream",
             "state": "closed",
@@ -36,7 +37,7 @@
         },
         {
           "index": 1,
-          "elapsed_s": 7.8e-05,
+          "elapsed_s": 3.5e-05,
           "phase": "healthy",
           "outcome": "success",
           "state": "closed",
@@ -45,6 +46,7 @@
           "blocked": 0,
           "called": true,
           "available": true,
+          "input_id": 1,
           "breaker": {
             "name": "upstream",
             "state": "closed",
@@ -56,7 +58,7 @@
         },
         {
           "index": 2,
-          "elapsed_s": 0.000127,
+          "elapsed_s": 5.6e-05,
           "phase": "failure",
           "outcome": "failure",
           "state": "closed",
@@ -65,18 +67,19 @@
           "blocked": 0,
           "called": true,
           "available": false,
+          "input_id": 2,
           "breaker": {
             "name": "upstream",
             "state": "closed",
             "failure_count": 1,
             "success_count": 1,
             "total_trips": 0,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 3,
-          "elapsed_s": 0.000165,
+          "elapsed_s": 9e-05,
           "phase": "failure",
           "outcome": "failure",
           "state": "closed",
@@ -85,18 +88,19 @@
           "blocked": 0,
           "called": true,
           "available": false,
+          "input_id": 3,
           "breaker": {
             "name": "upstream",
             "state": "closed",
             "failure_count": 2,
             "success_count": 1,
             "total_trips": 0,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 4,
-          "elapsed_s": 0.00048,
+          "elapsed_s": 0.000243,
           "phase": "failure",
           "outcome": "failure",
           "state": "open",
@@ -105,18 +109,19 @@
           "blocked": 0,
           "called": true,
           "available": false,
+          "input_id": 4,
           "breaker": {
             "name": "upstream",
             "state": "open",
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 5,
-          "elapsed_s": 0.00052,
+          "elapsed_s": 0.000271,
           "phase": "isolation",
           "outcome": "blocked",
           "state": "open",
@@ -125,18 +130,19 @@
           "blocked": 1,
           "called": false,
           "available": false,
+          "input_id": 5,
           "breaker": {
             "name": "upstream",
             "state": "open",
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 6,
-          "elapsed_s": 0.000553,
+          "elapsed_s": 0.000289,
           "phase": "isolation",
           "outcome": "blocked",
           "state": "open",
@@ -145,18 +151,19 @@
           "blocked": 2,
           "called": false,
           "available": false,
+          "input_id": 6,
           "breaker": {
             "name": "upstream",
             "state": "open",
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 7,
-          "elapsed_s": 0.000569,
+          "elapsed_s": 0.000293,
           "phase": "cooldown",
           "outcome": "waiting",
           "state": "open",
@@ -165,18 +172,19 @@
           "blocked": 2,
           "called": false,
           "available": false,
+          "input_id": null,
           "breaker": {
             "name": "upstream",
             "state": "open",
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 8,
-          "elapsed_s": 2.051036,
+          "elapsed_s": 2.050708,
           "phase": "probe",
           "outcome": "allowed",
           "state": "half_open",
@@ -185,18 +193,19 @@
           "blocked": 2,
           "called": false,
           "available": true,
+          "input_id": 7,
           "breaker": {
             "name": "upstream",
             "state": "half_open",
             "failure_count": 3,
             "success_count": 1,
             "total_trips": 1,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 9,
-          "elapsed_s": 2.051076,
+          "elapsed_s": 2.050777,
           "phase": "recovery",
           "outcome": "success",
           "state": "closed",
@@ -205,18 +214,19 @@
           "blocked": 2,
           "called": true,
           "available": true,
+          "input_id": 7,
           "breaker": {
             "name": "upstream",
             "state": "closed",
             "failure_count": 0,
             "success_count": 2,
             "total_trips": 1,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         },
         {
           "index": 10,
-          "elapsed_s": 2.051102,
+          "elapsed_s": 2.050818,
           "phase": "resumed",
           "outcome": "success",
           "state": "closed",
@@ -225,22 +235,74 @@
           "blocked": 2,
           "called": true,
           "available": true,
+          "input_id": 8,
           "breaker": {
             "name": "upstream",
             "state": "closed",
             "failure_count": 0,
             "success_count": 3,
             "total_trips": 1,
-            "last_failure_time": 1792095132.5514164
+            "last_failure_time": 1792512116.0699353
           }
         }
-      ]
+      ],
+      "input_schedule": [
+        {
+          "input_id": 1,
+          "phase": "healthy",
+          "available": true,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 2,
+          "phase": "failure",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 3,
+          "phase": "failure",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 4,
+          "phase": "failure",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 5,
+          "phase": "isolation",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 6,
+          "phase": "isolation",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 7,
+          "phase": "recovery",
+          "available": true,
+          "wait_before_s": 2.05
+        },
+        {
+          "input_id": 8,
+          "phase": "resumed",
+          "available": true,
+          "wait_before_s": 0
+        }
+      ],
+      "experiment_id": "circuit-outage-0e08ea6e7e8a44019a2b59b1ea2f28d1"
     },
     "dlq": {
       "schema_version": 1,
       "library_version": "0.1.0",
       "source_sha256": "e342809780a66e015eab922b8437b632f6519e897f92eb4da4096fd735239d13",
-      "recorded_at": "2026-10-15T20:12:14.610461+00:00",
+      "recorded_at": "2026-10-20T16:02:00.179988+00:00",
       "scenario": "DLQ task failure and replay",
       "environment": "Python DLQQueue with an in-memory Redis service adapter",
       "config": {
@@ -249,7 +311,7 @@
       "events": [
         {
           "index": 0,
-          "elapsed_s": 0.000162,
+          "elapsed_s": 7.2e-05,
           "phase": "queued",
           "outcome": "enqueued",
           "state": "queued",
@@ -269,13 +331,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": null
           }
         },
         {
           "index": 1,
-          "elapsed_s": 0.000378,
+          "elapsed_s": 0.00015,
           "phase": "processing",
           "outcome": "dequeued",
           "state": "processing",
@@ -295,13 +357,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": null
           }
         },
         {
           "index": 2,
-          "elapsed_s": 0.000779,
+          "elapsed_s": 0.000299,
           "phase": "retry",
           "outcome": "failure",
           "state": "queued",
@@ -321,13 +383,13 @@
             "retry_count": 1,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 3,
-          "elapsed_s": 0.001596,
+          "elapsed_s": 0.000361,
           "phase": "processing",
           "outcome": "dequeued",
           "state": "processing",
@@ -347,13 +409,13 @@
             "retry_count": 1,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 4,
-          "elapsed_s": 0.002059,
+          "elapsed_s": 0.000448,
           "phase": "quarantined",
           "outcome": "failure",
           "state": "dlq",
@@ -373,13 +435,13 @@
             "retry_count": 2,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 5,
-          "elapsed_s": 0.002305,
+          "elapsed_s": 0.000505,
           "phase": "inspected",
           "outcome": "inspected",
           "state": "dlq",
@@ -399,13 +461,13 @@
             "retry_count": 2,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": "local worker unavailable"
           }
         },
         {
           "index": 6,
-          "elapsed_s": 0.002535,
+          "elapsed_s": 0.000569,
           "phase": "replayed",
           "outcome": "reenqueued",
           "state": "queued",
@@ -425,13 +487,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": null
           }
         },
         {
           "index": 7,
-          "elapsed_s": 0.002715,
+          "elapsed_s": 0.000611,
           "phase": "final_attempt",
           "outcome": "dequeued",
           "state": "processing",
@@ -451,13 +513,13 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": null
           }
         },
         {
           "index": 8,
-          "elapsed_s": 0.002768,
+          "elapsed_s": 0.000623,
           "phase": "completed",
           "outcome": "success",
           "state": "completed",
@@ -477,7 +539,7 @@
             "retry_count": 0,
             "max_retries": 2,
             "scheduled_time": null,
-            "created_at": "2026-10-15T20:12:14.607462+00:00",
+            "created_at": "2026-10-20T16:02:00.178988+00:00",
             "error": null
           }
         }
@@ -487,7 +549,7 @@
       "schema_version": 1,
       "library_version": "0.1.0",
       "source_sha256": "b1fce85a5fff50c5aa89fab2b08e7df906c13c47ee5174fbce7d3567f3f3bbbe",
-      "recorded_at": "2026-10-15T20:12:24.649403+00:00",
+      "recorded_at": "2026-10-20T16:02:10.213834+00:00",
       "scenario": "MQTT offline buffering and automatic flush",
       "environment": "Python ResilientMQTTPublisher with a simulated local MQTT client",
       "config": {
@@ -497,7 +559,7 @@
       "events": [
         {
           "index": 0,
-          "elapsed_s": 1.6e-05,
+          "elapsed_s": 8e-06,
           "phase": "offline",
           "outcome": "disconnected",
           "state": "offline",
@@ -509,7 +571,7 @@
         },
         {
           "index": 1,
-          "elapsed_s": 0.003595,
+          "elapsed_s": 0.000806,
           "phase": "buffered",
           "outcome": "retained",
           "state": "buffered",
@@ -521,7 +583,7 @@
         },
         {
           "index": 2,
-          "elapsed_s": 0.003625,
+          "elapsed_s": 0.000816,
           "phase": "buffered",
           "outcome": "retained",
           "state": "buffered",
@@ -533,7 +595,7 @@
         },
         {
           "index": 3,
-          "elapsed_s": 0.003641,
+          "elapsed_s": 0.000822,
           "phase": "buffered",
           "outcome": "retained",
           "state": "buffered",
@@ -545,7 +607,7 @@
         },
         {
           "index": 4,
-          "elapsed_s": 0.003652,
+          "elapsed_s": 0.000826,
           "phase": "reconnected",
           "outcome": "connected",
           "state": "connected",
@@ -557,7 +619,7 @@
         },
         {
           "index": 5,
-          "elapsed_s": 5.003639,
+          "elapsed_s": 5.001174,
           "phase": "flushing",
           "outcome": "published",
           "state": "connected",
@@ -578,7 +640,7 @@
         },
         {
           "index": 6,
-          "elapsed_s": 5.014104,
+          "elapsed_s": 5.011522,
           "phase": "flushing",
           "outcome": "published",
           "state": "connected",
@@ -607,7 +669,7 @@
         },
         {
           "index": 7,
-          "elapsed_s": 5.024606,
+          "elapsed_s": 5.022086,
           "phase": "flushing",
           "outcome": "published",
           "state": "connected",
@@ -644,7 +706,7 @@
         },
         {
           "index": 8,
-          "elapsed_s": 5.024974,
+          "elapsed_s": 5.022169,
           "phase": "drained",
           "outcome": "success",
           "state": "connected",
@@ -680,6 +742,438 @@
           ]
         }
       ]
+    }
+  },
+  "comparisons": {
+    "circuit": {
+      "experiment_id": "circuit-outage-0e08ea6e7e8a44019a2b59b1ea2f28d1",
+      "input_schedule": [
+        {
+          "input_id": 1,
+          "phase": "healthy",
+          "available": true,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 2,
+          "phase": "failure",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 3,
+          "phase": "failure",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 4,
+          "phase": "failure",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 5,
+          "phase": "isolation",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 6,
+          "phase": "isolation",
+          "available": false,
+          "wait_before_s": 0
+        },
+        {
+          "input_id": 7,
+          "phase": "recovery",
+          "available": true,
+          "wait_before_s": 2.05
+        },
+        {
+          "input_id": 8,
+          "phase": "resumed",
+          "available": true,
+          "wait_before_s": 0
+        }
+      ],
+      "baseline": {
+        "events": [
+          {
+            "index": 0,
+            "input_id": 1,
+            "elapsed_s": 1.1e-05,
+            "phase": "healthy",
+            "state": "unprotected",
+            "outcome": "success",
+            "attempts": 1,
+            "upstream_calls": 1,
+            "blocked": 0,
+            "called": true,
+            "available": true
+          },
+          {
+            "index": 1,
+            "input_id": 2,
+            "elapsed_s": 5e-05,
+            "phase": "failure",
+            "state": "unprotected",
+            "outcome": "failure",
+            "attempts": 2,
+            "upstream_calls": 2,
+            "blocked": 0,
+            "called": true,
+            "available": false
+          },
+          {
+            "index": 2,
+            "input_id": 3,
+            "elapsed_s": 6.7e-05,
+            "phase": "failure",
+            "state": "unprotected",
+            "outcome": "failure",
+            "attempts": 3,
+            "upstream_calls": 3,
+            "blocked": 0,
+            "called": true,
+            "available": false
+          },
+          {
+            "index": 3,
+            "input_id": 4,
+            "elapsed_s": 8.8e-05,
+            "phase": "failure",
+            "state": "unprotected",
+            "outcome": "failure",
+            "attempts": 4,
+            "upstream_calls": 4,
+            "blocked": 0,
+            "called": true,
+            "available": false
+          },
+          {
+            "index": 4,
+            "input_id": 5,
+            "elapsed_s": 9.6e-05,
+            "phase": "isolation",
+            "state": "unprotected",
+            "outcome": "failure",
+            "attempts": 5,
+            "upstream_calls": 5,
+            "blocked": 0,
+            "called": true,
+            "available": false
+          },
+          {
+            "index": 5,
+            "input_id": 6,
+            "elapsed_s": 0.000104,
+            "phase": "isolation",
+            "state": "unprotected",
+            "outcome": "failure",
+            "attempts": 6,
+            "upstream_calls": 6,
+            "blocked": 0,
+            "called": true,
+            "available": false
+          },
+          {
+            "index": 6,
+            "input_id": 7,
+            "elapsed_s": 2.050398,
+            "phase": "recovery",
+            "state": "unprotected",
+            "outcome": "success",
+            "attempts": 7,
+            "upstream_calls": 7,
+            "blocked": 0,
+            "called": true,
+            "available": true
+          },
+          {
+            "index": 7,
+            "input_id": 8,
+            "elapsed_s": 2.050413,
+            "phase": "resumed",
+            "state": "unprotected",
+            "outcome": "success",
+            "attempts": 8,
+            "upstream_calls": 8,
+            "blocked": 0,
+            "called": true,
+            "available": true
+          }
+        ],
+        "summary": {
+          "attempts": 8,
+          "upstream_calls": 8,
+          "failures": 5,
+          "successes": 3,
+          "blocked": 0
+        }
+      },
+      "protected": {
+        "events": [
+          {
+            "index": 0,
+            "elapsed_s": 2e-06,
+            "phase": "initial",
+            "outcome": "ready",
+            "state": "closed",
+            "attempts": 0,
+            "upstream_calls": 0,
+            "blocked": 0,
+            "called": false,
+            "available": true,
+            "input_id": null,
+            "breaker": {
+              "name": "upstream",
+              "state": "closed",
+              "failure_count": 0,
+              "success_count": 0,
+              "total_trips": 0,
+              "last_failure_time": 0
+            }
+          },
+          {
+            "index": 1,
+            "elapsed_s": 3.5e-05,
+            "phase": "healthy",
+            "outcome": "success",
+            "state": "closed",
+            "attempts": 1,
+            "upstream_calls": 1,
+            "blocked": 0,
+            "called": true,
+            "available": true,
+            "input_id": 1,
+            "breaker": {
+              "name": "upstream",
+              "state": "closed",
+              "failure_count": 0,
+              "success_count": 1,
+              "total_trips": 0,
+              "last_failure_time": 0
+            }
+          },
+          {
+            "index": 2,
+            "elapsed_s": 5.6e-05,
+            "phase": "failure",
+            "outcome": "failure",
+            "state": "closed",
+            "attempts": 2,
+            "upstream_calls": 2,
+            "blocked": 0,
+            "called": true,
+            "available": false,
+            "input_id": 2,
+            "breaker": {
+              "name": "upstream",
+              "state": "closed",
+              "failure_count": 1,
+              "success_count": 1,
+              "total_trips": 0,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 3,
+            "elapsed_s": 9e-05,
+            "phase": "failure",
+            "outcome": "failure",
+            "state": "closed",
+            "attempts": 3,
+            "upstream_calls": 3,
+            "blocked": 0,
+            "called": true,
+            "available": false,
+            "input_id": 3,
+            "breaker": {
+              "name": "upstream",
+              "state": "closed",
+              "failure_count": 2,
+              "success_count": 1,
+              "total_trips": 0,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 4,
+            "elapsed_s": 0.000243,
+            "phase": "failure",
+            "outcome": "failure",
+            "state": "open",
+            "attempts": 4,
+            "upstream_calls": 4,
+            "blocked": 0,
+            "called": true,
+            "available": false,
+            "input_id": 4,
+            "breaker": {
+              "name": "upstream",
+              "state": "open",
+              "failure_count": 3,
+              "success_count": 1,
+              "total_trips": 1,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 5,
+            "elapsed_s": 0.000271,
+            "phase": "isolation",
+            "outcome": "blocked",
+            "state": "open",
+            "attempts": 5,
+            "upstream_calls": 4,
+            "blocked": 1,
+            "called": false,
+            "available": false,
+            "input_id": 5,
+            "breaker": {
+              "name": "upstream",
+              "state": "open",
+              "failure_count": 3,
+              "success_count": 1,
+              "total_trips": 1,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 6,
+            "elapsed_s": 0.000289,
+            "phase": "isolation",
+            "outcome": "blocked",
+            "state": "open",
+            "attempts": 6,
+            "upstream_calls": 4,
+            "blocked": 2,
+            "called": false,
+            "available": false,
+            "input_id": 6,
+            "breaker": {
+              "name": "upstream",
+              "state": "open",
+              "failure_count": 3,
+              "success_count": 1,
+              "total_trips": 1,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 7,
+            "elapsed_s": 0.000293,
+            "phase": "cooldown",
+            "outcome": "waiting",
+            "state": "open",
+            "attempts": 6,
+            "upstream_calls": 4,
+            "blocked": 2,
+            "called": false,
+            "available": false,
+            "input_id": null,
+            "breaker": {
+              "name": "upstream",
+              "state": "open",
+              "failure_count": 3,
+              "success_count": 1,
+              "total_trips": 1,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 8,
+            "elapsed_s": 2.050708,
+            "phase": "probe",
+            "outcome": "allowed",
+            "state": "half_open",
+            "attempts": 7,
+            "upstream_calls": 4,
+            "blocked": 2,
+            "called": false,
+            "available": true,
+            "input_id": 7,
+            "breaker": {
+              "name": "upstream",
+              "state": "half_open",
+              "failure_count": 3,
+              "success_count": 1,
+              "total_trips": 1,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 9,
+            "elapsed_s": 2.050777,
+            "phase": "recovery",
+            "outcome": "success",
+            "state": "closed",
+            "attempts": 7,
+            "upstream_calls": 5,
+            "blocked": 2,
+            "called": true,
+            "available": true,
+            "input_id": 7,
+            "breaker": {
+              "name": "upstream",
+              "state": "closed",
+              "failure_count": 0,
+              "success_count": 2,
+              "total_trips": 1,
+              "last_failure_time": 1792512116.0699353
+            }
+          },
+          {
+            "index": 10,
+            "elapsed_s": 2.050818,
+            "phase": "resumed",
+            "outcome": "success",
+            "state": "closed",
+            "attempts": 8,
+            "upstream_calls": 6,
+            "blocked": 2,
+            "called": true,
+            "available": true,
+            "input_id": 8,
+            "breaker": {
+              "name": "upstream",
+              "state": "closed",
+              "failure_count": 0,
+              "success_count": 3,
+              "total_trips": 1,
+              "last_failure_time": 1792512116.0699353
+            }
+          }
+        ],
+        "summary": {
+          "attempts": 8,
+          "upstream_calls": 6,
+          "failures": 3,
+          "successes": 3,
+          "blocked": 2
+        }
+      }
+    }
+  },
+  "provenance": {
+    "source_revision": "d5ffc11b26ac8afa50f56388a5d48f5a179f7b0b",
+    "source_dirty": false,
+    "capture_sources_sha256": {
+      "examples/visual_demo.py": "442fb305db100b62256de90be0d849562038a82ee3de857d9a37cabf3d8fddf2",
+      "examples/demo_scenarios.py": "598fae0088c7a6900820d02a82c9e6f7dc59d4eb64ab09399bb7b0c435925e52",
+      "examples/demo_comparison.py": "35b217e35c86b884b0de33944b22fde4560f9e3a77aa10aced5f7a5cd7c4b185",
+      "examples/visual_demo.html": "abc9c2e55222b4c3ceb5f574371378b635f58ae28284b8b746866e87f4e3082e"
+    },
+    "python_version": "3.12.14",
+    "python_implementation": "CPython",
+    "platform": "Windows 11 AMD64",
+    "clock": {
+      "name": "perf_counter",
+      "implementation": "QueryPerformanceCounter()",
+      "resolution_s": 1e-07,
+      "monotonic": true,
+      "adjustable": false
     }
   }
 }

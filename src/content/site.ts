@@ -684,12 +684,12 @@ export const projects: Project[] = [
       results: {
         en: [
           "Version v0.1.0 is publicly released with documented installation and examples for each resilience component.",
-          "The circuit breaker demo follows a dependency outage, blocked requests and recovery: three failures open the circuit, two requests are rejected without calling upstream, then a successful probe restores normal flow.",
+          "The circuit breaker demo follows a dependency outage, blocked requests and recovery: three failures open the circuit, two requests are rejected without calling upstream, then a successful probe restores normal flow. Two recorded executions of the same scenario compare the calls reaching the dependency with and without protection.",
           "Two more scenarios follow a failed task through the DLQ and a successful replay, and MQTT messages buffered during an outage then transmitted after reconnection.",
         ],
         fr: [
           "La version v0.1.0 est publiée avec une installation documentée et des exemples pour chaque composant de résilience.",
-          "La démo du circuit breaker suit une panne, le blocage des appels et la reprise : trois échecs ouvrent le circuit, deux demandes sont rejetées sans appeler la dépendance, puis une sonde réussie rétablit le flux normal.",
+          "La démo du circuit breaker suit une panne, le blocage des appels et la reprise : trois échecs ouvrent le circuit, deux demandes sont rejetées sans appeler la dépendance, puis une sonde réussie rétablit le flux normal. Deux exécutions enregistrées du même scénario comparent les appels qui atteignent la dépendance, avec et sans protection.",
           "Deux autres parcours suivent une tâche en échec jusqu’à la DLQ puis à sa relance réussie, et des messages MQTT conservés pendant une coupure puis transmis à la reconnexion.",
         ],
       },
