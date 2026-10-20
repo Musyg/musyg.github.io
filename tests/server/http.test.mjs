@@ -49,6 +49,31 @@ test("HTTP serves prerendered routes and protects API boundaries", async (t) => 
     }
   }
   assert.equal((await fetch(base + "/route-redirects.json")).status, 404);
+  for (const [file, type] of [
+    ["walkthrough.mp4", "video/mp4"],
+    ["walkthrough.fr.vtt", "text/vtt; charset=utf-8"],
+    ["walkthrough.en.vtt", "text/vtt; charset=utf-8"],
+  ]) {
+    const path = `/demos/persistent-memory/${file}`;
+    const expected = await readFile(
+      new URL(`../../dist${path}`, import.meta.url),
+    );
+    for (const method of ["GET", "HEAD"]) {
+      const response = await fetch(base + path, { method });
+      assert.equal(response.status, 200, `${method} ${path}`);
+      assert.equal(response.headers.get("content-type"), type);
+      assert.equal(
+        response.headers.get("content-length"),
+        String(expected.length),
+      );
+      assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+      assert.deepEqual(
+        Buffer.from(await response.arrayBuffer()),
+        method === "HEAD" ? Buffer.alloc(0) : expected,
+        `${method} ${path}`,
+      );
+    }
+  }
   for (const path of routes) {
     const response = await fetch(base + path);
     assert.equal(response.status, 200, path);

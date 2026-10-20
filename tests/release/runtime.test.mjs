@@ -73,12 +73,27 @@ test("isolated release starts with only bundled runtime and contact disabled", a
       "/demos/agent-resilience/?lang=en",
       "/demos/agent-resilience/?lang=fr",
       "/demos/agent-resilience/trace.json",
+      "/demos/persistent-memory/?lang=fr",
+      "/demos/persistent-memory/?lang=en",
+      "/demos/persistent-memory/trace.json",
+      "/demos/persistent-memory/comparison.json",
+      "/demos/persistent-memory/walkthrough.mp4",
+      "/demos/persistent-memory/walkthrough-poster.jpg",
+      "/demos/persistent-memory/walkthrough.fr.vtt",
+      "/demos/persistent-memory/walkthrough.en.vtt",
     ]) {
       const response = await fetch(base + route);
       assert.equal(response.status, 200, route);
       assert.equal(response.headers.get("x-frame-options"), "DENY");
       const relative = route.split("?")[0];
       const file = relative.endsWith("/") ? `${relative}index.html` : relative;
+      if (relative.endsWith(".mp4"))
+        assert.equal(response.headers.get("content-type"), "video/mp4");
+      if (relative.endsWith(".vtt"))
+        assert.equal(
+          response.headers.get("content-type"),
+          "text/vtt; charset=utf-8",
+        );
       assert.deepEqual(
         Buffer.from(await response.arrayBuffer()),
         await readFile(join(temporary, "dist", file)),

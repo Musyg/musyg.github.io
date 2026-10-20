@@ -12,6 +12,8 @@ const types = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
+  ".mp4": "video/mp4",
+  ".vtt": "text/vtt; charset=utf-8",
   ".ico": "image/x-icon",
   ".woff2": "font/woff2",
   ".pdf": "application/pdf",
