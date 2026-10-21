@@ -87,6 +87,7 @@ test("isolated release starts with only bundled runtime and contact disabled", a
       "/demos/persistent-memory/?lang=en",
       "/demos/persistent-memory/trace.json",
       "/demos/persistent-memory/comparison.json",
+      "/demos/persistent-memory/memory-on-off.json",
       "/demos/persistent-memory/walkthrough.mp4",
       "/demos/persistent-memory/walkthrough-poster.jpg",
       "/demos/persistent-memory/walkthrough.fr.vtt",

@@ -13,6 +13,12 @@ const embeddedTrace = (document: string) =>
   )![1];
 const comparison = () =>
   JSON.parse(readFileSync(`${prefix}comparison.json`, "utf8"));
+const memoryOnOff = () =>
+  JSON.parse(readFileSync(`${prefix}memory-on-off.json`, "utf8"));
+const embeddedMemoryOnOff = (document: string) =>
+  document.match(
+    /<script id="recorded-memory-on-off" type="application\/json">([\s\S]*?)<\/script>/,
+  )![1];
 const embeddedComparison = (document: string) =>
   document.match(
     /<script id="recorded-comparison" type="application\/json">([\s\S]*?)<\/script>/,
@@ -25,6 +31,69 @@ const comparisonMoments = [
 const primaryRoles = ["date_v1", "brief_v1", "brief_v2", "brief_v2", "control"];
 
 describe("Persistent Memory recorded demonstration", () => {
+  it("embeds the public memory-on/off evidence without changing original answers", () => {
+    const data = memoryOnOff();
+    expect(JSON.parse(embeddedMemoryOnOff(html()))).toEqual(data);
+    expect(data.summary.paired).toEqual({
+      gain: 3,
+      loss: 0,
+      tie_success: 4,
+      tie_failure: 0,
+      unknown: 1,
+    });
+    expect(data.summary.exact_net_gain).toBeNull();
+    expect(data.cases).toHaveLength(8);
+    expect(data.accounting.completed_answers).toBe(15);
+    expect(
+      data.cases.find((item: { id: string }) => item.id === "MC20N04").arms
+        .absence.answer,
+    ).toBeNull();
+  });
+
+  it("hides inconsistent memory-on/off counts and renders answer text without HTML", () => {
+    const original = html();
+    const changed = memoryOnOff();
+    changed.summary.paired.gain = 4;
+    const unavailable = new JSDOM(
+      original.replace(embeddedMemoryOnOff(original), JSON.stringify(changed)),
+      { runScripts: "dangerously", url: "https://demo.invalid/?lang=en" },
+    );
+    try {
+      expect(
+        unavailable.window.document.getElementById("memory-results"),
+      ).toHaveProperty("hidden", true);
+      expect(
+        unavailable.window.document.getElementById("memory-unavailable"),
+      ).toHaveProperty("hidden", false);
+      expect(unavailable.window.document.getElementById("demo")).toHaveProperty(
+        "hidden",
+        false,
+      );
+    } finally {
+      unavailable.window.close();
+    }
+    const unsafe = memoryOnOff();
+    unsafe.cases[0].arms.presence.answer =
+      '<img src="unsafe.invalid" onerror="alert(1)">';
+    const textOnly = new JSDOM(
+      original.replace(
+        embeddedMemoryOnOff(original),
+        JSON.stringify(unsafe).replace(/</g, "\\u003c"),
+      ),
+      { runScripts: "dangerously", url: "https://demo.invalid/?lang=fr" },
+    );
+    try {
+      expect(
+        textOnly.window.document.querySelector(".memory-answer")!.textContent,
+      ).toBe(unsafe.cases[0].arms.presence.answer);
+      expect(
+        textOnly.window.document.querySelectorAll("#memory-case-list img"),
+      ).toHaveLength(0);
+    } finally {
+      textOnly.window.close();
+    }
+  });
+
   it.each([
     ["/work/persistent-memory/", "en", "Try the demo"],
     ["/fr/realisations/persistent-memory/", "fr", "Voir la démo"],
@@ -139,6 +208,29 @@ describe("Persistent Memory recorded demonstration", () => {
         const text = (id: string) => document.getElementById(id)!.textContent;
         const click = (id: string) =>
           (document.getElementById(id) as HTMLButtonElement).click();
+        const memoryData = memoryOnOff();
+        expect(document.getElementById("memory-results")).toHaveProperty(
+          "hidden",
+          false,
+        );
+        expect(text("memory-presence-count")).toBe("8 / 8");
+        expect(text("memory-absence-count")).toBe("4 / 8");
+        expect(text("memory-gain-count")).toBe("3");
+        expect(document.querySelectorAll(".memory-case")).toHaveLength(8);
+        expect(document.querySelectorAll(".memory-answer")).toHaveLength(15);
+        for (const item of memoryData.cases) {
+          for (const name of ["presence", "absence"]) {
+            const column = document.querySelector(
+              `#memory-case-${item.id} [data-arm="${name}"]`,
+            )!;
+            const answer = column.querySelector(".memory-answer");
+            expect(answer?.textContent ?? null).toBe(item.arms[name].answer);
+            if (answer) expect(answer).toHaveAttribute("lang", "fr");
+          }
+        }
+        expect(
+          document.querySelector("#memory-method a[download]"),
+        ).toHaveAttribute("href", "memory-on-off.json");
         const video = document.getElementById(
           "walkthrough-video",
         ) as HTMLVideoElement;

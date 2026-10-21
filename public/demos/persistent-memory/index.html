@@ -92,6 +92,8 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
 .comparison{margin-top:36px}.comparison h2{max-width:760px}.comparison>p{max-width:820px;color:var(--muted);font-size:14px}.comparison-table{font:14px/1.6 system-ui,sans-serif;white-space:normal;table-layout:fixed}.comparison-table caption{text-align:left;font-size:13px;color:var(--muted);padding:0 0 12px}.comparison-table th,.comparison-table td{padding:16px 12px;vertical-align:top;overflow-wrap:anywhere}.comparison-table thead th{font-weight:650;color:var(--text)}.comparison-table thead th:first-child{width:21%}.comparison-table tbody th{font-weight:650;color:var(--text)}.comparison-read{margin:0 0 14px}.comparison-read:last-child{margin-bottom:0}.comparison-read strong{font-size:12px}.comparison-read span{display:block;font-size:12px;color:var(--muted)}.comparison-read[data-allowed="false"]{border-left:2px dashed var(--blue);padding-left:10px}.comparison-read[data-allowed="true"]{border-left:2px solid var(--blue);padding-left:10px}.comparison .comparison-contract{border-left:3px solid var(--blue);padding-left:14px}.comparison-proof p{font-size:13px;color:var(--muted);margin-top:14px}.comparison-proof .links{margin-bottom:16px}.comparison-unavailable{font-size:14px;color:var(--muted)}
 @media(max-width:600px){.comparison-table,.comparison-table tbody,.comparison-table tr,.comparison-table th,.comparison-table td{display:block;width:100%}.comparison-table{table-layout:auto}.comparison-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.comparison-table tbody tr{border:1px solid var(--line);border-radius:8px;margin-bottom:18px;padding:0 12px}.comparison-table tbody th{font-size:16px;border-bottom:1px solid var(--line)}.comparison-table td::before{content:attr(data-label);display:block;font-size:14px;font-weight:650;margin-bottom:14px}.comparison-table td:last-child{border-bottom:0}.comparison-table td{padding:16px 0}.comparison-table caption{display:block}}
 .walkthrough{margin-top:36px}.walkthrough>p,.walkthrough li{font-size:14px;color:var(--muted)}.walkthrough video{display:block;width:100%;height:auto;aspect-ratio:8/5;background:#000;border:1px solid var(--line);border-radius:8px;margin:20px 0}.walkthrough video:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.walkthrough .links{font-size:14px}.walkthrough ol{padding-left:22px;margin-bottom:0}.walkthrough li{margin-bottom:10px}
+.demo-sections{font-size:13px;margin:22px 0}.memory-on-off{margin-top:36px}.memory-on-off>p,.memory-method p{font-size:14px;color:var(--muted)}.memory-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0}.memory-metric{padding:18px;border:1px solid var(--line);border-radius:8px}.memory-metric strong{display:block;font-size:28px;line-height:1.3;color:var(--text);margin-bottom:8px}.memory-metric span{display:block;font-size:13px;color:var(--muted)}.memory-verdict{border-left:3px solid var(--blue);padding-left:14px}.memory-case{margin-top:20px}.memory-case h3{font-size:16px;margin:0 0 12px}.memory-case p,.memory-case li{font-size:14px;overflow-wrap:anywhere}.memory-case .memory-prompt{white-space:pre-wrap}.memory-arms{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:20px}.memory-arm{min-width:0;border:1px solid var(--line);padding:16px;border-radius:8px}.memory-arm h4{font-size:14px;margin:0 0 12px}.memory-answer{white-space:pre-wrap;font-size:14px;line-height:1.65;margin:12px 0 0}.memory-arm[data-completed="false"]{border-style:dashed}.memory-judges{margin-top:18px}.memory-judges p{color:var(--muted)}.memory-method .links{margin:18px 0}.memory-on-off details[open]>summary{margin-bottom:18px}.memory-original{font-size:13px;color:var(--muted)}
+@media(max-width:600px){.memory-metrics,.memory-arms{grid-template-columns:1fr}.memory-metric{padding:14px}.memory-metric strong{font-size:25px}.memory-arms{gap:12px}}
 </style>
   </head>
   <body>
@@ -103,6 +105,7 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
         <p class="eyebrow" data-i18n="eyebrow"></p>
         <h1 data-i18n="title"></h1>
         <p class="intro" data-i18n="intro"></p>
+        <nav class="demo-sections links" aria-label="Sections"><a href="#memory-on-off" data-i18n="memoryNav"></a><a href="#comparison" data-i18n="cacheNav"></a><a href="#walkthrough" data-i18n="walkthroughTitle"></a></nav>
       </section>
       <p id="unavailable" class="unavailable" role="alert" hidden></p>
       <div id="demo">
@@ -141,6 +144,18 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
         <div class="links"><a href="walkthrough.mp4" download="persistent-memory-walkthrough.mp4" data-i18n="walkthroughDownload"></a><a href="#steps" data-i18n="walkthroughExplore"></a></div>
         <details id="walkthrough-transcript"><summary data-i18n="walkthroughTranscript"></summary><ol><li data-i18n="walkthroughAdmit"></li><li data-i18n="walkthroughDerive"></li><li data-i18n="walkthroughCorrect"></li><li data-i18n="walkthroughRevoke"></li><li data-i18n="walkthroughRestore"></li><li data-i18n="walkthroughCompare"></li></ol></details>
       </section>
+      <section class="memory-on-off panel" id="memory-on-off" aria-labelledby="memory-on-off-title">
+        <p class="eyebrow" data-i18n="memoryEyebrow"></p><h2 id="memory-on-off-title" data-i18n="memoryTitle"></h2>
+        <p data-i18n="memoryIntro"></p>
+        <p id="memory-unavailable" hidden data-i18n="memoryUnavailable"></p>
+        <div id="memory-results">
+          <div class="memory-metrics"><div class="memory-metric"><strong id="memory-presence-count"></strong><span data-i18n="memoryPresenceMetric"></span></div><div class="memory-metric"><strong id="memory-absence-count"></strong><span data-i18n="memoryAbsenceMetric"></span></div><div class="memory-metric"><strong id="memory-gain-count"></strong><span data-i18n="memoryGainMetric"></span></div></div>
+          <p class="memory-verdict" data-i18n="memoryVerdict"></p><p data-i18n="memoryUnknown"></p>
+          <p class="memory-original" data-i18n="memoryOriginal"></p>
+          <details id="memory-cases"><summary data-i18n="memoryCases"></summary><div id="memory-case-list"></div></details>
+          <details class="memory-method" id="memory-method"><summary data-i18n="memoryMethod"></summary><p data-i18n="memoryProtocol"></p><p data-i18n="memoryJudges"></p><p data-i18n="memoryBoundary"></p><p data-i18n="memoryAccounting"></p><div class="links"><a href="memory-on-off.json" download="persistent-memory-on-off-20261020.json" data-i18n="memoryDownload"></a><a id="memory-guide" href="https://github.com/Musyg/persistent-memory/blob/main/docs/MEMORY-COMPARISON.md" data-i18n="memoryGuide"></a></div></details>
+        </div>
+      </section>
       <section class="comparison panel" id="comparison" aria-labelledby="comparison-title">
         <p class="eyebrow" data-i18n="comparisonEyebrow"></p><h2 id="comparison-title" data-i18n="comparisonTitle"></h2>
         <p data-i18n="comparisonIntro"></p><p class="comparison-contract" id="comparison-contract" data-i18n="comparisonContract"></p>
@@ -153,6 +168,703 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
       <details class="technical" id="technical"><summary data-i18n="technical"></summary><div class="inspector"><h2 id="inspector-title"></h2><p id="inspector-summary"></p><pre id="inspector-read"></pre><a class="step-code" id="step-code" href="https://github.com/Musyg/persistent-memory" data-i18n="stepCode"></a></div><div id="answer-meta"></div><div class="evidence"><div class="evidence-top"><p class="label" data-i18n="evidence"></p></div><div class="journey" id="evidence"></div></div><div class="tech-grid"><div><p data-i18n="machine"></p><pre id="machine"></pre></div><div><p data-i18n="refs"></p><pre id="references"></pre></div></div><p data-i18n="limit"></p></details>
       <footer id="provenance"></footer>
     </main>
+    <script id="recorded-memory-on-off" type="application/json">{
+  "schema": "persistent-memory.memory-on-off.v1",
+  "date": "2026-10-20",
+  "content_language": "fr",
+  "synthetic_only": true,
+  "summary": {
+    "counts": {
+      "presence": {
+        "success": 8,
+        "failure": 0,
+        "unknown": 0,
+        "denominator": 8
+      },
+      "absence": {
+        "success": 4,
+        "failure": 3,
+        "unknown": 1,
+        "denominator": 8
+      }
+    },
+    "paired": {
+      "gain": 3,
+      "loss": 0,
+      "tie_success": 4,
+      "tie_failure": 0,
+      "unknown": 1
+    },
+    "exact_net_gain": null,
+    "possible_net_gain_task_bounds": {
+      "lower": 3,
+      "upper": 4
+    },
+    "not_confidence_interval": true
+  },
+  "methodology": {
+    "scope": "Isolated selected fact-enrichment response path; not the standalone public library or full production bootstrap.",
+    "requested_model": "gpt-4.1",
+    "observed_model": "gpt-4.1-2025-04-14",
+    "temperature": 0.7,
+    "max_output_tokens": 2048,
+    "max_input_tokens": 11264,
+    "max_request_bytes": 10240,
+    "generations_per_arm": 1,
+    "arm_order": "Alternating presence/absence order across eight pairs, four first in each arm.",
+    "intervention": "Same task, model, request limits and selected consumer path; isolated admissible facts present or absent. Same ceilings, not identical token consumption.",
+    "grading": "Two LLM annotators independently scored masked items before arm reconciliation. Sixteen primary verdicts agreed, including one unknown. Zero human annotations; statistical independence and perfect masking are not established.",
+    "primary_metric": "Business task completion under the same preannotated admissible truth for both arms. Safe abstention without necessary context can still fail an answerable task; abstention is success when the task truly lacks admissible information.",
+    "secondary_support_disagreement_count": 2,
+    "secondary_disposition": "Keep both annotations. Generic conditional suggestions vs unsupported local claims ambiguous; support unknown. Primary coverage failure certain and unchanged. No new claim of hallucination from this disagreement.",
+    "global_grading_rules": {
+      "same_oracle_for_both_arms": true,
+      "oracle_must_not_be_sent_to_generator": true,
+      "paraphrases_allowed": true,
+      "word_count_requirement": null,
+      "citation_format_requirement": null,
+      "unknown_or_ambiguous_is_not_strict_success": true,
+      "technical_unavailable_is_not_semantic_failure": true,
+      "answerable_task_abstention": "Une abstention peut être prudente compte tenu des preuves reçues par le bras sans mémoire ; elle ne remplit cependant pas une tâche dont les informations admissibles existent dans le périmètre global. Consigner séparément la prudence et la complétion.",
+      "unsupported_material_claims": "Ne pas inventer une valeur, un lieu, un rôle, une règle ou une étape supplémentaire présenté comme établi. Une suggestion explicitement conditionnelle n'est pas assimilée à un fait établi. Un conseil superflu ne fait pas échouer à lui seul si la réponse métier reste correcte et sans assertion matérielle fausse."
+    }
+  },
+  "accounting": {
+    "provider_requests": 17,
+    "attempted_arms": 16,
+    "completed_answers": 15,
+    "incomplete_answers": 1,
+    "retries": 0,
+    "reservation_debit_usd": "0.68",
+    "provider_billed_cost_usd": null,
+    "provider_token_totals": null,
+    "annotation_agent_costs_included": false
+  },
+  "limitations": {
+    "selected_synthetic_cases_not_representative": true,
+    "single_generation_per_arm": true,
+    "forced_intent_and_reduced_catalogue": true,
+    "production_routing_and_full_bootstrap_tested": false,
+    "public_library_benchmark": false,
+    "generalized_superiority_established": false,
+    "exact_net_gain_known": false,
+    "descriptive_bounds_not_confidence_interval": true,
+    "prior_functional_12_of_12_is_separate": true,
+    "autonomous_public_provider_replay_available": false
+  },
+  "cases": [
+    {
+      "id": "MC20N01",
+      "prompt": "Je termine mon créneau à l'atelier Méridien. Où dois-je déposer les pièces que j'ai empruntées, et que faut-il laisser avec elles ?",
+      "seed_facts": [
+        {
+          "text": "À l'atelier Méridien, les pièces empruntées se déposent après usage dans le bac bleu de l'étagère B. La fiche de prêt doit être laissée dans ce même bac avec les pièces.",
+          "revoked": false
+        }
+      ],
+      "criteria": {
+        "stratum": "memory_required_direct",
+        "globally_answerable": true,
+        "required": [
+          "Déposer les pièces dans le bac bleu de l'étagère B.",
+          "Laisser la fiche de prêt dans ce même bac avec les pièces."
+        ],
+        "forbidden": [
+          "Donner un autre emplacement comme lieu de dépôt.",
+          "Demander de garder la fiche ou de la déposer ailleurs comme règle établie."
+        ],
+        "acceptable_abstention": {
+          "primary_success": false,
+          "diagnostic": "Sans preuve disponible dans son bras, signaler l'absence d'information plutôt que deviner est prudent mais ne complète pas la tâche globale."
+        },
+        "strict_success": "Les deux éléments requis sont rendus, sans contradiction ni règle matérielle inventée. Des formulations équivalentes sont admises."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "À la fin de ton créneau à l’atelier Méridien, tu dois déposer les pièces empruntées dans le bac bleu de l’étagère B. Il faut également laisser la fiche de prêt dans ce même bac, avec les pièces.",
+          "answer_sha256": "cefc92a4e01b97e690241b979c5b13c0dc319477ce8fe385a8276b00eb0b766c",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Donne exactement le bac bleu de l'étagère B et demande de laisser la fiche de prêt dans ce même bac avec les pièces.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "Le lieu exact, bac bleu de l'étagère B, et la fiche de prêt à laisser dans ce même bac avec les pièces sont tous deux rendus sans ajout matériel."
+            }
+          }
+        },
+        "absence": {
+          "completed": true,
+          "answer": "Pour déposer les pièces empruntées à l’atelier Méridien à la fin de ton créneau, voici la procédure habituellement recommandée (à vérifier selon les règles spécifiques de l’atelier si tu veux être sûr à 100%) :\n\n1. **Lieu de dépôt** :  \n   - Les pièces doivent généralement être rapportées à l’accueil ou à l’endroit désigné pour les retours de matériel (souvent un comptoir ou une étagère spécifique marquée « Retour des pièces » ou similaire).\n   - S’il existe un bac ou une zone de retour dédiée dans l’atelier, utilise-la.\n\n2. **À laisser avec les pièces** :  \n   - Replace chaque pièce dans sa boîte, sachet ou contenant d’origine si c’est fourni (pour éviter les pertes ou confusions).\n   - Ajoute le bon de prêt ou le formulaire d’emprunt rempli (papier ou version numérique sur tablette/PC, selon le système de l’atelier).\n   - Si tu as signalé un problème ou une casse, joins une note explicative ou signale-le à la personne responsable.\n\n3. **Vérification finale** :  \n   - Assure-toi que tout est propre et complet (pas de pièces manquantes, pas de saleté ou de résidus).\n   - Préviens un responsable ou valide le retour sur le registre s’il y en a un.\n\n**À retenir :**  \nSi tu n’es pas certain de la procédure précise, tu peux demander directement à l’accueil de l’atelier ou consulter le règlement affiché sur place.\n\nBesoin d’informations propres à l’atelier Méridien (adresse, responsable, procédure écrite officielle) ? Je peux vérifier s’il existe une documentation ou des règles précises pour cet atelier. Veux-tu que je cherche ces informations ?",
+          "answer_sha256": "cdf75ace66345e9328aa2400a414f0c244215de8537660cffb2b338372bdd6ba",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": false,
+              "reason": "Ne donne ni le bac bleu de l'étagère B ni la fiche dans ce même bac. Les conseils conditionnels ne sont pas sanctionnés comme des faits vérifiés ; toutefois le retour généralement à l'accueil est présenté comme procédure usuelle sans source locale, plutôt qu'une abstention ciblée.",
+              "required_covered": false,
+              "strict_success": false,
+              "supported_claims": false
+            },
+            "B": {
+              "strict_success": false,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": false,
+              "reason": "Ni le bac bleu de l'étagère B ni le dépôt de la fiche dans ce même bac ne sont identifiés. Une procédure générique et des conseils conditionnels remplacent la réponse propre à Méridien ; ils ne complètent donc pas la tâche. Les réserves explicites empêchent de traiter tous ces conseils comme des règles établies de Méridien : l'échec retenu est l'absence des deux éléments requis, pas une hallucination supplémentaire automatiquement attribuée aux suggestions."
+            }
+          }
+        }
+      },
+      "outcome": "gain"
+    },
+    {
+      "id": "MC20N02",
+      "prompt": "Sur le terminal Solive, je dois garder un colis pour un contrôle interne. Quelle manipulation faut-il faire pour qu'il ne parte pas avec les autres ?",
+      "seed_facts": [
+        {
+          "text": "Sur le terminal Solive, un colis conservé pour contrôle interne doit être passé au statut « En attente » puis recevoir la note « CTRL ». Ces deux opérations le retirent de la liste des départs.",
+          "revoked": false
+        }
+      ],
+      "criteria": {
+        "stratum": "memory_required_direct",
+        "globally_answerable": true,
+        "required": [
+          "Passer le colis au statut En attente.",
+          "Ajouter la note CTRL."
+        ],
+        "forbidden": [
+          "Omettre l'une des deux opérations en affirmant que l'autre suffit.",
+          "Présenter un autre statut ou une autre note comme la procédure Solive.",
+          "Affirmer que le colis a effectivement été modifié ou qu'un outil a été exécuté."
+        ],
+        "acceptable_abstention": {
+          "primary_success": false,
+          "diagnostic": "Sans mémoire, l'absence de procédure connue justifie de ne pas inventer, mais pas une réussite métier."
+        },
+        "strict_success": "Les deux opérations sont indiquées comme consigne à effectuer ; aucune exécution réelle n'est prétendue."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "Pour qu’un colis soit conservé pour contrôle interne sur le terminal Solive et ne parte pas avec les autres, il faut effectuer deux opérations :\n\n1. Passer le colis au statut « En attente ».\n2. Ajouter la note « CTRL » à ce colis.\n\nUne fois ces deux actions réalisées, le colis sera retiré de la liste des départs et ne sera donc pas expédié avec les autres (source : procédure interne Solive).",
+          "answer_sha256": "dd92a6cc8a627a0219489ab403314f7fa5b281d54caed480f57832446638d9fa",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Indique les deux opérations En attente puis note CTRL, et leur effet conforme au fait reçu. La formulation décrit les actions à effectuer sans prétendre les avoir exécutées ; la mention de source interne est bénigne.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "Les deux opérations sont indiquées : statut En attente puis note CTRL. Leur effet sur la liste des départs est fourni par la source. Le futur après réalisation des actions n'est pas une prétention d'exécution déjà effectuée."
+            }
+          }
+        },
+        "absence": {
+          "completed": true,
+          "answer": "Pour garder un colis pour un contrôle interne sur le terminal Solive, voici la procédure classique à suivre (à confirmer selon la version précise du terminal, mais les étapes sont généralement les suivantes) :\n\n1. **Identifier le colis concerné** : Scanne le colis ou recherche-le dans la liste sur le terminal.\n\n2. **Sélectionner l’option de gestion** : Sur la fiche du colis, repère une option du type “Retenir”, “Mettre de côté”, “Contrôle interne”, ou “Bloquer l’expédition”. Cette option peut se trouver dans un menu contextuel ou dans les actions disponibles en bas de l’écran.\n\n3. **Confirmer la retenue** : Une fois l’option sélectionnée, il te sera probablement demandé de confirmer la mise en attente ou d’indiquer un motif (ici, contrôle interne).\n\n4. **Vérification** : Le colis doit alors apparaître comme “bloqué” ou “retenu” dans le listing, avec une mention de contrôle interne. Il ne sera plus disponible pour l’expédition tant qu’il n’a pas été débloqué.\n\n**Remarques importantes** :\n- Il ne faut pas simplement ignorer le colis lors du scan de ramassage. Il doit être explicitement bloqué/retiré du flux d’expédition pour éviter toute erreur.\n- Selon la configuration de Solive, l’intitulé exact de la fonction peut varier (ex : “Mettre en litige”, “Retirer de l’expédition”, etc.).\n\nSi tu veux, je peux rechercher la notice officielle ou des captures d’écran correspondant à la version actuelle de Solive que tu utilises. Veux-tu que je fasse cette recherche ? Peux-tu préciser le modèle du terminal ou la version logicielle affichée ?",
+          "answer_sha256": "3f13bea5a639ae6ae4bdf0a6abe6a8196ae153a2d3521ed1d43c93e0431125e7",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": false,
+              "reason": "Omet la note CTRL et ne donne pas le statut précis En attente comme consigne. Les menus alternatifs et confirmations hypothétiques ne sont pas seuls assimilés à des faits ; en revanche l'effet annoncé du statut bloqué ou retenu sur le terminal n'est étayé par aucune source disponible. La réserve initiale ne réalise pas la procédure demandée.",
+              "required_covered": false,
+              "strict_success": false,
+              "supported_claims": false
+            },
+            "B": {
+              "strict_success": false,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": false,
+              "reason": "Le statut exact En attente et surtout la note CTRL ne sont pas donnés comme les deux opérations requises. La procédure générique proposée à confirmer selon la version ne remplit pas la tâche Solive. Les variantes de boutons sont présentées comme des exemples hypothétiques et non comme une procédure Solive vérifiée ; aucune action déjà réalisée n'est revendiquée. L'échec tient au résultat métier manquant."
+            }
+          }
+        }
+      },
+      "outcome": "gain"
+    },
+    {
+      "id": "MC20N03",
+      "prompt": "Au 20 octobre 2026, je prépare quatre kits Floréal pour le dépôt local. Quelle étiquette doit-on utiliser ? Vérifie bien si le petit nombre de kits change la règle.",
+      "seed_facts": [
+        {
+          "text": "La note Floréal du 19 octobre 2026 remplace l'étiquette L12 par L18 pour les kits destinés au dépôt local. L18 s'applique aussi aux petits lots de cinq kits ou moins. Les envois à l'export attendent une validation distincte et ne relèvent pas de cette règle.",
+          "revoked": false
+        }
+      ],
+      "criteria": {
+        "stratum": "memory_required_update_qualifier",
+        "globally_answerable": true,
+        "required": [
+          "Utiliser L18 pour les quatre kits destinés au dépôt local.",
+          "Préciser que quatre kits constituent un petit lot qui suit aussi L18 ; la quantité ne crée pas d'exception."
+        ],
+        "forbidden": [
+          "Recommander L12 ou laisser L12 et L18 au choix pour ce lot local.",
+          "Inventer une exemption pour les petits lots.",
+          "Étendre la règle locale à l'export comme fait établi."
+        ],
+        "acceptable_abstention": {
+          "primary_success": false,
+          "diagnostic": "L'absence de règle reçue peut rendre une abstention prudente dans le contrôle ; la règle globale admissible est cependant déterminée."
+        },
+        "strict_success": "L18 et l'absence d'exception pour quatre kits sont claires. Mentionner l'ancienne L12 ou la date n'est pas obligatoire ; une mention correcte n'est pas un défaut. L'exception export n'a pas à être récitée pour cette commande locale."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "Selon la note Floréal du 19 octobre 2026, pour les kits destinés au dépôt local, l’étiquette L18 remplace l’ancienne étiquette L12. Cette règle s’applique aussi spécifiquement aux petits lots de cinq kits ou moins.\n\nDonc, pour vos quatre kits Floréal préparés pour le dépôt local le 20 octobre 2026, il faut utiliser l’étiquette L18 (et non L12). Le fait qu’il s’agisse d’un petit nombre de kits (moins de cinq) ne change pas la règle : c’est bien L18 qu’il faut.\n\nRésumé : Utilisez l’étiquette L18 pour vos quatre kits destinés au dépôt local.",
+          "answer_sha256": "9bd45486e3c009ba0406fa76184546057f4b6f9ea1a84adec5e7661745f34388",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Choisit L18 pour les quatre kits locaux et précise que le petit nombre ne crée aucune exception. L'ancienne L12 est correctement distinguée, sans extension à l'export.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "L18 est demandé pour les quatre kits locaux, avec absence explicite d'exception pour les petits lots. La source est d'abord correctement rappelée comme cinq kits ou moins ; la mention ultérieure moins de cinq décrit les quatre kits du cas et ne change pas la décision. Aucun élargissement à l'export."
+            }
+          }
+        },
+        "absence": {
+          "completed": true,
+          "answer": "Je n’ai trouvé aucune règle concernant l’étiquette à utiliser pour les kits Floréal, ni d’information spécifique liée au petit nombre de kits, dans les résultats disponibles.",
+          "answer_sha256": "6f081a70d927f75d876d58d237913da0edfacf79d5c012fba07ed6fe6ae02d19",
+          "provider_requests": 2,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": true,
+              "reason": "Signale correctement qu'aucune règle pertinente n'est disponible et ne devine pas d'étiquette. Abstention prudente avec ces preuves, mais L18 et son application aux quatre kits manquent pour la tâche globalement déterminée.",
+              "required_covered": false,
+              "strict_success": false,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": false,
+              "appropriate_abstention": true,
+              "supported_claims": true,
+              "required_covered": false,
+              "reason": "L'absence de règle dans les résultats effectivement reçus est honnêtement indiquée. Cette prudence ne répond cependant ni L18 ni à l'absence d'exception pour quatre kits, alors que la tâche globale dispose d'une règle admissible."
+            }
+          }
+        }
+      },
+      "outcome": "gain"
+    },
+    {
+      "id": "MC20N04",
+      "prompt": "Pour le prêt Marée, un intervenant extérieur peut-il emprunter le lot ? Et le lot comprend-il le socle, le câble et l'adaptateur ?",
+      "seed_facts": [
+        {
+          "text": "Le prêt Marée est réservé au personnel de l'atelier ; les intervenants extérieurs ne sont pas admissibles. Le lot comprend un socle et un câble. L'adaptateur est exclu du prêt.",
+          "revoked": false
+        }
+      ],
+      "criteria": {
+        "stratum": "memory_required_boundary_restrictions",
+        "globally_answerable": true,
+        "required": [
+          "L'intervenant extérieur n'est pas admissible au prêt réservé au personnel de l'atelier.",
+          "Le socle est inclus.",
+          "Le câble est inclus.",
+          "L'adaptateur est exclu."
+        ],
+        "forbidden": [
+          "Autoriser l'emprunt à l'intervenant extérieur comme règle établie.",
+          "Inclure l'adaptateur ou exclure le socle ou le câble.",
+          "Inventer une dérogation automatique ou une validation qui rendrait le prêt autorisé."
+        ],
+        "acceptable_abstention": {
+          "primary_success": false,
+          "diagnostic": "Sans source reçue, ne pas deviner les conditions est prudent ; cela ne répond pas aux quatre points de la tâche globale."
+        },
+        "strict_success": "L'admissibilité et les trois composants sont correctement distingués. Une réponse courte en prose ou liste est admise ; pas d'obligation de reprendre les mots du fait."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "Pour le prêt Marée :\n\n- Un intervenant extérieur ne peut pas emprunter le lot. Ce prêt est réservé au personnel de l’atelier.\n- Le lot comprend un socle et un câble. L’adaptateur est exclu du prêt.\n\nDonc, un intervenant extérieur n’est pas admissible, et le lot ne comprend pas l’adaptateur.",
+          "answer_sha256": "317f01f33450f216fc998c03bb089b1dcaa0fa33654a32c8f3cf7fc0fc65eac7",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Refuse explicitement le prêt à l'intervenant extérieur, inclut socle et câble et exclut l'adaptateur, conformément au fait reçu.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "Les quatre distinctions demandées sont correctes : intervenant extérieur exclu, prêt réservé au personnel, socle et câble inclus, adaptateur exclu. Aucune dérogation ajoutée."
+            }
+          }
+        },
+        "absence": {
+          "completed": false,
+          "answer": null,
+          "answer_sha256": null,
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Aucune réponse complète n'a été remise. Indisponibilité technique, aucun jugement sémantique ni échec métier imputé.",
+              "required_covered": null,
+              "strict_success": null,
+              "supported_claims": null
+            },
+            "B": {
+              "strict_success": null,
+              "appropriate_abstention": null,
+              "supported_claims": null,
+              "required_covered": null,
+              "reason": "Le paquet indique completed=false et answer=null. L'interruption technique ne permet aucun jugement sémantique, favorable ou défavorable."
+            }
+          },
+          "incident": "The test harness stopped before a second parallel search could complete; no complete answer was returned. Semantic outcome unknown; no retry."
+        }
+      },
+      "outcome": "unknown"
+    },
+    {
+      "id": "MC20N05",
+      "prompt": "Pour ma note de préparation : il y a trois bacs, avec sept pochettes dans chaque bac. Combien de pochettes faut-il annoncer au total ?",
+      "seed_facts": [],
+      "criteria": {
+        "stratum": "brief_self_sufficient",
+        "globally_answerable": true,
+        "required": [
+          "Annoncer vingt et une pochettes au total."
+        ],
+        "forbidden": [
+          "Donner un autre total.",
+          "Affirmer que le calcul nécessite une mémoire ou un outil externe indisponible."
+        ],
+        "acceptable_abstention": {
+          "primary_success": false,
+          "diagnostic": "Les nombres nécessaires sont dans la demande ; une abstention n'est pas justifiée."
+        },
+        "strict_success": "Le total21 est explicite ; l'opération3×7 est facultative."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "Il y a 3 bacs, et chaque bac contient 7 pochettes.\n\nPour trouver le nombre total de pochettes, il faut multiplier :\n3 bacs × 7 pochettes = 21 pochettes\n\nIl faut donc annoncer un total de 21 pochettes.",
+          "answer_sha256": "f9103f80f883350a1bd114b058bc4f73da578d014531946a4aa03de5616b5654",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Calcule correctement trois fois sept et annonce explicitement vingt et une pochettes.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "Le calcul trois fois sept et le total de vingt et une pochettes sont corrects et autosuffisants."
+            }
+          }
+        },
+        "absence": {
+          "completed": true,
+          "answer": "Pour calculer le nombre total de pochettes, il suffit de multiplier le nombre de bacs par le nombre de pochettes dans chaque bac :\n\n3 bacs × 7 pochettes par bac = 21 pochettes au total.\n\nIl faut donc annoncer 21 pochettes.",
+          "answer_sha256": "9ed268c3d5b3248c32d2d42f035ba7b504690a5a8508750cfac7f645ab1bea49",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Annonce vingt et une pochettes et justifie ce total par trois fois sept.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "Le total annoncé est vingt et une pochettes, obtenu correctement par trois fois sept ; aucune dépendance externe inventée."
+            }
+          }
+        }
+      },
+      "outcome": "tie_success"
+    },
+    {
+      "id": "MC20N06",
+      "prompt": "Pour ce seul essai dans l'atelier Pivoine, la consigne que je te donne ici est : une pastille verte signifie « contrôle terminé » ; une pastille orange signifie « contrôle à refaire ». Un bac porte une pastille orange. Que doit-on faire de ce bac ?",
+      "seed_facts": [
+        {
+          "text": "Dans l'atelier Sillage, une pastille orange désigne un colis réservé au transport maritime. Cette convention concerne seulement Sillage.",
+          "revoked": false
+        }
+      ],
+      "criteria": {
+        "stratum": "brief_self_sufficient_foreign_scope_distractor",
+        "globally_answerable": true,
+        "required": [
+          "Le contrôle du bac doit être refait selon la consigne Pivoine donnée dans la demande."
+        ],
+        "forbidden": [
+          "Appliquer la convention maritime de Sillage à Pivoine.",
+          "Dire que le contrôle est terminé ou que le bac peut être libéré sans refaire le contrôle.",
+          "Traiter la convention propre à Sillage comme un conflit non résolu concernant Pivoine."
+        ],
+        "acceptable_abstention": {
+          "primary_success": false,
+          "diagnostic": "La demande contient une convention explicite pour cet essai. Le fait d'un autre atelier ne la rend pas ambiguë."
+        },
+        "strict_success": "Refaire le contrôle est demandé clairement, sans contamination par la convention Sillage. Il n'est pas nécessaire de parler du distracteur."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "D’après la consigne que tu as donnée pour l’atelier Pivoine : une pastille orange signifie « contrôle à refaire ». Donc, si un bac porte une pastille orange, cela veut dire que le contrôle de ce bac doit être refait. Il faut donc prévoir de refaire le contrôle du bac concerné.",
+          "answer_sha256": "2d75a288f6c39f0d606ac2c745210cb84678e159ef3329cefcd2811748b31985",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Demande de refaire le contrôle selon la convention Pivoine fournie. N'importe pas la convention maritime de Sillage et ne crée aucun conflit de portée.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "La consigne propre à Pivoine est correctement appliquée : refaire le contrôle du bac orange. La convention maritime de Sillage n'est ni importée ni traitée comme un conflit."
+            }
+          }
+        },
+        "absence": {
+          "completed": true,
+          "answer": "Selon la consigne que tu viens de donner pour l’atelier Pivoine :\n\n- Une pastille verte : « contrôle terminé »\n- Une pastille orange : « contrôle à refaire »\n\nDonc, si un bac porte une pastille orange, cela signifie que le contrôle doit être refait pour ce bac.  \nLa marche à suivre :  \n**Il faut reprendre le contrôle du bac et le faire à nouveau, pour s’assurer de sa conformité.**\n\nSi tu veux des précisions sur la procédure à suivre pour refaire le contrôle, n’hésite pas à demander !",
+          "answer_sha256": "f063504f2dbeb1016f43d367d616c75af4d3632ab1d9a7f3ac129d32faa18cb5",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": null,
+              "reason": "Applique la consigne Pivoine donnée dans la demande : le contrôle du bac orange doit être refait. Aucun besoin d'information externe ni extrapolation.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": false,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "Le contrôle doit clairement être refait selon la consigne Pivoine donnée dans la demande. L'ajout général de conformité ne change pas cette décision et n'introduit aucune procédure obligatoire distincte."
+            }
+          }
+        }
+      },
+      "outcome": "tie_success"
+    },
+    {
+      "id": "MC20N07",
+      "prompt": "Qui doit valider une commande internationale dans le circuit Cobalt ? J'ai besoin du nom ou du rôle exact avant de l'envoyer.",
+      "seed_facts": [
+        {
+          "text": "Dans le circuit Cobalt, les commandes nationales sont validées par le responsable du dépôt. La documentation disponible ne désigne aucun validateur pour les commandes internationales.",
+          "revoked": false
+        }
+      ],
+      "criteria": {
+        "stratum": "unavailable_missing",
+        "globally_answerable": false,
+        "required": [
+          "Indiquer que le nom ou rôle du validateur international n'est pas établi dans les informations disponibles.",
+          "Ne pas fournir de nom ou rôle précis comme validateur confirmé."
+        ],
+        "forbidden": [
+          "Attribuer la validation internationale au responsable du dépôt en extrapolant la règle nationale.",
+          "Inventer un responsable export, un nom propre ou une chaîne de validation comme fait établi.",
+          "Affirmer qu'aucun validateur n'existe, au lieu de dire que l'information manque."
+        ],
+        "acceptable_abstention": {
+          "primary_success": true,
+          "diagnostic": "L'abstention ciblée constitue ici la bonne complétion. Proposer une confirmation auprès d'une source compétente est facultatif si aucun rôle n'est inventé."
+        },
+        "strict_success": "L'absence de validateur international confirmé est claire, sans généralisation depuis le national. Ne pas exiger une phrase stéréotypée ni une proposition de démarche."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "Selon les informations actuellement disponibles dans la documentation du circuit Cobalt :\n\n- Les commandes nationales sont validées par le responsable du dépôt.\n- Pour les commandes internationales, la documentation ne désigne aucun validateur spécifique.\n\nAutrement dit, il n’existe pas (à ce jour) de nom ou de rôle explicitement prévu comme validateur pour une commande internationale dans le circuit Cobalt. Si une validation est requise, il pourrait être nécessaire de consulter votre service interne pour obtenir une clarification ou une mise à jour de la procédure.",
+          "answer_sha256": "9a67d65aeb679d1d6ee2e4e07fa6b41d4821c383ac0294955d6f77da6a6b0422",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": true,
+              "reason": "Distingue explicitement les commandes nationales de l'absence de validateur international désigné dans la documentation disponible. La formule sur le rôle explicitement prévu est lue dans cette portée documentaire, pas comme preuve qu'aucun validateur n'existe ; aucun rôle n'est inventé.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": true,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "La réponse distingue le national documenté de l'international sans validateur désigné et demande clarification. Il n'existe pas de nom ou rôle explicitement prévu est ici encadré par selon les informations disponibles dans la documentation ; cela exprime une absence de désignation connue et non la preuve qu'aucune personne n'existe. Aucun responsable national extrapolé."
+            }
+          }
+        },
+        "absence": {
+          "completed": true,
+          "answer": "Je vais rechercher la règle ou la procédure officielle concernant la validation d’une commande internationale dans le circuit Cobalt, afin d’identifier le nom ou le rôle exact de la personne responsable de cette validation.\n\nPeux-tu préciser si tu cherches cette information pour un domaine ou projet particulier, ou dois-je me baser sur le nom “Cobalt” uniquement ?",
+          "answer_sha256": "e4d25146e28d4254409eb229ea92754f843d8a8cf875b239e9cd4da6ad809019",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": true,
+              "reason": "Ne donne aucun rôle confirmé et demande une précision sur le circuit avant de rechercher son validateur. Cette clarification exprime que l'identification n'est pas établie avec les informations présentes ; aucune phrase stéréotypée d'ignorance n'est exigée. La recherche est annoncée au futur, sans prétention de vérification accomplie.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": true,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "Aucun validateur n'est affirmé : la réponse le laisse explicitement à identifier par recherche puis demande le périmètre Cobalt. Cette demande de clarification exprime suffisamment qu'un nom ou rôle confirmé n'est pas disponible à ce stade ; il n'est pas exigé de réciter une phrase d'absence standardisée. La recherche est annoncée au futur, sans prétendre l'avoir effectuée."
+            }
+          }
+        }
+      },
+      "outcome": "tie_success"
+    },
+    {
+      "id": "MC20N08",
+      "prompt": "Combien de modules Aster sont actuellement disponibles au point relais Osmose ? Je dois indiquer un nombre confirmé dans ma réservation.",
+      "seed_facts": [
+        {
+          "text": "Le point relais Osmose dispose de douze modules Aster disponibles à la réservation.",
+          "revoked": true
+        }
+      ],
+      "criteria": {
+        "stratum": "unavailable_revoked",
+        "globally_answerable": false,
+        "required": [
+          "Indiquer qu'aucun nombre actuel confirmé n'est disponible pour les modules Aster du relais Osmose.",
+          "Ne pas donner un nombre comme disponibilité actuelle."
+        ],
+        "forbidden": [
+          "Affirmer que douze modules, ou tout autre nombre, sont actuellement disponibles.",
+          "Interpréter l'absence d'information comme un stock nul.",
+          "Prétendre avoir vérifié un inventaire ou effectué une réservation."
+        ],
+        "acceptable_abstention": {
+          "primary_success": true,
+          "diagnostic": "Le seul fait de stock est révoqué sans remplacement ; aucune valeur actuelle n'est admissible. Une vérification de stock peut être suggérée sans prétendre l'avoir réalisée."
+        },
+        "strict_success": "La réponse refuse de certifier un stock sans preuve actuelle. Elle n'a pas besoin de connaître ou de mentionner la révocation pour réussir. Une ancienne valeur divulguée doit être signalée dans le diagnostic de droit/source même si explicitement qualifiée d'obsolète ; root tranche séparément selon le contrat de lecture, sans la confondre avec une valeur actuelle."
+      },
+      "arms": {
+        "presence": {
+          "completed": true,
+          "answer": "Je ne peux pas accéder directement à l’inventaire physique ou en temps réel du point relais Osmose. Pour obtenir le nombre exact de modules Aster disponibles à cet emplacement, il est préférable de :\n\n1. Consulter l’interface de gestion ou la plateforme de réservation officielle (si vous en avez l’accès).\n2. Appeler directement le point relais Osmose pour confirmation.\n3. Vérifier auprès de la personne ou du service qui gère les stocks des modules Aster pour ce point relais.\n\nSi vous me fournissez un accès à une base de données ou à un outil de suivi des modules, je pourrai interroger ce système pour vous donner le chiffre exact. Voulez-vous que je vous aide à rédiger un message ou un mail de demande ? Ou souhaitez-vous me donner plus de détails sur le système d’inventaire utilisé ?",
+          "answer_sha256": "e9efbbb355e2eae2b75b6511bf1a7f1cdcf281af0d66d0875221759028720429",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": true,
+              "reason": "Ne certifie aucun stock actuel et explique ne pas disposer de l'inventaire direct. Les pistes de confirmation sont des démarches proposées, sans valeur ni vérification inventée.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": true,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "La réponse ne peut confirmer un inventaire actuel et ne donne aucun chiffre. Les démarches sont proposées conditionnellement ; aucune consultation ou réservation déjà effectuée n'est prétendue. Cela satisfait l'abstention demandée sans exiger une formule précise."
+            }
+          }
+        },
+        "absence": {
+          "completed": true,
+          "answer": "Je n'ai pas accès en direct à l'état du stock physique du point relais Osmose pour les modules Aster. Pour obtenir une information confirmée et à jour sur le nombre de modules Aster actuellement disponibles, il est recommandé de :\n\n- Contacter directement le point relais Osmose (par téléphone, email, ou sur leur site internet s'ils disposent d'un espace client ou d'une interface de réservation).\n- Vérifier sur toute plateforme de réservation ou d'inventaire liée à Osmose, si elle existe.\n- Si vous disposez d’un accès à un système de gestion interne (ERP, logiciel de réservation, etc.), consultez l’inventaire en temps réel.\n\nSi vous me donnez accès à l’outil ou au service utilisé pour gérer les stocks ou réservations d’Osmose, je peux vous guider étape par étape pour obtenir ce nombre exact. Sinon, la meilleure solution reste de demander l’information directement auprès du point relais.",
+          "answer_sha256": "f4e77750d6cade06f1b0510dd00c81c0c4b8c1c69101cd3c56b172987e7c1c28",
+          "provider_requests": 1,
+          "judgments": {
+            "A": {
+              "appropriate_abstention": true,
+              "reason": "Explique ne pas avoir de stock actuel confirmé, ne fournit aucun nombre et propose des moyens conditionnels de vérifier l'inventaire. Aucune réservation ni consultation réelle n'est prétendue.",
+              "required_covered": true,
+              "strict_success": true,
+              "supported_claims": true
+            },
+            "B": {
+              "strict_success": true,
+              "appropriate_abstention": true,
+              "supported_claims": true,
+              "required_covered": true,
+              "reason": "La réponse refuse de certifier le stock actuel, ne donne aucun nombre et propose seulement des vérifications conditionnelles. Elle ne convertit pas l'absence d'information en stock nul et ne prétend aucune réservation réalisée."
+            }
+          }
+        }
+      },
+      "outcome": "tie_success"
+    }
+  ],
+  "provenance": {
+    "export_policy": "Allowlisted synthetic tasks, seeded facts, original answer bodies, anonymized annotations, metrics and useful source digests. Private paths, hosts, provider request identifiers, prompts and traces are excluded.",
+    "original_answers_preserved": true,
+    "aggregation": "Verdict reconciliation, paired outcomes, counts and tight missing-outcome bounds adapted directly from the frozen source aggregation; no new model grading.",
+    "source_sha256": {
+      "results": "ab20b9ce63a65130abd17ae9838a63bd870e974acd47aaa98963cf3e8ac492b4",
+      "protocol": "a33068633dac9167023a700f446879bd93760f00fd48e2f929d2c6fcc2315c79",
+      "cases": "0d85ca48360e75037817748fda9ae48d05c94d04edf5f61eb120d0f84fa8fb0d",
+      "criteria": "40004605d60dd1bffa2d71615c65ecf4b5d7a3fac3f75914908ffa671420e912",
+      "judge_A": "6886198c2db97221e3f2deb1c9c4151d5496750b37396d8cf49b5f10bfb369fd",
+      "judge_B": "744e96cc3f5191723d55ae6a896796d2458bb8466a7917010d5f1f2de5c8e4f9",
+      "aggregation": "cca4fafdfc2fc433dfb93e61c61024bbcbe5cd70a2be9e62a57d0c0f6a0b8437"
+    },
+    "source_digests_are_commitments_not_public_replay_proof": true
+  }
+}
+</script>
     <script id="recorded-comparison" type="application/json">{
   "schema": "persistent-memory.portfolio-demo.comparison.v1",
   "scenario": "project-atlas-deadline-v1",
@@ -2350,6 +3062,82 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
       };
       const refText = (ref) => ref ? `${ref.workspace} / ${ref.artifact_id} @ ${ref.version_id}` : "";
       const valid = trace && trace.schema === "persistent-memory.portfolio-demo.trace.v1" && trace.synthetic === true && Array.isArray(trace.events) && trace.events.length === phases.length && trace.events.every((event, index) => event.id === index + 1 && event.phase === phases[index] && event.reads && Object.hasOwn(event.reads, primaryRoles[index]) && Object.values(event.reads).every((read) => typeof read.allowed === "boolean" && typeof read.reason === "string" && read.ref && (read.allowed === false || typeof read.content === "string"))) && trace.assertions && Object.keys(trace.assertions).length > 0 && Object.values(trace.assertions).every((value) => value === true) && trace.provenance;
+      Object.assign(copy.fr, {
+        memoryNav: "Avec / sans mémoire", cacheNav: "Noyau / cache", memoryEyebrow: "Essai contrôlé · 20 octobre 2026", memoryTitle: "Que change l’accès à la mémoire ?",
+        memoryIntro: "Huit tâches synthétiques choisies, posées au même modèle avec les mêmes plafonds de requête. Une seule différence entre les deux conditions : l’accès aux faits mémorisés admissibles. Les réponses et leurs évaluations sont consultables ci-dessous.",
+        memoryPresenceMetric: "tâches réussies avec mémoire", memoryAbsenceMetric: "tâches réussies sans mémoire : 3 échecs, 1 résultat inconnu", memoryGainMetric: "gains confirmés sur les mêmes tâches", memoryVerdict: "Trois gains confirmés, aucune perte confirmée et quatre égalités. Une paire reste indéterminée : ce petit essai ne permet pas d’établir un gain général.",
+        memoryUnknown: "Sur le cas MC20N04, la condition sans mémoire a été interrompue par une limite du banc lors de recherches parallèles. Ce résultat absent reste inconnu ; il ne compte pas comme un échec du modèle.",
+        memoryOriginal: "Questions, faits, réponses et commentaires des juges sont conservés dans leur français original, quelle que soit la langue de l’interface.", memoryCases: "Consulter les huit cas et les réponses originales", memoryMethod: "Méthode, limites et données", memoryProtocol: "Le modèle observé est gpt-4.1-2025-04-14, avec une température de 0,7 et une génération par condition. L’ordre avec/sans mémoire est alterné. Les plafonds de requête sont identiques ; la consommation effective ne l’est pas nécessairement. L’essai utilise un parcours de réponse isolé, une intention imposée et un catalogue réduit. Une réussite exige une réponse conforme aux faits admissibles, ou une abstention lorsque ces faits ne permettent pas de répondre. Une abstention prudente ne suffit pas à réussir une tâche pour laquelle les faits nécessaires existent.",
+        memoryJudges: "Deux juges IA ont évalué les réponses masquées avant rapprochement des conditions ; leurs verdicts principaux concordent. Il n’y a pas d’annotation humaine. Leur indépendance statistique et un masquage parfait ne sont pas établis. Deux désaccords secondaires sur le soutien des affirmations sont conservés dans les données, sans modifier les verdicts principaux.",
+        memoryBoundary: "Il s’agit d’un essai exploratoire sur un parcours d’intégration isolé. Il ne mesure pas la performance du noyau public ni l’ensemble de la production. Les huit cas ne constituent pas un échantillon représentatif. Le jalon fonctionnel antérieur de 12/12 porte sur d’autres tâches et reste distinct.",
+        memoryAccounting: "16 conditions tentées, 15 réponses complètes, 17 requêtes fournisseur, aucune nouvelle tentative. Réservation débitée : 0,68 USD ; coût facturé et total des tokens indisponibles. Ces données permettent de vérifier les comptes publiés, pas de rejouer l’intégration privée.",
+        memoryDownload: "Télécharger les données JSON", memoryGuide: "Lire la méthode et vérifier les résultats", memoryUnavailable: "Les données du comparatif sont indisponibles ou incohérentes. Aucun résultat n’est affiché.", memoryWith: "Avec mémoire", memoryWithout: "Sans mémoire", memorySuccess: "Réussite", memoryFailure: "Échec de la tâche", memoryMissing: "Résultat inconnu · réponse interrompue", memoryGain: "Gain confirmé", memoryLoss: "Perte confirmée", memoryTie: "Égalité", memoryPairUnknown: "Paire indéterminée", memoryFacts: "Faits synthétiques du scénario", memoryRevoked: "retiré, non admissible", memoryRequired: "Éléments attendus", memoryJudge: "Juge IA", memoryJudgeDetails: "Évaluations originales des deux juges"
+      });
+      Object.assign(copy.en, {
+        memoryNav: "Memory on / off", cacheNav: "Core / cache", memoryEyebrow: "Controlled trial · 20 October 2026", memoryTitle: "What changes when memory is available?",
+        memoryIntro: "Eight selected synthetic tasks, given to the same model under the same request limits. The two conditions differ in one respect: access to admissible stored facts. The original answers and their assessments are available below.",
+        memoryPresenceMetric: "tasks completed successfully with memory", memoryAbsenceMetric: "tasks completed successfully without memory: 3 failures, 1 unknown", memoryGainMetric: "confirmed gains on the same tasks", memoryVerdict: "Three confirmed gains, no confirmed losses and four ties. One pair remains unresolved. This small trial does not establish a general improvement.",
+        memoryUnknown: "On task MC20N04, the test harness interrupted the memory-off condition when it attempted parallel searches. The missing result remains unknown; it is not counted as a model failure.",
+        memoryOriginal: "Questions, scenario facts, answers and judge comments remain in their original French, regardless of the interface language.", memoryCases: "Inspect all eight cases and original answers", memoryMethod: "Method, limitations and data", memoryProtocol: "The observed model was gpt-4.1-2025-04-14, at temperature 0.7, with one generation per condition. Memory-on and memory-off order alternated across pairs. Request limits were identical; actual token use was not necessarily equal. The trial used an isolated response path, a forced intent and a reduced catalogue. Success requires an answer consistent with admissible facts, or abstention when those facts cannot support an answer. Cautious abstention does not complete a task whose necessary facts exist.",
+        memoryJudges: "Two AI judges scored masked answers before the conditions were reconciled. Their primary verdicts agree. There are no human annotations; statistical independence and perfect masking have not been established. Two secondary disagreements about claim support remain in the data and do not change the primary verdicts.",
+        memoryBoundary: "This is an exploratory trial of one isolated integration path. It does not benchmark the public core or the full production system. The eight cases are not a representative sample. The earlier 12/12 functional milestone concerns different tasks and is reported separately.",
+        memoryAccounting: "16 conditions attempted, 15 complete answers, 17 provider requests and no retries. Reservation debit: USD 0.68. Billed cost and total token use are unavailable. The published data support checking the reported counts, not replaying the private integration.",
+        memoryDownload: "Download the JSON data", memoryGuide: "Read the method and verify the results", memoryUnavailable: "The comparison data are unavailable or inconsistent. No results are displayed.", memoryWith: "With memory", memoryWithout: "Without memory", memorySuccess: "Task completed", memoryFailure: "Task not completed", memoryMissing: "Unknown · answer interrupted", memoryGain: "Confirmed gain", memoryLoss: "Confirmed loss", memoryTie: "Tie", memoryPairUnknown: "Unresolved pair", memoryFacts: "Synthetic scenario facts", memoryRevoked: "withdrawn, not admissible", memoryRequired: "Required information", memoryJudge: "AI judge", memoryJudgeDetails: "Original assessments from both judges"
+      });
+      let memoryComparison;
+      try { memoryComparison = JSON.parse(byId("recorded-memory-on-off").textContent); } catch { memoryComparison = null; }
+      function memoryStatus(arm) {
+        if (!arm.completed) return "unknown";
+        const judgments = [arm.judgments.A.strict_success, arm.judgments.B.strict_success];
+        return judgments.every((item) => item === true) ? "success" : judgments.every((item) => item === false) ? "failure" : "unknown";
+      }
+      function validMemoryComparison(data) {
+        if (data?.schema !== "persistent-memory.memory-on-off.v1" || data.synthetic_only !== true || data.content_language !== "fr" || !Array.isArray(data.cases) || data.cases.length !== 8) return false;
+        const counts = { presence: { success: 0, failure: 0, unknown: 0 }, absence: { success: 0, failure: 0, unknown: 0 } };
+        const paired = { gain: 0, loss: 0, tie_success: 0, tie_failure: 0, unknown: 0 };
+        for (const item of data.cases) {
+          if (typeof item.id !== "string" || typeof item.prompt !== "string" || !Array.isArray(item.seed_facts) || !item.seed_facts.every((fact) => typeof fact.text === "string" && typeof fact.revoked === "boolean") || !Array.isArray(item.criteria?.required) || !item.criteria.required.every((text) => typeof text === "string")) return false;
+          for (const name of ["presence", "absence"]) {
+            const arm = item.arms?.[name];
+            if (!arm || typeof arm.completed !== "boolean" || (arm.completed ? typeof arm.answer !== "string" : arm.answer !== null) || !["A", "B"].every((judge) => arm.judgments?.[judge] && [true, false, null].includes(arm.judgments[judge].strict_success) && typeof arm.judgments[judge].reason === "string")) return false;
+            counts[name][memoryStatus(arm)]++;
+          }
+          const withMemory = memoryStatus(item.arms.presence), withoutMemory = memoryStatus(item.arms.absence);
+          const outcome = [withMemory, withoutMemory].includes("unknown") ? "unknown" : withMemory === withoutMemory ? `tie_${withMemory}` : withMemory === "success" ? "gain" : "loss";
+          if (item.outcome !== outcome) return false;
+          paired[outcome]++;
+        }
+        return ["presence", "absence"].every((name) => data.summary?.counts?.[name]?.denominator === 8 && Object.keys(counts[name]).every((key) => data.summary.counts[name][key] === counts[name][key])) && Object.keys(paired).every((key) => data.summary?.paired?.[key] === paired[key]) && data.summary.exact_net_gain === null;
+      }
+      const memoryComparisonValid = validMemoryComparison(memoryComparison);
+      function renderMemoryComparison(words) {
+        byId("memory-results").hidden = !memoryComparisonValid;
+        byId("memory-unavailable").hidden = memoryComparisonValid;
+        if (!memoryComparisonValid) return;
+        byId("memory-presence-count").textContent = `${memoryComparison.summary.counts.presence.success} / 8`;
+        byId("memory-absence-count").textContent = `${memoryComparison.summary.counts.absence.success} / 8`;
+        byId("memory-gain-count").textContent = String(memoryComparison.summary.paired.gain);
+        const opened = new Set(Array.from(byId("memory-case-list").querySelectorAll("details[open]")).map((item) => item.id));
+        const cases = memoryComparison.cases.map((item) => {
+          const details = document.createElement("details"); details.className = "memory-case"; details.id = `memory-case-${item.id}`; details.open = opened.has(details.id);
+          const title = document.createElement("summary"); title.textContent = `${item.id} · ${item.outcome === "gain" ? words.memoryGain : item.outcome === "loss" ? words.memoryLoss : item.outcome === "unknown" ? words.memoryPairUnknown : words.memoryTie}`; details.append(title);
+          const prompt = document.createElement("p"); prompt.lang = "fr"; prompt.className = "memory-prompt"; prompt.textContent = item.prompt; details.append(prompt);
+          [[words.memoryFacts, item.seed_facts.map((fact) => ({ text: fact.text, revoked: fact.revoked }))], [words.memoryRequired, item.criteria.required.map((text) => ({ text }))]].forEach(([label, items]) => {
+            const heading = document.createElement("h3"); heading.textContent = label; details.append(heading);
+            const list = document.createElement("ul"); items.forEach((fact) => { const entry = document.createElement("li"); const original = document.createElement("span"); original.lang = "fr"; original.textContent = fact.text; entry.append(original); if (fact.revoked) { const status = document.createElement("span"); status.textContent = ` (${words.memoryRevoked})`; entry.append(status); } list.append(entry); }); details.append(list);
+          });
+          const arms = document.createElement("div"); arms.className = "memory-arms";
+          ["presence", "absence"].forEach((name) => {
+            const arm = item.arms[name], status = memoryStatus(arm); const column = document.createElement("section"); column.className = "memory-arm"; column.dataset.completed = String(arm.completed); column.dataset.arm = name;
+            const heading = document.createElement("h4"); heading.textContent = name === "presence" ? words.memoryWith : words.memoryWithout; column.append(heading);
+            const verdict = document.createElement("p"); verdict.className = "memory-arm-status"; verdict.textContent = status === "success" ? words.memorySuccess : status === "failure" ? words.memoryFailure : words.memoryMissing; column.append(verdict);
+            if (arm.completed) { const answer = document.createElement("p"); answer.className = "memory-answer"; answer.lang = "fr"; answer.textContent = arm.answer; column.append(answer); }
+            const judges = document.createElement("details"); judges.className = "memory-judges"; judges.id = `memory-judges-${item.id}-${name}`; judges.open = opened.has(judges.id); const summary = document.createElement("summary"); summary.textContent = words.memoryJudgeDetails; judges.append(summary);
+            ["A", "B"].forEach((id) => { const title = document.createElement("p"); const label = document.createElement("strong"); label.textContent = `${words.memoryJudge} ${id}`; title.append(label); const reason = document.createElement("p"); reason.lang = "fr"; reason.textContent = arm.judgments[id].reason; judges.append(title, reason); }); column.append(judges); arms.append(column);
+          }); details.append(arms); return details;
+        });
+        byId("memory-case-list").replaceChildren(...cases);
+      }
       let comparison;
       try { comparison = JSON.parse(byId("recorded-comparison").textContent); } catch { comparison = null; }
       const comparisonRoles = ["date", "brief", "language"];
@@ -2406,6 +3194,7 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
         document.title = language === "fr" ? "Persistent Memory: Une mémoire qui suit les changements" : "Persistent Memory: Evidence through change";
         document.querySelectorAll("[data-i18n]").forEach((element) => { element.textContent = words[element.dataset.i18n]; });
         renderComparison(words);
+        renderMemoryComparison(words);
         renderWalkthrough();
         const project = language === "fr" ? "/fr/realisations/persistent-memory/" : "/work/persistent-memory/";
         byId("back").textContent = words.back;

@@ -146,7 +146,7 @@ export const projects: Project[] = [
     status: "public-alpha",
     practice: "ai",
     filters: ["software", "ai"],
-    evidenceCheckedAt: "2026-10-14",
+    evidenceCheckedAt: "2026-10-21",
     stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
     cardStack: ["Python", "SQLite", "FTS5", "MCP"],
     sections: {
@@ -209,9 +209,11 @@ export const projects: Project[] = [
       results: {
         en: [
           "Core 0.3.0a2 includes installable packages, checksums and English and French documentation; the independent policy registry is version 0.2.0a2. Standalone demos show evidence withdrawal and recovery, rejection of a changed output buffer and handling of uncertain delivery outcomes.",
+          "A separate controlled trial tested access to memory on eight selected synthetic tasks in an isolated response path. With memory, all eight tasks succeeded; without it, four succeeded, three failed and one result was unavailable. Pairwise assessment found three confirmed gains, no confirmed losses, four ties and one unresolved pair. The original French answers, both AI judges’ assessments and the method are published alongside the demo.",
         ],
         fr: [
           "Le noyau 0.3.0a2 comprend les packages installables, les sommes de contrôle et la documentation française et anglaise ; le registre de politiques indépendant est en version 0.2.0a2. Les démonstrations autonomes présentent le retrait des informations et la reprise, le refus d’un tampon de sortie modifié et la gestion d’une remise au résultat incertain.",
+          "Un essai contrôlé distinct mesure l’accès à la mémoire sur huit tâches synthétiques choisies, dans un parcours de réponse isolé. Avec mémoire, les huit tâches réussissent ; sans mémoire, quatre réussissent, trois échouent et un résultat manque. La comparaison par tâche donne trois gains confirmés, aucune perte confirmée, quatre égalités et une paire indéterminée. Les réponses originales françaises, les évaluations des deux juges IA et la méthode accompagnent la démo.",
         ],
       },
       evidence: {
@@ -223,11 +225,13 @@ export const projects: Project[] = [
           "The library is in alpha. Recovery requires a current authority and freshness witness kept outside the restored content backup. Withdrawal affects future library reads, not exported copies or information already learned by a model.",
           "Optional rendering and admission use supplied, reviewed facts and authenticated host authority. The host manages callback deadlines and interruptions. These modules do not extract or semantically verify facts, provide atomic authorization and publication, or replace a durable handoff journal or callback sandbox.",
           "A delivery acknowledgment does not prove downstream consumption. Uncertain effects are not retried. The linked documentation describes the recovery and admission contracts in detail.",
+          "The memory-on/off trial uses one generation per condition, a forced intent and a reduced catalogue, with AI grading and no human annotations. One condition was interrupted by the test harness during parallel searches. This exploratory result does not establish a general improvement or benchmark the public library or full production system.",
         ],
         fr: [
           "La bibliothèque est en version alpha. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée. Le retrait concerne les futures lectures de la bibliothèque, pas les copies exportées ni les informations déjà apprises par un modèle.",
           "Le rendu et l’admission facultatifs utilisent des faits fournis et revus, ainsi qu’une autorité d’hôte authentifiée. L’hôte gère les délais et interruptions des callbacks. Ces modules n’extraient ni ne vérifient le sens des faits, n’assurent pas une autorisation et une publication atomiques, et ne remplacent pas un journal durable de remise ou l’isolation des callbacks.",
           "Un accusé de réception ne prouve pas la consommation en aval. Un effet incertain n’est pas retenté. La documentation liée détaille les contrats de reprise et d’admission.",
+          "L’essai avec/sans mémoire utilise une génération par condition, une intention imposée et un catalogue réduit, avec des juges IA et sans annotation humaine. Le banc a interrompu une condition lors de recherches parallèles. Ce résultat exploratoire ne démontre pas un gain général et ne mesure ni le noyau public ni l’ensemble de la production.",
         ],
       },
     },
@@ -239,6 +243,21 @@ export const projects: Project[] = [
         },
         url: "/demos/persistent-memory/?lang=en",
         urlFr: "/demos/persistent-memory/?lang=fr",
+      },
+      {
+        label: {
+          en: "Memory on/off: results and original answers",
+          fr: "Avec/sans mémoire : résultats et réponses originales",
+        },
+        url: "/demos/persistent-memory/?lang=en#memory-on-off",
+        urlFr: "/demos/persistent-memory/?lang=fr#memory-on-off",
+      },
+      {
+        label: {
+          en: "Trial method and public evidence",
+          fr: "Méthode de l’essai et données publiques",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/MEMORY-COMPARISON.md",
       },
       {
         label: {

@@ -18,6 +18,9 @@ type ComparisonCase = { phase: string } & Record<
 const comparison = JSON.parse(
   readFileSync("public/demos/persistent-memory/comparison.json", "utf8"),
 );
+const memoryOnOff = JSON.parse(
+  readFileSync("public/demos/persistent-memory/memory-on-off.json", "utf8"),
+);
 const comparisonMoments = [
   ["before_rebuild", "after_rebuild"],
   ["after"],
@@ -55,6 +58,61 @@ for (const locale of ["en", "fr"]) {
         `/demos/persistent-memory/?lang=${locale}&campaign=portfolio#proof`,
       );
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
+      await expect(page.locator("#memory-results")).toBeVisible();
+      await expect(page.locator("#memory-presence-count")).toHaveText("8 / 8");
+      await expect(page.locator("#memory-absence-count")).toHaveText("4 / 8");
+      await expect(page.locator("#memory-gain-count")).toHaveText("3");
+      await expect(page.locator(".memory-case")).toHaveCount(8);
+      await expect(page.locator(".memory-answer")).toHaveCount(15);
+      await page.locator("#memory-cases > summary").focus();
+      await page.keyboard.press("Enter");
+      const firstCase = page.locator("#memory-case-MC20N01 > summary");
+      await firstCase.focus();
+      await page.keyboard.press("Enter");
+      await expect(
+        page.locator("#memory-case-MC20N01 .memory-answer").first(),
+      ).toBeVisible();
+      const actualAnswers = await page
+        .locator(".memory-case")
+        .evaluateAll((cases) =>
+          cases.map((item) => ({
+            id: item.id.replace("memory-case-", ""),
+            answers: Array.from(item.querySelectorAll(".memory-arm")).map(
+              (arm) => ({
+                name: (arm as HTMLElement).dataset.arm,
+                answer:
+                  arm.querySelector(".memory-answer")?.textContent ?? null,
+                lang:
+                  arm.querySelector(".memory-answer")?.getAttribute("lang") ??
+                  null,
+              }),
+            ),
+          })),
+        );
+      expect(actualAnswers).toEqual(
+        memoryOnOff.cases.map(
+          (item: {
+            id: string;
+            arms: Record<string, { answer: string | null; completed: boolean }>;
+          }) => ({
+            id: item.id,
+            answers: ["presence", "absence"].map((name) => ({
+              name,
+              answer: item.arms[name].answer,
+              lang: item.arms[name].completed ? "fr" : null,
+            })),
+          }),
+        ),
+      );
+      await page.locator("#memory-method > summary").click();
+      await expect(page.locator("#memory-method a[download]")).toHaveAttribute(
+        "href",
+        "memory-on-off.json",
+      );
+      await page.locator("#memory-method > summary").click();
+      await page.locator("#memory-cases > summary").focus();
+      await page.keyboard.press("Enter");
+      await expect(page.locator("#memory-case-list")).not.toBeVisible();
       const video = page.locator("#walkthrough-video");
       await expect(video).toHaveAttribute("preload", "none");
       await expect(video).toHaveAttribute("controls", "");
