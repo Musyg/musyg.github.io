@@ -58,6 +58,35 @@ for (const locale of ["en", "fr"]) {
         `/demos/persistent-memory/?lang=${locale}&campaign=portfolio#proof`,
       );
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
+      const description = page.locator('meta[name="description"]');
+      const expectedDescription = (language: string) =>
+        language === "fr"
+          ? "Explorez les preuves publiées de Persistent Memory : corrections, reprise après interruption, efficacité et transfert d’expérience, puis le parcours interactif Atlas."
+          : "Explore the published Persistent Memory studies on corrections, recovery, efficiency and learned experience, then step through the interactive Atlas example.";
+      await expect(description).toHaveAttribute(
+        "content",
+        expectedDescription(locale),
+      );
+      await expect(page.locator("#published-proof")).toBeVisible();
+      await expect(page.locator("#published-proof tbody > tr")).toHaveCount(4);
+      await expect(page.locator('a[href="#published-proof"]')).toHaveText(
+        locale === "fr" ? "Preuves publiées" : "Published evidence",
+      );
+      for (const [key, label] of [
+        [
+          "proofResult",
+          locale === "fr" ? "Résultat observé" : "Observed result",
+        ],
+        ["proofScope", locale === "fr" ? "Portée" : "Scope"],
+      ]) {
+        const cells = page.locator(
+          `#published-proof td[data-i18n-label="${key}"]`,
+        );
+        await expect(cells).toHaveCount(4);
+        for (let index = 0; index < 4; index++) {
+          await expect(cells.nth(index)).toHaveAttribute("data-label", label);
+        }
+      }
       await expect(page.locator("#memory-results")).toBeVisible();
       await expect(page.locator("#memory-presence-count")).toHaveText("8 / 8");
       await expect(page.locator("#memory-absence-count")).toHaveText("4 / 8");
@@ -234,6 +263,14 @@ for (const locale of ["en", "fr"]) {
       await expect(video.locator("track[default]")).toHaveAttribute(
         "srclang",
         locale === "fr" ? "en" : "fr",
+      );
+      await expect(description).toHaveAttribute(
+        "content",
+        expectedDescription(locale === "fr" ? "en" : "fr"),
+      );
+      await expect(page.locator("#proof-experience-study")).toHaveAttribute(
+        "href",
+        `https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README${locale === "fr" ? "" : ".fr"}.md`,
       );
       await expect(page.locator("#status")).toHaveAttribute(
         "data-phase",
@@ -428,6 +465,14 @@ for (const locale of ["en", "fr"]) {
       await page.locator("#language").click();
       await page.goBack();
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
+      await expect(description).toHaveAttribute(
+        "content",
+        expectedDescription(locale),
+      );
+      await expect(page.locator("#proof-experience-study")).toHaveAttribute(
+        "href",
+        `https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README${locale === "fr" ? ".fr" : ""}.md`,
+      );
       await expect(page.locator("#status")).toHaveAttribute(
         "data-phase",
         "revoke",

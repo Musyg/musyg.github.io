@@ -31,6 +31,80 @@ const comparisonMoments = [
 const primaryRoles = ["date_v1", "brief_v1", "brief_v2", "brief_v2", "control"];
 
 describe("Persistent Memory recorded demonstration", () => {
+  it.each(["fr", "en"])(
+    "keeps the four published studies distinct from historical evidence in %s",
+    (locale) => {
+      const dom = new JSDOM(html(), {
+        runScripts: "dangerously",
+        url: `https://demo.invalid/?lang=${locale}`,
+      });
+      try {
+        const document = dom.window.document;
+        const proof = document.getElementById("published-proof")!;
+        const content = (key: string) =>
+          proof.querySelector(`[data-i18n="${key}"]`)!.textContent!;
+        expect(proof.querySelectorAll("tbody > tr")).toHaveLength(4);
+        expect(content("proofIntro")).toMatch(
+          locale === "fr"
+            ? /synthétiques.*distinctes.*huit tâches/
+            : /synthetic.*separate.*eight-task/,
+        );
+        expect(content("proofLifecycleResult")).toMatch(/100.*751.*389/);
+        expect(content("proofLifecycleScope")).toMatch(
+          locale === "fr"
+            ? /SQLite.*Aucun avantage/
+            : /SQLite.*not establish an advantage/,
+        );
+        expect(content("proofFailuresResult")).toMatch(
+          locale === "fr" ? /huit.*0,227.*0,383/ : /eight.*0\.227.*0\.383/,
+        );
+        expect(content("proofFailuresScope")).toMatch(
+          locale === "fr"
+            ? /ni un SLO ni un test de coupure électrique/
+            : /neither an availability SLO nor a power-loss test/,
+        );
+        expect(content("proofEfficiencyResult")).toMatch(
+          locale === "fr"
+            ? /1 000.*50.*28,01.*27,68/
+            : /1,000.*50.*28\.01.*27\.68/,
+        );
+        expect(content("proofEfficiencyScope")).toMatch(
+          locale === "fr"
+            ? /Une observation avant\/après.*cache non contrôlé/
+            : /One before-and-after.*uncontrolled cache/,
+        );
+        expect(content("proofExperienceResult")).toMatch(
+          /Luna.*22\/24.*13\/24.*7\/24.*Sol.*24\/24.*12\/24/,
+        );
+        expect(content("proofExperienceScope")).toMatch(/48.*288.*192/);
+        expect(content("proofExperienceScope")).toMatch(
+          locale === "fr"
+            ? /Deux échecs.*généralisation.*ne sont pas démontrées/
+            : /Both failures.*Generalisation.*not established/,
+        );
+        expect(content("proofBoundary")).toMatch(
+          locale === "fr"
+            ? /ne représentent pas 288 tâches indépendantes/
+            : /not 288 independent tasks/,
+        );
+        const studyPaths = {
+          lifecycle: "lifecycle-20261022",
+          failures: "efficiency-20261023/core-optimization-20261023",
+          efficiency: "efficiency-20261023/core-optimization-20261023",
+          experience: "action-20261023/experience",
+        };
+        for (const [id, path] of Object.entries(studyPaths)) {
+          expect(document.getElementById(`proof-${id}-study`)).toHaveAttribute(
+            "href",
+            `https://github.com/Musyg/persistent-memory/blob/main/benchmarks/${path}/README${locale === "fr" ? ".fr" : ""}.md`,
+          );
+        }
+      } finally {
+        dom.window.close();
+      }
+    },
+  );
+
   it("embeds the public memory-on/off evidence without changing original answers", () => {
     const data = memoryOnOff();
     expect(JSON.parse(embeddedMemoryOnOff(html()))).toEqual(data);

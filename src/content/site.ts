@@ -146,7 +146,7 @@ export const projects: Project[] = [
     status: "public-alpha",
     practice: "ai",
     filters: ["software", "ai"],
-    evidenceCheckedAt: "2026-10-21",
+    evidenceCheckedAt: "2026-10-24",
     stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
     cardStack: ["Python", "SQLite", "FTS5", "MCP"],
     sections: {
@@ -200,20 +200,26 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "Tests cover concurrent access, evidence withdrawal and recovery using synthetic data. For core 0.3.0a2, seven focused methods passed on the CI wheel and on a wheel rebuilt from its source archive, including source-reference budgets and the fixed-workspace/token HTTP boundary. CI passed on Python 3.11–3.14.",
+          "Core 0.3.0a3 and registry 0.2.0a2 passed 208 distinct test methods on each of two Linux hosts. Testing the wheel and a wheel rebuilt from the source archive produced 416 test executions per host. The published core package was then downloaded, installed in a fresh environment and checked with its supplied demo. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
         ],
         fr: [
-          "Les tests couvrent les accès concurrents, le retrait des informations et la reprise sur des données synthétiques. Pour le noyau 0.3.0a2, sept méthodes ciblées ont réussi sur le wheel de la CI et sur un wheel reconstruit depuis son archive source, notamment pour le budget des références et la séparation HTTP par espace et token fixes. La CI a réussi sur Python 3.11–3.14.",
+          "Le noyau 0.3.0a3 et le registre 0.2.0a2 ont passé 208 méthodes de test distinctes sur chacun des deux hôtes Linux. Les tests du wheel puis d’un wheel reconstruit depuis l’archive source représentent 416 exécutions par hôte. Le paquet public du noyau a ensuite été téléchargé, installé dans un environnement neuf et vérifié avec sa démo. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
         ],
       },
       results: {
         en: [
-          "Core 0.3.0a2 includes installable packages, checksums and English and French documentation; the independent policy registry is version 0.2.0a2. Standalone demos show evidence withdrawal and recovery, rejection of a changed output buffer and handling of uncertain delivery outcomes.",
-          "A separate controlled trial tested access to memory on eight selected synthetic tasks in an isolated response path. With memory, all eight tasks succeeded; without it, four succeeded, three failed and one result was unavailable. Pairwise assessment found three confirmed gains, no confirmed losses, four ties and one unresolved pair. The original French answers, both AI judges’ assessments and the method are published alongside the demo.",
+          "Core 0.3.0a3 ships with installation files, checksums and French and English documentation; the separate policy registry remains at 0.2.0a2. The code, synthetic data, protocols and offline calculations are public.",
+          "Across 100 fixed lifecycle scenarios, all 751 valid reads were preserved and all 389 forbidden reads were blocked, matching a SQLite reference with retained current authority. After the core change, four SIGKILL interruption scenarios passed on each Linux host, with observed recovery times of 0.227 to 0.383 seconds.",
+          "At 1,000 sources and 50 searches, a targeted core optimization reduced instrumented workload time by 28.01% on one host and 27.68% on the other, with the same checked outcomes and stored file sizes. Each figure comes from one before-and-after observation per host.",
+          "In a separate study, a model completed task A, received feedback on its actual output and extracted a lesson before attempting a different task B in a fresh session.",
+          "Across 48 episodes and 288 model calls, Luna succeeded in 22 of 24 B tasks with a lesson, 13 with the complete trace and feedback, and seven without experience. Sol scored 24 of 24 with either a lesson or the complete trace, and 12 without experience. All 192 B outcomes were independently rechecked from the actual files produced; the two failed lesson-assisted tasks remain in the results.",
         ],
         fr: [
-          "Le noyau 0.3.0a2 comprend les packages installables, les sommes de contrôle et la documentation française et anglaise ; le registre de politiques indépendant est en version 0.2.0a2. Les démonstrations autonomes présentent le retrait des informations et la reprise, le refus d’un tampon de sortie modifié et la gestion d’une remise au résultat incertain.",
-          "Un essai contrôlé distinct mesure l’accès à la mémoire sur huit tâches synthétiques choisies, dans un parcours de réponse isolé. Avec mémoire, les huit tâches réussissent ; sans mémoire, quatre réussissent, trois échouent et un résultat manque. La comparaison par tâche donne trois gains confirmés, aucune perte confirmée, quatre égalités et une paire indéterminée. Les réponses originales françaises, les évaluations des deux juges IA et la méthode accompagnent la démo.",
+          "Le noyau 0.3.0a3 est distribué avec ses fichiers d’installation, sommes de contrôle et guides français et anglais ; le registre de politiques indépendant reste en version 0.2.0a2. Le code, les données synthétiques, les protocoles et les calculs hors ligne sont publics.",
+          "Sur 100 scénarios de cycle de vie définis à l’avance, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées, à égalité avec une référence SQLite conservant une autorité actuelle. Après la modification du noyau, quatre scénarios d’interruption par SIGKILL passent sur chacun des deux hôtes Linux, avec une reprise observée entre 0,227 et 0,383 seconde.",
+          "À 1 000 sources et 50 recherches, une optimisation ciblée du noyau réduit la durée de la charge instrumentée de 28,01 % sur un hôte et de 27,68 % sur l’autre, avec les mêmes résultats vérifiés et les mêmes tailles de fichiers stockés. Chaque chiffre provient d’une seule observation avant et après par hôte.",
+          "Dans une étude distincte, un modèle exécute une tâche A, reçoit un retour sur le fichier réellement produit et en extrait une leçon avant de tenter une tâche B différente dans une nouvelle session.",
+          "Sur 48 épisodes et 288 appels aux modèles, Luna réussit 22 tâches B sur 24 avec la leçon, 13 avec la trace complète et le retour, et sept sans expérience. Sol réussit 24 tâches sur 24 avec la leçon comme avec la trace complète, et 12 sans expérience. Les 192 résultats B ont été revérifiés indépendamment à partir des fichiers produits ; les deux échecs avec leçon restent dans les résultats.",
         ],
       },
       evidence: {
@@ -225,13 +231,15 @@ export const projects: Project[] = [
           "The library is in alpha. Recovery requires a current authority and freshness witness kept outside the restored content backup. Withdrawal affects future library reads, not exported copies or information already learned by a model.",
           "Optional rendering and admission use supplied, reviewed facts and authenticated host authority. The host manages callback deadlines and interruptions. These modules do not extract or semantically verify facts, provide atomic authorization and publication, or replace a durable handoff journal or callback sandbox.",
           "A delivery acknowledgment does not prove downstream consumption. Uncertain effects are not retried. The linked documentation describes the recovery and admission contracts in detail.",
-          "The memory-on/off trial uses one generation per condition, a forced intent and a reduced catalogue, with AI grading and no human annotations. One condition was interrupted by the test harness during parallel searches. This exploratory result does not establish a general improvement or benchmark the public library or full production system.",
+          "These are bounded synthetic studies: six task families and 12 worlds for learned experience, with no generalization or end-to-end cost claim. The 1,000-source timing study did not control cache state or measure production latency. The eight process interruptions do not establish an availability SLO or resilience to power loss.",
+          "An earlier exploratory memory-on/off trial on eight tasks uses one generation per condition, a forced intent and a reduced catalogue, with AI grading and no human annotations. One condition was interrupted by the test harness during parallel searches. This exploratory result does not establish a general improvement or benchmark the public library or full production system.",
         ],
         fr: [
           "La bibliothèque est en version alpha. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée. Le retrait concerne les futures lectures de la bibliothèque, pas les copies exportées ni les informations déjà apprises par un modèle.",
           "Le rendu et l’admission facultatifs utilisent des faits fournis et revus, ainsi qu’une autorité d’hôte authentifiée. L’hôte gère les délais et interruptions des callbacks. Ces modules n’extraient ni ne vérifient le sens des faits, n’assurent pas une autorisation et une publication atomiques, et ne remplacent pas un journal durable de remise ou l’isolation des callbacks.",
           "Un accusé de réception ne prouve pas la consommation en aval. Un effet incertain n’est pas retenté. La documentation liée détaille les contrats de reprise et d’admission.",
-          "L’essai avec/sans mémoire utilise une génération par condition, une intention imposée et un catalogue réduit, avec des juges IA et sans annotation humaine. Le banc a interrompu une condition lors de recherches parallèles. Ce résultat exploratoire ne démontre pas un gain général et ne mesure ni le noyau public ni l’ensemble de la production.",
+          "Ces études synthétiques ont un périmètre limité : six familles de tâches et douze mondes pour l’expérience apprise, sans démonstration de généralisation ni de réduction du coût complet. L’étude à 1 000 sources ne contrôle pas le cache et ne mesure pas la latence en production. Les huit interruptions de processus n’établissent ni SLO de disponibilité ni résistance aux coupures électriques.",
+          "Un premier essai exploratoire avec/sans mémoire sur huit tâches utilise une génération par condition, une intention imposée et un catalogue réduit, avec des juges IA et sans annotation humaine. Le banc a interrompu une condition lors de recherches parallèles. Ce résultat exploratoire ne démontre pas un gain général et ne mesure ni le noyau public ni l’ensemble de la production.",
         ],
       },
     },
@@ -246,18 +254,38 @@ export const projects: Project[] = [
       },
       {
         label: {
-          en: "Memory on/off: results and original answers",
-          fr: "Avec/sans mémoire : résultats et réponses originales",
+          en: "Learning from a previous task: study and data",
+          fr: "Apprendre d’une tâche précédente : étude et données",
         },
-        url: "/demos/persistent-memory/?lang=en#memory-on-off",
-        urlFr: "/demos/persistent-memory/?lang=fr#memory-on-off",
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README.fr.md",
       },
       {
         label: {
-          en: "Trial method and public evidence",
-          fr: "Méthode de l’essai et données publiques",
+          en: "Corrections and withdrawals: comparative study",
+          fr: "Corrections et retraits : étude comparative",
         },
-        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/MEMORY-COMPARISON.md",
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/lifecycle-20261022/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/lifecycle-20261022/README.fr.md",
+      },
+      {
+        label: {
+          en: "Core performance and crash recovery: measurements",
+          fr: "Performance du noyau et reprise après panne : mesures",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/README.fr.md",
+      },
+      {
+        label: {
+          en: "Earlier eight-task trial: results and original answers",
+          fr: "Premier essai sur huit tâches : résultats et réponses originales",
+        },
+        url: "/demos/persistent-memory/?lang=en#memory-on-off",
+        urlFr: "/demos/persistent-memory/?lang=fr#memory-on-off",
       },
       {
         label: {
@@ -266,37 +294,39 @@ export const projects: Project[] = [
         },
         url: "https://github.com/Musyg/persistent-memory",
         urlFr:
-          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/README.fr.md",
+          "https://github.com/Musyg/persistent-memory/blob/main/README.fr.md",
       },
       {
         label: {
           en: "Core alpha and installation files",
           fr: "Noyau alpha et fichiers d’installation",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a2",
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a3",
       },
       {
         label: {
-          en: "Python 3.11–3.14 CI",
-          fr: "CI Python 3.11–3.14",
+          en: "Linux package qualification",
+          fr: "Qualification des paquets sous Linux",
         },
-        url: "https://github.com/Musyg/persistent-memory/actions/runs/38587598469",
+        url: "https://github.com/Musyg/persistent-memory/releases/download/v0.3.0a3/QUALIFICATION.json",
       },
       {
         label: {
           en: "Recovery contract",
           fr: "Contrat de reprise",
         },
-        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/docs/RECOVERY.md",
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/RECOVERY.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/RECOVERY.fr.md",
       },
       {
         label: {
           en: "Structured output and admission",
           fr: "Rendu structuré et admission",
         },
-        url: "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/docs/ADMISSION.md",
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/ADMISSION.md",
         urlFr:
-          "https://github.com/Musyg/persistent-memory/blob/v0.3.0a2/docs/ADMISSION.fr.md",
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/ADMISSION.fr.md",
       },
     ],
   },
