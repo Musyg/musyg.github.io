@@ -32,7 +32,7 @@ const primaryRoles = ["date_v1", "brief_v1", "brief_v2", "brief_v2", "control"];
 
 describe("Persistent Memory recorded demonstration", () => {
   it.each(["fr", "en"])(
-    "keeps the four published studies distinct from historical evidence in %s",
+    "keeps the four evidence priorities distinct from historical evidence in %s",
     (locale) => {
       const dom = new JSDOM(html(), {
         runScripts: "dangerously",
@@ -46,13 +46,13 @@ describe("Persistent Memory recorded demonstration", () => {
         expect(proof.querySelectorAll("tbody > tr")).toHaveLength(4);
         expect(content("proofIntro")).toMatch(
           locale === "fr"
-            ? /synthétiques.*distinctes.*huit tâches/
-            : /synthetic.*separate.*eight-task/,
+            ? /synthétiques.*agents réels.*distincts.*huit tâches/
+            : /synthetic.*real agents.*separate.*eight-task/,
         );
         expect(content("proofLifecycleResult")).toMatch(/100.*751.*389/);
         expect(content("proofLifecycleScope")).toMatch(
           locale === "fr"
-            ? /SQLite.*Aucun avantage/
+            ? /SQLite.*n’établit pas d’avantage/
             : /SQLite.*not establish an advantage/,
         );
         expect(content("proofFailuresResult")).toMatch(
@@ -87,6 +87,33 @@ describe("Persistent Memory recorded demonstration", () => {
             ? /ne représentent pas 288 tâches indépendantes/
             : /not 288 independent tasks/,
         );
+        expect(content("proofEfficiencyCycle")).toMatch(
+          locale === "fr" ? /2,35.*29,13/ : /2\.35.*29\.13/,
+        );
+        expect(content("proofEfficiencyCycleScope")).toMatch(
+          locale === "fr"
+            ? /Trois.*1 000.*médianes descriptives/
+            : /Three.*1,000.*descriptive medians/,
+        );
+        expect(content("proofExperienceActual")).toMatch(
+          locale === "fr"
+            ? /avec et sans.*7 tests sur 7.*treize.*une seule mission/
+            : /with and without.*7 of 7.*thirteen.*single task/,
+        );
+        expect(content("proofExperienceActualScope")).toMatch(
+          locale === "fr"
+            ? /égalité.*sans nouveau gain.*sans comparaison causale.*mêmes treize.*n’a pas été déployée/
+            : /tied.*no additional measured gain.*without a causal comparison.*same thirteen.*not deployed/,
+        );
+        for (const [id, path] of [
+          ["efficiency-cycle", "benchmarks/efficiency-20261025"],
+          ["experience-actual", "docs/evidence/experience-transfer-20261026"],
+        ]) {
+          expect(document.getElementById(`proof-${id}-study`)).toHaveAttribute(
+            "href",
+            `https://github.com/Musyg/persistent-memory/blob/main/${path}/README${locale === "fr" ? ".fr" : ""}.md`,
+          );
+        }
         const studyPaths = {
           lifecycle: "lifecycle-20261022",
           failures: "efficiency-20261023/core-optimization-20261023",

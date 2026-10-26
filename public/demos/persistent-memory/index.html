@@ -113,8 +113,8 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
         <table class="comparison-table"><caption data-i18n="proofCaption"></caption><thead><tr><th scope="col" data-i18n="proofQuestion"></th><th scope="col" data-i18n="proofResult"></th><th scope="col" data-i18n="proofScope"></th></tr></thead><tbody>
           <tr><th scope="row" data-i18n="proofLifecycle"></th><td data-i18n-label="proofResult"><p data-i18n="proofLifecycleResult"></p></td><td data-i18n-label="proofScope"><p data-i18n="proofLifecycleScope"></p><a id="proof-lifecycle-study" href="https://github.com/Musyg/persistent-memory/blob/main/benchmarks/lifecycle-20261022/README.fr.md" data-i18n="proofLifecycleLink"></a></td></tr>
           <tr><th scope="row" data-i18n="proofFailures"></th><td data-i18n-label="proofResult"><p data-i18n="proofFailuresResult"></p></td><td data-i18n-label="proofScope"><p data-i18n="proofFailuresScope"></p><a id="proof-failures-study" href="https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/README.fr.md" data-i18n="proofFailuresLink"></a></td></tr>
-          <tr><th scope="row" data-i18n="proofEfficiency"></th><td data-i18n-label="proofResult"><p data-i18n="proofEfficiencyResult"></p></td><td data-i18n-label="proofScope"><p data-i18n="proofEfficiencyScope"></p><a id="proof-efficiency-study" href="https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/README.fr.md" data-i18n="proofEfficiencyLink"></a></td></tr>
-          <tr><th scope="row" data-i18n="proofExperience"></th><td data-i18n-label="proofResult"><p data-i18n="proofExperienceResult"></p></td><td data-i18n-label="proofScope"><p data-i18n="proofExperienceScope"></p><a id="proof-experience-study" href="https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README.fr.md" data-i18n="proofExperienceLink"></a></td></tr>
+          <tr><th scope="row" data-i18n="proofEfficiency"></th><td data-i18n-label="proofResult"><p data-i18n="proofEfficiencyResult"></p><p data-i18n="proofEfficiencyCycle"></p></td><td data-i18n-label="proofScope"><p data-i18n="proofEfficiencyScope"></p><a id="proof-efficiency-study" href="https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/README.fr.md" data-i18n="proofEfficiencyLink"></a><p data-i18n="proofEfficiencyCycleScope"></p><a id="proof-efficiency-cycle-study" href="https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261025/README.fr.md" data-i18n="proofEfficiencyCycleLink"></a></td></tr>
+          <tr><th scope="row" data-i18n="proofExperience"></th><td data-i18n-label="proofResult"><p data-i18n="proofExperienceResult"></p><p data-i18n="proofExperienceActual"></p></td><td data-i18n-label="proofScope"><p data-i18n="proofExperienceScope"></p><a id="proof-experience-study" href="https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README.fr.md" data-i18n="proofExperienceLink"></a><p data-i18n="proofExperienceActualScope"></p><a id="proof-experience-actual-study" href="https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/experience-transfer-20261026/README.fr.md" data-i18n="proofExperienceActualLink"></a></td></tr>
         </tbody></table>
         <p class="comparison-contract" data-i18n="proofBoundary"></p>
       </section>
@@ -3046,10 +3046,10 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
       Object.assign(copy.fr, {
   "metaDescription": "Explorez les preuves publiées de Persistent Memory : corrections, reprise après interruption, efficacité et transfert d’expérience, puis le parcours interactif Atlas.",
   "proofNav": "Preuves publiées",
-  "proofEyebrow": "Études publiées · 23 octobre 2026",
+  "proofEyebrow": "Études publiées · 26 octobre 2026",
   "proofTitle": "Quatre questions, des résultats vérifiables.",
-  "proofIntro": "Les études ci-dessous évaluent le noyau public et un parcours d’apprentissage sur des données synthétiques. Elles sont distinctes de la démonstration Atlas et du premier essai de huit tâches, conservés plus bas.",
-  "proofCaption": "Résultats et limites des quatre études",
+  "proofIntro": "Les études ci-dessous évaluent le noyau public et l’apprentissage sur des données synthétiques. Des observations complémentaires vérifient le raccord de la mémoire à des agents réels. Ces résultats sont distincts de la démonstration Atlas et du premier essai de huit tâches, conservés plus bas.",
+  "proofCaption": "Quatre questions, avec les études et observations associées",
   "proofQuestion": "Question",
   "proofResult": "Résultat observé",
   "proofScope": "Portée",
@@ -3065,19 +3065,25 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
   "proofEfficiencyResult": "À 1 000 sources et 50 recherches, la durée instrumentée diminue de 28,01 % sur Phoenix5 et de 27,68 % sur Phoenix3. Résultats attendus et tailles de stockage identiques.",
   "proofEfficiencyScope": "Une observation avant/après par hôte, cache non contrôlé. Le gain décrit cette charge ; le coût complet et le passage à plus grande échelle restent inconnus.",
   "proofEfficiencyLink": "Lire les mesures d’efficacité",
+  "proofEfficiencyCycle": "Une étude complémentaire sépare le chargement initial d’un cycle d’usage : réduction médiane de 2,35 % pour le cycle et de 29,13 % pour le chargement.",
+  "proofEfficiencyCycleScope": "Trois comparaisons appariées sur 1 000 sources, avec dix ajouts, des recherches, des lectures et un retrait. Ces médianes descriptives ne s’additionnent pas aux gains précédents.",
+  "proofEfficiencyCycleLink": "Lire les mesures du cycle après chargement",
   "proofExperience": "Une mission peut-elle aider la suivante ?",
   "proofExperienceResult": "Luna : 22/24 réussites avec la leçon, 13/24 avec la trace complète et son feedback, 7/24 sans expérience. Sol : 24/24 avec la leçon ou la trace, 12/24 sans expérience.",
   "proofExperienceScope": "48 épisodes, 288 appels réels et 192 résultats B vérifiés, sur six familles et douze mondes synthétiques. Deux échecs avec leçon sont conservés. La généralisation, l’économie totale et l’activation autonome ne sont pas démontrées.",
   "proofExperienceLink": "Lire l’étude de transfert d’expérience",
+  "proofExperienceActual": "Avec un agent réel, les sessions avec et sans expérience réussissent toutes deux 7 tests sur 7. Un second agent récupère à son tour l’expérience et réussit les sept méthodes du banc, couvrant treize scénarios dans une seule mission.",
+  "proofExperienceActualScope": "La paire à égalité vérifie la transmission automatique, sans nouveau gain mesuré. Le second essai vérifie le raccord à un autre agent, sans comparaison causale. Il réutilise les mêmes treize scénarios ; la proposition générée n’a pas été déployée.",
+  "proofExperienceActualLink": "Lire les observations avec les agents réels",
   "proofBoundary": "Chaque lien donne accès au protocole, aux observations et à leurs limites. Les 288 appels ne représentent pas 288 tâches indépendantes. Les exécutions historiques présentées ci-dessous conservent leur version et leurs données d’origine."
 });
       Object.assign(copy.en, {
   "metaDescription": "Explore the published Persistent Memory studies on corrections, recovery, efficiency and learned experience, then step through the interactive Atlas example.",
   "proofNav": "Published evidence",
-  "proofEyebrow": "Published studies · 23 October 2026",
+  "proofEyebrow": "Published studies · 26 October 2026",
   "proofTitle": "Four questions, verifiable results.",
-  "proofIntro": "The studies below assess the public core and a learning workflow using synthetic data. They are separate from the Atlas demonstration and the initial eight-task trial, both preserved below.",
-  "proofCaption": "Results and limits of the four studies",
+  "proofIntro": "The studies below assess the public core and learning from synthetic tasks. Additional observations check memory integration with real agents. These results are separate from the Atlas demonstration and the initial eight-task trial, both preserved below.",
+  "proofCaption": "Four questions, with the relevant studies and observations",
   "proofQuestion": "Question",
   "proofResult": "Observed result",
   "proofScope": "Scope",
@@ -3093,10 +3099,16 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
   "proofEfficiencyResult": "With 1,000 sources and 50 searches, instrumented runtime falls by 28.01% on Phoenix5 and 27.68% on Phoenix3. Expected results and storage sizes are unchanged.",
   "proofEfficiencyScope": "One before-and-after observation per host, with uncontrolled cache state. The gain describes this workload; full cost and larger-scale performance remain unknown.",
   "proofEfficiencyLink": "Read the efficiency measurements",
+  "proofEfficiencyCycle": "A follow-up study separates the initial load from subsequent use: median runtime reductions of 2.35% for the memory cycle and 29.13% for the initial load.",
+  "proofEfficiencyCycleScope": "Three paired comparisons using 1,000 sources, with ten additions, searches, reads and a withdrawal. These descriptive medians are not added to the earlier gains.",
+  "proofEfficiencyCycleLink": "Read the cycle measurements after loading",
   "proofExperience": "Can one mission help with the next?",
   "proofExperienceResult": "Luna: 22/24 successes with the lesson, 13/24 with the complete trace and its feedback, 7/24 without experience. Sol: 24/24 with either the lesson or the trace, 12/24 without experience.",
   "proofExperienceScope": "48 episodes, 288 actual model calls and 192 verified B outcomes across six families and twelve synthetic worlds. Both failures with a lesson are retained. Generalisation, total savings and autonomous activation are not established.",
   "proofExperienceLink": "Read the experience-transfer study",
+  "proofExperienceActual": "With a real agent, sessions with and without experience both pass 7 of 7 tests. A second agent then retrieves the experience and passes all seven test methods, covering thirteen scenarios within a single task.",
+  "proofExperienceActualScope": "The tied pair verifies automatic delivery, with no additional measured gain. The second observation checks integration with another agent, without a causal comparison. It reuses the same thirteen scenarios; the generated proposal was not deployed.",
+  "proofExperienceActualLink": "Read the observations with real agents",
   "proofBoundary": "Each study links to its protocol, observations and limitations. The 288 calls are not 288 independent tasks. The historical runs shown below retain their original version and data."
 });
       // Captions describe the observed operation; evidence values always come from the recording.
@@ -3264,7 +3276,9 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
         byId("proof-lifecycle-study").href = "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/lifecycle-20261022/" + studyLanguage;
         byId("proof-failures-study").href = "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/" + studyLanguage;
         byId("proof-efficiency-study").href = "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/" + studyLanguage;
+        byId("proof-efficiency-cycle-study").href = "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261025/" + studyLanguage;
         byId("proof-experience-study").href = "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/" + studyLanguage;
+        byId("proof-experience-actual-study").href = "https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/experience-transfer-20261026/" + studyLanguage;
         document.title = language === "fr" ? "Persistent Memory: Une mémoire qui suit les changements" : "Persistent Memory: Evidence through change";
         document.querySelectorAll("[data-i18n]").forEach((element) => { element.textContent = words[element.dataset.i18n]; });
         renderComparison(words);

@@ -87,6 +87,25 @@ for (const locale of ["en", "fr"]) {
           await expect(cells.nth(index)).toHaveAttribute("data-label", label);
         }
       }
+      for (const [id, path] of [
+        ["efficiency-cycle", "benchmarks/efficiency-20261025"],
+        ["experience-actual", "docs/evidence/experience-transfer-20261026"],
+      ]) {
+        await expect(page.locator(`#proof-${id}-study`)).toHaveAttribute(
+          "href",
+          `https://github.com/Musyg/persistent-memory/blob/main/${path}/README${locale === "fr" ? ".fr" : ""}.md`,
+        );
+      }
+      await expect(
+        page.locator('[data-i18n="proofEfficiencyCycle"]'),
+      ).toContainText(locale === "fr" ? "2,35 %" : "2.35%");
+      await expect(
+        page.locator('[data-i18n="proofExperienceActualScope"]'),
+      ).toContainText(
+        locale === "fr"
+          ? "sans comparaison causale"
+          : "without a causal comparison",
+      );
       await expect(page.locator("#memory-results")).toBeVisible();
       await expect(page.locator("#memory-presence-count")).toHaveText("8 / 8");
       await expect(page.locator("#memory-absence-count")).toHaveText("4 / 8");
