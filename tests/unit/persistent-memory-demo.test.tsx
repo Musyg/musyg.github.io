@@ -52,16 +52,16 @@ describe("Persistent Memory recorded demonstration", () => {
         expect(content("proofLifecycleResult")).toMatch(/100.*751.*389/);
         expect(content("proofLifecycleScope")).toMatch(
           locale === "fr"
-            ? /SQLite.*n’établit pas d’avantage/
-            : /SQLite.*not establish an advantage/,
+            ? /SQLite.*même résultat.*tous deux.*autorité actuelle/
+            : /SQLite.*both retain.*current authority.*tie/,
         );
         expect(content("proofFailuresResult")).toMatch(
           locale === "fr" ? /huit.*0,227.*0,383/ : /eight.*0\.227.*0\.383/,
         );
         expect(content("proofFailuresScope")).toMatch(
           locale === "fr"
-            ? /ni un SLO ni un test de coupure électrique/
-            : /neither an availability SLO nor a power-loss test/,
+            ? /interruptions de processus.*disponibilité.*coupure électrique.*évaluations distinctes/
+            : /process interruption.*availability targets.*power-loss.*outside its scope/,
         );
         expect(content("proofEfficiencyResult")).toMatch(
           locale === "fr"
@@ -70,7 +70,7 @@ describe("Persistent Memory recorded demonstration", () => {
         );
         expect(content("proofEfficiencyScope")).toMatch(
           locale === "fr"
-            ? /Une observation avant\/après.*cache non contrôlé/
+            ? /Une observation avant et après.*cache non contrôlé/
             : /One before-and-after.*uncontrolled cache/,
         );
         expect(content("proofExperienceResult")).toMatch(
@@ -79,8 +79,8 @@ describe("Persistent Memory recorded demonstration", () => {
         expect(content("proofExperienceScope")).toMatch(/48.*288.*192/);
         expect(content("proofExperienceScope")).toMatch(
           locale === "fr"
-            ? /Deux échecs.*généralisation.*ne sont pas démontrées/
-            : /Both failures.*Generalisation.*not established/,
+            ? /deux échecs.*généralisation.*restent à évaluer/
+            : /Both lesson-assisted failures.*generalization.*require further evaluation/,
         );
         expect(content("proofBoundary")).toMatch(
           locale === "fr"
@@ -102,8 +102,8 @@ describe("Persistent Memory recorded demonstration", () => {
         );
         expect(content("proofExperienceActualScope")).toMatch(
           locale === "fr"
-            ? /égalité.*sans nouveau gain.*sans comparaison causale.*mêmes treize.*n’a pas été déployée/
-            : /tied.*no additional measured gain.*without a causal comparison.*same thirteen.*not deployed/,
+            ? /égalité.*mêmes treize.*gain causal reste à établir.*n’a pas été déployée.*False ou 0/
+            : /tied.*same thirteen.*causal gains remain unmeasured.*not deployed.*False or 0/,
         );
         for (const [id, path] of [
           ["efficiency-cycle", "benchmarks/efficiency-20261025"],

@@ -103,8 +103,8 @@ for (const locale of ["en", "fr"]) {
         page.locator('[data-i18n="proofExperienceActualScope"]'),
       ).toContainText(
         locale === "fr"
-          ? "sans comparaison causale"
-          : "without a causal comparison",
+          ? "le gain causal reste à établir"
+          : "Additional causal gains remain unmeasured",
       );
       await expect(page.locator("#memory-results")).toBeVisible();
       await expect(page.locator("#memory-presence-count")).toHaveText("8 / 8");
