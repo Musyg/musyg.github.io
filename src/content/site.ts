@@ -200,27 +200,29 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "Core 0.3.0a4 and registry 0.2.0a2 passed 209 distinct test methods on each of two Linux hosts: 160 for the core and 49 for the registry. Testing the wheel and a wheel rebuilt from the source archive produced 418 test executions per host. The installation archives were tested on those Linux hosts; public downloads match the tested files byte for byte. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
+          "Core 0.3.0a5 and registry 0.2.0a2 passed 215 distinct test methods: 166 for the core and 49 for the registry. Testing installed wheels and wheels rebuilt from source archives produced 430 executions per Linux environment, 860 across the two hosts. The public downloads match the tested archives byte for byte. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
         ],
         fr: [
-          "Le noyau 0.3.0a4 et le registre 0.2.0a2 ont passé 209 méthodes de test distinctes sur chacun des deux hôtes Linux : 160 pour le noyau et 49 pour le registre. Les tests du wheel puis d’un wheel reconstruit depuis l’archive source représentent 418 exécutions par hôte. Les archives d’installation ont été testées sur ces hôtes ; les téléchargements publics sont identiques à l’octet près. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
+          "Le noyau 0.3.0a5 et le registre 0.2.0a2 ont passé 215 méthodes de test distinctes : 166 pour le noyau et 49 pour le registre. Les tests des wheels installés, puis de wheels reconstruits depuis les archives source, représentent 430 exécutions par environnement Linux, 860 au total sur deux hôtes. Les téléchargements publics sont identiques à l’octet près aux archives testées. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
         ],
       },
       results: {
         en: [
-          "Core 0.3.0a4 ships with installation files, checksums and French and English documentation; the separate policy registry remains at 0.2.0a2. The code, synthetic data, protocols and offline calculations are public.",
+          "Core 0.3.0a5 ships with installation files, checksums and French and English documentation; the separate policy registry remains at 0.2.0a2. The code, synthetic data, protocols and offline calculations are public.",
           "Across 100 fixed lifecycle scenarios, all 751 valid reads were preserved and all 389 forbidden reads were blocked, matching a SQLite reference with retained current authority. After the core change, four SIGKILL interruption scenarios passed on each Linux host, with observed recovery times of 0.227 to 0.383 seconds.",
           "At 1,000 sources and 50 searches, a targeted core optimization reduced instrumented workload time by 28.01% on one host and 27.68% on the other, with the same checked outcomes and stored file sizes. Each figure comes from one before-and-after observation per host.",
           "A later study separates the initial load of 1,000 sources from a subsequent cycle of additions, searches, reads and withdrawal. Across three paired observations, the cycle took a median 2.35% less time and the initial load a median 29.13% less time, with the same checked outcomes. These descriptive timings concern this synthetic workload; production latency and total operating cost require separate evaluation.",
+          "At 1,500 sources followed by ten additions and 50 searches, a targeted change to identifier validation reduced instrumented workload time by a median 6.79% and CPU time by 6.77% across three new paired observations. All six runs preserved the expected reads and withdrawal behavior, with identical final storage sizes.",
           "In a separate study, a model completed task A, received feedback on its actual output and extracted a lesson before attempting a different task B in a fresh session.",
           "Across 48 episodes and 288 model calls, Luna succeeded in 22 of 24 B tasks with a lesson, 13 with the complete trace and feedback, and seven without experience. Sol scored 24 of 24 with either a lesson or the complete trace, and 12 without experience. All 192 B outcomes were independently rechecked from the actual files produced; the two failed lesson-assisted tasks remain in the results.",
           "Two sessions of a real agent each passed seven tests on the same thirteen scenarios, tying on quality; the system message confirmed automatic delivery of stored lessons. A second agent retrieved the experience and produced code that passed the same tests unchanged, in one task. That proposal was not deployed: some metrics and secondary text still used defaults such as False or 0 for missing information, beyond the tests’ coverage. The report details this defect. Counted separately from the synthetic campaign, these observations establish neither additional causal gains nor complete code correctness.",
         ],
         fr: [
-          "Le noyau 0.3.0a4 est distribué avec ses fichiers d’installation, sommes de contrôle et guides français et anglais ; le registre de politiques indépendant reste en version 0.2.0a2. Le code, les données synthétiques, les protocoles et les calculs hors ligne sont publics.",
+          "Le noyau 0.3.0a5 est distribué avec ses fichiers d’installation, sommes de contrôle et guides français et anglais ; le registre de politiques indépendant reste en version 0.2.0a2. Le code, les données synthétiques, les protocoles et les calculs hors ligne sont publics.",
           "Sur 100 scénarios de cycle de vie définis à l’avance, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées, à égalité avec une référence SQLite conservant une autorité actuelle. Après la modification du noyau, quatre scénarios d’interruption par SIGKILL passent sur chacun des deux hôtes Linux, avec une reprise observée entre 0,227 et 0,383 seconde.",
           "À 1 000 sources et 50 recherches, une optimisation ciblée du noyau réduit la durée de la charge instrumentée de 28,01 % sur un hôte et de 27,68 % sur l’autre, avec les mêmes résultats vérifiés et les mêmes tailles de fichiers stockés. Chaque chiffre provient d’une seule observation avant et après par hôte.",
           "Une étude complémentaire distingue le chargement initial de 1 000 sources du cycle suivant : ajouts, recherches, lectures et retrait. Sur trois comparaisons appariées, la durée du cycle baisse de 2,35 % en médiane et celle du chargement initial de 29,13 %, avec les mêmes résultats vérifiés. Ces mesures descriptives portent sur cette charge synthétique ; la latence en production et le coût complet relèvent d’autres évaluations.",
+          "Sur une charge de 1 500 sources suivie de dix ajouts et 50 recherches, une modification ciblée de la validation des identifiants réduit la durée instrumentée de 6,79 % en médiane et le temps CPU de 6,77 %. Les trois nouvelles comparaisons appariées conservent les lectures et les retraits attendus, avec les mêmes tailles de stockage final dans les six exécutions.",
           "Dans une étude distincte, un modèle exécute une tâche A, reçoit un retour sur le fichier réellement produit et en extrait une leçon avant de tenter une tâche B différente dans une nouvelle session.",
           "Sur 48 épisodes et 288 appels aux modèles, Luna réussit 22 tâches B sur 24 avec la leçon, 13 avec la trace complète et le retour, et sept sans expérience. Sol réussit 24 tâches sur 24 avec la leçon comme avec la trace complète, et 12 sans expérience. Les 192 résultats B ont été revérifiés indépendamment à partir des fichiers produits ; les deux échecs avec leçon restent dans les résultats.",
           "Deux sessions d’un agent réel réussissent sept tests sur les mêmes treize scénarios, à égalité ; le message système confirme la transmission automatique des enseignements. Un second agent retrouve l’expérience et produit un code qui réussit les mêmes tests sans retouche, sur une mission. Cette proposition n’a pas été déployée : des métriques et un texte secondaire remplacent des informations absentes par des valeurs comme False ou 0, hors couverture des tests. Le rapport détaille ce défaut. Ces observations, distinctes de la campagne synthétique, n’établissent ni gain causal supplémentaire ni conformité complète du code.",
@@ -294,6 +296,15 @@ export const projects: Project[] = [
       },
       {
         label: {
+          en: "Identifier validation: three paired measurements",
+          fr: "Validation des identifiants : trois mesures appariées",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261026/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261026/README.fr.md",
+      },
+      {
+        label: {
           en: "Experience transfer across real tasks and agents",
           fr: "Réutiliser une expérience entre missions et agents réels",
         },
@@ -323,14 +334,14 @@ export const projects: Project[] = [
           en: "Core alpha and installation files",
           fr: "Noyau alpha et fichiers d’installation",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a4",
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a5",
       },
       {
         label: {
           en: "Linux package qualification",
           fr: "Qualification des paquets sous Linux",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/download/v0.3.0a4/QUALIFICATION.json",
+        url: "https://github.com/Musyg/persistent-memory/releases/download/v0.3.0a5/QUALIFICATION.json",
       },
       {
         label: {

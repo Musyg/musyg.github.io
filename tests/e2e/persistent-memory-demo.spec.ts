@@ -89,6 +89,7 @@ for (const locale of ["en", "fr"]) {
       }
       for (const [id, path] of [
         ["efficiency-cycle", "benchmarks/efficiency-20261025"],
+        ["efficiency-identifier", "benchmarks/efficiency-20261026"],
         ["experience-actual", "docs/evidence/experience-transfer-20261026"],
       ]) {
         await expect(page.locator(`#proof-${id}-study`)).toHaveAttribute(
@@ -99,6 +100,18 @@ for (const locale of ["en", "fr"]) {
       await expect(
         page.locator('[data-i18n="proofEfficiencyCycle"]'),
       ).toContainText(locale === "fr" ? "2,35 %" : "2.35%");
+      await expect(page.locator('[data-i18n="proofRelease"]')).toContainText(
+        "215",
+      );
+      await expect(page.locator('[data-i18n="proofRelease"]')).toContainText(
+        "860",
+      );
+      await expect(
+        page.locator('[data-i18n="proofEfficiencyIdentifier"]'),
+      ).toContainText(locale === "fr" ? "6,79 %" : "6.79%");
+      await expect(
+        page.locator('[data-i18n="proofEfficiencyIdentifier"]'),
+      ).toContainText(locale === "fr" ? "6,77 %" : "6.77%");
       await expect(
         page.locator('[data-i18n="proofExperienceActualScope"]'),
       ).toContainText(

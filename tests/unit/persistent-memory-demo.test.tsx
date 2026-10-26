@@ -95,6 +95,13 @@ describe("Persistent Memory recorded demonstration", () => {
             ? /Trois.*1 000.*médianes descriptives/
             : /Three.*1,000.*descriptive medians/,
         );
+        expect(content("proofRelease")).toMatch(/0\.3\.0a5.*215.*860/);
+        expect(content("proofEfficiencyIdentifier")).toMatch(
+          locale === "fr" ? /1 500.*6,79.*6,77/ : /1,500.*6\.79.*6\.77/,
+        );
+        expect(content("proofEfficiencyIdentifierScope")).toMatch(
+          locale === "fr" ? /Trois.*50.*six/ : /Three.*50.*six/,
+        );
         expect(content("proofExperienceActual")).toMatch(
           locale === "fr"
             ? /avec et sans.*7 tests sur 7.*treize.*une seule mission/
@@ -107,6 +114,7 @@ describe("Persistent Memory recorded demonstration", () => {
         );
         for (const [id, path] of [
           ["efficiency-cycle", "benchmarks/efficiency-20261025"],
+          ["efficiency-identifier", "benchmarks/efficiency-20261026"],
           ["experience-actual", "docs/evidence/experience-transfer-20261026"],
         ]) {
           expect(document.getElementById(`proof-${id}-study`)).toHaveAttribute(
