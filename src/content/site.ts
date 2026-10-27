@@ -876,8 +876,8 @@ export const practicePages: Record<
   software: {
     title: { en: "Software engineering", fr: "Ingénierie logicielle" },
     lead: {
-      en: "Backend, infrastructure, Web, product, blockchain, and open-source systems with explicit operational boundaries.",
-      fr: "Backend, infrastructure, Web, produit, blockchain et systèmes open source avec des limites opérationnelles explicites.",
+      en: "Backend, infrastructure, Web, systems, blockchain, and open-source software with explicit operational boundaries.",
+      fr: "Backend, infrastructure, Web, systèmes, blockchain et logiciels open source avec des limites opérationnelles explicites.",
     },
     capabilities: {
       en: [
