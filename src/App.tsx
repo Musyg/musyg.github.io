@@ -5,6 +5,7 @@ import {
   practiceLabels,
   practicePages,
   professionalProfiles,
+  publicLinkUrl,
   projectById,
   projects,
   sectionLabels,
@@ -642,6 +643,17 @@ function ProjectPage({
             ) : null}
             <h1>{project.title}</h1>
             <p className="page-lead">{localized(project.summary, locale)}</p>
+            <nav className="case-actions" aria-label={content.externalLinks}>
+              {project.links.map((link) => (
+                <a
+                  className="button button-secondary"
+                  href={publicLinkUrl(link, locale)}
+                  key={link.url}
+                >
+                  {localized(link.label, locale)}
+                </a>
+              ))}
+            </nav>
           </div>
           <dl className="metadata-rail">
             <div>
@@ -687,7 +699,9 @@ function ProjectPage({
                 <ul className="evidence-links">
                   {project.links.map((link) => (
                     <li key={link.url}>
-                      <a href={link.url}>{localized(link.label, locale)}</a>
+                      <a href={publicLinkUrl(link, locale)}>
+                        {localized(link.label, locale)}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -747,9 +761,17 @@ function PracticePage({
           </p>
           <h2>{isFrench ? "Preuves et limites" : "Evidence and boundaries"}</h2>
           <ul>
-            {page.evidence[locale].map((evidence) => (
-              <li key={evidence}>{evidence}</li>
-            ))}
+            {Array.isArray(page.evidence)
+              ? page.evidence.map((link) => (
+                  <li key={link.url}>
+                    <a className="text-link" href={publicLinkUrl(link, locale)}>
+                      {localized(link.label, locale)}
+                    </a>
+                  </li>
+                ))
+              : page.evidence[locale].map((evidence) => (
+                  <li key={evidence}>{evidence}</li>
+                ))}
           </ul>
         </div>
       </section>

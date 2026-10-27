@@ -783,6 +783,19 @@
   align-items: end;
 }
 
+.case-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.case-actions .button {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
 .security-review-case-mark {
   display: block;
   width: 48px;
