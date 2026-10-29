@@ -3,7 +3,8 @@ import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { projects, sectionOrder } from "../../src/content/site";
-import { publicRoutes, routeFor } from "../../src/routes";
+import { aboutCopy } from "../../src/content/about";
+import { canonicalUrl, publicRoutes, routeFor } from "../../src/routes";
 
 function filesUnder(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -13,6 +14,137 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("uses only Talos as the public agency name across source and public assets", () => {
+    for (const directory of ["src", "public"]) {
+      for (const file of filesUnder(directory).filter((path) =>
+        /\.(tsx?|html|js|json|svg|txt)$/i.test(path),
+      )) {
+        expect(readFileSync(file, "utf8"), file).not.toMatch(/herm[eè]s/i);
+      }
+    }
+  });
+
+  it("distinguishes Mika the real cat, the store assistant and separate SAV", () => {
+    const project = projects.find((item) => item.id === "mikasshop")!;
+    expect(project.status).toBe("store-and-integrations");
+    expect(project.filters).toContain("ai");
+    expect(project.projectStart).toEqual({ en: "2024", fr: "2024" });
+    expect(project.stack).toEqual(
+      expect.arrayContaining(["Python", "FastAPI", "SSE", "MQTT"]),
+    );
+    for (const locale of ["en", "fr"] as const) {
+      expect(JSON.stringify(project)).not.toMatch(
+        /chat IA Mika|Mika AI chat|Mika, a custom AI chat/,
+      );
+      expect(JSON.stringify(project.sections)).toContain(
+        "Mika est le vrai chat",
+      );
+      expect(JSON.stringify(project.sections)).toContain(
+        "Mika is the real cat",
+      );
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "Talos",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
+      );
+    }
+    expect(JSON.stringify(project)).not.toContain("hermes-agency");
+    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+  });
+
+  it("describes Inaricom supplier integration without claiming a completed rebuild", () => {
+    const project = projects.find((item) => item.id === "inaricom")!;
+    expect(project.status).toBe("active-rebuild");
+    expect(project.projectStart).toEqual({ en: "2023", fr: "2023" });
+    expect(project.filters).toEqual(["software", "web"]);
+    for (const locale of ["en", "fr"] as const) {
+      expect(project.sections.role[locale].join(" ")).toContain("DigiKey");
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "WooCommerce",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+      );
+    }
+    expect(JSON.stringify(project)).not.toContain("github.com/Musyg/Inaricom");
+    expect(JSON.stringify(project)).not.toContain(
+      "18dadcaf341f9dc5eeda293a047c91f982b8d313",
+    );
+  });
+
+  it("presents Pedi-Sense beyond its storefront without claiming live backend activation", () => {
+    const project = projects.find((item) => item.id === "pedi-sense")!;
+    expect(project.status).toBe("store-and-integrations");
+    expect(project.filters).toContain("ai");
+    expect(project.projectStart).toEqual({ en: "Late 2022", fr: "Fin 2022" });
+    expect(project.stack).toEqual(
+      expect.arrayContaining(["Shopify", "Python", "MQTT", "Listmonk"]),
+    );
+    for (const locale of ["en", "fr"] as const) {
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "Talos",
+      );
+      expect(project.sections.architecture[locale].join(" ")).toContain(
+        "Listmonk",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+      );
+    }
+    expect(JSON.stringify(project)).not.toContain("hermes-agency");
+    expect(JSON.stringify(project)).not.toContain(
+      "5eb44f8839a3a457099df26bc784b67c4bbf151c",
+    );
+    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+  });
+
+  it("keeps the report preview identical to the documented public source rendering", () => {
+    const preview = readFileSync("public/stvault-report-cover.png");
+    expect(createHash("sha256").update(preview).digest("hex")).toBe(
+      "2455d96387bad36a01e3d29c06bd90b34ff1fd1f23c1a63977a8587c189679e0",
+    );
+    expect(preview.length).toBeLessThan(250_000);
+  });
+
+  it("uses a personal bilingual About and first-person contribution descriptions", () => {
+    expect(aboutCopy.fr.introduction).toMatch(/^Je suis Gilles Musy/);
+    expect(aboutCopy.en.introduction).toMatch(/^I’m Gilles Musy/);
+    for (const locale of ["fr", "en"] as const) {
+      expect(aboutCopy[locale].paragraphs).toHaveLength(5);
+      for (const paragraph of aboutCopy[locale].paragraphs) {
+        expect(paragraph).not.toContain("—");
+      }
+      for (const project of projects) {
+        for (const section of sectionOrder) {
+          for (const paragraph of project.sections[section][locale]) {
+            expect(paragraph).not.toContain("Gilles Musy");
+          }
+        }
+      }
+    }
+    expect(aboutCopy.fr.paragraphs[3]).toContain(
+      "leurs méthodes et leurs responsabilités propres",
+    );
+    expect(aboutCopy.en.paragraphs[3]).toContain(
+      "its own methods and responsibilities",
+    );
+  });
+
+  it("uses the custom domain for metadata and the sitemap", () => {
+    expect(canonicalUrl("/fr/")).toBe("https://musyg.com/fr/");
+    const prerender = readFileSync("scripts/prerender.mjs", "utf8");
+    expect(prerender).toContain('const siteOrigin = "https://musyg.com";');
+  });
+
+  it("serves prerendered directories and real errors on Hostinger", () => {
+    const config = readFileSync("public/.htaccess", "utf8");
+    expect(config).toContain("DirectoryIndex index.html");
+    expect(config).toContain("Options -Indexes");
+    expect(config).toContain("ErrorDocument 404 /404.html");
+    expect(config).not.toContain("RewriteRule");
+  });
+
   it("keeps six projects with complete bilingual case-study sections", () => {
     expect(projects).toHaveLength(6);
 

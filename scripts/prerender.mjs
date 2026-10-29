@@ -42,7 +42,7 @@ const notFoundDocument = template
   .replace("<!--app-html-->", notFound.html);
 await writeFile(join(distributionDirectory, "404.html"), notFoundDocument);
 
-const siteOrigin = "https://musyg.github.io";
+const siteOrigin = "https://musyg.com";
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
