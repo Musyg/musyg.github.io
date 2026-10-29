@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { projects, sectionOrder } from "../../src/content/site";
+import { practicePages, projects, sectionOrder } from "../../src/content/site";
 import { aboutCopy } from "../../src/content/about";
 import { canonicalUrl, publicRoutes, routeFor } from "../../src/routes";
 
@@ -14,12 +14,55 @@ function filesUnder(directory: string): string[] {
 }
 
 describe("portfolio content contract", () => {
+  it("presents broader AI engineering without tying other projects to Talos", () => {
+    const ai = practicePages.ai;
+    for (const locale of ["en", "fr"] as const) {
+      expect(ai.title[locale]).toMatch(/multi-agent/);
+      expect(ai.lead[locale]).not.toContain("Talos");
+      expect(ai.lead[locale]).not.toMatch(/shopping|conseil produit|SAV/);
+      expect(ai.capabilities[locale][0]).toMatch(/multi-agent/);
+      expect(ai.capabilities[locale].join(" ")).toMatch(/simulat/);
+      expect(ai.capabilities[locale].join(" ")).toContain("Python");
+      expect(ai.capabilities[locale].join(" ")).toContain("commerce");
+    }
+    expect(ai.lead.fr).toContain("tout en explorant la prédiction");
+    expect(ai.lead.en).toContain("while exploring prediction");
+    expect(Array.isArray(ai.evidence) && ai.evidence[0].url).toBe(
+      "https://github.com/Musyg/talos",
+    );
+    for (const path of ["/ai-systems/", "/fr/systemes-ia/"]) {
+      const route = routeFor(path);
+      expect(route.title).toMatch(/multi-agent/);
+      expect(route.description).not.toContain("Talos");
+    }
+  });
+
   it("uses only Talos as the public agency name across source and public assets", () => {
+    // Published technical package identifiers retain their names; agency copy does not.
+    const agencyCopy = (value: string) =>
+      value.replace(
+        /(?<![\p{L}\p{N}_.-])(?:hermes-memory-core|hermes-policy-registry)(?![\p{L}\p{N}_.-])/gu,
+        "",
+      );
+    expect(
+      agencyCopy('"hermes-memory-core" "hermes-policy-registry"'),
+    ).not.toMatch(/herm[eè]s/i);
+    expect(agencyCopy("Hermes agency Hermès")).toMatch(/herm[eè]s/i);
+    expect(
+      [
+        "prefix-hermes-memory-core",
+        "hermes-memory-core-suffix",
+        "prefix-hermes-policy-registry",
+        "hermes-policy-registry-suffix",
+      ].every((value) => /herm[eè]s/i.test(agencyCopy(value))),
+    ).toBe(true);
     for (const directory of ["src", "public"]) {
       for (const file of filesUnder(directory).filter((path) =>
         /\.(tsx?|html|js|json|svg|txt)$/i.test(path),
       )) {
-        expect(readFileSync(file, "utf8"), file).not.toMatch(/herm[eè]s/i);
+        expect(agencyCopy(readFileSync(file, "utf8")), file).not.toMatch(
+          /herm[eè]s/i,
+        );
       }
     }
   });
@@ -42,29 +85,38 @@ describe("portfolio content contract", () => {
       expect(JSON.stringify(project.sections)).toContain(
         "Mika is the real cat",
       );
-      expect(project.sections.architecture[locale].join(" ")).toContain(
-        "Talos",
-      );
+      expect(JSON.stringify(project)).not.toMatch(/talos/i);
       expect(project.sections.limitations[locale].join(" ")).toContain(
-        locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
+      );
+      expect(project.sections.limitations[locale].join(" ")).not.toMatch(
+        /active in production|deployed backend|actifs en production/i,
       );
     }
     expect(JSON.stringify(project)).not.toContain("hermes-agency");
-    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+    expect(project.links[1].label.fr).toBe("Étude de cas");
   });
 
-  it("describes Inaricom supplier integration without claiming a completed rebuild", () => {
+  it("presents Inaricom without an availability badge or verified integration claim", () => {
     const project = projects.find((item) => item.id === "inaricom")!;
-    expect(project.status).toBe("active-rebuild");
+    expect(project.status).toBeUndefined();
+    expect(project.evidenceCheckedAt).toBe("2026-10-11");
+    expect(JSON.stringify(project)).not.toMatch(
+      /refonte|rebuild|site en ligne|website live|rouvert|reopened/i,
+    );
+    expect(JSON.stringify(practicePages.software.evidence)).not.toMatch(
+      /refonte|rebuilt/i,
+    );
     expect(project.projectStart).toEqual({ en: "2023", fr: "2023" });
-    expect(project.filters).toEqual(["software", "web"]);
+    expect(project.filters).toEqual(["software", "web", "ai"]);
+    expect(practicePages.ai.projectIds).toContain(project.id);
     for (const locale of ["en", "fr"] as const) {
       expect(project.sections.role[locale].join(" ")).toContain("DigiKey");
       expect(project.sections.architecture[locale].join(" ")).toContain(
         "WooCommerce",
       );
       expect(project.sections.limitations[locale].join(" ")).toContain(
-        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+        locale === "fr" ? "en cours d’intégration" : "being integrated",
       );
     }
     expect(JSON.stringify(project)).not.toContain("github.com/Musyg/Inaricom");
@@ -82,21 +134,134 @@ describe("portfolio content contract", () => {
       expect.arrayContaining(["Shopify", "Python", "MQTT", "Listmonk"]),
     );
     for (const locale of ["en", "fr"] as const) {
-      expect(project.sections.architecture[locale].join(" ")).toContain(
-        "Talos",
-      );
+      expect(JSON.stringify(project)).not.toMatch(/talos/i);
       expect(project.sections.architecture[locale].join(" ")).toContain(
         "Listmonk",
       );
       expect(project.sections.limitations[locale].join(" ")).toContain(
-        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
+      );
+      expect(project.sections.limitations[locale].join(" ")).not.toMatch(
+        /active in production|deployed backend|actifs en production/i,
       );
     }
     expect(JSON.stringify(project)).not.toContain("hermes-agency");
     expect(JSON.stringify(project)).not.toContain(
       "5eb44f8839a3a457099df26bc784b67c4bbf151c",
     );
-    expect(project.links[1].label.fr).toBe("Étude de la vitrine");
+    expect(project.links[1].label.fr).toBe("Étude de cas");
+  });
+
+  it("keeps project work ahead of verification narration", () => {
+    expect(practicePages.software.projectIds).toContain("agent-resilience");
+    expect(practicePages.ai.projectIds).toContain("agent-resilience");
+    const memory = projects.find(
+      (project) => project.id === "persistent-memory",
+    )!;
+    for (const locale of ["en", "fr"] as const) {
+      for (const section of sectionOrder) {
+        for (const paragraph of memory.sections[section][locale]) {
+          expect(paragraph.split(/\s+/).length).toBeLessThan(95);
+        }
+      }
+      expect(memory.sections.limitations[locale].join(" ")).toMatch(
+        /authority|autorité/,
+      );
+      expect(memory.sections.limitations[locale].join(" ")).toMatch(/copies/);
+      expect(memory.sections.limitations[locale].join(" ")).toMatch(/alpha/);
+      for (const id of ["inaricom", "mikasshop", "pedi-sense"]) {
+        const project = projects.find((p) => p.id === id)!;
+        expect(
+          JSON.stringify(project.sections["limitations"][locale]),
+        ).not.toMatch(
+          /n’a pas été vérifié|has not been verified|health benefits|sur la santé/,
+        );
+      }
+    }
+    expect(
+      projects
+        .find((p) => p.id === "mikasshop")!
+        .sections.decisions.en.join(" "),
+    ).not.toMatch(/\bSAV\b/);
+    const app = readFileSync("src/App.tsx", "utf8");
+    expect(app).toContain('{isFrench ? "Me contacter" : "Get in touch"}');
+  });
+
+  it("describes each ecommerce project's own agents, retrieval and analytics", () => {
+    for (const id of ["inaricom", "mikasshop", "pedi-sense"]) {
+      const project = projects.find((item) => item.id === id)!;
+      expect(project.evidenceCheckedAt).toBe("2026-10-11");
+      expect(project.stack).toEqual(
+        expect.arrayContaining(["Python", "Qdrant", "FAISS", "MQTT"]),
+      );
+      for (const locale of ["en", "fr"] as const) {
+        const architecture = project.sections.architecture[locale].join(" ");
+        for (const term of ["Qdrant", "FAISS", "pixel", "KPI", "Analytics Hub"])
+          expect(architecture).toContain(term);
+        const copy = Object.values(project.sections)
+          .flatMap((section) => section[locale])
+          .join(" ");
+        expect(copy).not.toMatch(
+          /multi-store|multi-boutiques|mutualis|composants partagés|shared (?:components|infrastructure)/i,
+        );
+        expect(copy).not.toMatch(
+          /herm[eè]s|store_support_kb|hermes_business_kb|phoenix[235]|localhost/i,
+        );
+        if (id !== "inaricom") {
+          expect(architecture).toContain("skills");
+          expect(copy).not.toMatch(
+            /MEDDPICC|Sales Closing|agents commerciaux|sales-agent chain/,
+          );
+        }
+      }
+    }
+  });
+
+  it("distinguishes Inaricom sales agents from quote and invoicing modules", () => {
+    const project = projects.find((item) => item.id === "inaricom")!;
+    for (const locale of ["en", "fr"] as const) {
+      const architecture = project.sections.architecture[locale].join(" ");
+      expect(architecture).toContain("closing");
+      expect(architecture).toContain("PHP");
+      expect(architecture).toContain("PDF");
+      expect(architecture).toContain(
+        locale === "fr" ? "devis accepté" : "accepted quote",
+      );
+      expect(architecture).toContain(
+        locale === "fr" ? "reçu de paiement" : "payment receipt",
+      );
+      expect(project.summary[locale]).toContain(
+        locale === "fr" ? "facturation" : "invoicing",
+      );
+      expect(project.sections.limitations[locale].join(" ")).toContain(
+        locale === "fr" ? "devis-facturation" : "quote-to-invoice",
+      );
+    }
+  });
+
+  it("presents every case independently of Talos, including memory and resilience", () => {
+    for (const project of projects) {
+      expect(JSON.stringify(project)).not.toMatch(/talos|herm[eè]s/i);
+    }
+    const memory = projects.find(
+      (project) => project.id === "persistent-memory",
+    )!;
+    expect(memory.slug).toEqual({
+      en: "persistent-memory",
+      fr: "persistent-memory",
+    });
+    expect(routeFor("/work/talos-memory/").path).toBe(
+      "/work/persistent-memory/",
+    );
+    expect(routeFor("/fr/realisations/talos-memory/").path).toBe(
+      "/fr/realisations/persistent-memory/",
+    );
+    expect(publicRoutes.map((route) => route.path).join(" ")).not.toContain(
+      "talos-memory",
+    );
+    for (const practice of Object.values(practicePages)) {
+      expect(practice.projectIds).not.toContain("talos-memory");
+    }
   });
 
   it("keeps the report preview identical to the documented public source rendering", () => {
@@ -131,6 +296,29 @@ describe("portfolio content contract", () => {
     );
   });
 
+  it("makes cybersecurity and red teaming explicit without merging engineering roles", () => {
+    for (const locale of ["fr", "en"] as const) {
+      const security = practicePages.security;
+      expect(security.title[locale]).toContain("red teaming");
+      expect(aboutCopy[locale].paragraphs[2]).toContain("red teaming");
+      for (const term of ["crypto", "smart contracts", "applications", "API"]) {
+        expect(security.lead[locale]).toContain(term);
+        expect(aboutCopy[locale].paragraphs[2]).toContain(term);
+      }
+      expect(security.capabilities[locale].join(" ")).toContain("Circuits");
+    }
+    expect(aboutCopy.fr.paragraphs[0]).toContain("Ce qui m’anime");
+    expect(aboutCopy.fr.paragraphs[2]).toContain("commet une erreur");
+    expect(aboutCopy.fr.paragraphs[2]).not.toContain("se trompe");
+    const app = readFileSync("src/App.tsx", "utf8");
+    expect(app).toContain(
+      "Je distingue mes travaux de recherche et de red teaming",
+    );
+    expect(app).toContain("I distinguish my research and red teaming work");
+    expect(routeFor("/fr/recherche-securite/").title).toContain("red teaming");
+    expect(routeFor("/security-research/").title).toContain("red teaming");
+  });
+
   it("uses the custom domain for metadata and the sitemap", () => {
     expect(canonicalUrl("/fr/")).toBe("https://musyg.com/fr/");
     const prerender = readFileSync("scripts/prerender.mjs", "utf8");
@@ -145,8 +333,8 @@ describe("portfolio content contract", () => {
     expect(config).not.toContain("RewriteRule");
   });
 
-  it("keeps six projects with complete bilingual case-study sections", () => {
-    expect(projects).toHaveLength(6);
+  it("keeps eight projects with complete bilingual case-study sections", () => {
+    expect(projects).toHaveLength(8);
 
     for (const project of projects) {
       expect(project.links.length).toBeGreaterThan(0);
@@ -156,10 +344,47 @@ describe("portfolio content contract", () => {
       );
 
       for (const section of sectionOrder) {
-        expect(project.sections[section].en.length).toBeGreaterThan(0);
-        expect(project.sections[section].fr.length).toBeGreaterThan(0);
+        expect(project.sections[section].en.length).toBe(
+          project.sections[section].fr.length,
+        );
+        if (
+          ["summary", "role", "architecture", "limitations"].includes(section)
+        ) {
+          expect(project.sections[section].en.length).toBeGreaterThan(0);
+        }
       }
     }
+  });
+
+  it("presents Bifrost as a public software MVP without inventing its start date", () => {
+    const project = projects.find((item) => item.id === "bifrost-vpn")!;
+    expect(project.status).toBe("public-mvp");
+    expect(project.practice).toBe("software");
+    expect(project.filters).toEqual(["software"]);
+    expect(project.role.fr).toBe(
+      "Conception et développement système et réseau",
+    );
+    expect(project.role.en).toBe("Systems and network design and development");
+    expect(JSON.stringify(project)).not.toMatch(
+      /produit de cybersécurité|security-product/,
+    );
+    expect(project.sections.role.fr[0]).toBe(
+      "Je conçois et développe Bifrost : orchestration du tunnel, filtrage réseau, gestion DNS, intégration système et outils de test.",
+    );
+    expect(project.sections.role.en[0]).toBe(
+      "I design and develop Bifrost: tunnel orchestration, traffic filtering, DNS handling, system integration, and test tooling.",
+    );
+    expect(project.projectStart).toBeUndefined();
+    expect(project.links[0].url).toBe("https://github.com/Musyg/bifrost-vpn");
+    expect(practicePages.software.projectIds).toContain(project.id);
+    expect(practicePages.security.projectIds).not.toContain(project.id);
+    expect(practicePages.ai.projectIds).not.toContain(project.id);
+    expect(project.sections.limitations.fr[0]).toContain(
+      "l’interface graphique n’est pas encore publiée",
+    );
+    expect(project.sections.limitations.en[0]).toContain(
+      "the graphical interface is not yet published",
+    );
   });
 
   it("keeps every public route unique and paired with its locale counterpart", () => {
@@ -229,13 +454,38 @@ describe("portfolio content contract", () => {
     expect(preview.readUInt32BE(20)).toBe(630);
   });
 
-  it("keeps email addresses out of every public asset", () => {
+  it("keeps email addresses out of public assets except pinned image signing certificates", () => {
     const publicDirectory = join(process.cwd(), "public");
+    // The approved originals retain their C2PA signing certificates. Only
+    // these exact files may contain the certificate authority's public email.
+    const signedImages = new Map([
+      [
+        join(publicDirectory, "brands/bifrost/bifrost-fond-sombre.png"),
+        "86af83c5bed458506d349041d7a3c5ab86f92c1f1a9d8cc6f88d7fc42199169f",
+      ],
+      [
+        join(publicDirectory, "brands/bifrost/bifrost-icone.png"),
+        "3137510510e9641b3fe90cf5c4d8bb30370daca9ac5686be74dcd5233190ade8",
+      ],
+    ]);
 
     for (const asset of filesUnder(publicDirectory)) {
-      expect(readFileSync(asset).toString("latin1"), asset).not.toMatch(
-        /[\w.+-]+@[\w.-]+\.[a-z]{2,}/iu,
-      );
+      const bytes = readFileSync(asset);
+      const emails = [
+        ...new Set(
+          bytes.toString("latin1").match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/giu) ??
+            [],
+        ),
+      ];
+      const approvedHash = signedImages.get(asset);
+      if (approvedHash) {
+        expect(createHash("sha256").update(bytes).digest("hex"), asset).toBe(
+          approvedHash,
+        );
+        expect(emails, asset).toEqual(["ca@trufo.ai"]);
+      } else {
+        expect(emails, asset).toEqual([]);
+      }
     }
   });
 

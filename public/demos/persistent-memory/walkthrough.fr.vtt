@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00.000 --> 00:05.300
+La date de livraison change.
+Quelles informations restent utilisables ?
+
+00:05.300 --> 00:11.300
+La date et la langue de communication
+sont deux sources indépendantes pour Atlas.
+
+00:11.300 --> 00:17.300
+Le résumé indique précisément
+les versions des sources utilisées.
+
+00:17.300 --> 00:25.300
+La livraison passe de vendredi à lundi.
+L’ancien résumé est bloqué, puis reconstruit.
+
+00:25.300 --> 00:32.300
+La date est retirée.
+Le résumé qui l’utilisait est aussi bloqué.
+
+00:32.300 --> 00:40.300
+Le retrait reste enregistré hors de la sauvegarde.
+Restaurer celle-ci ne réautorise pas la date.
+
+00:40.300 --> 00:48.300
+Les deux systèmes reçoivent les mêmes changements.
+Reconstruire le résumé met aussi le cache à jour.
+
+00:48.300 --> 00:52.300
+Après restauration, la date retirée
+et son résumé restent bloqués.
+
+00:52.300 --> 00:55.300
+Le code et les traces sont publics.
+Vous pouvez reproduire ce parcours.

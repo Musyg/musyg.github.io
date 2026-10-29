@@ -4,7 +4,7 @@ const copy = {
   fr: {
     title: "De la boutique aux services e-commerce",
     introduction:
-      "La vitrine présente le produit et son parcours d’achat. Derrière elle, j’ai développé les intégrations de service client, les modèles d’emails et la collecte des événements e-commerce.",
+      "Derrière la vitrine, j’ai développé les agents e-commerce et SAV, les parcours email, la recherche catalogue et la chaîne de suivi jusqu’à l’Analytics Hub.",
     desktop: "La boutique sur ordinateur",
     mobile: "La boutique sur mobile",
     desktopAlt:
@@ -14,35 +14,41 @@ const copy = {
     open: "Agrandir la capture",
     desktopLink: "Voir aussi la capture sur ordinateur",
     capture:
-      "Vues de la boutique française, capturées le 12 septembre 2026. Le carrousel affiche deux visuels différents ; les couleurs et les contenus de la boutique sont conservés.",
-    system: "La boutique, le SAV et les intégrations",
+      "Boutique française sur ordinateur et mobile. Captures du 12 septembre 2026.",
+    system: "Les agents et les parcours métier de Pedi-Sense",
     systemLead:
       "Les composants développés dans ce projet et leurs responsabilités respectives.",
     nodes: [
       {
-        title: "Boutique Shopify",
-        body: "Présentation du produit, variantes, langues, panier et paiement.",
+        title: "Boutique et agent e-commerce",
+        body: "Présentation du produit, variantes, langues et accès aux informations de catalogue, de stock et de commande.",
         detail:
           "Les API Shopify relient les informations produit et commande aux services métier.",
       },
       {
-        title: "Agent SAV Talos",
-        body: "Traitement des demandes d’assistance et accès aux informations utiles à la réponse.",
+        title: "Agent SAV",
+        body: "Traitement des demandes d’assistance avec recherche catalogue, politiques et FAQ de la boutique.",
         detail:
           "Le parcours comprend des brouillons à valider et une transmission à un opérateur.",
       },
       {
-        title: "Emails et événements",
+        title: "Emails et relation client",
         body: "Modèles aux couleurs de la marque pour les commandes, paniers abandonnés et expéditions.",
         detail:
-          "Intégration Listmonk pour les emails ; collecte et attribution des événements e-commerce.",
+          "Les parcours email développés utilisent Listmonk et les événements métier.",
+      },
+      {
+        title: "Pixel et Analytics Hub",
+        body: "Intégration d’un pixel maison pour les événements du parcours d’achat et leur transformation en KPI.",
+        detail:
+          "Événements de la boutique et des agents → agrégation → Analytics Hub.",
       },
     ],
   },
   en: {
     title: "From storefront to ecommerce services",
     introduction:
-      "The storefront presents the product and purchase journey. Behind it, I developed customer-support integrations, email templates and ecommerce event collection.",
+      "Behind the storefront, I developed ecommerce and support agents, email workflows, catalogue retrieval and the tracking pipeline into Analytics Hub.",
     desktop: "The desktop storefront",
     mobile: "The mobile storefront",
     desktopAlt:
@@ -52,28 +58,33 @@ const copy = {
     open: "View full-size screenshot",
     desktopLink: "View the desktop screenshot too",
     capture:
-      "Views of the French storefront, captured on 12 September 2026. The carousel shows two different slides; the store’s original colors and content are preserved.",
-    system: "Storefront, support and integrations",
+      "French storefront on desktop and mobile. Screenshots taken on 12 September 2026.",
+    system: "Pedi-Sense agents and business workflows",
     systemLead:
       "The components developed for this project and their respective responsibilities.",
     nodes: [
       {
-        title: "Shopify storefront",
-        body: "Product presentation, variants, languages, cart and checkout.",
+        title: "Storefront and ecommerce agent",
+        body: "Product presentation, variants, languages and access to catalogue, stock and order information.",
         detail:
           "Shopify APIs connect product and order information to the business services.",
       },
       {
-        title: "Talos support agent",
-        body: "Support-request handling and access to the information needed for a reply.",
+        title: "Customer-support agent",
+        body: "Support-request handling with catalogue retrieval, store policies and FAQs.",
         detail:
           "The workflow includes draft responses for review and escalation to an operator.",
       },
       {
-        title: "Emails and events",
+        title: "Emails and customer relationships",
         body: "Branded templates for order confirmations, abandoned carts and shipping notifications.",
         detail:
-          "Listmonk email integration; ecommerce event collection and attribution.",
+          "The email workflows developed use Listmonk and business events.",
+      },
+      {
+        title: "Tracking pixel and Analytics Hub",
+        body: "Custom pixel integration for purchase-path events and their transformation into KPIs.",
+        detail: "Storefront and agent events → aggregation → Analytics Hub.",
       },
     ],
   },

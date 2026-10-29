@@ -10,9 +10,13 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+/release/
 playwright-report
 test-results
 *.local
+.env
+.env.*
+!.env.example
 src/assets/hero.png
 
 # Editor directories and files

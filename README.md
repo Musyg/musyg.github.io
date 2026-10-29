@@ -6,21 +6,19 @@ Bilingual professional portfolio for three distinct practices:
 - agentic AI engineering;
 - security research.
 
-The site uses React, TypeScript, and Vite, with prerendered pages.
-
-**Portfolio:** <https://musyg.com/> · [Français](https://musyg.com/fr/)
+The site uses React, TypeScript, and Vite, with prerendered pages deployed to
+Hostinger at <https://musyg.com/>. The French version is at <https://musyg.com/fr/>.
 
 ## Current state
 
-The bilingual production site is published on Hostinger at <https://musyg.com/> with the final
-black and `#005EFF` visual direction. It includes the full route set, static prerendering,
-responsive layouts, metadata, content guards, tests, accessibility checks, and GitHub
-Pages workflows. The initial release passed independent local review, CI, deployment,
-public route checks, and post-publication verification.
+The site presents software engineering, AI systems and security research in English
+and French. It includes project case studies, technical publications and a contact
+form, with black backgrounds and the identity blue `#005EFF`.
 
-Production is maintained on `feature/contact-protected`. The `main` branch and its
-GitHub Pages publication at <https://musyg.github.io/> remain separate; the local
-development commands below apply to this branch.
+Production is deployed automatically to Hostinger from `feature/contact-protected`.
+The build uses npm and packages prerendered pages together with the Node.js server.
+Each case study presents its own technical scope without attributing it to another
+project or agency.
 
 Every production page, section, card, panel, navigation element, and footer uses black
 or a near-black neutral as its background. White and other light backgrounds are not
@@ -37,9 +35,13 @@ npm run build
 
 Use Node.js 24 and npm 11.6.0 (the CI version). `package-lock.json` is the sole
 dependency lockfile. Run `npm run verify` for the full validation suite.
-Hostinger must use npm, the complete `npm run build` command, and `dist` output.
-Do not redeploy the older `main` branch or enable automatic deployment until the
-current release and prerendered routes have been verified on Hostinger.
+Hostinger uses npm and the complete `npm run build` command. Set the output directory
+to `release` and the entry file to `server/index.mjs`, relative to that directory.
+The server serves the sibling `dist` directory. The older `main` branch is not the
+production deployment branch.
+
+See [deployment branches](docs/deployment-branches.md) for the separate GitHub
+Pages and Hostinger publication paths and the dependency maintenance procedure.
 
 ## Content boundaries
 

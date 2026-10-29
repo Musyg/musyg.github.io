@@ -2,8 +2,46 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
 import { securityReportSource } from "../../src/SecurityOverview";
+import { ipiArticle } from "../../src/content/ipi-article";
+import { projects, sectionOrder } from "../../src/content/site";
 
-test("Pedi visual overview shows responsive captures and three implemented roles", async ({
+test("case studies omit empty sections but keep resource links and continuous numbering", async ({
+  page,
+}) => {
+  for (const route of publicRoutes.filter(
+    (route) => route.kind === "project",
+  )) {
+    const project = projects.find((item) => item.id === route.projectId)!;
+    const visible = sectionOrder.filter(
+      (section) =>
+        !(project.id === "celo-credentials" && section === "results") &&
+        (section === "evidence" ||
+          project.sections[section][route.locale].length > 0),
+    );
+    await page.goto(route.path);
+    await expect(page.locator(".case-body > section")).toHaveCount(
+      visible.length,
+    );
+    for (const section of sectionOrder.filter(
+      (key) => !visible.includes(key),
+    )) {
+      await expect(
+        page.locator(`.case-body #${project.id}-${section}`),
+      ).toHaveCount(0);
+    }
+    await expect(
+      page.locator(".case-body > section > .section-number"),
+    ).toHaveText(visible.map((_, index) => String(index + 1).padStart(2, "0")));
+    await expect(page.locator(".evidence-links a")).toHaveCount(
+      project.links.length,
+    );
+    await expect(page.locator("main")).not.toContainText(
+      /read-only source inspection|examen du code en lecture seule|No test purchase was made|Aucun achat de test|credibility shortcut|raccourci de crédibilité/,
+    );
+  }
+});
+
+test("Pedi visual overview shows responsive captures and four business workflows", async ({
   page,
 }) => {
   for (const locale of ["en", "fr"]) {
@@ -14,8 +52,8 @@ test("Pedi visual overview shows responsive captures and three implemented roles
       );
       const overview = page.locator(".pedi-overview");
       await overview.scrollIntoViewIfNeeded();
-      await expect(overview.locator(".pedi-system-nodes > li")).toHaveCount(3);
-      await expect(overview).toContainText("Talos");
+      await expect(overview.locator(".pedi-system-nodes > li")).toHaveCount(4);
+      await expect(overview).not.toContainText("Talos");
       await expect(overview).toContainText("Listmonk");
       await expect(overview).toContainText(
         locale === "fr" ? "développés" : "developed",
@@ -85,7 +123,7 @@ test("Mika visual overview preserves the real cat identity and responsive captur
       await expect(overview).toContainText(
         locale === "fr" ? "le vrai chat" : "the real cat",
       );
-      await expect(overview.locator(".mika-system-nodes > li")).toHaveCount(3);
+      await expect(overview.locator(".mika-system-nodes > li")).toHaveCount(4);
       await expect(overview).not.toContainText("Chat IA Mika");
       await expect(overview).not.toContainText("Mika AI chat");
       const storefront = overview.locator("picture img");
@@ -146,14 +184,12 @@ test("Mika's Shop presents AI chat and separate SAV without runtime claims", asy
         `${locale === "fr" ? "/fr/realisations" : "/work"}/mikasshop/`,
       );
       await expect(page.locator(".case-hero .page-lead")).toContainText(
-        locale === "fr"
-          ? "assistant conversationnel IA"
-          : "AI shopping assistant",
+        locale === "fr" ? "assistant conversationnel IA" : "AI store assistant",
       );
       await expect(page.locator(".metadata-rail")).toContainText("2024");
       await expect(page.locator(".case-body")).toContainText("FastAPI");
       await expect(page.locator(".case-body")).toContainText(
-        locale === "fr" ? "n’a pas été vérifié" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
       );
       await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
       expect(
@@ -165,7 +201,7 @@ test("Mika's Shop presents AI chat and separate SAV without runtime claims", asy
   }
 });
 
-test("Pedi-Sense distinguishes the storefront from implemented Talos integrations", async ({
+test("Pedi-Sense distinguishes the storefront from its business integrations", async ({
   page,
 }) => {
   for (const locale of ["en", "fr"]) {
@@ -178,11 +214,11 @@ test("Pedi-Sense distinguishes the storefront from implemented Talos integration
         locale === "fr" ? "agent SAV" : "customer-support agent",
       );
       await expect(page.locator(".metadata-rail")).toContainText(
-        locale === "fr" ? "intégrations développées" : "integrations developed",
+        locale === "fr" ? "Boutique en ligne" : "Online store",
       );
       await expect(page.locator(".case-body")).toContainText("Listmonk");
       await expect(page.locator(".case-body")).toContainText(
-        locale === "fr" ? "n’a pas été vérifiée" : "has not been verified",
+        locale === "fr" ? "sont développés" : "are developed",
       );
       await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
       expect(
@@ -252,8 +288,18 @@ test("Security Reviews presents a real report and clearly labels the demonstrati
           .locator("figure")
           .evaluate((el) => getComputedStyle(el).borderTopColor),
       ).toBe("rgb(0, 94, 255)");
-      await expect(page.locator(".case-body > section")).toHaveCount(10);
+      await expect(page.locator(".case-body > section")).toHaveCount(9);
     }
+    await page
+      .getByRole("link", {
+        name: locale === "fr" ? "Lire l’étude de cas" : "Read the case study",
+        exact: true,
+      })
+      .click();
+    await expect(page).toHaveURL(new RegExp(ipiArticle[locale].path));
+    await expect(
+      page.getByRole("heading", { level: 1, name: ipiArticle[locale].title }),
+    ).toBeVisible();
   }
   await page.goto("/work/celo-credentials/");
   await expect(page.locator(".security-overview")).toHaveCount(0);
@@ -350,7 +396,7 @@ test("Celo pilot offers an early result, accessible flow and working contents", 
       await expect(
         page.locator(".case-body #celo-credentials-results"),
       ).toHaveCount(0);
-      await expect(page.locator(".case-toc a")).toHaveCount(9);
+      await expect(page.locator(".case-toc a")).toHaveCount(8);
       for (const link of await page.locator(".case-toc a").all()) {
         const href = await link.getAttribute("href");
         await expect(page.locator(href!)).toHaveCount(1);
@@ -379,7 +425,7 @@ test("Celo pilot offers an early result, accessible flow and working contents", 
   }
   await page.goto("/work/agent-resilience/");
   await expect(page.locator(".celo-overview, .case-toc")).toHaveCount(0);
-  await expect(page.locator(".case-body > section")).toHaveCount(10);
+  await expect(page.locator(".case-body > section")).toHaveCount(9);
 });
 
 test("Celo pilot accessibility @a11y", async ({ page }) => {
@@ -431,7 +477,9 @@ test("project history is distinct from evidence check dates", async ({
       );
     }
     await page.goto(locale === "fr" ? "/fr/systemes-ia/" : "/ai-systems/");
-    await expect(page.getByRole("link", { name: /Talos/ })).toContainText(
+    await expect(
+      page.locator('a[href="https://github.com/Musyg/talos"]'),
+    ).toContainText(
       locale === "fr" ? "depuis décembre 2024" : "since December 2024",
     );
   }
@@ -510,8 +558,8 @@ test("homepage introduces its domains without a duplicate role line", async ({
       }
       await expect(hero.locator(".hero-lead")).toHaveText(
         path === "/fr/"
-          ? "Je travaille sur la sécurité applicative et les smart contracts, les systèmes d’IA agentiques et le développement full-stack."
-          : "I work across application and smart-contract security, agentic AI systems, and full-stack development.",
+          ? "Je mène des recherches en cybersécurité et du red teaming sur le Web, les applications, les protocoles crypto et l’IA. Je développe aussi des systèmes d’IA agentiques et des logiciels full-stack."
+          : "I work on cybersecurity research and red teaming across the web, applications, crypto protocols, and AI. I also build agentic AI systems and full-stack software.",
       );
       await expect(hero.locator(".hero-actions a")).toHaveCount(2);
       expect(
@@ -545,7 +593,16 @@ test("case-study evidence is available in the hero in both languages", async ({
         );
         const actions = page.locator(".case-hero .case-actions");
         const heroLinks = actions.locator("a");
-        await expect(heroLinks).toHaveCount(2);
+        await expect(heroLinks).toHaveCount(
+          slug === "agent-resilience" ? 3 : 2,
+        );
+        if (slug === "agent-resilience") {
+          await expect(
+            actions.getByRole("link", {
+              name: locale === "fr" ? "Voir la démo" : "Try the demo",
+            }),
+          ).toHaveAttribute("href", `/demos/agent-resilience/?lang=${locale}`);
+        }
         for (const link of await heroLinks.all()) {
           await expect(link).toBeVisible();
           const bounds = await link.boundingBox();
@@ -650,7 +707,7 @@ for (const route of publicRoutes) {
 
 test("language switch keeps the matching page context", async ({ page }) => {
   await page.goto("/work/celo-credentials/");
-  await page.getByRole("link", { name: "View this page in French" }).click();
+  await page.getByRole("link", { name: "Français", exact: true }).click();
   await expect(page).toHaveURL(/\/fr\/realisations\/celo-credentials\/$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 });

@@ -3,10 +3,11 @@ export type Locale = "en" | "fr";
 export type Practice = "software" | "ai" | "security";
 
 export type ProjectStatus =
+  | "public-alpha"
+  | "public-mvp"
   | "stable-release"
   | "public-testnet"
   | "published-research"
-  | "active-rebuild"
   | "store-and-integrations";
 
 export type ProjectFilter = "all" | Practice | "web" | "blockchain";
@@ -42,14 +43,17 @@ export interface Project {
   id: string;
   slug: Bilingual;
   title: string;
+  seoTitle?: Bilingual;
   summary: Bilingual;
   role: Bilingual;
-  status: ProjectStatus;
+  status?: ProjectStatus;
   practice: Practice;
   filters: ProjectFilter[];
   evidenceCheckedAt: string;
   projectStart?: Bilingual;
   stack: string[];
+  cardStack?: string[];
+  brandImage?: string;
   sections: Record<SectionKey, { en: string[]; fr: string[] }>;
   links: PublicLink[];
 }
@@ -84,20 +88,24 @@ export const sectionLabels: Record<SectionKey, Bilingual> = {
 };
 
 export const statusLabels: Record<ProjectStatus, Bilingual> = {
+  "public-alpha": { en: "Public alpha", fr: "Version alpha publique" },
+  "public-mvp": {
+    en: "Public MVP, in development",
+    fr: "MVP public, en développement",
+  },
   "stable-release": { en: "Stable release", fr: "Version stable" },
   "store-and-integrations": {
-    en: "Public storefront; integrations developed",
-    fr: "Vitrine accessible ; intégrations développées",
+    en: "Online store",
+    fr: "Boutique en ligne",
   },
   "public-testnet": {
-    en: "Public testnet reference",
-    fr: "Référence publique sur testnet",
+    en: "Testnet deployment",
+    fr: "Déploiement testnet",
   },
   "published-research": {
     en: "Published research",
     fr: "Recherche publiée",
   },
-  "active-rebuild": { en: "Active rebuild", fr: "Refonte en cours" },
 };
 
 export const practiceLabels: Record<Practice, Bilingual> = {
@@ -116,6 +124,351 @@ export const filterLabels: Record<ProjectFilter, Bilingual> = {
 };
 
 export const projects: Project[] = [
+  {
+    id: "persistent-memory",
+    slug: {
+      en: "persistent-memory",
+      fr: "persistent-memory",
+    },
+    title: "Persistent Memory",
+    seoTitle: {
+      en: "Persistent Memory for AI Agents",
+      fr: "Mémoire persistante pour agents IA",
+    },
+    summary: {
+      en: "Persistent memory for AI agents in Python, with versioned evidence, revocation checks, typed retrieval and an optional policy registry.",
+      fr: "Mémoire persistante pour agents IA en Python, avec preuves versionnées, contrôle des retraits, recherche typée et registre de politiques facultatif.",
+    },
+    role: {
+      en: "Memory architecture, Python libraries and reproducible validation",
+      fr: "Architecture mémoire, bibliothèques Python et validation reproductible",
+    },
+    status: "public-alpha",
+    practice: "ai",
+    filters: ["software", "ai"],
+    evidenceCheckedAt: "2026-10-26",
+    stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
+    cardStack: ["Python", "SQLite", "FTS5", "MCP"],
+    sections: {
+      summary: {
+        en: [
+          "Persistent Memory is a Python library for storing information used by AI agents, tracing it to its sources and excluding corrected or withdrawn evidence. It combines versioned memory with a separate policy registry. The MIT-licensed alpha runs on Linux without a model or external database.",
+        ],
+        fr: [
+          "Persistent Memory est une bibliothèque Python pour conserver les informations utilisées par des agents IA, retrouver leurs sources et écarter celles qui ont été corrigées ou retirées. Elle associe une mémoire versionnée à un registre de politiques indépendant. Cette version alpha sous licence MIT fonctionne sous Linux sans modèle ni base externe.",
+        ],
+      },
+      role: {
+        en: [
+          "I design and develop the storage, retrieval and recovery mechanisms, the Python interfaces and the optional HTTP and MCP integrations. I also maintain the public packages, bilingual documentation, standalone examples and tests for failures, concurrent access and evidence withdrawal.",
+        ],
+        fr: [
+          "Je conçois et développe les mécanismes de stockage, de recherche et de reprise, les interfaces Python et les intégrations HTTP et MCP facultatives. Je maintiens aussi les packages publics, la documentation bilingue, les exemples autonomes et les tests de panne, d’accès concurrents et de retrait des informations.",
+        ],
+      },
+      problem: {
+        en: [
+          "A search index or restored backup can still contain evidence that was corrected or withdrawn. A useful memory system must distinguish current evidence, outdated versions and unavailable validation before returning context to an application.",
+        ],
+        fr: [
+          "Un index de recherche ou une sauvegarde restaurée peut encore contenir des preuves corrigées ou retirées. La mémoire doit distinguer les preuves actuelles, les versions périmées et une validation indisponible avant de fournir du contexte à une application.",
+        ],
+      },
+      architecture: {
+        en: [
+          "SQLite stores immutable versions and links between sources and derived information. A separate authority and freshness witness determine which evidence is still usable. Rebuildable FTS5 indexes find candidates, which are checked again before retrieval.",
+          "Typed records distinguish documents, observations, hypotheses, procedures, tasks and feedback. Context can optionally include immutable source references; each complete text-and-reference item and the separators count towards the same budget. Plain text remains the default. The optional HTTP facade also offers a typed-only mode with a fixed workspace and token, configured by the host.",
+          "An optional renderer turns supplied, reviewed facts into text using predefined French templates, preserving source versions and passages. The admission module checks the host’s authority and the final output buffer, and reports unknown, conflicting or withdrawn evidence.",
+        ],
+        fr: [
+          "SQLite conserve des versions immuables et les liens entre les sources et les informations qui en découlent. Une autorité séparée et un témoin de fraîcheur déterminent quelles informations restent utilisables. Les index FTS5 reconstruisibles proposent des résultats, vérifiés à nouveau avant leur restitution.",
+          "Les enregistrements typés distinguent documents, observations, hypothèses, procédures, tâches et retours d’expérience. Le contexte peut inclure des références sources immuables : chaque ensemble complet texte-référence et les séparateurs comptent dans le même budget. Le texte seul reste le comportement par défaut. La façade HTTP facultative propose aussi un mode limité aux routes typées, avec un espace de travail et un jeton fixes, configurés par l’hôte.",
+          "Un module de rendu facultatif transforme des faits fournis et déjà revus en texte, à partir de formulations françaises prédéfinies, en conservant les versions et passages sources. Le module d’admission vérifie l’autorité de l’hôte et le contenu final à transmettre, puis signale les informations inconnues, contradictoires ou retirées.",
+        ],
+      },
+      decisions: {
+        en: [
+          "The index is a projection, not the authority. Writes use compare-and-swap; recovery from an old content snapshot begins in quarantine against a retained current authority. The optional registry separates policy proposal, evidence, admission and rollback, without activating policies or granting permissions.",
+        ],
+        fr: [
+          "L’index reste une projection : il ne décide pas de la validité des preuves. Les écritures utilisent un contrôle compare-and-swap ; une ancienne sauvegarde de contenu est d’abord placée en quarantaine, puis contrôlée par rapport à l’autorité actuelle conservée séparément. Le registre facultatif distingue proposition de politique, preuves, admission et retour arrière. L’activation des politiques et l’attribution des droits restent sous le contrôle de l’hôte.",
+        ],
+      },
+      security: {
+        en: [],
+        fr: [],
+      },
+      testing: {
+        en: [
+          "Core 0.3.0a5 and registry 0.2.0a2 passed 215 distinct test methods: 166 for the core and 49 for the registry. Testing installed wheels and wheels rebuilt from source archives produced 430 executions per Linux environment, 860 across the two hosts. The public downloads match the tested archives byte for byte. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
+        ],
+        fr: [
+          "Le noyau 0.3.0a5 et le registre 0.2.0a2 ont passé 215 méthodes de test distinctes : 166 pour le noyau et 49 pour le registre. Les tests des wheels installés, puis de wheels reconstruits depuis les archives source, représentent 430 exécutions par environnement Linux, 860 au total sur deux hôtes. Les téléchargements publics sont identiques à l’octet près aux archives testées. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
+        ],
+      },
+      results: {
+        en: [
+          "Core 0.3.0a5 ships with installation files, checksums and French and English documentation; the separate policy registry remains at 0.2.0a2. The code, synthetic data, protocols and offline calculations are public.",
+          "Across 100 fixed lifecycle scenarios, all 751 valid reads were preserved and all 389 forbidden reads were blocked, matching a SQLite reference with retained current authority. After the core change, four SIGKILL interruption scenarios passed on each Linux host, with observed recovery times of 0.227 to 0.383 seconds.",
+          "At 1,000 sources and 50 searches, a targeted core optimization reduced instrumented workload time by 28.01% on one host and 27.68% on the other, with the same checked outcomes and stored file sizes. Each figure comes from one before-and-after observation per host.",
+          "A later study separates the initial load of 1,000 sources from a subsequent cycle of additions, searches, reads and withdrawal. Across three paired observations, the cycle took a median 2.35% less time and the initial load a median 29.13% less time, with the same checked outcomes. These descriptive timings concern this synthetic workload; production latency and total operating cost require separate evaluation.",
+          "At 1,500 sources followed by ten additions and 50 searches, a targeted change to identifier validation reduced instrumented workload time by a median 6.79% and CPU time by 6.77% across three new paired observations. All six runs preserved the expected reads and withdrawal behavior, with identical final storage sizes.",
+          "In a separate study, a model completed task A, received feedback on its actual output and extracted a lesson before attempting a different task B in a fresh session.",
+          "Across 48 episodes and 288 model calls, Luna succeeded in 22 of 24 B tasks with a lesson, 13 with the complete trace and feedback, and seven without experience. Sol scored 24 of 24 with either a lesson or the complete trace, and 12 without experience. All 192 B outcomes were independently rechecked from the actual files produced; the two failed lesson-assisted tasks remain in the results.",
+          "Two sessions of a real agent each passed seven tests on the same thirteen scenarios, tying on quality; the system message confirmed automatic delivery of stored lessons. A second agent retrieved the experience and produced code that passed the same tests unchanged, in one task. That proposal was not deployed: some metrics and secondary text still used defaults such as False or 0 for missing information, beyond the tests’ coverage. The report details this defect. Counted separately from the synthetic campaign, these observations establish neither additional causal gains nor complete code correctness.",
+        ],
+        fr: [
+          "Le noyau 0.3.0a5 est distribué avec ses fichiers d’installation, sommes de contrôle et guides français et anglais ; le registre de politiques indépendant reste en version 0.2.0a2. Le code, les données synthétiques, les protocoles et les calculs hors ligne sont publics.",
+          "Sur 100 scénarios de cycle de vie définis à l’avance, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées, à égalité avec une référence SQLite conservant une autorité actuelle. Après la modification du noyau, quatre scénarios d’interruption par SIGKILL passent sur chacun des deux hôtes Linux, avec une reprise observée entre 0,227 et 0,383 seconde.",
+          "À 1 000 sources et 50 recherches, une optimisation ciblée du noyau réduit la durée de la charge instrumentée de 28,01 % sur un hôte et de 27,68 % sur l’autre, avec les mêmes résultats vérifiés et les mêmes tailles de fichiers stockés. Chaque chiffre provient d’une seule observation avant et après par hôte.",
+          "Une étude complémentaire distingue le chargement initial de 1 000 sources du cycle suivant : ajouts, recherches, lectures et retrait. Sur trois comparaisons appariées, la durée du cycle baisse de 2,35 % en médiane et celle du chargement initial de 29,13 %, avec les mêmes résultats vérifiés. Ces mesures descriptives portent sur cette charge synthétique ; la latence en production et le coût complet relèvent d’autres évaluations.",
+          "Sur une charge de 1 500 sources suivie de dix ajouts et 50 recherches, une modification ciblée de la validation des identifiants réduit la durée instrumentée de 6,79 % en médiane et le temps CPU de 6,77 %. Les trois nouvelles comparaisons appariées conservent les lectures et les retraits attendus, avec les mêmes tailles de stockage final dans les six exécutions.",
+          "Dans une étude distincte, un modèle exécute une tâche A, reçoit un retour sur le fichier réellement produit et en extrait une leçon avant de tenter une tâche B différente dans une nouvelle session.",
+          "Sur 48 épisodes et 288 appels aux modèles, Luna réussit 22 tâches B sur 24 avec la leçon, 13 avec la trace complète et le retour, et sept sans expérience. Sol réussit 24 tâches sur 24 avec la leçon comme avec la trace complète, et 12 sans expérience. Les 192 résultats B ont été revérifiés indépendamment à partir des fichiers produits ; les deux échecs avec leçon restent dans les résultats.",
+          "Deux sessions d’un agent réel réussissent sept tests sur les mêmes treize scénarios, à égalité ; le message système confirme la transmission automatique des enseignements. Un second agent retrouve l’expérience et produit un code qui réussit les mêmes tests sans retouche, sur une mission. Cette proposition n’a pas été déployée : des métriques et un texte secondaire remplacent des informations absentes par des valeurs comme False ou 0, hors couverture des tests. Le rapport détaille ce défaut. Ces observations, distinctes de la campagne synthétique, n’établissent ni gain causal supplémentaire ni conformité complète du code.",
+        ],
+      },
+      evidence: {
+        en: [],
+        fr: [],
+      },
+      limitations: {
+        en: [
+          "The library is in alpha. Recovery requires a current authority and freshness witness kept outside the restored content backup. Withdrawal governs future library reads; exported copies and information already learned by a model remain outside its scope.",
+          "Optional rendering and admission work with supplied, reviewed facts and authenticated host authority. The host manages callback deadlines and interruptions. Fact extraction and semantic verification sit outside these modules, as do atomic authorization and publication, durable handoff journaling and callback isolation.",
+          "A delivery acknowledgment confirms receipt; whether the receiving application uses the information is a separate question. Effects whose outcome is uncertain are not retried automatically. The linked documentation details the recovery and admission contracts.",
+          "The experience study covers six task families and twelve synthetic worlds; broader generalization and total operating cost remain unmeasured. The 1,000-source timing study uses uncontrolled cache state. The recovery study covers eight process interruptions. Production latency, a service availability objective and recovery from power loss require separate evaluation.",
+          "An earlier exploratory memory-on/off trial covers eight tasks, with one generation per condition, a preset intent and a restricted catalogue. Answers were assessed by AI judges without human annotations. The test harness interrupted one condition during parallel searches. Results describe this exploratory integration; broader improvement, public-library performance and full-system performance require separate evaluation.",
+        ],
+        fr: [
+          "La bibliothèque est en version alpha. La reprise exige une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée. Le retrait s’applique aux lectures ultérieures de la bibliothèque. Les copies exportées et les informations déjà apprises par un modèle restent hors de son action.",
+          "Le rendu et l’admission facultatifs travaillent à partir de faits déjà fournis et revus, sous une autorité d’hôte authentifiée. L’hôte gère les délais et interruptions des fonctions de rappel. L’extraction et la vérification du sens des faits, l’autorisation et la publication en une seule opération, le journal durable des remises et l’isolation des fonctions de rappel demandent des mécanismes complémentaires.",
+          "L’accusé de réception atteste la remise ; l’utilisation effective par le destinataire reste à vérifier. Quand l’effet est incertain, aucune relance automatique n’est effectuée. La documentation liée détaille les contrats de reprise et d’admission.",
+          "L’étude d’apprentissage couvre six familles de tâches et douze mondes synthétiques ; la généralisation et le coût complet restent à mesurer. L’étude à 1 000 sources porte sur une charge de laboratoire, avec un état du cache non contrôlé. Les huit interruptions évaluent la reprise après arrêt de processus. La latence en production, un objectif de disponibilité en service et la résistance aux coupures électriques demandent des protocoles distincts.",
+          "Un premier essai exploratoire avec et sans mémoire porte sur huit tâches : une génération par condition, une intention imposée et un catalogue réduit, avec des juges IA et sans annotation humaine. Le banc a interrompu une condition lors de recherches parallèles. Les résultats décrivent ce parcours exploratoire ; une évaluation du noyau public, du système complet et de la généralisation demande des protocoles distincts.",
+        ],
+      },
+    },
+    links: [
+      {
+        label: {
+          en: "Try the demo",
+          fr: "Voir la démo",
+        },
+        url: "/demos/persistent-memory/?lang=en",
+        urlFr: "/demos/persistent-memory/?lang=fr",
+      },
+      {
+        label: {
+          en: "Learning from a previous task: study and data",
+          fr: "Apprendre d’une tâche précédente : étude et données",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/action-20261023/experience/README.fr.md",
+      },
+      {
+        label: {
+          en: "Corrections and withdrawals: comparative study",
+          fr: "Corrections et retraits : étude comparative",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/lifecycle-20261022/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/lifecycle-20261022/README.fr.md",
+      },
+      {
+        label: {
+          en: "Core performance and crash recovery: measurements",
+          fr: "Performance du noyau et reprise après panne : mesures",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261023/core-optimization-20261023/README.fr.md",
+      },
+      {
+        label: {
+          en: "Memory cycle after initial loading: paired measurements",
+          fr: "Cycle mémoire après chargement : mesures appariées",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261025/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261025/README.fr.md",
+      },
+      {
+        label: {
+          en: "Identifier validation: three paired measurements",
+          fr: "Validation des identifiants : trois mesures appariées",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261026/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/efficiency-20261026/README.fr.md",
+      },
+      {
+        label: {
+          en: "Experience transfer across real tasks and agents",
+          fr: "Réutiliser une expérience entre missions et agents réels",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/experience-transfer-20261026/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/experience-transfer-20261026/README.fr.md",
+      },
+      {
+        label: {
+          en: "Earlier eight-task trial: results and original answers",
+          fr: "Premier essai sur huit tâches : résultats et réponses originales",
+        },
+        url: "/demos/persistent-memory/?lang=en#memory-on-off",
+        urlFr: "/demos/persistent-memory/?lang=fr#memory-on-off",
+      },
+      {
+        label: {
+          en: "Public repository and documentation",
+          fr: "Dépôt public et documentation",
+        },
+        url: "https://github.com/Musyg/persistent-memory",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/README.fr.md",
+      },
+      {
+        label: {
+          en: "Core alpha and installation files",
+          fr: "Noyau alpha et fichiers d’installation",
+        },
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a5",
+      },
+      {
+        label: {
+          en: "Linux package qualification",
+          fr: "Qualification des paquets sous Linux",
+        },
+        url: "https://github.com/Musyg/persistent-memory/releases/download/v0.3.0a5/QUALIFICATION.json",
+      },
+      {
+        label: {
+          en: "Recovery contract",
+          fr: "Contrat de reprise",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/RECOVERY.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/RECOVERY.fr.md",
+      },
+      {
+        label: {
+          en: "Structured output and admission",
+          fr: "Rendu structuré et admission",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/ADMISSION.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/ADMISSION.fr.md",
+      },
+    ],
+  },
+  {
+    id: "bifrost-vpn",
+    slug: { en: "bifrost-vpn", fr: "bifrost-vpn" },
+    title: "Bifrost",
+    brandImage: "/brands/bifrost/bifrost-fond-sombre.png",
+    summary: {
+      en: "Self-hosted VPN in Rust for Windows and Linux, with WireGuard, a kill switch, and leak-prevention checks.",
+      fr: "VPN auto-hébergé en Rust pour Windows et Linux, avec WireGuard, kill switch et contrôles anti-fuite.",
+    },
+    role: {
+      en: "Systems and network design and development",
+      fr: "Conception et développement système et réseau",
+    },
+    status: "public-mvp",
+    practice: "software",
+    filters: ["software"],
+    evidenceCheckedAt: "2026-09-16",
+    stack: [
+      "Rust",
+      "WireGuard",
+      "Windows Filtering Platform",
+      "nftables",
+      "Tokio",
+      "Linux",
+      "Windows",
+    ],
+    cardStack: ["Rust", "WireGuard", "WFP", "nftables"],
+    sections: {
+      summary: {
+        en: [
+          "Bifrost is a self-hosted VPN for Windows 11 and Linux, written in Rust. Its public MVP provides a background service and command-line client, focused on the tunnel lifecycle and preventing traffic from escaping outside it.",
+        ],
+        fr: [
+          "Bifrost est un VPN auto-hébergé pour Windows 11 et Linux, développé en Rust. Son MVP public comprend un service système et un client en ligne de commande, centrés sur le cycle de vie du tunnel et la prévention des sorties de trafic hors de celui-ci.",
+        ],
+      },
+      role: {
+        en: [
+          "I design and develop Bifrost: tunnel orchestration, traffic filtering, DNS handling, system integration, and test tooling.",
+        ],
+        fr: [
+          "Je conçois et développe Bifrost : orchestration du tunnel, filtrage réseau, gestion DNS, intégration système et outils de test.",
+        ],
+      },
+      problem: {
+        en: [
+          "A tunnel can stop, reconnect, or encounter a DNS failure. The system must coordinate these transitions with traffic filtering, rather than treating a successful connection as sufficient protection.",
+        ],
+        fr: [
+          "Un tunnel peut s’interrompre, se reconnecter ou rencontrer une panne DNS. Le système doit coordonner ces transitions avec le filtrage du trafic, plutôt que de considérer une connexion réussie comme une protection suffisante.",
+        ],
+      },
+      architecture: {
+        en: [
+          "The Rust workspace separates the state machine, privileged daemon, CLI, authenticated IPC, firewall, DNS, and secret storage. WireGuard integrates with the Linux kernel and WireGuardNT on Windows; filtering uses nftables and Windows Filtering Platform respectively.",
+        ],
+        fr: [
+          "L’espace de travail Rust sépare la machine à états, le daemon privilégié, la CLI, les communications IPC authentifiées, le pare-feu, le DNS et le stockage des secrets. WireGuard s’intègre au noyau Linux et à WireGuardNT sous Windows ; le filtrage repose respectivement sur nftables et Windows Filtering Platform.",
+        ],
+      },
+      decisions: {
+        en: [
+          "The state machine produces actions without making system calls. Firewall policies are represented as data, allowing their behavior to be tested separately from privileged execution. The kill switch is designed to remain armed across connection failures and reconnects.",
+        ],
+        fr: [
+          "La machine à états produit des actions sans effectuer d’appels système. Les politiques de pare-feu sont représentées sous forme de données, ce qui permet de les tester séparément de leur exécution privilégiée. Le kill switch est conçu pour rester armé lors des échecs de connexion et des reconnexions.",
+        ],
+      },
+      security: { en: [], fr: [] },
+      testing: {
+        en: [
+          "The public repository includes leak-test benches and automated Linux and Windows checks. The CI run linked below passed its Linux and Windows jobs, leak suite, dependency audit, and software-component inventory generation. Tests that cannot run in a given environment are tracked separately.",
+        ],
+        fr: [
+          "Le dépôt public comprend des bancs anti-fuite et des contrôles automatisés Linux et Windows. L’exécution CI liée ci-dessous a réussi ses contrôles Linux et Windows, sa suite anti-fuite, son audit des dépendances et la génération de l’inventaire des composants logiciels. Les tests qui ne peuvent pas tourner dans un environnement donné sont suivis séparément.",
+        ],
+      },
+      results: { en: [], fr: [] },
+      evidence: { en: [], fr: [] },
+      limitations: {
+        en: [
+          "The project remains in development. The public version provides a daemon and CLI; the graphical interface is not yet published, and no GitHub release is available. Anti-censorship transports and OS telemetry reduction are ongoing work: DNS filtering is implemented, while some Windows layers remain unfinished. This MVP does not guarantee leak-free operation or anonymity in every environment.",
+        ],
+        fr: [
+          "Le projet reste en développement. La version publique fournit un daemon et une CLI ; l’interface graphique n’est pas encore publiée et aucune release GitHub n’est disponible. Les transports anti-censure et la réduction de la télémétrie de l’OS sont en cours : le filtrage DNS est implémenté, tandis que certaines couches Windows restent à terminer. Ce MVP ne constitue pas une garantie universelle d’absence de fuite ou d’anonymat.",
+        ],
+      },
+    },
+    links: [
+      {
+        label: { en: "Public repository", fr: "Dépôt public" },
+        url: "https://github.com/Musyg/bifrost-vpn",
+      },
+      {
+        label: {
+          en: "Documented project status",
+          fr: "État documenté du projet",
+        },
+        url: "https://github.com/Musyg/bifrost-vpn/blob/2f3a995842a44dd8b4476b11e42354acff4399d2/ETAT.md",
+      },
+      {
+        label: { en: "Linux and Windows CI", fr: "CI Linux et Windows" },
+        url: "https://github.com/Musyg/bifrost-vpn/actions/runs/34884823744",
+      },
+    ],
+  },
   {
     id: "celo-credentials",
     slug: { en: "celo-credentials", fr: "celo-credentials" },
@@ -154,10 +507,10 @@ export const projects: Project[] = [
       },
       role: {
         en: [
-          "I designed and implemented the smart contract, deployment path, relayer backend, indexer boundary, frontend integration, tests, and public evidence manifest.",
+          "I designed and implemented the smart contract, deployment workflow, relayer backend, frontend integration, and tests.",
         ],
         fr: [
-          "J’ai conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, la limite de l’indexeur, l’intégration frontend, les tests et le manifeste de preuves publiques.",
+          "J’ai conçu et réalisé le smart contract, le parcours de déploiement, le backend de relais, l’intégration frontend et les tests.",
         ],
       },
       problem: {
@@ -178,19 +531,15 @@ export const projects: Project[] = [
       },
       decisions: {
         en: [
-          "Gas sponsorship stays in a separate relayer, credentials cannot be transferred, nonces are single use, deadlines expire, and revocation is limited to the contract owner or the still-authorized original issuer.",
+          "Gas sponsorship stays in a separate relayer, credentials cannot be transferred, nonces are single use, vouchers have a validity period, and revocation is limited to the contract owner or the still-authorized original issuer.",
         ],
         fr: [
-          "La prise en charge des frais reste dans un relais séparé, les attestations ne peuvent pas être transférées, les nonces sont à usage unique, les échéances expirent et la révocation est limitée au propriétaire du contrat ou à l’émetteur d’origine encore autorisé.",
+          "La prise en charge des frais reste dans un relais séparé, les attestations ne peuvent pas être transférées, les nonces sont à usage unique, les autorisations ont une durée de validité et la révocation est limitée au propriétaire du contrat ou à l’émetteur d’origine encore autorisé.",
         ],
       },
       security: {
-        en: [
-          "These controls are security design for a self-authored application. They are not presented as an external audit of the system.",
-        ],
-        fr: [
-          "Ces contrôles relèvent de la conception de la sécurité d’une application réalisée par son auteur. Ils ne sont pas présentés comme un audit externe du système.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
         en: [
@@ -209,12 +558,8 @@ export const projects: Project[] = [
         ],
       },
       evidence: {
-        en: [
-          "The repository, verified contract, deployment transaction, lifecycle transactions, and machine-readable deployment manifest are public.",
-        ],
-        fr: [
-          "Le dépôt, le contrat vérifié, la transaction de déploiement, les transactions du cycle de vie et le manifeste de déploiement lisible par machine sont publics.",
-        ],
+        en: [],
+        fr: [],
       },
       limitations: {
         en: [
@@ -241,18 +586,22 @@ export const projects: Project[] = [
     slug: { en: "security-reviews", fr: "security-reviews" },
     title: "Security Reviews",
     summary: {
-      en: "A public catalogue of reproducible smart-contract and applied-security research.",
-      fr: "Un catalogue public de travaux reproductibles sur les smart contracts et la sécurité appliquée.",
+      en: "Cybersecurity research across the web, applications, smart contracts and AI agents.",
+      fr: "Recherche en cybersécurité sur le Web, les applications, les smart contracts et les agents IA.",
     },
     role: {
-      en: "Security research, exploit reproduction, remediation, and reporting",
-      fr: "Recherche en sécurité, reproduction d’exploits, correction et rapports",
+      en: "Cybersecurity research, red teaming, code reviews and reports",
+      fr: "Recherche en cybersécurité, red teaming, revues de code et rapports",
     },
     status: "published-research",
     practice: "security",
-    filters: ["security", "blockchain"],
+    filters: ["security", "web", "blockchain"],
     evidenceCheckedAt: "2026-08-24",
+    cardStack: ["Web / API", "Solidity", "LLM / agents", "IPI"],
     stack: [
+      "Web / API",
+      "LLM / agents",
+      "IPI",
       "Solidity",
       "Vyper",
       "Foundry",
@@ -264,10 +613,12 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Security Reviews groups public, reproducible research by vulnerability class. Each review links a vulnerable target, an exploit proof of concept, a remediated branch, a report, and automated checks.",
+          "This page brings together published code reviews, an AI red teaming case study on Gray Swan, and my research profiles on HackerOne, Cantina and Code4rena.",
+          "The Security Reviews GitHub catalogue groups reproducible research by vulnerability class. Each review links a vulnerable target, an exploit proof of concept, a remediated branch, a report, and automated checks.",
         ],
         fr: [
-          "Security Reviews regroupe des recherches publiques et reproductibles par classe de vulnérabilité. Chaque revue relie une cible vulnérable, une preuve de concept d’exploitation, une branche corrigée, un rapport et des contrôles automatisés.",
+          "Cette page réunit les revues de code publiées, une étude de cas de red teaming IA menée sur Gray Swan et mes profils de recherche sur HackerOne, Cantina et Code4rena.",
+          "Le catalogue GitHub Security Reviews regroupe des recherches reproductibles par classe de vulnérabilité. Chaque revue relie une cible vulnérable, une preuve de concept d’exploitation, une branche corrigée, un rapport et des contrôles automatisés.",
         ],
       },
       role: {
@@ -295,19 +646,15 @@ export const projects: Project[] = [
         ],
       },
       decisions: {
-        en: [
-          "The portfolio names the vulnerability classes and public programs involved, but does not publish private report details, unsupported severity claims, or finding counts as a credibility shortcut.",
-        ],
-        fr: [
-          "Le portfolio nomme les classes de vulnérabilités et les programmes publics concernés, mais ne publie ni détails privés, ni gravité non étayée, ni nombre de constats comme raccourci de crédibilité.",
-        ],
+        en: [],
+        fr: [],
       },
       security: {
         en: [
-          "The research covers Web and application security, Solidity and Vyper contracts, ZK circuits, formal verification, and indirect prompt injection. Public platform associations include the Treasury Board of Canada Secretariat, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2, and K2.",
+          "The research covers Web and application security, Solidity and Vyper contracts, ZK circuits, formal verification, and indirect prompt injection. My public profiles document contributions involving the Treasury Board of Canada Secretariat, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2, and K2.",
         ],
         fr: [
-          "Les recherches couvrent la sécurité Web et applicative, les contrats Solidity et Vyper, les circuits ZK, la vérification formelle et l’injection indirecte de prompts. Les associations publiques comprennent le Secrétariat du Conseil du Trésor du Canada, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2 et K2.",
+          "Les recherches couvrent la sécurité Web et applicative, les contrats Solidity et Vyper, les circuits ZK, la vérification formelle et l’injection indirecte de prompts. Mes profils publics documentent des contributions concernant le Secrétariat du Conseil du Trésor du Canada, Reserve Protocol, Revert Finance, Chainlink Payment Abstraction V2 et K2.",
         ],
       },
       testing: {
@@ -327,19 +674,13 @@ export const projects: Project[] = [
         ],
       },
       evidence: {
-        en: [
-          "The catalogue and linked repositories are public. HackerOne, Gray Swan Arena, Cantina, and Code4rena provide separate public professional profiles.",
-        ],
-        fr: [
-          "Le catalogue et les dépôts liés sont publics. HackerOne, Gray Swan Arena, Cantina et Code4rena fournissent des profils professionnels publics distincts.",
-        ],
+        en: [],
+        fr: [],
       },
       limitations: {
-        en: [
-          "Only attributable public evidence appears here. Private submissions, unpublished technical details, and non-public program information remain excluded.",
-        ],
+        en: ["Confidential submissions are not included in this catalogue."],
         fr: [
-          "Seules les preuves publiques et attribuables apparaissent ici. Les soumissions privées, les détails techniques non publiés et les informations non publiques des programmes restent exclus.",
+          "Les signalements confidentiels ne figurent pas dans ce catalogue.",
         ],
       },
     },
@@ -352,8 +693,11 @@ export const projects: Project[] = [
         url: "https://github.com/Musyg/security-reviews",
       },
       {
-        label: { en: "HackerOne profile", fr: "Profil HackerOne" },
-        url: "https://hackerone.com/gilmu",
+        label: {
+          en: "Profiles and contributions",
+          fr: "Profils et contributions",
+        },
+        url: "#security-profiles-title",
       },
     ],
   },
@@ -416,12 +760,8 @@ export const projects: Project[] = [
         ],
       },
       security: {
-        en: [
-          "This project demonstrates reliability engineering for agent infrastructure. It is not presented as a security audit or as proof that an integrated application is secure.",
-        ],
-        fr: [
-          "Ce projet démontre une ingénierie de fiabilité pour l’infrastructure d’agents. Il n’est pas présenté comme un audit de sécurité ni comme la preuve qu’une application intégrée est sécurisée.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
         en: [
@@ -434,18 +774,18 @@ export const projects: Project[] = [
       results: {
         en: [
           "Version v0.1.0 is publicly released with documented installation and examples for each resilience component.",
+          "The circuit breaker demo follows a dependency outage, blocked requests and recovery: three failures open the circuit, two requests are rejected without calling upstream, then a successful probe restores normal flow. Two recorded executions of the same scenario compare the calls reaching the dependency with and without protection.",
+          "Two more scenarios follow a failed task through the DLQ and a successful replay, and MQTT messages buffered during an outage then transmitted after reconnection.",
         ],
         fr: [
           "La version v0.1.0 est publiée avec une installation documentée et des exemples pour chaque composant de résilience.",
+          "La démo du circuit breaker suit une panne, le blocage des appels et la reprise : trois échecs ouvrent le circuit, deux demandes sont rejetées sans appeler la dépendance, puis une sonde réussie rétablit le flux normal. Deux exécutions enregistrées du même scénario comparent les appels qui atteignent la dépendance, avec et sans protection.",
+          "Deux autres parcours suivent une tâche en échec jusqu’à la DLQ puis à sa relance réussie, et des messages MQTT conservés pendant une coupure puis transmis à la reconnexion.",
         ],
       },
       evidence: {
-        en: [
-          "The source repository, release, package metadata, tests, and CI configuration are public.",
-        ],
-        fr: [
-          "Le dépôt source, la release, les métadonnées du package, les tests et la configuration de CI sont publics.",
-        ],
+        en: [],
+        fr: [],
       },
       limitations: {
         en: [
@@ -457,6 +797,11 @@ export const projects: Project[] = [
       },
     },
     links: [
+      {
+        label: { en: "Try the demo", fr: "Voir la démo" },
+        url: "/demos/agent-resilience/?lang=en",
+        urlFr: "/demos/agent-resilience/?lang=fr",
+      },
       {
         label: { en: "Public repository", fr: "Dépôt public" },
         url: "https://github.com/Musyg/agent-resilience",
@@ -472,18 +817,27 @@ export const projects: Project[] = [
     slug: { en: "inaricom", fr: "inaricom" },
     title: "Inaricom",
     summary: {
-      en: "Business website, custom backend and supplier integration for WooCommerce. Rebuild in progress.",
-      fr: "Site professionnel, backend sur mesure et intégration fournisseur pour WooCommerce. Refonte en cours.",
+      en: "WordPress/WooCommerce and React website, supplier integration, commerce and sales agents, quote and invoicing workflows, and event analytics.",
+      fr: "Site WordPress/WooCommerce et React, intégration fournisseur, agents e-commerce et commerciaux, parcours devis et facturation, analyse des événements.",
     },
     role: {
-      en: "Website and backend development",
-      fr: "Développement du site et du backend",
+      en: "Website, backend and business-agent development",
+      fr: "Développement du site, du backend et des agents métier",
     },
-    status: "active-rebuild",
     practice: "software",
-    filters: ["software", "web"],
-    evidenceCheckedAt: "2026-09-12",
+    filters: ["software", "web", "ai"],
+    evidenceCheckedAt: "2026-10-11",
     projectStart: { en: "2023", fr: "2023" },
+    cardStack: [
+      "WordPress",
+      "WooCommerce",
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "PHP",
+      "REST",
+      "Python",
+    ],
     stack: [
       "WordPress",
       "WooCommerce",
@@ -492,94 +846,98 @@ export const projects: Project[] = [
       "React 19",
       "TypeScript",
       "Vite",
+      "Python",
+      "FastAPI",
+      "Qdrant",
+      "FAISS",
+      "MQTT",
+      "TimescaleDB",
     ],
     sections: {
       summary: {
         en: [
-          "Inaricom is a business, services, publishing, and commerce site under active rebuild. The implementation keeps WordPress and WooCommerce as the publishing and commerce backend while adding page-specific React interfaces.",
+          "Inaricom brings together services, technical publishing and commerce. I develop its WordPress/WooCommerce backend and React interfaces, alongside agents for ecommerce operations, customer support and sales workflows.",
         ],
         fr: [
-          "Inaricom est un site professionnel de services, de publication et de commerce en cours de refonte. L’implémentation conserve WordPress et WooCommerce comme backend éditorial et commercial tout en ajoutant des interfaces React propres à chaque page.",
+          "Inaricom réunit services, publication technique et commerce. Je développe son backend WordPress/WooCommerce et ses interfaces React, ainsi que les agents destinés aux opérations e-commerce, au SAV et aux parcours commerciaux.",
         ],
       },
       role: {
         en: [
           "I develop the website and backend: WordPress content models, custom PHP plugins and REST endpoints, React interfaces, contact flows and deployment tooling. I also built a DigiKey integration to search and import product references into WooCommerce, enrich product information and update prices and availability.",
+          "I also develop Inaricom’s business services: ecommerce tools, document-grounded support and a sales-agent chain for prospecting, qualification, negotiation, closing and follow-up. The work includes quote and contract preparation, client acceptance and PDF invoicing modules linked to WooCommerce orders. I built a WooCommerce tracking pixel and the event-to-KPI pipeline feeding Analytics Hub.",
         ],
         fr: [
           "Je développe le site et son backend : modèles de contenu WordPress, extensions PHP et points d’accès REST dédiés, interfaces React, parcours de contact et outils de déploiement. J’ai également créé une intégration DigiKey pour rechercher et importer des références dans WooCommerce, enrichir les fiches produits et mettre à jour les prix et disponibilités.",
+          "Je développe aussi les services métier d’Inaricom : outils e-commerce, assistance fondée sur les documents et chaîne d’agents commerciaux pour la prospection, la qualification, la négociation, le closing et le suivi. Le travail comprend la préparation des devis et contrats, l’acceptation client et les modules de facturation PDF reliés aux commandes WooCommerce. J’ai créé un pixel de suivi WooCommerce et la chaîne d’événements et de KPI destinée à l’Analytics Hub.",
         ],
       },
       problem: {
         en: [
-          "The rebuild must combine service content, technical publishing, contact and quote paths, and e-commerce without replacing the established content and commerce backend with an unnecessary custom engine.",
+          "The goal is to combine service content, technical publishing, contact and quote paths, and e-commerce while retaining the established content and commerce backend.",
         ],
         fr: [
-          "La refonte doit réunir les contenus de services, la publication technique, les parcours de contact et de devis ainsi que l’e-commerce sans remplacer le backend éditorial et commercial par un moteur sur mesure inutile.",
+          "L’objectif est de réunir les contenus de services, la publication technique, les parcours de contact et de devis ainsi que l’e-commerce en conservant le backend éditorial et commercial existant.",
         ],
       },
       architecture: {
         en: [
           "A custom PHP plugin defines content models, taxonomies, structured data, REST endpoints, and conditional React mount points. Vite builds page-specific React 19 and TypeScript interfaces while WooCommerce retains catalogue and purchase flows.",
           "A separate supplier integration connects the DigiKey API to WooCommerce products. It maps descriptions, images and technical attributes, with manual updates and a scheduled price and stock synchronisation mechanism. A custom contact endpoint connects the website form to WordPress mail handling.",
+          "Python/FastAPI services connect the ecommerce agent to WooCommerce catalogue, stock and order information. Catalogue retrieval uses FAISS; Qdrant provides ecommerce knowledge and store-specific support documents. These sources inform the support workflow and response preparation.",
+          "The sales-agent chain connects prospecting, qualification, negotiation and closing. The commercial case retains the quote, contract, operator approval and client acceptance. Dedicated PHP modules link PDF invoice generation and archiving to the accepted quote, WooCommerce order and payment receipt.",
+          "The tracking pixel collects storefront events; analytics services aggregate and attribute them before publishing KPI snapshots to Analytics Hub over MQTT. Business-agent events provide a second input to the analysis pipeline.",
         ],
         fr: [
           "Une extension PHP dédiée définit les modèles de contenu, les taxonomies, les données structurées, les points d’accès REST et les points de montage conditionnels de React. Vite construit des interfaces React 19 et TypeScript propres à chaque page, tandis que WooCommerce conserve le catalogue et les parcours d’achat.",
           "Une intégration fournisseur distincte relie l’API DigiKey aux produits WooCommerce. Elle associe descriptions, images et caractéristiques techniques, avec des mises à jour manuelles et un mécanisme de synchronisation programmé des prix et stocks. Un point d’accès dédié relie le formulaire de contact à l’envoi de courriels WordPress.",
+          "Des services Python/FastAPI relient l’agent e-commerce aux informations de catalogue, de stock et de commande de WooCommerce. La recherche dans le catalogue utilise FAISS ; Qdrant apporte les connaissances e-commerce et les documents SAV du site. Ces sources alimentent le parcours d’assistance et la préparation des réponses.",
+          "La chaîne d’agents commerciaux relie prospection, qualification, négociation et closing. Le dossier commercial conserve le devis, le contrat, la validation opérateur et l’acceptation du client. Des modules PHP dédiés relient la génération et l’archivage des factures PDF au devis accepté, à la commande WooCommerce et au reçu de paiement.",
+          "Le pixel collecte les événements du site ; les services d’analyse les agrègent et leur attribuent des canaux avant de transmettre les KPI à l’Analytics Hub via MQTT. Les événements des agents métier constituent une seconde entrée de la chaîne d’analyse.",
         ],
       },
       decisions: {
         en: [
           "React is loaded only where an interface needs it. Classic WordPress and WooCommerce pages remain available, and the custom layer focuses on services, content, structured data, and interactions rather than reimplementing commerce.",
+          "I separate catalogue retrieval, store documents and sales context so each workflow uses the appropriate source. Qualification and document preparation are distinct from approval, signature and payment.",
         ],
         fr: [
           "React n’est chargé que lorsqu’une interface en a besoin. Les pages WordPress et WooCommerce classiques restent disponibles et la couche dédiée se concentre sur les services, les contenus, les données structurées et les interactions plutôt que de réimplémenter le commerce.",
+          "Je distingue recherche catalogue, documents du site et contexte commercial pour fournir les bonnes sources à chaque parcours. La qualification et la préparation documentaire restent des étapes distinctes de la validation, de la signature et du paiement.",
         ],
       },
       security: {
-        en: [
-          "This is a Web development case study. Security controls applied during implementation remain engineering work, and the project is not presented as having received an external security audit.",
-        ],
-        fr: [
-          "Il s’agit d’une étude de cas de développement Web. Les contrôles de sécurité appliqués pendant la réalisation restent des travaux d’ingénierie et le projet n’est pas présenté comme ayant reçu un audit de sécurité externe.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
-        en: [
-          "Read-only source inspection confirmed the product-import, attribute-mapping and price/stock update implementation. This review did not execute supplier requests, import products or send messages. End-to-end verification of the rebuilt site remains pending until the public relaunch.",
-        ],
-        fr: [
-          "L’examen du code en lecture seule a confirmé l’implémentation de l’import produit, de la correspondance des attributs et de la mise à jour des prix et stocks. Cet examen n’a déclenché aucun appel fournisseur, import ni envoi de message. La vérification de bout en bout de la nouvelle version reste à réaliser lors de la remise en ligne.",
-        ],
+        en: [],
+        fr: [],
       },
       results: {
-        en: [
-          "The current hybrid architecture and contributor scope are documented. On 2026-08-24 the public URL still returned HTTP 503, which matches the active construction state rather than a completed release.",
-        ],
-        fr: [
-          "L’architecture hybride actuelle et le périmètre de contribution sont documentés. Le 24 août 2026, l’URL publique répondait encore en HTTP 503, ce qui correspond à l’état de construction et non à une version terminée.",
-        ],
+        en: [],
+        fr: [],
       },
       evidence: {
         en: [
-          "The project URL and bilingual GitHub case study document the publicly described architecture. The supplier integration and contact implementation were reviewed separately in private source. This portfolio presents their role without publishing code or infrastructure details.",
+          "Project documentation is available through the resources below. Integration source code is private.",
         ],
         fr: [
-          "L’URL du projet et l’étude de cas GitHub bilingue documentent l’architecture déjà décrite publiquement. L’intégration fournisseur et le traitement du contact ont été examinés séparément dans le code privé. Le portfolio en présente le rôle sans publier le code ni les détails d’infrastructure.",
+          "La documentation du projet est disponible dans les ressources ci-dessous. Le code des intégrations est privé.",
         ],
       },
       limitations: {
         en: [
-          "The rebuild remains in progress. Current production activation of the supplier integration and contact backend has not been verified. Sales, traffic and private business data are not published.",
+          "The supplier and contact-backend integrations are developed. The sales-agent chain and its quote-to-invoice workflow are being integrated.",
         ],
         fr: [
-          "La refonte reste en cours. L’activation actuelle en production de l’intégration fournisseur et du backend de contact n’a pas été vérifiée. Les ventes, l’audience et les données commerciales privées ne sont pas publiées.",
+          "Les intégrations fournisseur et backend de contact sont développées. La chaîne d’agents commerciaux et son parcours devis-facturation sont en cours d’intégration.",
         ],
       },
     },
     links: [
       {
-        label: { en: "Project URL", fr: "URL du projet" },
+        label: { en: "Visit Inaricom", fr: "Voir Inaricom" },
         url: "https://inaricom.com",
       },
       {
@@ -595,18 +953,27 @@ export const projects: Project[] = [
     slug: { en: "mikasshop", fr: "mikasshop" },
     title: "Mika's Shop",
     summary: {
-      en: "Shopify storefront, AI shopping assistant and customer-support integrations for a pet-products store.",
-      fr: "Boutique Shopify, assistant conversationnel IA et intégrations SAV pour une enseigne dédiée aux animaux de compagnie.",
+      en: "Shopify storefront, AI store assistant, customer-support agents, content workflows and custom event analytics.",
+      fr: "Boutique Shopify, assistant conversationnel IA, agents SAV, parcours éditoriaux et analyse des événements sur mesure.",
     },
     role: {
-      en: "Storefront design, AI chat development and customer-support integrations",
-      fr: "Conception de la boutique, développement du chat IA et intégrations SAV",
+      en: "Storefront design, AI agents and ecommerce analytics",
+      fr: "Conception de la boutique, agents IA et analyse e-commerce",
     },
     status: "store-and-integrations",
     practice: "software",
     filters: ["software", "web", "ai"],
-    evidenceCheckedAt: "2026-09-12",
+    evidenceCheckedAt: "2026-10-11",
     projectStart: { en: "2024", fr: "2024" },
+    cardStack: [
+      "Shopify",
+      "Python",
+      "FastAPI",
+      "Shopify APIs",
+      "Qdrant",
+      "SSE",
+      "MQTT",
+    ],
     stack: [
       "Shopify",
       "Liquid theme configuration",
@@ -617,22 +984,27 @@ export const projects: Project[] = [
       "Shopify APIs",
       "SSE",
       "MQTT",
+      "Qdrant",
+      "FAISS",
+      "TimescaleDB",
     ],
     sections: {
       summary: {
         en: [
-          "Mika is the real cat at the heart of the Mika's Shop brand. The Shopify pet-products store also includes a custom AI shopping assistant and customer-support services developed in Talos. Visitors can browse by cat profile or product category; the assistant is designed to guide them using the catalogue and site content.",
+          "Mika is the real cat at the heart of the Mika's Shop brand. Behind the Shopify storefront, I developed an AI store assistant, ecommerce and support agents, customer-relationship workflows and event analytics. Visitors can browse by cat profile or product category; the assistant guides them using catalogue and site information.",
         ],
         fr: [
-          "Mika est le vrai chat qui incarne la marque Mika's Shop. La boutique Shopify pour animaux de compagnie intègre également un assistant conversationnel IA sur mesure et des services SAV développés dans Talos. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant est conçu pour guider les visiteurs à partir du catalogue et des contenus du site.",
+          "Mika est le vrai chat qui incarne la marque Mika's Shop. Derrière la boutique Shopify, j’ai développé un assistant conversationnel IA, des agents e-commerce et SAV, des parcours de relation client et l’analyse des événements. La navigation propose des entrées par profil de chat ou catégorie de produits ; l’assistant guide les visiteurs à partir du catalogue et des contenus du site.",
         ],
       },
       role: {
         en: [
-          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and the store's integration with the Talos customer-support agent.",
+          "I designed and built the storefront, from the theme, navigation and collections to localization, editorial content and launch. I also developed the store’s AI assistant interface and backend, its catalogue and site-content tools, and its customer-support agent integration.",
+          "The work also includes branded customer-relationship workflows, a custom tracking pixel, KPI delivery to Analytics Hub and an editorial workflow that prepares French and English product-based drafts for review.",
         ],
         fr: [
-          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de la boutique à l’agent SAV Talos.",
+          "J’ai conçu et réalisé la boutique, du thème, de la navigation et des collections à la localisation, aux contenus éditoriaux et à la mise en ligne. J’ai aussi développé l’interface et le backend de l’assistant conversationnel, ses outils d’accès au catalogue et aux contenus du site, ainsi que l’intégration de l’agent SAV de la boutique.",
+          "Le travail comprend aussi les parcours de relation client aux couleurs de la marque, un pixel de suivi maison, la transmission de KPI à l’Analytics Hub et un parcours éditorial qui prépare des brouillons français et anglais à partir des produits, à relire avant publication.",
         ],
       },
       problem: {
@@ -646,36 +1018,32 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "Shopify provides hosted commerce, catalogue, localization, cart, and checkout. The storefront theme organizes collections by product type and cat profile, multilingual content, editorial pages, and customer information.",
-          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate Talos SAV service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
+          "The store’s AI assistant uses a Python/FastAPI service with tool calls for product advice, catalogue search, stock, store policies and navigation links. A browser widget displays responses over SSE. A separate customer-support service handles support requests, response drafts, operator approval and escalation pathways, with MQTT connecting the approval workflow.",
+          "The ecommerce backend supplies catalogue retrieval through FAISS and business knowledge and store policies through Qdrant. Product prices and availability come from dedicated Shopify-reading tools. The content workflow prepares product-based drafts; content and SEO skills document task-specific instructions and editorial methods.",
+          "The custom pixel collects storefront events such as product views, cart additions and purchase steps. The analytics pipeline stores, aggregates and attributes events, then sends KPI snapshots to Analytics Hub via MQTT. Support and ecommerce agents also emit business events for analysis.",
         ],
         fr: [
           "Shopify fournit le commerce hébergé, le catalogue, la localisation, le panier et le passage en caisse. Le thème de la vitrine organise les collections par type de produit et profil de chat, les contenus multilingues, les pages éditoriales et les informations clients.",
-          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV Talos distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
+          "L’assistant de la boutique s’appuie sur un service Python/FastAPI et des appels d’outils pour le conseil produit, la recherche dans le catalogue, les stocks, les politiques de la boutique et les liens de navigation. Un widget affiche les réponses via SSE. Un service SAV distinct gère les demandes d’assistance, les brouillons, les validations et les transmissions à un opérateur, avec MQTT pour relier le parcours de validation.",
+          "Le backend e-commerce apporte la recherche catalogue via FAISS, ainsi que les connaissances métier et les politiques de la boutique via Qdrant. Les prix et disponibilités proviennent d’outils dédiés de lecture Shopify. Le parcours éditorial prépare des brouillons à partir des produits ; des skills de contenu et de SEO décrivent les consignes propres aux tâches et les méthodes éditoriales.",
+          "Le pixel maison collecte les événements de la boutique, notamment les vues produit, ajouts au panier et étapes d’achat. La chaîne d’analyse stocke, agrège et attribue ces événements, puis transmet des KPI à l’Analytics Hub via MQTT. Les agents SAV et e-commerce émettent également des événements métier destinés à l’analyse.",
         ],
       },
       decisions: {
         en: [
-          "Shopify retains checkout and commerce while custom services handle guidance and support. The assistant’s tool set focuses on site information rather than order lookup or purchases. The SAV follows a separate workflow with configurable response routing and operator escalation; it is not the public shopping chat.",
+          "Shopify retains checkout and commerce while custom services handle guidance and support. The assistant’s tool set focuses on site information rather than order lookup or purchases. Customer support follows a separate workflow with configurable response routing and operator escalation; it is not the public shopping chat.",
         ],
         fr: [
           "Shopify conserve le paiement et le commerce, tandis que les services sur mesure prennent en charge le conseil et l’assistance. Les outils de l’assistant portent sur les informations du site, pas sur le suivi de commandes ni les achats. Le SAV suit un parcours distinct, avec un mode de réponse configurable et une transmission à un opérateur ; il ne se confond pas avec l’assistant public.",
         ],
       },
       security: {
-        en: [
-          "Checkout and payment processing use Shopify-managed flows. This case study does not claim a custom payment system or an external security audit.",
-        ],
-        fr: [
-          "Le passage en caisse et le traitement des paiements utilisent les parcours gérés par Shopify. Cette étude de cas ne revendique ni système de paiement personnalisé ni audit de sécurité externe.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
-        en: [
-          "Public verification covered the homepage, product, brand, blog, guide, localization, cart-related controls, shipping information, returns information, and policy paths. No test purchase was made.",
-        ],
-        fr: [
-          "La vérification publique a couvert l’accueil, les produits, la marque, le blog, le guide, la localisation, les contrôles liés au panier, la livraison, les retours et les politiques. Aucun achat de test n’a été effectué.",
-        ],
+        en: [],
+        fr: [],
       },
       results: {
         en: [
@@ -687,18 +1055,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The public storefront and dated bilingual GitHub case study document the shop. The AI assistant backend, browser widget and store-specific SAV integration were inspected separately in private source. No private code or customer data is published here.",
+          "Explore the storefront and its case study. The assistant and support integrations use private source code.",
         ],
         fr: [
-          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. Le backend de l’assistant conversationnel, son widget et l’intégration SAV propre à la boutique ont été examinés séparément dans le code privé. Aucun code privé ni donnée client n’est publié ici.",
+          "Découvrez la boutique et son étude de cas. Le code de l’assistant et des intégrations SAV est privé.",
         ],
       },
       limitations: {
         en: [
-          "The storefront is public. Current production operation of the chat and SAV services has not been verified for this case study; no live chat, ticket or purchase was submitted during the review. Sales, conversion, traffic and revenue are not claimed.",
+          "The store is online. The AI assistant and customer-support integrations are developed.",
         ],
         fr: [
-          "La vitrine est publique. Le fonctionnement actuel en production du chat et des services SAV n’a pas été vérifié pour cette étude de cas ; aucun message, ticket ni achat n’a été soumis pendant l’examen. Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas revendiqués.",
+          "La boutique est en ligne. L’assistant IA et les intégrations SAV sont développés.",
         ],
       },
     },
@@ -708,7 +1076,7 @@ export const projects: Project[] = [
         url: "https://mikasshop.com",
       },
       {
-        label: { en: "Storefront case study", fr: "Étude de la vitrine" },
+        label: { en: "Case study", fr: "Étude de cas" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/mikasshop.md",
         urlFr:
           "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/mikasshop.md",
@@ -720,8 +1088,8 @@ export const projects: Project[] = [
     slug: { en: "pedi-sense", fr: "pedi-sense" },
     title: "Pedi-Sense",
     summary: {
-      en: "Shopify storefront, customer-support agent and custom ecommerce integrations.",
-      fr: "Boutique Shopify, agent SAV et intégrations e-commerce sur mesure.",
+      en: "Shopify storefront, customer-support agent, ecommerce agents, branded email workflows and event analytics.",
+      fr: "Boutique Shopify, agent SAV, agents e-commerce, automatisations email et analyse des événements.",
     },
     role: {
       en: "Storefront design, agent development and backend integrations",
@@ -730,8 +1098,9 @@ export const projects: Project[] = [
     status: "store-and-integrations",
     practice: "software",
     filters: ["software", "web", "ai"],
-    evidenceCheckedAt: "2026-09-12",
+    evidenceCheckedAt: "2026-10-11",
     projectStart: { en: "Late 2022", fr: "Fin 2022" },
+    cardStack: ["Shopify", "Python", "Shopify APIs", "MQTT", "Listmonk"],
     stack: [
       "Shopify",
       "Liquid theme configuration",
@@ -741,22 +1110,27 @@ export const projects: Project[] = [
       "Shopify APIs",
       "MQTT",
       "Listmonk",
+      "Qdrant",
+      "FAISS",
+      "TimescaleDB",
     ],
     sections: {
       summary: {
         en: [
-          "Pedi-Sense combines a Shopify storefront with custom services developed within Talos: customer support, email workflows and ecommerce event analysis. The work covers both the customer-facing store and the integrations behind it.",
+          "Pedi-Sense combines a Shopify storefront with ecommerce and support agents, branded email workflows, catalogue retrieval and event analytics. The work covers the customer-facing store and the business workflows behind it.",
         ],
         fr: [
-          "Pedi-Sense associe une boutique Shopify à des services sur mesure développés dans Talos : SAV, parcours email et analyse des événements e-commerce. Le travail couvre à la fois la boutique visible par les clients et les intégrations qui l’accompagnent.",
+          "Pedi-Sense associe une boutique Shopify à des agents e-commerce et SAV, des emails aux couleurs de la marque, une recherche catalogue et l’analyse des événements. Le travail couvre la boutique visible par les clients et les parcours métier qui l’accompagnent.",
         ],
       },
       role: {
         en: [
-          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed the Pedi-Sense integrations within Talos, including customer-support workflows, branded emails and storefront event collection.",
+          "I designed and implemented the storefront, from theme composition and product options to localization, content and launch. I also developed Pedi-Sense’s business integrations, including customer-support workflows, branded emails and storefront event collection.",
+          "I built the store’s tracking-pixel integration and the event-to-KPI path into Analytics Hub. The agent workflows also connect to semantic catalogue retrieval and ecommerce knowledge, with content and SEO workflows developed for the store.",
         ],
         fr: [
-          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations Pedi-Sense dans Talos, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
+          "J’ai conçu et réalisé la boutique, de la composition du thème et des options produit à la localisation, aux contenus et à la mise en ligne. J’ai aussi développé les intégrations métier de Pedi-Sense, notamment les parcours SAV, les emails aux couleurs de la marque et la collecte des événements de la boutique.",
+          "J’ai développé l’intégration du pixel de suivi et le parcours des événements jusqu’aux KPI de l’Analytics Hub. Les agents sont aussi reliés à la recherche sémantique du catalogue et aux connaissances e-commerce, avec des parcours de contenu et de SEO développés pour la boutique.",
         ],
       },
       problem: {
@@ -769,35 +1143,31 @@ export const projects: Project[] = [
       },
       architecture: {
         en: [
-          "Shopify handles the catalogue, accounts, cart and checkout. Separate Talos services provide a multi-store support agent, connections to order and product information, email delivery through Listmonk, and event collection and attribution. Python services, Shopify APIs and MQTT connect these components.",
+          "Shopify handles the catalogue, accounts, cart and checkout. Python services connect ecommerce and support agents to product, stock and order information. The support workflow prepares responses for review and escalation; branded email workflows cover order confirmations, abandoned carts and shipping through Listmonk.",
+          "Catalogue retrieval uses FAISS, while Qdrant provides ecommerce knowledge and store-specific policies and FAQs. The content and SEO workflow includes task instructions documented as skills. This separates catalogue facts, support documents and editorial methods.",
+          "The store’s custom pixel integration collects navigation and purchase-path events. Analytics services store, aggregate and attribute them, then publish KPI snapshots to Analytics Hub over MQTT. Events emitted by the business agents feed the analysis pipeline too.",
         ],
         fr: [
-          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Talos distincts apportent un agent SAV multi-boutiques, l’accès aux informations de commande et de produit, l’envoi d’emails via Listmonk ainsi que la collecte et l’attribution des événements. Des services Python, les API Shopify et MQTT relient ces composants.",
+          "Shopify prend en charge le catalogue, les comptes, le panier et le paiement. Des services Python relient les agents e-commerce et SAV aux informations de produit, de stock et de commande. Le SAV prépare les réponses à valider et les transmissions à un opérateur ; les automatisations email couvrent confirmations de commande, paniers abandonnés et expéditions via Listmonk.",
+          "La recherche catalogue utilise FAISS, tandis que Qdrant apporte les connaissances e-commerce, les politiques et les FAQ de la boutique. Le parcours de contenu et de SEO comprend des consignes de tâche documentées sous forme de skills. Les faits du catalogue, les documents SAV et les méthodes éditoriales restent ainsi distincts.",
+          "L’intégration du pixel maison collecte les événements de navigation et du parcours d’achat. Les services d’analyse les stockent, les agrègent et leur attribuent des canaux, puis publient des KPI vers l’Analytics Hub via MQTT. Les événements émis par les agents métier alimentent aussi la chaîne d’analyse.",
         ],
       },
       decisions: {
         en: [
-          "I kept checkout within Shopify while developing business workflows separately. The support implementation includes draft responses for review and escalation to an operator. The email implementation includes templates for order confirmations, abandoned carts and shipping notifications; implementation and activation are tracked separately.",
+          "I kept checkout within Shopify while developing business workflows separately. Support includes draft responses for review and escalation to an operator. Email templates cover order confirmations, abandoned carts and shipping notifications.",
         ],
         fr: [
-          "J’ai conservé le paiement dans Shopify tout en développant les parcours métier séparément. Le SAV comprend des brouillons à valider et une transmission à un opérateur. La partie email comprend des modèles de confirmation de commande, de panier abandonné et d’expédition ; le développement et l’activation sont suivis séparément.",
+          "J’ai conservé le paiement dans Shopify tout en développant les parcours métier séparément. Le SAV comprend des brouillons à valider et une transmission à un opérateur. Les modèles d’emails couvrent les confirmations de commande, les paniers abandonnés et les expéditions.",
         ],
       },
       security: {
-        en: [
-          "Payments and checkout remain Shopify-managed. This development case study does not claim a custom payment service, an external security audit, or independent validation of product and health statements.",
-        ],
-        fr: [
-          "Les paiements et le passage en caisse restent gérés par Shopify. Cette étude de cas de développement ne revendique ni service de paiement personnalisé, ni audit de sécurité externe, ni validation des affirmations relatives au produit ou à la santé.",
-        ],
+        en: [],
+        fr: [],
       },
       testing: {
-        en: [
-          "Public verification covered the home, product, brand, FAQ, contact, policy, blog, language, region, product-option, cart, and metadata surfaces. No test purchase was made.",
-        ],
-        fr: [
-          "La vérification publique a couvert l’accueil, le produit, la marque, la FAQ, le contact, les politiques, le blog, les langues, les régions, les options produit, le panier et les métadonnées. Aucun achat de test n’a été effectué.",
-        ],
+        en: [],
+        fr: [],
       },
       results: {
         en: [
@@ -809,18 +1179,18 @@ export const projects: Project[] = [
       },
       evidence: {
         en: [
-          "The public storefront and the dated bilingual GitHub case study document the storefront. The Talos implementation was reviewed separately in the private source repository; its code and customer data are not published here.",
+          "Explore the storefront and its case study. The business integrations use private source code.",
         ],
         fr: [
-          "La boutique publique et l’étude de cas GitHub bilingue datée documentent la vitrine. L’implémentation Talos a été examinée séparément dans le dépôt source privé ; son code et les données clients ne sont pas publiés ici.",
+          "Découvrez la boutique et son étude de cas. Le code des intégrations métier est privé.",
         ],
       },
       limitations: {
         en: [
-          "The storefront is publicly accessible. The backend implementation is private; its current production activation has not been verified for this case study. Sales, conversion, traffic and revenue are not claimed, and product effects and customer statements are not treated as verified evidence.",
+          "The store is online. The agent services and backend integrations are developed.",
         ],
         fr: [
-          "La vitrine est accessible publiquement. L’implémentation backend est privée ; son activation actuelle en production n’a pas été vérifiée pour cette étude de cas. Les ventes, la conversion, l’audience et le chiffre d’affaires ne sont pas revendiqués, et les effets du produit comme les témoignages clients ne sont pas considérés comme des preuves vérifiées.",
+          "La boutique est en ligne. Les services d’agents et les intégrations backend sont développés.",
         ],
       },
     },
@@ -830,7 +1200,7 @@ export const projects: Project[] = [
         url: "https://pedi-sense.com",
       },
       {
-        label: { en: "Storefront case study", fr: "Étude de la vitrine" },
+        label: { en: "Case study", fr: "Étude de cas" },
         url: "https://github.com/Musyg/Musyg/blob/main/case-studies/en/pedi-sense.md",
         urlFr:
           "https://github.com/Musyg/Musyg/blob/main/case-studies/fr/pedi-sense.md",
@@ -839,7 +1209,11 @@ export const projects: Project[] = [
   },
 ];
 
+export type PlatformId =
+  "github" | "gray-swan" | "hackerone" | "cantina" | "code4rena";
+
 export const professionalProfiles: Array<{
+  platform: PlatformId;
   name: string;
   handle: string;
   association: Bilingual;
@@ -847,6 +1221,7 @@ export const professionalProfiles: Array<{
 }> = [
   {
     name: "GitHub",
+    platform: "github",
     handle: "Musyg",
     association: {
       en: "Public repositories and releases",
@@ -856,6 +1231,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "Gray Swan Arena",
+    platform: "gray-swan",
     handle: "GilMu",
     association: {
       en: "Indirect prompt injection research and adversarial AI evaluation",
@@ -865,6 +1241,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "HackerOne",
+    platform: "hackerone",
     handle: "@gilmu",
     association: {
       en: "Treasury Board of Canada Secretariat",
@@ -874,6 +1251,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "Cantina",
+    platform: "cantina",
     handle: "@GilMu",
     association: {
       en: "Reserve Protocol and Revert Finance",
@@ -883,6 +1261,7 @@ export const professionalProfiles: Array<{
   },
   {
     name: "Code4rena",
+    platform: "code4rena",
     handle: "@GiMu84",
     association: {
       en: "Chainlink Payment Abstraction V2 and K2",
@@ -911,6 +1290,7 @@ export const practicePages: Record<
     capabilities: {
       en: [
         "Backend APIs, asynchronous services, integrations, and observability",
+        "Rust systems software, Windows and Linux services, and network orchestration",
         "React and TypeScript interfaces connected to existing platforms",
         "WordPress, WooCommerce, Shopify, and localized commerce paths",
         "Smart-contract applications and public testnet deployments",
@@ -918,52 +1298,83 @@ export const practicePages: Record<
       ],
       fr: [
         "API backend, services asynchrones, intégrations et observabilité",
+        "Logiciels système en Rust, services Windows et Linux et orchestration réseau",
         "Interfaces React et TypeScript reliées à des plateformes existantes",
         "WordPress, WooCommerce, Shopify et parcours commerciaux localisés",
         "Applications de smart contracts et déploiements publics sur testnet",
         "Packaging, CI, publication de versions et documentation d’exploitation",
       ],
     },
-    projectIds: ["celo-credentials", "inaricom", "mikasshop", "pedi-sense"],
+    projectIds: [
+      "persistent-memory",
+      "bifrost-vpn",
+      "celo-credentials",
+      "agent-resilience",
+      "inaricom",
+      "mikasshop",
+      "pedi-sense",
+    ],
     evidence: {
       en: [
         "Source-verified Celo Sepolia deployment and reproducible lifecycle",
         "Public Shopify storefronts with bilingual case studies",
         "Published Python packages, releases, tests, and CI",
-        "Documented Inaricom architecture, with the site currently being rebuilt",
+        "Inaricom website with documented WordPress, WooCommerce and React architecture",
       ],
       fr: [
         "Déploiement Celo Sepolia au code source vérifié et cycle reproductible",
         "Boutiques Shopify publiques avec études de cas bilingues",
         "Packages Python, releases, tests et CI publics",
-        "Architecture Inaricom documentée, avec un site en cours de refonte",
+        "Site Inaricom avec architecture WordPress, WooCommerce et React documentée",
       ],
     },
   },
   ai: {
-    title: { en: "Agentic AI engineering", fr: "Ingénierie IA agentique" },
+    title: {
+      en: "AI engineering and multi-agent systems",
+      fr: "Ingénierie IA et systèmes multi-agents",
+    },
     lead: {
-      en: "Agent orchestration, local-model operations, memory, resilience, observability, and AI adoption through pilot projects.",
-      fr: "Orchestration d’agents, exploitation de modèles locaux, mémoire, résilience, observabilité et adoption de l’IA par des projets pilotes.",
+      en: "I design AI systems that bring together specialized agents, language models, memory and tools. I develop their orchestration and their capabilities for analysis, automation and interaction, while exploring prediction and decision support through machine learning.",
+      fr: "Je conçois des systèmes d’IA qui associent agents spécialisés, modèles de langage, mémoire et outils. Je développe leur orchestration et leurs capacités d’analyse, d’automatisation et d’interaction, tout en explorant la prédiction et l’aide à la décision par l’apprentissage automatique.",
     },
     capabilities: {
       en: [
-        "Capability-based multi-agent routing and tool-enabled workflows",
-        "Circuit breakers, dead-letter queues, offline buffers, and recovery",
+        "Distributed multi-agent orchestration, capability-based routing and tool-enabled Python workflows",
         "Local LLM routing, GGUF operations, and resource-aware model loading",
         "Graph and vector memory, event buses, and real-time interaction",
+        "Predictive experimentation, forecasting and simulated decision support",
+        "Voice and multimodal interaction: streaming speech, vision and document processing",
+        "Observability, circuit breakers, dead-letter queues, offline buffers and recovery",
+        "Applications include commerce and customer support: Python services connected to business APIs, with operator review and escalation in support workflows",
         "Pilot design, controls, evidence, and governance for AI adoption",
       ],
       fr: [
-        "Routage multi-agent fondé sur les capacités et workflows avec outils",
-        "Circuit breakers, files de messages en échec, tampons hors ligne et reprise",
+        "Orchestration multi-agent distribuée, routage fondé sur les capacités et workflows Python avec outils",
         "Routage de LLM locaux, exploitation de GGUF et chargement adapté aux ressources",
         "Mémoire graphe et vectorielle, bus d’événements et interaction en temps réel",
+        "Expérimentation prédictive, prévision et aide à la décision en simulation",
+        "Interaction vocale et multimodale : parole en flux continu, vision et traitement de documents",
+        "Observabilité, circuit breakers, files de messages en échec, tampons hors ligne et reprise",
+        "Applications au commerce et au SAV : services Python reliés aux API métier, avec validation et transmission à un opérateur dans les parcours SAV",
         "Conception de pilotes, contrôles, preuves et gouvernance pour l’adoption de l’IA",
       ],
     },
-    projectIds: ["agent-resilience"],
+    projectIds: [
+      "persistent-memory",
+      "agent-resilience",
+      "mikasshop",
+      "pedi-sense",
+      "inaricom",
+    ],
     evidence: [
+      {
+        label: {
+          en: "Talos, since December 2024: public architecture and evaluation material; implementation remains private",
+          fr: "Talos, depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
+        },
+        url: "https://github.com/Musyg/talos",
+      },
       {
         label: {
           en: "Agent Resilience: public source, tests, packaging, and CI",
@@ -993,34 +1404,32 @@ export const practicePages: Record<
         url: "https://musyg.github.io/ai-adoption-playbook/",
         urlFr: "https://musyg.github.io/ai-adoption-playbook/fr/",
       },
-      {
-        label: {
-          en: "Talos, since December 2024: public architecture and evaluation material; implementation remains private",
-          fr: "Talos, depuis décembre 2024 : architecture et éléments d’évaluation publics ; l’implémentation reste privée",
-        },
-        url: "https://github.com/Musyg/talos",
-      },
     ],
   },
   security: {
-    title: { en: "Security research", fr: "Recherche en sécurité" },
+    title: {
+      en: "Cybersecurity and red teaming",
+      fr: "Cybersécurité et red teaming",
+    },
     lead: {
-      en: "Web and application security, smart contracts, ZK and applied cryptography, and agentic AI attack paths.",
-      fr: "Sécurité Web et applicative, smart contracts, ZK et cryptographie appliquée, ainsi que chaînes d’attaque sur les IA agentiques.",
+      en: "I research vulnerabilities and test how systems withstand adversarial scenarios: websites, applications and APIs, crypto protocols and smart contracts, and agentic AI systems.",
+      fr: "Je recherche des vulnérabilités et j’évalue la résistance des systèmes à des scénarios adversariaux : sites Web, applications et API, protocoles crypto et smart contracts, systèmes d’IA agentiques.",
     },
     capabilities: {
       en: [
-        "Web applications, APIs, access control, business logic, and integrations",
+        "Vulnerability research and red teaming within authorized scopes",
+        "Websites, applications, APIs, access control, business logic, and integrations",
         "Solidity and Vyper contracts with executable exploit proofs",
         "Circuits, verifiers, proof systems, and formal verification",
-        "Indirect prompt injection, tool misuse, and adversarial evaluation",
+        "AI red teaming: indirect prompt injection, tool misuse, and adversarial evaluation",
         "Reports that separate public evidence from private program details",
       ],
       fr: [
-        "Applications Web, API, contrôle d’accès, logique métier et intégrations",
+        "Recherche de vulnérabilités et red teaming dans des périmètres autorisés",
+        "Sites Web, applications, API, contrôle d’accès, logique métier et intégrations",
         "Contrats Solidity et Vyper avec preuves d’exploitation exécutables",
         "Circuits, vérificateurs, systèmes de preuve et vérification formelle",
-        "Injection indirecte de prompts, usage abusif d’outils et évaluation adversariale",
+        "Red teaming IA : injection indirecte de prompts, usage abusif d’outils et évaluation adversariale",
         "Rapports séparant les preuves publiques des détails privés des programmes",
       ],
     },
@@ -1074,7 +1483,7 @@ export const ui = {
     externalLinks: "Public links",
     nextProject: "Next case study",
     notFoundTitle: "Page not found",
-    notFoundText: "The requested page is not part of the public portfolio.",
+    notFoundText: "This page could not be found.",
     homeAction: "Return home",
   },
   fr: {
@@ -1106,7 +1515,7 @@ export const ui = {
     externalLinks: "Liens publics",
     nextProject: "Étude de cas suivante",
     notFoundTitle: "Page introuvable",
-    notFoundText: "La page demandée ne fait pas partie du portfolio public.",
+    notFoundText: "Cette page est introuvable.",
     homeAction: "Retour à l’accueil",
   },
 } as const;
