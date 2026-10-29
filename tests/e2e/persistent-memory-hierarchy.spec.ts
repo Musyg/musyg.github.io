@@ -5,11 +5,20 @@ import { expect, test, type Locator } from "@playwright/test";
 
 // Visibility alone does not detect a sticky header covering text or a link.
 async function expectUncovered(locator: Locator) {
-  await expect(locator).toBeInViewport({ ratio: 1 });
+  await expect(locator).toBeVisible();
   await expect
     .poll(() =>
       locator.evaluate((element) => {
         const rect = element.getBoundingClientRect();
+        // Native focus scrolling can leave a fractional CSS pixel at a viewport
+        // edge. Allow at most one pixel; every inset hit-test must still pass.
+        if (
+          rect.left < -1 ||
+          rect.top < -1 ||
+          rect.right > innerWidth + 1 ||
+          rect.bottom > innerHeight + 1
+        )
+          return false;
         return [
           rect.left + 1,
           (rect.left + rect.right) / 2,
