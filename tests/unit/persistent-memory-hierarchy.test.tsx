@@ -48,7 +48,7 @@ describe("Persistent Memory evidence hierarchy", () => {
       expect(cards).toHaveLength(3);
       expect(cards[0]).toHaveTextContent(/77.*96.*29\/96/);
       expect(cards[0]).toHaveTextContent(
-        locale === "fr" ? /Neuf.*inconnus/ : /Nine.*unknown/,
+        locale === "fr" ? /neuf.*inconnus/ : /nine.*unknown/,
       );
       expect(cards[1]).toHaveTextContent(/Luna.*22.*24.*13\/24.*7\/24/);
       expect(cards[2]).toHaveTextContent(/100.*751.*389.*SQLite/);
@@ -94,6 +94,22 @@ describe("Persistent Memory evidence hierarchy", () => {
           ".case-toc a[href='#persistent-memory-results']",
         ),
       ).toBeInTheDocument();
+      expect(
+        container.querySelector("#persistent-memory-limitations"),
+      ).toHaveTextContent(
+        locale === "fr"
+          ? "Utilisation et intégration"
+          : "Usage and integration",
+      );
+      const narrative = Object.values(project.sections)
+        .flatMap((section) => section[locale])
+        .join(" ");
+      expect(narrative).not.toMatch(
+        /n’établissent ni|restent à mesurer|demandent des protocoles distincts|broader generalization|require separate evaluation|establish neither|remain unmeasured/,
+      );
+      expect(narrative).toMatch(/False.*0/);
+      expect(narrative).toMatch(/0[.,]227.*0[.,]383/);
+      expect(narrative).toMatch(/215.*166.*49.*430.*860/);
     },
   );
 

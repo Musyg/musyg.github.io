@@ -667,6 +667,12 @@ function ProjectPage({
   const nextProject = projects[(currentIndex + 1) % projects.length];
   const isCelo = project.id === "celo-credentials";
   const isPersistentMemory = project.id === "persistent-memory";
+  const sectionTitle = (section: SectionKey) =>
+    isPersistentMemory && section === "limitations"
+      ? locale === "fr"
+        ? "Utilisation et intégration"
+        : "Usage and integration"
+      : localized(sectionLabels[section], locale);
   const orderedSections: SectionKey[] = isPersistentMemory
     ? [
         "summary",
@@ -794,7 +800,7 @@ function ProjectPage({
                 {visibleSections.map((section) => (
                   <li key={section}>
                     <a className="text-link" href={`#${project.id}-${section}`}>
-                      {localized(sectionLabels[section], locale)}
+                      {sectionTitle(section)}
                     </a>
                   </li>
                 ))}
@@ -808,9 +814,7 @@ function ProjectPage({
               <span className="section-number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h2 id={`${project.id}-${section}`}>
-                {localized(sectionLabels[section], locale)}
-              </h2>
+              <h2 id={`${project.id}-${section}`}>{sectionTitle(section)}</h2>
               {isPersistentMemory && section === "results" ? (
                 <PersistentMemoryResults locale={locale} project={project} />
               ) : (
