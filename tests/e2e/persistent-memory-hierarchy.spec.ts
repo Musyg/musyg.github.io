@@ -49,7 +49,11 @@ for (const locale of ["fr", "en"]) {
           : testInfo.outputPath(
               `memory-hierarchy-${locale}-${width}-${state}.png`,
             );
+      await page.evaluate(() => window.scrollTo(0, 0));
       await page.screenshot({ path: screenshotPath("closed"), fullPage: true });
+      await page.locator(".memory-priorities").screenshot({
+        path: screenshotPath("priorities"),
+      });
       const summary = disclosure.locator("summary");
       await summary.focus();
       await summary.press("Enter");
