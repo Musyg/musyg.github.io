@@ -146,7 +146,7 @@ export const projects: Project[] = [
     status: "public-alpha",
     practice: "ai",
     filters: ["software", "ai"],
-    evidenceCheckedAt: "2026-10-26",
+    evidenceCheckedAt: "2026-10-29",
     stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
     cardStack: ["Python", "SQLite", "FTS5", "MCP"],
     sections: {
@@ -210,6 +210,7 @@ export const projects: Project[] = [
         en: [
           "Core 0.3.0a5 ships with installation files, checksums and French and English documentation; the separate policy registry remains at 0.2.0a2. The code, synthetic data, protocols and offline calculations are public.",
           "Across 100 fixed lifecycle scenarios, all 751 valid reads were preserved and all 389 forbidden reads were blocked, matching a SQLite reference with retained current authority. After the core change, four SIGKILL interruption scenarios passed on each Linux host, with observed recovery times of 0.227 to 0.383 seconds.",
+          "Across eight synthetic development histories retained between sessions, memory achieves 77 successes out of 96, compared with 29 for a lexical baseline with validity checks. Nine outcomes per configuration remain unknown and stay in the denominator. The campaign used 192 generations without retries; two Codex readers assessed the answers blind to the configuration.",
           "At 1,000 sources and 50 searches, a targeted core optimization reduced instrumented workload time by 28.01% on one host and 27.68% on the other, with the same checked outcomes and stored file sizes. Each figure comes from one before-and-after observation per host.",
           "A later study separates the initial load of 1,000 sources from a subsequent cycle of additions, searches, reads and withdrawal. Across three paired observations, the cycle took a median 2.35% less time and the initial load a median 29.13% less time, with the same checked outcomes. These descriptive timings concern this synthetic workload; production latency and total operating cost require separate evaluation.",
           "At 1,500 sources followed by ten additions and 50 searches, a targeted change to identifier validation reduced instrumented workload time by a median 6.79% and CPU time by 6.77% across three new paired observations. All six runs preserved the expected reads and withdrawal behavior, with identical final storage sizes.",
@@ -220,6 +221,7 @@ export const projects: Project[] = [
         fr: [
           "Le noyau 0.3.0a5 est distribué avec ses fichiers d’installation, sommes de contrôle et guides français et anglais ; le registre de politiques indépendant reste en version 0.2.0a2. Le code, les données synthétiques, les protocoles et les calculs hors ligne sont publics.",
           "Sur 100 scénarios de cycle de vie définis à l’avance, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées, à égalité avec une référence SQLite conservant une autorité actuelle. Après la modification du noyau, quatre scénarios d’interruption par SIGKILL passent sur chacun des deux hôtes Linux, avec une reprise observée entre 0,227 et 0,383 seconde.",
+          "Sur huit historiques synthétiques de développement conservés entre sessions, la mémoire obtient 77 réussites sur 96, contre 29 pour une référence lexicale avec contrôle de validité. Chaque configuration conserve neuf résultats inconnus au dénominateur. La campagne comprend 192 générations sans relance ; deux lecteurs Codex ont évalué les réponses à l’aveugle, sans connaître la configuration.",
           "À 1 000 sources et 50 recherches, une optimisation ciblée du noyau réduit la durée de la charge instrumentée de 28,01 % sur un hôte et de 27,68 % sur l’autre, avec les mêmes résultats vérifiés et les mêmes tailles de fichiers stockés. Chaque chiffre provient d’une seule observation avant et après par hôte.",
           "Une étude complémentaire distingue le chargement initial de 1 000 sources du cycle suivant : ajouts, recherches, lectures et retrait. Sur trois comparaisons appariées, la durée du cycle baisse de 2,35 % en médiane et celle du chargement initial de 29,13 %, avec les mêmes résultats vérifiés. Ces mesures descriptives portent sur cette charge synthétique ; la latence en production et le coût complet relèvent d’autres évaluations.",
           "Sur une charge de 1 500 sources suivie de dix ajouts et 50 recherches, une modification ciblée de la validation des identifiants réduit la durée instrumentée de 6,79 % en médiane et le temps CPU de 6,77 %. Les trois nouvelles comparaisons appariées conservent les lectures et les retraits attendus, avec les mêmes tailles de stockage final dans les six exécutions.",
@@ -257,6 +259,15 @@ export const projects: Project[] = [
         },
         url: "/demos/persistent-memory/?lang=en",
         urlFr: "/demos/persistent-memory/?lang=fr",
+      },
+      {
+        label: {
+          en: "Answer quality: protocol, results and data",
+          fr: "Qualité des réponses : protocole, résultats et données",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/answer-quality-20261029/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/benchmarks/answer-quality-20261029/README.fr.md",
       },
       {
         label: {
