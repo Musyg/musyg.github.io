@@ -8,6 +8,7 @@ import { BifrostSpotlight } from "./BifrostSpotlight";
 import { MikaOverview } from "./MikaOverview";
 import { PediOverview } from "./PediOverview";
 import { InaricomOverview } from "./InaricomOverview";
+import { PersistentMemoryResults } from "./PersistentMemoryResults";
 import { ContactForm } from "./ContactForm";
 import { PlatformLogo } from "./PlatformLogo";
 import { IpiArticle } from "./IpiArticle";
@@ -29,6 +30,7 @@ import {
   type Practice,
   type Project,
   type ProjectFilter,
+  type SectionKey,
 } from "./content/site";
 import {
   aboutPath,
@@ -664,7 +666,24 @@ function ProjectPage({
   const currentIndex = projects.findIndex((item) => item.id === project.id);
   const nextProject = projects[(currentIndex + 1) % projects.length];
   const isCelo = project.id === "celo-credentials";
-  const visibleSections = sectionOrder.filter(
+  const isPersistentMemory = project.id === "persistent-memory";
+  const orderedSections: SectionKey[] = isPersistentMemory
+    ? [
+        "summary",
+        "results",
+        ...sectionOrder.filter(
+          (section) => section !== "summary" && section !== "results",
+        ),
+      ]
+    : sectionOrder;
+  const heroLinks = isPersistentMemory
+    ? project.links.filter(
+        (link) =>
+          link.url === "/demos/persistent-memory/?lang=en" ||
+          link.url === "https://github.com/Musyg/persistent-memory",
+      )
+    : project.links;
+  const visibleSections = orderedSections.filter(
     (section) =>
       !(isCelo && section === "results") &&
       (section === "evidence" || project.sections[section][locale].length > 0),
@@ -704,7 +723,7 @@ function ProjectPage({
             <h1>{project.title}</h1>
             <p className="page-lead">{localized(project.summary, locale)}</p>
             <nav className="case-actions" aria-label={content.externalLinks}>
-              {project.links.map((link) => (
+              {heroLinks.map((link) => (
                 <a
                   className="button button-secondary"
                   href={publicLinkUrl(link, locale)}
@@ -713,6 +732,16 @@ function ProjectPage({
                   {localized(link.label, locale)}
                 </a>
               ))}
+              {isPersistentMemory && (
+                <a
+                  className="button button-secondary"
+                  href="#persistent-memory-results"
+                >
+                  {locale === "fr"
+                    ? "Voir les trois résultats clés"
+                    : "Explore the three key results"}
+                </a>
+              )}
             </nav>
           </div>
           <dl className="metadata-rail">
@@ -751,7 +780,7 @@ function ProjectPage({
               <li key={item}>{item}</li>
             ))}
           </ul>
-          {isCelo && (
+          {(isCelo || isPersistentMemory) && (
             <nav
               className="case-toc"
               aria-label={
@@ -782,9 +811,13 @@ function ProjectPage({
               <h2 id={`${project.id}-${section}`}>
                 {localized(sectionLabels[section], locale)}
               </h2>
-              {project.sections[section][locale].map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+              {isPersistentMemory && section === "results" ? (
+                <PersistentMemoryResults locale={locale} project={project} />
+              ) : (
+                project.sections[section][locale].map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))
+              )}
               {section === "evidence" ? (
                 <ul className="evidence-links">
                   {project.links.map((link) => (

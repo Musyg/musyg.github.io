@@ -18,6 +18,8 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      MEMORY_HIERARCHY_SCREENSHOT_DIR: ${{ runner.temp }}/memory-hierarchy
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -28,6 +30,14 @@ jobs:
       - run: npm ci
       - run: npm exec -- playwright install --with-deps chromium
       - run: npm run verify
+      - name: Save Persistent Memory hierarchy previews
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: memory-hierarchy-${{ github.sha }}
+          path: ${{ runner.temp }}/memory-hierarchy/*.png
+          if-no-files-found: ignore
+          retention-days: 3
       - name: Save validated Hostinger release
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
