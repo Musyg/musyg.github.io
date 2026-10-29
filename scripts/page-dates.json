@@ -1,0 +1,138 @@
+{
+  "/": {
+    "hash": "dedcda8bd1e93932",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/": {
+    "hash": "6ac2ebb51f9ee0cc",
+    "lastmod": "2026-10-29"
+  },
+  "/work/": {
+    "hash": "2a09a645d79ab3ca",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/": {
+    "hash": "43cc8cf63a5d8d73",
+    "lastmod": "2026-10-29"
+  },
+  "/engineering/": {
+    "hash": "290f2ce72986506a",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/ingenierie/": {
+    "hash": "fd7ad2398741bb3e",
+    "lastmod": "2026-10-29"
+  },
+  "/ai-systems/": {
+    "hash": "6ca0281940bb2648",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/systemes-ia/": {
+    "hash": "9513b18f2d693152",
+    "lastmod": "2026-10-29"
+  },
+  "/security-research/": {
+    "hash": "fd51c9f0b0fe7019",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/recherche-securite/": {
+    "hash": "4ef1971d9b9b743f",
+    "lastmod": "2026-10-29"
+  },
+  "/writing/": {
+    "hash": "6462d862ebbc6493",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/publications/": {
+    "hash": "62fb743ec86e559c",
+    "lastmod": "2026-10-29"
+  },
+  "/about/": {
+    "hash": "f80c156e28d329a7",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/a-propos/": {
+    "hash": "90938037fb330a70",
+    "lastmod": "2026-10-29"
+  },
+  "/contact/": {
+    "hash": "9324a8ab734bb246",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/contact/": {
+    "hash": "2ddb5f414d327012",
+    "lastmod": "2026-10-29"
+  },
+  "/work/persistent-memory/": {
+    "hash": "cd55d16b3ccda61a",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/persistent-memory/": {
+    "hash": "6a4db28b8a3e1476",
+    "lastmod": "2026-10-29"
+  },
+  "/work/bifrost-vpn/": {
+    "hash": "6cd1b2e01e77f72d",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/bifrost-vpn/": {
+    "hash": "d00599b6ea131fc0",
+    "lastmod": "2026-10-29"
+  },
+  "/work/celo-credentials/": {
+    "hash": "8cea75b5d40a05cc",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/celo-credentials/": {
+    "hash": "7cadb485e93808f9",
+    "lastmod": "2026-10-29"
+  },
+  "/work/security-reviews/": {
+    "hash": "3a344bac4222bf6a",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/security-reviews/": {
+    "hash": "4934e1d1c8203ea4",
+    "lastmod": "2026-10-29"
+  },
+  "/work/agent-resilience/": {
+    "hash": "e510454304517ace",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/agent-resilience/": {
+    "hash": "0604662876cb2294",
+    "lastmod": "2026-10-29"
+  },
+  "/work/inaricom/": {
+    "hash": "36277d4ab7bc740e",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/inaricom/": {
+    "hash": "2fb4533e07fdeddf",
+    "lastmod": "2026-10-29"
+  },
+  "/work/mikasshop/": {
+    "hash": "bd1670ab1ce32401",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/mikasshop/": {
+    "hash": "899ee6a01502805b",
+    "lastmod": "2026-10-29"
+  },
+  "/work/pedi-sense/": {
+    "hash": "c79f9d695c16e52d",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/realisations/pedi-sense/": {
+    "hash": "92e23d41ac444bc6",
+    "lastmod": "2026-10-29"
+  },
+  "/writing/indirect-injection-refund-agent/": {
+    "hash": "eb6ce4d986ecf499",
+    "lastmod": "2026-10-29"
+  },
+  "/fr/publications/injection-indirecte-remboursement/": {
+    "hash": "30b8a528fe403582",
+    "lastmod": "2026-10-29"
+  }
+}

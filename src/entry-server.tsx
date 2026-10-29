@@ -2,8 +2,26 @@ import { renderToString } from "react-dom/server";
 import App from "./App";
 import { canonicalUrl, publicRoutes, routeFor } from "./routes";
 import { professionalProfiles } from "./content/site";
+import { engagements } from "./content/engagements";
+import { ipiArticle, ipiImage, ipiPublishedAt } from "./content/ipi-article";
 
 export const routePaths = publicRoutes.map((route) => route.path);
+export { routeAliases } from "./routes";
+
+// Build-time metadata for generated discovery files (llms.txt).
+export const routeIndex = publicRoutes.map(
+  ({ path, counterpart, locale, kind, title, description }) => ({
+    path,
+    counterpart,
+    locale,
+    kind,
+    title,
+    description,
+  }),
+);
+export const profileLinks = professionalProfiles.map(
+  ({ name, handle, url }) => ({ name, handle, url }),
+);
 
 function escapeAttribute(value: string): string {
   return value
@@ -28,14 +46,22 @@ export function render(pathname: string) {
     route.locale === "fr"
       ? "Portfolio de Gilles Musy : recherche en sécurité, ingénierie IA et systèmes logiciels"
       : "Gilles Musy portfolio: security research, AI engineering, and software systems";
+  const personId = canonicalUrl("/#gilles-musy");
+  const websiteId = canonicalUrl("/#website");
+  const engagement = route.practice
+    ? engagements[route.practice][route.locale]
+    : null;
   const structuredData =
-    route.kind === "home"
+    route.kind !== "not-found"
       ? [
           {
             "@context": "https://schema.org",
             "@type": "Person",
+            "@id": personId,
             name: "Gilles Musy",
+            alternateName: "Musyg",
             url: canonicalUrl("/"),
+            jobTitle: ["Developer", "AI engineer", "Security researcher"],
             sameAs: professionalProfiles.map((profile) => profile.url),
             knowsAbout: [
               "Software engineering",
@@ -43,15 +69,66 @@ export function render(pathname: string) {
               "Application security",
               "Smart contract security",
               "Indirect prompt injection",
+              "AI agent security",
+              "AI red teaming",
             ],
           },
           {
             "@context": "https://schema.org",
             "@type": "WebSite",
+            "@id": websiteId,
             name: "Gilles Musy portfolio",
             url: canonicalUrl("/"),
             inLanguage: ["en", "fr"],
+            publisher: { "@id": personId },
           },
+          {
+            "@context": "https://schema.org",
+            "@type": route.kind === "about" ? "ProfilePage" : "WebPage",
+            "@id": `${canonical}#webpage`,
+            url: canonical,
+            name: route.title,
+            description: route.description,
+            inLanguage: route.locale,
+            isPartOf: { "@id": websiteId },
+            author: { "@id": personId },
+            ...(route.kind === "about" || route.kind === "home"
+              ? { mainEntity: { "@id": personId } }
+              : {}),
+          },
+          ...(engagement
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Service",
+                  "@id": `${canonical}#service`,
+                  url: `${canonical}#engagement-title`,
+                  name: engagement.title,
+                  description: engagement.introduction,
+                  provider: { "@id": personId },
+                  areaServed: "Worldwide",
+                  mainEntityOfPage: { "@id": `${canonical}#webpage` },
+                },
+              ]
+            : []),
+          ...(route.kind === "article"
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  "@id": `${canonical}#article`,
+                  headline: ipiArticle[route.locale].title,
+                  description: route.description,
+                  inLanguage: route.locale,
+                  datePublished: ipiPublishedAt,
+                  dateModified: ipiPublishedAt,
+                  author: { "@id": personId },
+                  publisher: { "@id": personId },
+                  mainEntityOfPage: { "@id": `${canonical}#webpage` },
+                  image: canonicalUrl(ipiImage),
+                },
+              ]
+            : []),
         ]
       : null;
 
@@ -62,7 +139,7 @@ export function render(pathname: string) {
     `<link rel="alternate" hreflang="en" href="${escapeAttribute(enUrl)}">`,
     `<link rel="alternate" hreflang="fr" href="${escapeAttribute(frUrl)}">`,
     `<link rel="alternate" hreflang="x-default" href="${escapeAttribute(enUrl)}">`,
-    '<meta property="og:type" content="website">',
+    `<meta property="og:type" content="${route.kind === "article" ? "article" : "website"}">`,
     `<meta property="og:title" content="${escapeAttribute(route.title)}">`,
     `<meta property="og:description" content="${escapeAttribute(route.description)}">`,
     `<meta property="og:url" content="${escapeAttribute(canonical)}">`,

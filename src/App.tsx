@@ -1,4 +1,17 @@
 import { useEffect, useRef, useState } from "react";
+import { aboutCopy } from "./content/about";
+import { engagements, engagementScope } from "./content/engagements";
+import { CeloOverview } from "./CeloOverview";
+import { SecurityOverview } from "./SecurityOverview";
+import { SecurityProfiles } from "./SecurityProfiles";
+import { BifrostSpotlight } from "./BifrostSpotlight";
+import { MikaOverview } from "./MikaOverview";
+import { PediOverview } from "./PediOverview";
+import { InaricomOverview } from "./InaricomOverview";
+import { ContactForm } from "./ContactForm";
+import { PlatformLogo } from "./PlatformLogo";
+import { IpiArticle } from "./IpiArticle";
+import { ipiArticle } from "./content/ipi-article";
 import {
   filterLabels,
   localized,
@@ -54,7 +67,7 @@ const evidenceItems = {
   en: [
     {
       title: "StVault v1.1.0",
-      text: "Synchronized public report and PDF, current Foundry baseline, and green tests on both canonical branches.",
+      text: "Review report, fixes, and Foundry tests.",
       url: "https://github.com/Musyg/stvault-audit",
     },
     {
@@ -64,14 +77,14 @@ const evidenceItems = {
     },
     {
       title: "Celo Credentials",
-      text: "Source-verified Celo Sepolia deployment, demonstrated credential lifecycle, and 11/11 Foundry tests.",
+      text: "Issuance, public verification and revocation of education credentials on Celo Sepolia, with a source-verified contract.",
       url: "https://github.com/Musyg/celo-credentials-dapp",
     },
   ],
   fr: [
     {
       title: "StVault v1.1.0",
-      text: "Rapport public et PDF synchronisés, environnement Foundry actuel et tests réussis sur les deux branches canoniques.",
+      text: "Rapport de revue, corrections et tests Foundry.",
       url: "https://github.com/Musyg/stvault-audit",
     },
     {
@@ -81,7 +94,7 @@ const evidenceItems = {
     },
     {
       title: "Celo Credentials",
-      text: "Déploiement Celo Sepolia au code source vérifié, cycle d’attestation démontré et 11 tests Foundry réussis sur 11.",
+      text: "Émission, vérification publique et révocation d’attestations sur Celo Sepolia, avec un contrat au code source vérifié.",
       url: "https://github.com/Musyg/celo-credentials-dapp",
     },
   ],
@@ -177,7 +190,7 @@ function Header({ route }: { route: RouteEntry }) {
           href={route.counterpart}
           hrefLang={locale === "en" ? "fr" : "en"}
           lang={locale === "en" ? "fr" : "en"}
-          aria-label={content.languageLabel}
+          title={content.languageLabel}
         >
           {content.language}
         </a>
@@ -224,8 +237,9 @@ function Footer({ locale }: { locale: Locale }) {
         }
       >
         {professionalProfiles.map((profile) => (
-          <a href={profile.url} key={profile.name}>
-            {profile.name}
+          <a className="platform-link" href={profile.url} key={profile.name}>
+            <PlatformLogo platform={profile.platform} />
+            <span>{profile.name}</span>
           </a>
         ))}
       </nav>
@@ -234,6 +248,7 @@ function Footer({ locale }: { locale: Locale }) {
 }
 
 function StatusPill({ project, locale }: { project: Project; locale: Locale }) {
+  if (!project.status) return null;
   return (
     <span className="status-pill">
       {localized(statusLabels[project.status], locale)}
@@ -252,9 +267,19 @@ function ProjectCard({
 
   return (
     <article className="project-card">
+      {project.brandImage && (
+        <img
+          className="project-brand-image"
+          src={project.brandImage}
+          alt=""
+          width="1448"
+          height="1086"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
       <div className="project-card-topline">
         <StatusPill project={project} locale={locale} />
-        <time dateTime={project.date}>{project.date}</time>
       </div>
       <p className="project-practice">
         {localized(practiceLabels[project.practice], locale)}
@@ -270,7 +295,9 @@ function ProjectCard({
         </div>
         <div>
           <dt>{content.stack}</dt>
-          <dd>{project.stack.slice(0, 4).join(" · ")}</dd>
+          <dd>
+            {(project.cardStack ?? project.stack.slice(0, 4)).join(" · ")}
+          </dd>
         </div>
       </dl>
       <a className="text-link" href={projectPath(project.id, locale)}>
@@ -359,7 +386,6 @@ function HomePage({ locale }: { locale: Locale }) {
           />
         </svg>
         <div className="hero-content">
-          <p className="eyebrow">{ui[locale].roleLine}</p>
           <h1 id="hero-title" aria-label={heroLines.join(" ")}>
             {heroLines.map((line) => (
               <span key={line}>{line}</span>
@@ -367,8 +393,8 @@ function HomePage({ locale }: { locale: Locale }) {
           </h1>
           <p className="hero-lead">
             {isFrench
-              ? "Je travaille sur la sécurité applicative et les smart contracts, les systèmes d’IA agentiques et le développement full-stack."
-              : "I work across application and smart-contract security, agentic AI systems, and full-stack development."}
+              ? "Je mène des recherches en cybersécurité et du red teaming sur le Web, les applications, les protocoles crypto et l’IA. Je développe aussi des systèmes d’IA agentiques et des logiciels full-stack."
+              : "I work on cybersecurity research and red teaming across the web, applications, crypto protocols, and AI. I also build agentic AI systems and full-stack software."}
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href={workPath(locale)}>
@@ -378,11 +404,12 @@ function HomePage({ locale }: { locale: Locale }) {
               {isFrench ? "Explorer les expertises" : "Explore expertise"}
             </a>
           </div>
+          <p className="engagement-scope">{engagementScope[locale]}</p>
         </div>
         <div className="hero-index" aria-hidden="true">
-          <span>01</span>
+          <span data-index="01" />
           <span className="hero-index-line" />
-          <span>03</span>
+          <span data-index="03" />
         </div>
       </section>
 
@@ -392,21 +419,10 @@ function HomePage({ locale }: { locale: Locale }) {
         aria-labelledby="expertise-title"
       >
         <div className="section-heading">
-          <p className="eyebrow">
-            {isFrench
-              ? "Trois pratiques distinctes"
-              : "Three distinct practices"}
-          </p>
+          <p className="eyebrow">{isFrench ? "Expertises" : "Expertise"}</p>
           <h2 id="expertise-title">
-            {isFrench
-              ? "Un portfolio, des frontières professionnelles claires."
-              : "One portfolio, clear professional boundaries."}
+            {isFrench ? "Domaines d’expertise" : "Areas of expertise"}
           </h2>
-          <p>
-            {isFrench
-              ? "L’ingénierie, l’IA et la recherche en sécurité sont présentées séparément, avec des preuves publiques et des limites explicites."
-              : "Engineering, AI, and security research are presented separately, with public evidence and explicit limitations."}
-          </p>
         </div>
         <div className="practice-grid">
           {(["software", "ai", "security"] as Practice[]).map(
@@ -430,6 +446,8 @@ function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      <BifrostSpotlight locale={locale} />
+
       <section
         className="section-shell selected-section"
         aria-labelledby="selected-title"
@@ -440,13 +458,13 @@ function HomePage({ locale }: { locale: Locale }) {
           </p>
           <h2 id="selected-title">
             {isFrench
-              ? "Des preuves avant les promesses."
-              : "Evidence before promises."}
+              ? "Du code, des systèmes et des applications."
+              : "Code, systems, and applications."}
           </h2>
           <p>
             {isFrench
-              ? "Chaque projet indique son état, mon rôle, les preuves disponibles et ses limites."
-              : "Each project states its status, my role, the available evidence, and its limitations."}
+              ? "Applications web, outils open source et travaux de recherche."
+              : "Web applications, open-source tools, and research."}
           </p>
         </div>
         <div className="project-grid">
@@ -464,13 +482,11 @@ function HomePage({ locale }: { locale: Locale }) {
 
       <section className="evidence-band" aria-labelledby="evidence-title">
         <div className="evidence-heading">
-          <p className="eyebrow">
-            {isFrench ? "Preuves publiques" : "Public evidence"}
-          </p>
+          <p className="eyebrow">{isFrench ? "Ressources" : "Resources"}</p>
           <h2 id="evidence-title">
             {isFrench
-              ? "Des signaux vérifiables."
-              : "Signals that can be checked."}
+              ? "Rapports, code et versions publiées."
+              : "Reports, code, and releases."}
           </h2>
         </div>
         <div className="evidence-grid">
@@ -482,6 +498,31 @@ function HomePage({ locale }: { locale: Locale }) {
               <a href={item.url}>{ui[locale].viewEvidence}</a>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="publication-feature" aria-labelledby="home-ipi-title">
+        <div>
+          <p className="eyebrow">
+            {isFrench
+              ? "Recherche publiée · Sécurité des agents IA"
+              : "Published research · AI agent security"}
+          </p>
+          <h2 id="home-ipi-title">{ipiArticle[locale].title}</h2>
+          <p>{ipiArticle[locale].description}</p>
+        </div>
+        <div className="publication-actions">
+          <a className="button button-primary" href={ipiArticle[locale].path}>
+            {isFrench ? "Lire l’étude de cas" : "Read the case study"}
+          </a>
+          <a
+            className="text-link"
+            href={projectPath("security-reviews", locale)}
+          >
+            {isFrench
+              ? "Explorer mes travaux en cybersécurité"
+              : "Explore my cybersecurity work"}
+          </a>
         </div>
       </section>
 
@@ -499,8 +540,15 @@ function HomePage({ locale }: { locale: Locale }) {
               ? "Un guide interactif pour choisir entre assistance IA, automatisation, aide à la décision et agents métier autonomes, avec des pilotes, des contrôles et des exigences de gouvernance."
               : "An interactive guide for choosing between AI assistance, workflow automation, decision support, and autonomous business agents, with pilots, controls, and governance requirements."}
           </p>
-          <a className="text-link" href={writingPath(locale)}>
-            {isFrench ? "Voir la publication" : "View the publication"}
+          <a
+            className="text-link"
+            href={
+              isFrench
+                ? "https://musyg.github.io/ai-adoption-playbook/fr/"
+                : "https://musyg.github.io/ai-adoption-playbook/"
+            }
+          >
+            {isFrench ? "Ouvrir le guide" : "Open the guide"}
           </a>
         </div>
       </section>
@@ -515,7 +563,7 @@ function HomePage({ locale }: { locale: Locale }) {
             : "Discuss an engineering, AI, or security research project."}
         </h2>
         <a className="button button-primary" href={contactPath(locale)}>
-          {isFrench ? "Profils professionnels" : "Professional profiles"}
+          {isFrench ? "Me contacter" : "Get in touch"}
         </a>
       </section>
     </>
@@ -564,15 +612,11 @@ function WorkPage({ locale }: { locale: Locale }) {
     <>
       <PageIntro
         eyebrow={isFrench ? "Index des réalisations" : "Work index"}
-        title={
-          isFrench
-            ? "Des réalisations documentées."
-            : "Work with evidence attached."
-        }
+        title={isFrench ? "Des réalisations documentées." : "Documented work."}
         lead={
           isFrench
-            ? "Chaque entrée indique le rôle, l’état, les technologies, les preuves publiques et les limites restantes."
-            : "Every entry states the role, status, technology, public evidence, and remaining limitations."
+            ? "Retrouvez mon rôle, les technologies utilisées et l’état de chaque projet, ainsi que les dépôts, études de cas et démonstrations disponibles."
+            : "Explore my role, the technologies used, and each project’s status, alongside available repositories, case studies, and demos."
         }
       />
       <section
@@ -619,6 +663,12 @@ function ProjectPage({
   const content = ui[locale];
   const currentIndex = projects.findIndex((item) => item.id === project.id);
   const nextProject = projects[(currentIndex + 1) % projects.length];
+  const isCelo = project.id === "celo-credentials";
+  const visibleSections = sectionOrder.filter(
+    (section) =>
+      !(isCelo && section === "results") &&
+      (section === "evidence" || project.sections[section][locale].length > 0),
+  );
 
   return (
     <>
@@ -641,6 +691,16 @@ function ProjectPage({
                 aria-hidden="true"
               />
             ) : null}
+            {project.brandImage && (
+              <img
+                className="case-brand-image"
+                src={project.brandImage}
+                alt=""
+                width="1448"
+                height="1086"
+                decoding="async"
+              />
+            )}
             <h1>{project.title}</h1>
             <p className="page-lead">{localized(project.summary, locale)}</p>
             <nav className="case-actions" aria-label={content.externalLinks}>
@@ -656,24 +716,33 @@ function ProjectPage({
             </nav>
           </div>
           <dl className="metadata-rail">
-            <div>
-              <dt>{content.status}</dt>
-              <dd>{localized(statusLabels[project.status], locale)}</dd>
-            </div>
+            {project.status && (
+              <div>
+                <dt>{content.status}</dt>
+                <dd>{localized(statusLabels[project.status], locale)}</dd>
+              </div>
+            )}
             <div>
               <dt>{content.role}</dt>
               <dd>{localized(project.role, locale)}</dd>
             </div>
-            <div>
-              <dt>{content.updated}</dt>
-              <dd>
-                <time dateTime={project.date}>{project.date}</time>
-              </dd>
-            </div>
+            {project.projectStart && (
+              <div>
+                <dt>{content.projectStart}</dt>
+                <dd>{localized(project.projectStart, locale)}</dd>
+              </div>
+            )}
           </dl>
         </div>
       </section>
 
+      {isCelo && <CeloOverview locale={locale} project={project} />}
+      {project.id === "security-reviews" && (
+        <SecurityOverview locale={locale} />
+      )}
+      {project.id === "mikasshop" && <MikaOverview locale={locale} />}
+      {project.id === "pedi-sense" && <PediOverview locale={locale} />}
+      {project.id === "inaricom" && <InaricomOverview locale={locale} />}
       <div className="case-layout">
         <aside className="case-stack" aria-label={content.stack}>
           <h2>{content.stack}</h2>
@@ -682,9 +751,30 @@ function ProjectPage({
               <li key={item}>{item}</li>
             ))}
           </ul>
+          {isCelo && (
+            <nav
+              className="case-toc"
+              aria-label={
+                locale === "fr"
+                  ? "Dans cette étude de cas"
+                  : "In this case study"
+              }
+            >
+              <h2>{locale === "fr" ? "Approfondir" : "Explore the details"}</h2>
+              <ul>
+                {visibleSections.map((section) => (
+                  <li key={section}>
+                    <a className="text-link" href={`#${project.id}-${section}`}>
+                      {localized(sectionLabels[section], locale)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
         </aside>
         <article className="case-body">
-          {sectionOrder.map((section, index) => (
+          {visibleSections.map((section, index) => (
             <section key={section} aria-labelledby={`${project.id}-${section}`}>
               <span className="section-number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
@@ -733,6 +823,7 @@ function PracticePage({
   practice: Practice;
 }) {
   const page = practicePages[practice];
+  const engagement = engagements[practice][locale];
   const related = page.projectIds
     .map((id) => projectById(id))
     .filter((project): project is Project => Boolean(project));
@@ -745,6 +836,53 @@ function PracticePage({
         title={localized(page.title, locale)}
         lead={localized(page.lead, locale)}
       />
+      {practice === "software" && <BifrostSpotlight locale={locale} />}
+      <section
+        className="section-shell practice-details engagement-section"
+        aria-labelledby="engagement-title"
+      >
+        <div className="capability-list">
+          <p className="eyebrow">
+            {isFrench ? "Missions freelance" : "Freelance engagements"}
+          </p>
+          <h2 id="engagement-title">{engagement.title}</h2>
+          <p>{engagement.introduction}</p>
+          <ul>
+            {engagement.needs.map((need) => (
+              <li key={need}>{need}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>
+            {isFrench ? "Méthode et livrables" : "Approach and deliverables"}
+          </h3>
+          <p>{engagement.method}</p>
+          <p>{engagement.deliverables}</p>
+          <p>{engagementScope[locale]}</p>
+          <a className="button button-primary" href={contactPath(locale)}>
+            {engagement.action}
+          </a>
+          {practice === "ai" ? (
+            <p>
+              <a className="text-link" href={practicePath("security", locale)}>
+                {isFrench
+                  ? "Faire évaluer la sécurité de vos agents IA"
+                  : "Assess your AI agents’ security"}
+              </a>
+            </p>
+          ) : null}
+          {practice === "security" ? (
+            <p>
+              <a className="text-link" href={practicePath("ai", locale)}>
+                {isFrench
+                  ? "Découvrir mon travail d’ingénierie IA"
+                  : "Explore my AI engineering work"}
+              </a>
+            </p>
+          ) : null}
+        </div>
+      </section>
       <section className="section-shell practice-details">
         <div className="capability-list">
           <p className="eyebrow">{isFrench ? "Périmètre" : "Scope"}</p>
@@ -756,11 +894,22 @@ function PracticePage({
           </ul>
         </div>
         <div className="evidence-list">
-          <p className="eyebrow">
-            {isFrench ? "Base publique" : "Public basis"}
-          </p>
-          <h2>{isFrench ? "Preuves et limites" : "Evidence and boundaries"}</h2>
+          <p className="eyebrow">{isFrench ? "En pratique" : "In practice"}</p>
+          <h2>
+            {isFrench
+              ? "Projets et contributions"
+              : "Projects and contributions"}
+          </h2>
           <ul>
+            {practice === "security" && (
+              <li>
+                <a className="text-link" href={ipiArticle[locale].path}>
+                  {isFrench
+                    ? "Injection indirecte : étude de cas Gray Swan"
+                    : "Indirect prompt injection: Gray Swan case study"}
+                </a>
+              </li>
+            )}
             {Array.isArray(page.evidence)
               ? page.evidence.map((link) => (
                   <li key={link.url}>
@@ -798,47 +947,6 @@ function PracticePage({
   );
 }
 
-function SecurityProfiles({ locale }: { locale: Locale }) {
-  const isFrench = locale === "fr";
-  const profiles = professionalProfiles.filter(
-    (profile) => profile.name !== "GitHub",
-  );
-
-  return (
-    <section
-      className="profile-section"
-      aria-labelledby="security-profiles-title"
-    >
-      <div>
-        <p className="eyebrow">
-          {isFrench ? "Profils publics" : "Public profiles"}
-        </p>
-        <h2 id="security-profiles-title">
-          {isFrench
-            ? "Associations attribuables."
-            : "Attributable associations."}
-        </h2>
-        <p>
-          {isFrench
-            ? "Les plateformes sont présentées sans nombre de constats, gravité ni détail technique non public."
-            : "Platforms are presented without finding counts, severity, or non-public technical detail."}
-        </p>
-      </div>
-      <div className="profile-list">
-        {profiles.map((profile) => (
-          <a href={profile.url} key={profile.name}>
-            <span>
-              <strong>{profile.name}</strong>
-              <small>{profile.handle}</small>
-            </span>
-            <span>{localized(profile.association, locale)}</span>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function WritingPage({ locale }: { locale: Locale }) {
   const isFrench = locale === "fr";
 
@@ -848,19 +956,38 @@ function WritingPage({ locale }: { locale: Locale }) {
         eyebrow={isFrench ? "Publications techniques" : "Technical writing"}
         title={
           isFrench
-            ? "Écrire pour rendre les choix vérifiables."
-            : "Writing that makes decisions inspectable."
+            ? "Partager les choix et les méthodes."
+            : "Sharing decisions and methods."
         }
         lead={
           isFrench
-            ? "Les publications relient les choix d’architecture, les contrôles, les preuves et les limites au lieu de présenter une simple opinion."
-            : "Publications connect architecture decisions, controls, evidence, and limitations instead of presenting an unsupported opinion."
+            ? "J’y partage des méthodes, des choix d’architecture et des retours techniques pour passer d’une idée à sa mise en œuvre."
+            : "I share methods, architecture decisions, and technical insights to help move from an idea to implementation."
         }
       />
+      <section
+        className="publication-feature"
+        aria-labelledby="ipi-publication-title"
+      >
+        <div>
+          <p className="eyebrow">
+            {isFrench
+              ? "Étude de cas · Sécurité des agents IA"
+              : "Case study · AI agent security"}
+          </p>
+          <h2 id="ipi-publication-title">{ipiArticle[locale].title}</h2>
+          <p>{ipiArticle[locale].description}</p>
+        </div>
+        <div className="publication-actions">
+          <a className="button button-primary" href={ipiArticle[locale].path}>
+            {isFrench ? "Lire l’étude de cas" : "Read the case study"}
+          </a>
+        </div>
+      </section>
       <section className="publication-feature">
         <div>
           <p className="eyebrow">
-            {isFrench ? "Guide interactif public" : "Public interactive guide"}
+            {isFrench ? "Guide interactif" : "Interactive guide"}
           </p>
           <h2>AI Adoption Playbook</h2>
           <p>
@@ -894,33 +1021,34 @@ function WritingPage({ locale }: { locale: Locale }) {
 
 function AboutPage({ locale }: { locale: Locale }) {
   const isFrench = locale === "fr";
+  const biography = aboutCopy[locale];
   const principles = isFrench
     ? [
         [
           "Périmètre",
-          "Je précise mon rôle, les limites de contribution et l’état réel du projet.",
+          "Je précise mon rôle, ce que j’ai réalisé et l’état du projet.",
         ],
         [
-          "Preuves",
-          "Je relie les affirmations aux dépôts, releases, tests, déploiements et profils publics.",
+          "Documentation",
+          "Je donne accès aux dépôts, versions publiées, tests et démonstrations disponibles.",
         ],
         [
           "Séparation",
-          "La sécurité d’un système que je développe reste une responsabilité d’ingénierie, pas un audit externe.",
+          "Je distingue mes travaux de recherche et de red teaming de la sécurisation des systèmes que je développe.",
         ],
       ]
     : [
         [
           "Scope",
-          "I state my role, contribution boundaries, and the project’s actual status.",
+          "I describe my role, what I contributed, and the project’s status.",
         ],
         [
-          "Evidence",
-          "I connect claims to public repositories, releases, tests, deployments, and profiles.",
+          "Documentation",
+          "I link to available repositories, releases, tests, and demos.",
         ],
         [
           "Separation",
-          "Security work on a system I build remains engineering responsibility, not an external audit.",
+          "I distinguish my research and red teaming work from securing the systems I develop.",
         ],
       ];
 
@@ -928,17 +1056,14 @@ function AboutPage({ locale }: { locale: Locale }) {
     <>
       <PageIntro
         eyebrow={isFrench ? "À propos" : "About"}
-        title={
-          isFrench
-            ? "Gilles Musy, basé en Suisse."
-            : "Gilles Musy, based in Switzerland."
-        }
-        lead={
-          isFrench
-            ? "Je travaille à l’intersection de l’ingénierie logicielle, des systèmes d’IA agentiques et de la recherche en sécurité, sans confondre leurs méthodes ni leurs preuves."
-            : "I work across software engineering, agentic AI systems, and security research without conflating their methods or evidence."
-        }
+        title="Gilles Musy"
+        lead={biography.introduction}
       />
+      <div className="section-shell about-narrative">
+        {biography.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
       <section className="section-shell principles-grid">
         {principles.map(([title, text], index) => (
           <article key={title}>
@@ -961,39 +1086,30 @@ function ContactPage({ locale }: { locale: Locale }) {
     <>
       <PageIntro
         eyebrow={isFrench ? "Contact professionnel" : "Professional contact"}
-        title={
-          isFrench
-            ? "Utiliser un profil public vérifié."
-            : "Use a verified public profile."
-        }
+        title={isFrench ? "Prenons contact." : "Get in touch."}
         lead={
           isFrench
-            ? "Cette première version n’expose aucune adresse email et n’affiche aucun faux formulaire. Les profils ci-dessous constituent les canaux publics disponibles."
-            : "This first release exposes no email address and renders no simulated form. The profiles below are the available public channels."
+            ? "Développement, ingénierie IA ou tests de sécurité : décrivez votre besoin. Je travaille en freelance avec des équipes partout dans le monde."
+            : "Development, AI engineering or security testing: tell me about your needs. I work with teams worldwide as a freelancer."
         }
       />
+      <ContactForm locale={locale} />
       <section
         className="profile-section contact-profiles"
         aria-label={isFrench ? "Canaux publics" : "Public channels"}
       >
         <div>
-          <h2>
-            {isFrench
-              ? "Choisir le contexte adapté."
-              : "Choose the relevant context."}
-          </h2>
-          <p>
-            {isFrench
-              ? "GitHub convient aux projets et au code public. Les autres plateformes documentent les activités de recherche en sécurité qui leur sont propres."
-              : "GitHub is appropriate for projects and public code. The other platforms document their respective security-research activity."}
-          </p>
+          <h2>{isFrench ? "Me retrouver ailleurs" : "Find me elsewhere"}</h2>
         </div>
         <div className="profile-list">
           {professionalProfiles.map((profile) => (
             <a href={profile.url} key={profile.name}>
-              <span>
-                <strong>{profile.name}</strong>
-                <small>{profile.handle}</small>
+              <span className="profile-identity">
+                <PlatformLogo platform={profile.platform} />
+                <span className="profile-identity-text">
+                  <strong>{profile.name}</strong>
+                  <small>{profile.handle}</small>
+                </span>
               </span>
               <span>{localized(profile.association, locale)}</span>
             </a>
@@ -1059,6 +1175,9 @@ export default function App({ pathname }: AppProps) {
       break;
     case "writing":
       page = <WritingPage locale={route.locale} />;
+      break;
+    case "article":
+      page = <IpiArticle locale={route.locale} />;
       break;
     case "about":
       page = <AboutPage locale={route.locale} />;

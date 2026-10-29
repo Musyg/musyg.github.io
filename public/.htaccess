@@ -1,0 +1,5 @@
+# Serve the prerendered routes on Apache/LiteSpeed without an SPA catch-all.
+DirectoryIndex index.html
+Options -Indexes
+ErrorDocument 404 /404.html
+AddType text/vtt .vtt

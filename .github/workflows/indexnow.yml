@@ -1,0 +1,30 @@
+name: IndexNow
+
+# After a push to the production branch, wait until the deployment is live,
+# then notify IndexNow about the pages whose content changed.
+on:
+  push:
+    branches:
+      - main
+      - feature/contact-protected
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node scripts/indexnow.mjs --since "${{ github.event.before }}" --wait

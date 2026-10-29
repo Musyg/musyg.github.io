@@ -1,4 +1,5 @@
 import { projects, type Locale, type Practice } from "./content/site";
+import { ipiArticle } from "./content/ipi-article";
 
 export type RouteKind =
   | "home"
@@ -6,6 +7,7 @@ export type RouteKind =
   | "project"
   | "practice"
   | "writing"
+  | "article"
   | "about"
   | "contact"
   | "not-found";
@@ -31,7 +33,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "home",
     title: `${siteName} | Security, AI and software engineering`,
     description:
-      "Public portfolio of Gilles Musy across security research, agentic AI engineering, and software systems.",
+      "Gilles Musy (Musyg), freelance developer, AI engineer and security researcher. AI agents, full-stack development and red teaming. Worldwide engagements.",
   },
   {
     path: "/fr/",
@@ -40,7 +42,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "home",
     title: `${siteName} | Sécurité, IA et ingénierie logicielle`,
     description:
-      "Portfolio public de Gilles Musy consacré à la recherche en sécurité, à l’ingénierie IA agentique et aux systèmes logiciels.",
+      "Gilles Musy (Musyg), développeur freelance, ingénieur IA et chercheur en sécurité. Agents IA, développement full-stack et red teaming. Missions internationales.",
   },
   {
     path: "/work/",
@@ -49,7 +51,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "work",
     title: `Work | ${siteName}`,
     description:
-      "Evidence-backed software, AI, Web, blockchain, and security work by Gilles Musy.",
+      "Software, AI, Web, blockchain, and security projects by Gilles Musy.",
   },
   {
     path: "/fr/realisations/",
@@ -58,7 +60,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "work",
     title: `Réalisations | ${siteName}`,
     description:
-      "Réalisations documentées de Gilles Musy en logiciel, IA, Web, blockchain et sécurité.",
+      "Réalisations de Gilles Musy en logiciel, IA, Web, blockchain et sécurité.",
   },
   {
     path: "/engineering/",
@@ -66,9 +68,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "software",
-    title: `Software engineering | ${siteName}`,
+    title: `Freelance full-stack developer | ${siteName}`,
     description:
-      "Backend, infrastructure, Web, systems, blockchain, and open-source engineering by Gilles Musy.",
+      "Gilles Musy, freelance full-stack developer: React, TypeScript, Python, PHP, WordPress and custom backend integrations. Working with teams worldwide.",
   },
   {
     path: "/fr/ingenierie/",
@@ -76,9 +78,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "software",
-    title: `Ingénierie logicielle | ${siteName}`,
+    title: `Développeur full-stack freelance | ${siteName}`,
     description:
-      "Ingénierie backend, infrastructure, Web, systèmes, blockchain et open source par Gilles Musy.",
+      "Gilles Musy, développeur full-stack freelance : React, TypeScript, Python, PHP, WordPress et intégrations backend sur mesure. Missions dans le monde entier.",
   },
   {
     path: "/ai-systems/",
@@ -86,9 +88,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "ai",
-    title: `Agentic AI engineering | ${siteName}`,
+    title: `Freelance AI engineer, multi-agent systems | ${siteName}`,
     description:
-      "Agent orchestration, resilience, local-model operations, memory, observability, and AI adoption.",
+      "Freelance AI engineering by Gilles Musy: Python agents, multi-agent orchestration, API integrations and machine learning. Worldwide engagements.",
   },
   {
     path: "/fr/systemes-ia/",
@@ -96,9 +98,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "ai",
-    title: `Ingénierie IA agentique | ${siteName}`,
+    title: `Ingénieur IA freelance, systèmes multi-agents | ${siteName}`,
     description:
-      "Orchestration, résilience, modèles locaux, mémoire, observabilité et adoption de l’IA.",
+      "Gilles Musy, ingénieur IA freelance : agents Python, orchestration multi-agent, intégrations API et apprentissage automatique. Missions dans le monde entier.",
   },
   {
     path: "/security-research/",
@@ -106,9 +108,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "en",
     kind: "practice",
     practice: "security",
-    title: `Security research | ${siteName}`,
+    title: `AI agent security and red teaming | ${siteName}`,
     description:
-      "Web, application, smart-contract, ZK, applied-cryptography, and agentic AI security research.",
+      "Gilles Musy: freelance AI agent security testing, indirect prompt injection (IPI) and red teaming. Web, API and smart contract research. Worldwide.",
   },
   {
     path: "/fr/recherche-securite/",
@@ -116,9 +118,9 @@ const fixedRoutes: RouteEntry[] = [
     locale: "fr",
     kind: "practice",
     practice: "security",
-    title: `Recherche en sécurité | ${siteName}`,
+    title: `Sécurité des agents IA et red teaming | ${siteName}`,
     description:
-      "Recherche sur la sécurité Web, applicative, des smart contracts, ZK et des systèmes d’IA agentiques.",
+      "Gilles Musy : tests de sécurité des agents IA, injection indirecte de prompts (IPI) et red teaming. Recherche Web, API et smart contracts. Freelance international.",
   },
   {
     path: "/writing/",
@@ -127,7 +129,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "writing",
     title: `Writing | ${siteName}`,
     description:
-      "Public technical writing by Gilles Musy, including the evidence-led AI Adoption Playbook.",
+      "Technical writing by Gilles Musy, including the AI Adoption Playbook.",
   },
   {
     path: "/fr/publications/",
@@ -136,7 +138,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "writing",
     title: `Publications | ${siteName}`,
     description:
-      "Publications techniques de Gilles Musy, dont le guide AI Adoption Playbook fondé sur les preuves.",
+      "Publications techniques de Gilles Musy, dont le guide AI Adoption Playbook.",
   },
   {
     path: "/about/",
@@ -145,7 +147,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "about",
     title: `About | ${siteName}`,
     description:
-      "Professional scope, working method, and evidence boundaries for Gilles Musy.",
+      "Why I build software, explore AI, and research security: curiosity, practical experience, and an understanding of their limits.",
   },
   {
     path: "/fr/a-propos/",
@@ -154,7 +156,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "about",
     title: `À propos | ${siteName}`,
     description:
-      "Périmètre professionnel, méthode de travail et limites des preuves de Gilles Musy.",
+      "Ce qui m’anime en développement, en IA et en recherche en sécurité : la curiosité, la pratique et la compréhension de leurs limites.",
   },
   {
     path: "/contact/",
@@ -163,7 +165,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "contact",
     title: `Contact | ${siteName}`,
     description:
-      "Verified public professional profiles for contacting Gilles Musy without exposing a public email address.",
+      "Contact Gilles Musy (Musyg) for freelance development, AI engineering or security testing. Working with teams worldwide.",
   },
   {
     path: "/fr/contact/",
@@ -172,7 +174,7 @@ const fixedRoutes: RouteEntry[] = [
     kind: "contact",
     title: `Contact | ${siteName}`,
     description:
-      "Profils professionnels publics vérifiés pour contacter Gilles Musy sans exposer d’adresse email publique.",
+      "Contactez Gilles Musy (Musyg) pour une mission freelance en développement, ingénierie IA ou tests de sécurité, partout dans le monde.",
   },
 ];
 
@@ -187,7 +189,7 @@ const projectRoutes: RouteEntry[] = projects.flatMap((project) => {
       locale: "en",
       kind: "project",
       projectId: project.id,
-      title: `${project.title} | ${siteName}`,
+      title: `${project.seoTitle?.en ?? project.title} | ${siteName}`,
       description: project.summary.en,
     },
     {
@@ -196,13 +198,31 @@ const projectRoutes: RouteEntry[] = projects.flatMap((project) => {
       locale: "fr",
       kind: "project",
       projectId: project.id,
-      title: `${project.title} | ${siteName}`,
+      title: `${project.seoTitle?.fr ?? project.title} | ${siteName}`,
       description: project.summary.fr,
     },
   ];
 });
 
-export const publicRoutes: RouteEntry[] = [...fixedRoutes, ...projectRoutes];
+const articleRoutes: RouteEntry[] = (["en", "fr"] as const).map((locale) => ({
+  path: ipiArticle[locale].path,
+  counterpart: ipiArticle[locale === "fr" ? "en" : "fr"].path,
+  locale,
+  kind: "article",
+  title: `${ipiArticle[locale].title} | ${siteName}`,
+  description: ipiArticle[locale].description,
+}));
+
+export const publicRoutes: RouteEntry[] = [
+  ...fixedRoutes,
+  ...projectRoutes,
+  ...articleRoutes,
+];
+
+export const routeAliases: Record<string, string> = {
+  "/work/talos-memory/": "/work/persistent-memory/",
+  "/fr/realisations/talos-memory/": "/fr/realisations/persistent-memory/",
+};
 
 export function normalizePath(pathname: string): string {
   const clean = pathname.split(/[?#]/, 1)[0] || "/";
@@ -216,7 +236,9 @@ export function normalizePath(pathname: string): string {
 
 export function routeFor(pathname: string): RouteEntry {
   const normalized = normalizePath(pathname);
-  const match = publicRoutes.find((route) => route.path === normalized);
+  const match = publicRoutes.find(
+    (route) => route.path === (routeAliases[normalized] ?? normalized),
+  );
 
   if (match) {
     return match;
@@ -283,7 +305,7 @@ export function contactPath(locale: Locale): string {
   return locale === "fr" ? "/fr/contact/" : "/contact/";
 }
 
-export const siteOrigin = "https://musyg.github.io";
+export const siteOrigin = "https://musyg.com";
 
 export function canonicalUrl(path: string): string {
   return new URL(path, siteOrigin).toString();

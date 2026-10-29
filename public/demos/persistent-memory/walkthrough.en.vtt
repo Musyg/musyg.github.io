@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00.000 --> 00:05.300
+The delivery date changes.
+Which information can still be used?
+
+00:05.300 --> 00:11.300
+Atlas has two independent sources:
+a deadline and a communication language.
+
+00:11.300 --> 00:17.300
+The summary records exactly
+which source versions it used.
+
+00:17.300 --> 00:25.300
+Delivery moves from Friday to Monday.
+The old summary is blocked, then rebuilt.
+
+00:25.300 --> 00:32.300
+The date is withdrawn.
+The summary that used it is also blocked.
+
+00:32.300 --> 00:40.300
+The withdrawal record is kept outside the backup.
+Restoring old content leaves the date blocked.
+
+00:40.300 --> 00:48.300
+Both systems receive the same updates.
+Rebuilding the summary also updates the cache.
+
+00:48.300 --> 00:52.300
+After restoring the backup, the date
+and its summary remain blocked.
+
+00:52.300 --> 00:55.300
+The code and traces are public.
+You can reproduce this walkthrough.

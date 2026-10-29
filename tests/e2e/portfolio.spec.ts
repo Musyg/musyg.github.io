@@ -1,6 +1,578 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { publicRoutes } from "../../src/routes";
+import { securityReportSource } from "../../src/SecurityOverview";
+import { ipiArticle } from "../../src/content/ipi-article";
+import { projects, sectionOrder } from "../../src/content/site";
+
+test("case studies omit empty sections but keep resource links and continuous numbering", async ({
+  page,
+}) => {
+  for (const route of publicRoutes.filter(
+    (route) => route.kind === "project",
+  )) {
+    const project = projects.find((item) => item.id === route.projectId)!;
+    const visible = sectionOrder.filter(
+      (section) =>
+        !(project.id === "celo-credentials" && section === "results") &&
+        (section === "evidence" ||
+          project.sections[section][route.locale].length > 0),
+    );
+    await page.goto(route.path);
+    await expect(page.locator(".case-body > section")).toHaveCount(
+      visible.length,
+    );
+    for (const section of sectionOrder.filter(
+      (key) => !visible.includes(key),
+    )) {
+      await expect(
+        page.locator(`.case-body #${project.id}-${section}`),
+      ).toHaveCount(0);
+    }
+    await expect(
+      page.locator(".case-body > section > .section-number"),
+    ).toHaveText(visible.map((_, index) => String(index + 1).padStart(2, "0")));
+    await expect(page.locator(".evidence-links a")).toHaveCount(
+      project.links.length,
+    );
+    await expect(page.locator("main")).not.toContainText(
+      /read-only source inspection|examen du code en lecture seule|No test purchase was made|Aucun achat de test|credibility shortcut|raccourci de crédibilité/,
+    );
+  }
+});
+
+test("Pedi visual overview shows responsive captures and four business workflows", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 768, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/pedi-sense/`,
+      );
+      const overview = page.locator(".pedi-overview");
+      await overview.scrollIntoViewIfNeeded();
+      await expect(overview.locator(".pedi-system-nodes > li")).toHaveCount(4);
+      await expect(overview).not.toContainText("Talos");
+      await expect(overview).toContainText("Listmonk");
+      await expect(overview).toContainText(
+        locale === "fr" ? "développés" : "developed",
+      );
+      const mobile = overview.locator(".pedi-capture-mobile img");
+      await mobile.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          mobile.evaluate(
+            (img: HTMLImageElement) => img.complete && img.naturalWidth,
+          ),
+        )
+        .toBe(375);
+      const desktop = overview.locator(".pedi-capture-desktop img");
+      if (width > 600) {
+        await desktop.scrollIntoViewIfNeeded();
+        await expect
+          .poll(() =>
+            desktop.evaluate(
+              (img: HTMLImageElement) => img.complete && img.naturalWidth,
+            ),
+          )
+          .toBe(1425);
+      } else {
+        await expect(desktop).toBeHidden();
+        await expect(overview.locator(".pedi-desktop-link")).toBeVisible();
+      }
+      await expect(
+        overview.locator(".pedi-system-nodes > li").first(),
+      ).toHaveCSS("border-top-color", "rgb(0, 94, 255)");
+      await expect(
+        overview.locator(".pedi-system-nodes > li").first(),
+      ).toHaveCSS("border-left-width", "1px");
+      await expect(overview.locator(".pedi-node-detail").first()).toHaveCSS(
+        "border-top-color",
+        "rgb(102, 125, 141)",
+      );
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+  await page.goto("/fr/realisations/inaricom/");
+  await expect(page.locator(".pedi-overview")).toHaveCount(0);
+});
+
+test("@a11y Pedi visual overview in both languages", async ({ page }) => {
+  for (const path of ["/work/pedi-sense/", "/fr/realisations/pedi-sense/"]) {
+    await page.goto(path);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  }
+});
+
+test("Mika visual overview preserves the real cat identity and responsive captures", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/mikasshop/`,
+      );
+      const overview = page.locator(".mika-overview");
+      await overview.scrollIntoViewIfNeeded();
+      await expect(overview).toContainText(
+        locale === "fr" ? "le vrai chat" : "the real cat",
+      );
+      await expect(overview.locator(".mika-system-nodes > li")).toHaveCount(4);
+      await expect(overview).not.toContainText("Chat IA Mika");
+      await expect(overview).not.toContainText("Mika AI chat");
+      const storefront = overview.locator("picture img");
+      await storefront.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          storefront.evaluate(
+            (element: HTMLImageElement) =>
+              element.complete && element.naturalWidth,
+          ),
+        )
+        .toBe(width <= 520 ? 375 : 1425);
+      expect(
+        await storefront.evaluate(
+          (element: HTMLImageElement) => element.currentSrc,
+        ),
+      ).toContain(
+        width <= 520 ? "mikasshop-mobile.jpg" : "mikasshop-desktop.jpg",
+      );
+      const assistant = overview.locator(".mika-capture-chat img");
+      await assistant.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          assistant.evaluate(
+            (element: HTMLImageElement) =>
+              element.complete && element.naturalWidth,
+          ),
+        )
+        .toBe(375);
+      await expect(
+        overview.locator(".mika-system-nodes > li").first(),
+      ).toHaveCSS("border-top-color", "rgb(0, 94, 255)");
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+  await page.goto("/fr/realisations/pedi-sense/");
+  await expect(page.locator(".mika-overview")).toHaveCount(0);
+});
+
+test("@a11y Mika visual overview in both languages", async ({ page }) => {
+  for (const path of ["/work/mikasshop/", "/fr/realisations/mikasshop/"]) {
+    await page.goto(path);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  }
+});
+
+test("Mika's Shop presents AI chat and separate SAV without runtime claims", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/mikasshop/`,
+      );
+      await expect(page.locator(".case-hero .page-lead")).toContainText(
+        locale === "fr" ? "assistant conversationnel IA" : "AI store assistant",
+      );
+      await expect(page.locator(".metadata-rail")).toContainText("2024");
+      await expect(page.locator(".case-body")).toContainText("FastAPI");
+      await expect(page.locator(".case-body")).toContainText(
+        locale === "fr" ? "sont développés" : "are developed",
+      );
+      await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+});
+
+test("Pedi-Sense distinguishes the storefront from its business integrations", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/pedi-sense/`,
+      );
+      await expect(page.locator(".case-hero .page-lead")).toContainText(
+        locale === "fr" ? "agent SAV" : "customer-support agent",
+      );
+      await expect(page.locator(".metadata-rail")).toContainText(
+        locale === "fr" ? "Boutique en ligne" : "Online store",
+      );
+      await expect(page.locator(".case-body")).toContainText("Listmonk");
+      await expect(page.locator(".case-body")).toContainText(
+        locale === "fr" ? "sont développés" : "are developed",
+      );
+      await expect(page.locator('a[href*="hermes-agency"]')).toHaveCount(0);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    }
+  }
+});
+
+test("Pedi-Sense expanded scope accessibility @a11y", async ({ page }) => {
+  for (const path of ["/work/pedi-sense/", "/fr/realisations/pedi-sense/"]) {
+    await page.goto(path);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+});
+
+test("Security Reviews presents a real report and clearly labels the demonstration", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 720, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/security-reviews/`,
+      );
+      const overview = page.locator(".security-overview");
+      await overview.scrollIntoViewIfNeeded();
+      await expect(overview.locator(".security-report-context")).toContainText(
+        locale === "fr"
+          ? "ne correspond pas à une mission client"
+          : "not a client engagement",
+      );
+      const preview = overview.locator("img");
+      await preview.scrollIntoViewIfNeeded();
+      await expect(preview).toHaveAttribute("alt", /StVault/);
+      await expect
+        .poll(() =>
+          preview.evaluate((img: HTMLImageElement) => img.naturalWidth),
+        )
+        .toBe(679);
+      await expect(
+        overview.locator(
+          `a[href="${securityReportSource}/StVault_Security_Review.pdf"]`,
+        ),
+      ).toHaveCount(1);
+      await expect(
+        overview.locator(`a[href="${securityReportSource}/REPORT.md"]`),
+      ).toHaveCount(1);
+      await expect(
+        overview.locator('a[href="https://github.com/Musyg/stvault-audit"]'),
+      ).toHaveCount(1);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+      expect(
+        await overview
+          .locator("figure")
+          .evaluate((el) => getComputedStyle(el).borderTopColor),
+      ).toBe("rgb(0, 94, 255)");
+      await expect(page.locator(".case-body > section")).toHaveCount(9);
+    }
+    await page
+      .getByRole("link", {
+        name: locale === "fr" ? "Lire l’étude de cas" : "Read the case study",
+        exact: true,
+      })
+      .click();
+    await expect(page).toHaveURL(new RegExp(ipiArticle[locale].path));
+    await expect(
+      page.getByRole("heading", { level: 1, name: ipiArticle[locale].title }),
+    ).toBeVisible();
+  }
+  await page.goto("/work/celo-credentials/");
+  await expect(page.locator(".security-overview")).toHaveCount(0);
+});
+
+test("Security report overview accessibility @a11y", async ({ page }) => {
+  for (const path of [
+    "/work/security-reviews/",
+    "/fr/realisations/security-reviews/",
+  ]) {
+    await page.goto(path);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+});
+
+test("numbered case headings keep breathing room in both languages", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const width of [1440, 720, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const locale of ["en", "fr"]) {
+      for (const slug of [
+        "celo-credentials",
+        "security-reviews",
+        "agent-resilience",
+        "inaricom",
+        "mikasshop",
+        "pedi-sense",
+      ]) {
+        await page.goto(
+          `${locale === "fr" ? "/fr/realisations" : "/work"}/${slug}/`,
+        );
+        const gaps = await page
+          .locator(".case-body > section")
+          .evaluateAll((sections) =>
+            sections.map((section) => {
+              const number = section
+                .querySelector(".section-number")!
+                .getBoundingClientRect();
+              const title = section
+                .querySelector("h2")!
+                .getBoundingClientRect();
+              return title.left - number.right;
+            }),
+          );
+        expect(gaps.length).toBeGreaterThan(0);
+        for (const gap of gaps) expect(gap).toBeGreaterThanOrEqual(19.5);
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+        ).toBeTruthy();
+      }
+      await page.goto(locale === "fr" ? "/fr/a-propos/" : "/about/");
+      const verticalGaps = await page
+        .locator(".principles-grid article")
+        .evaluateAll((cards) =>
+          cards.map((card) => {
+            const number = card
+              .querySelector(".section-number")!
+              .getBoundingClientRect();
+            return (
+              card.querySelector("h2")!.getBoundingClientRect().top -
+              number.bottom
+            );
+          }),
+        );
+      for (const gap of verticalGaps) expect(gap).toBeGreaterThanOrEqual(24);
+    }
+  }
+});
+
+test("Celo pilot offers an early result, accessible flow and working contents", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/celo-credentials/`,
+      );
+      await expect(page.locator(".celo-brief > div")).toHaveCount(3);
+      await expect(page.locator(".celo-flow li")).toHaveCount(4);
+      await expect(page.locator("#celo-credentials-results")).toContainText(
+        "Celo Sepolia",
+      );
+      await expect(
+        page.locator(".case-body #celo-credentials-results"),
+      ).toHaveCount(0);
+      await expect(page.locator(".case-toc a")).toHaveCount(8);
+      for (const link of await page.locator(".case-toc a").all()) {
+        const href = await link.getAttribute("href");
+        await expect(page.locator(href!)).toHaveCount(1);
+      }
+      await page
+        .locator('.case-toc a[href="#celo-credentials-architecture"]')
+        .click();
+      await expect(page).toHaveURL(/#celo-credentials-architecture$/);
+      expect(
+        await page
+          .locator("#celo-credentials-architecture")
+          .evaluate((el) => el.getBoundingClientRect().top),
+      ).toBeGreaterThanOrEqual(75);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+      expect(
+        await page
+          .locator(".celo-brief > div")
+          .first()
+          .evaluate((el) => getComputedStyle(el).borderTopColor),
+      ).toBe("rgb(0, 94, 255)");
+    }
+  }
+  await page.goto("/work/agent-resilience/");
+  await expect(page.locator(".celo-overview, .case-toc")).toHaveCount(0);
+  await expect(page.locator(".case-body > section")).toHaveCount(9);
+});
+
+test("Celo pilot accessibility @a11y", async ({ page }) => {
+  for (const path of [
+    "/work/celo-credentials/",
+    "/fr/realisations/celo-credentials/",
+  ]) {
+    await page.goto(path);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+});
+
+test("project history is distinct from evidence check dates", async ({
+  page,
+}) => {
+  for (const locale of ["en", "fr"]) {
+    await page.goto(locale === "fr" ? "/fr/realisations/" : "/work/");
+    await expect(page.locator(".project-card time")).toHaveCount(0);
+    for (const [slug, en, fr] of [
+      ["inaricom", "2023", "2023"],
+      ["pedi-sense", "Late 2022", "Fin 2022"],
+      ["mikasshop", "2024", "2024"],
+      ["celo-credentials", "June 2026", "Juin 2026"],
+    ]) {
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/${slug}/`,
+      );
+      const metadata = page.locator(".metadata-rail");
+      await expect(metadata).toContainText(
+        locale === "fr" ? "Début du projet" : "Project started",
+      );
+      await expect(metadata).toContainText(locale === "fr" ? fr : en);
+      await expect(metadata).not.toContainText(
+        /2026-08|Evidence date|Date des preuves/,
+      );
+    }
+    for (const slug of ["security-reviews", "agent-resilience"]) {
+      await page.goto(
+        `${locale === "fr" ? "/fr/realisations" : "/work"}/${slug}/`,
+      );
+      await expect(page.locator(".metadata-rail")).not.toContainText(
+        /Project started|Début du projet|2026-08/,
+      );
+    }
+    await page.goto(locale === "fr" ? "/fr/systemes-ia/" : "/ai-systems/");
+    await expect(
+      page.locator('a[href="https://github.com/Musyg/talos"]'),
+    ).toContainText(
+      locale === "fr" ? "depuis décembre 2024" : "since December 2024",
+    );
+  }
+});
+
+test("editorial tone keeps project context without repetitive caveat slogans", async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const route of publicRoutes.filter((route) =>
+    ["home", "work", "practice", "writing", "about"].includes(route.kind),
+  )) {
+    await page.goto(route.path);
+    await expect(page.locator("main")).not.toContainText(
+      /preuves et limites|evidence and boundaries|limites explicites|explicit limitations|limites opérationnelles|operational boundaries/i,
+    );
+    if (route.kind === "practice") {
+      await expect(
+        page.getByRole("heading", {
+          name:
+            route.locale === "fr"
+              ? "Projets et contributions"
+              : "Projects and contributions",
+          exact: true,
+        }),
+      ).toBeVisible();
+    }
+  }
+  for (const path of [
+    "/work/celo-credentials/",
+    "/fr/realisations/celo-credentials/",
+  ]) {
+    await page.goto(path);
+    await expect(
+      page.getByRole("heading", {
+        name: path.startsWith("/fr/")
+          ? "Périmètre et état actuel"
+          : "Scope and current status",
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(page.locator("main")).toContainText(/testnet/i);
+    await expect(page.locator(".evidence-links a").first()).toBeVisible();
+  }
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/engineering/", "/fr/ingenierie/"]) {
+      await page.goto(path);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+      ).toBeLessThanOrEqual(width);
+      await page.screenshot({
+        fullPage: true,
+        path: testInfo.outputPath(
+          `editorial-${width}-${path.includes("/fr/") ? "fr" : "en"}.png`,
+        ),
+      });
+    }
+  }
+});
+
+test("homepage introduces its domains without a duplicate role line", async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/", "/fr/"]) {
+      await page.goto(path);
+      const hero = page.locator(".hero-content");
+      await expect(hero.locator(".eyebrow")).toHaveCount(0);
+      await expect(hero.locator("h1")).toBeVisible();
+      await expect(hero.locator("h1 span")).toHaveCount(3);
+      for (const line of await hero.locator("h1 span").all()) {
+        await expect(line).toHaveCSS("opacity", "1");
+      }
+      await expect(hero.locator(".hero-lead")).toHaveText(
+        path === "/fr/"
+          ? "Je mène des recherches en cybersécurité et du red teaming sur le Web, les applications, les protocoles crypto et l’IA. Je développe aussi des systèmes d’IA agentiques et des logiciels full-stack."
+          : "I work on cybersecurity research and red teaming across the web, applications, crypto protocols, and AI. I also build agentic AI systems and full-stack software.",
+      );
+      await expect(hero.locator(".hero-actions a")).toHaveCount(2);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+      ).toBeLessThanOrEqual(width);
+      await page.screenshot({
+        path: testInfo.outputPath(
+          `hero-${width}-${path === "/" ? "en" : "fr"}.png`,
+        ),
+      });
+    }
+  }
+});
 
 test("case-study evidence is available in the hero in both languages", async ({
   page,
@@ -21,7 +593,16 @@ test("case-study evidence is available in the hero in both languages", async ({
         );
         const actions = page.locator(".case-hero .case-actions");
         const heroLinks = actions.locator("a");
-        await expect(heroLinks).toHaveCount(2);
+        await expect(heroLinks).toHaveCount(
+          slug === "agent-resilience" ? 3 : 2,
+        );
+        if (slug === "agent-resilience") {
+          await expect(
+            actions.getByRole("link", {
+              name: locale === "fr" ? "Voir la démo" : "Try the demo",
+            }),
+          ).toHaveAttribute("href", `/demos/agent-resilience/?lang=${locale}`);
+        }
         for (const link of await heroLinks.all()) {
           await expect(link).toBeVisible();
           const bounds = await link.boundingBox();
@@ -119,14 +700,14 @@ for (const route of publicRoutes) {
     await expect(page).toHaveTitle(route.title);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      new URL(route.path, "https://musyg.github.io").toString(),
+      new URL(route.path, "https://musyg.com").toString(),
     );
   });
 }
 
 test("language switch keeps the matching page context", async ({ page }) => {
   await page.goto("/work/celo-credentials/");
-  await page.getByRole("link", { name: "View this page in French" }).click();
+  await page.getByRole("link", { name: "Français", exact: true }).click();
   await expect(page).toHaveURL(/\/fr\/realisations\/celo-credentials\/$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 });
@@ -168,7 +749,7 @@ test("favicon and social-preview metadata are wired", async ({ page }) => {
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    "https://musyg.github.io/social-preview.png",
+    "https://musyg.com/social-preview.png",
   );
   await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute(
     "content",
@@ -359,15 +940,29 @@ test("the review identity appears only on the bilingual Security Reviews case st
   );
 });
 
-test("the bilingual About principles keep spacing outside the divider surface", async ({
+test("the bilingual About renders the personal narrative", async ({ page }) => {
+  for (const [path, introduction, ending] of [
+    ["/fr/a-propos/", "Je suis Gilles Musy", "ce qui reste à explorer"],
+    ["/about/", "I’m Gilles Musy", "what I’m still exploring"],
+  ]) {
+    await page.goto(path);
+    await expect(page.locator(".page-lead")).toContainText(introduction);
+    await expect(page.locator(".about-narrative p")).toHaveCount(5);
+    await expect(page.locator(".about-narrative p").last()).toContainText(
+      ending,
+    );
+  }
+});
+
+test("the bilingual About cards stay separated without a visible grid", async ({
   page,
 }) => {
   const viewports = [
-    { width: 1440, height: 900, margin: 136 },
-    { width: 960, height: 800, margin: 96 },
-    { width: 520, height: 800, margin: 84 },
-    { width: 390, height: 844, margin: 84 },
-    { width: 320, height: 700, margin: 84 },
+    { width: 1440, height: 900, margin: 96 },
+    { width: 960, height: 800, margin: 67.2 },
+    { width: 520, height: 800, margin: 48 },
+    { width: 390, height: 844, margin: 48 },
+    { width: 320, height: 700, margin: 48 },
   ];
 
   for (const path of ["/about/", "/fr/a-propos/"]) {
@@ -385,6 +980,7 @@ test("the bilingual About principles keep spacing outside the divider surface", 
         return {
           articleCount: articles.length,
           background: style.backgroundColor,
+          gap: Number.parseFloat(style.gap),
           marginTop: Number.parseFloat(style.marginTop),
           marginBottom: Number.parseFloat(style.marginBottom),
           paddingTop: Number.parseFloat(style.paddingTop),
@@ -395,7 +991,8 @@ test("the bilingual About principles keep spacing outside the divider surface", 
       });
 
       expect(layout.articleCount).toBe(3);
-      expect(layout.background).toBe("rgb(37, 48, 58)");
+      expect(layout.background).toBe("rgba(0, 0, 0, 0)");
+      expect(layout.gap).toBe(18);
       expect(layout.marginTop).toBeCloseTo(viewport.margin, 0);
       expect(layout.marginBottom).toBeCloseTo(viewport.margin, 0);
       expect(layout.paddingTop).toBe(0);
@@ -409,6 +1006,74 @@ test("the bilingual About principles keep spacing outside the divider surface", 
             document.documentElement.clientWidth,
         ),
       ).toBeLessThanOrEqual(1);
+    }
+  }
+});
+
+test("section landmarks and detached cards retain the exact blue on desktop and mobile", async ({
+  page,
+}, testInfo) => {
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/fr/", "/fr/a-propos/", "/fr/realisations/"]) {
+      await page.goto(path);
+      const cards = page.locator(
+        ".project-card, .practice-card, .evidence-grid article, .principles-grid article",
+      );
+      const styles = await cards.evaluateAll((elements) =>
+        elements.map((element) => {
+          const style = getComputedStyle(element);
+          return { radius: style.borderRadius, border: style.borderTopColor };
+        }),
+      );
+      expect(styles.length).toBeGreaterThan(0);
+      for (const style of styles) {
+        expect(style.radius).toBe("12px");
+        expect(style.border).toBe("rgba(0, 94, 255, 0.26)");
+      }
+      const intro = page.locator(".page-intro");
+      if (await intro.count()) {
+        expect(
+          await intro.evaluate(
+            (element) => getComputedStyle(element, "::after").backgroundColor,
+          ),
+        ).toBe("rgb(0, 94, 255)");
+        const size = await intro
+          .locator("h1")
+          .evaluate((element) =>
+            parseFloat(getComputedStyle(element).fontSize),
+          );
+        expect(size).toBeLessThanOrEqual(width <= 520 ? 42 : 68);
+      } else {
+        const marker = page.locator(".expertise-section");
+        expect(
+          await marker.evaluate(
+            (element) => getComputedStyle(element, "::before").content,
+          ),
+        ).toBe("none");
+        await expect(page.locator(".hero-section")).toHaveCSS(
+          "border-bottom-width",
+          "5px",
+        );
+        await expect(page.locator(".hero-section")).toHaveCSS(
+          "border-bottom-color",
+          "rgb(0, 94, 255)",
+        );
+        expect(
+          await page
+            .locator(".selected-section")
+            .evaluate(
+              (element) =>
+                getComputedStyle(element, "::before").backgroundColor,
+            ),
+        ).toBe("rgb(0, 94, 255)");
+        await marker.scrollIntoViewIfNeeded();
+      }
+      await page.screenshot({
+        path: testInfo.outputPath(
+          `hierarchy-${width}-${path.replaceAll("/", "_")}.png`,
+        ),
+      });
     }
   }
 });
@@ -433,7 +1098,13 @@ test("dark backgrounds only across representative routes and viewports", async (
     { width: 1440, height: 900 },
   ]) {
     await page.setViewportSize(viewport);
-    for (const path of ["/", "/work/celo-credentials/", "/fr/contact/"]) {
+    for (const path of [
+      "/",
+      "/work/celo-credentials/",
+      "/fr/contact/",
+      "/fr/a-propos/",
+      "/fr/realisations/",
+    ]) {
       await page.goto(path);
       const result = await page.locator("*").evaluateAll(
         (elements, allowed) =>
