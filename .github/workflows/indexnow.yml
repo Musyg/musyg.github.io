@@ -5,6 +5,7 @@ name: IndexNow
 on:
   push:
     branches:
+      - main
       - feature/contact-protected
   workflow_dispatch:
 

@@ -15,8 +15,11 @@ The site presents software engineering, AI systems and security research in Engl
 and French. It includes project case studies, technical publications and a contact
 form, with black backgrounds and the identity blue `#005EFF`.
 
-Production is deployed automatically to Hostinger from `feature/contact-protected`.
-The build uses npm and packages prerendered pages together with the Node.js server.
+`main` is the shared source for all 34 bilingual routes. After full validation and
+GitHub Pages publication, the workflow advances the Hostinger mirror
+`feature/contact-protected` to the same commit without rewriting history.
+Hostinger's existing integration builds that mirror with npm and packages the
+prerendered pages together with the Node.js server.
 Each case study presents its own technical scope without attributing it to another
 project or agency.
 
@@ -37,8 +40,8 @@ Use Node.js 24 and npm 11.6.0 (the CI version). `package-lock.json` is the sole
 dependency lockfile. Run `npm run verify` for the full validation suite.
 Hostinger uses npm and the complete `npm run build` command. Set the output directory
 to `release` and the entry file to `server/index.mjs`, relative to that directory.
-The server serves the sibling `dist` directory. The older `main` branch is not the
-production deployment branch.
+The server serves the sibling `dist` directory. GitHub Pages publishes only
+`dist`, so its static copy has no mail backend. `musyg.com` remains canonical.
 
 See [deployment branches](docs/deployment-branches.md) for the separate GitHub
 Pages and Hostinger publication paths and the dependency maintenance procedure.

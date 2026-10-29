@@ -9,6 +9,7 @@ import {
 } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { join, extname } from "node:path";
+import { buildIdentity } from "./build-identity.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const release = join(root, "release");
@@ -76,6 +77,10 @@ async function copyRegularTree(source, destination, publicOnly = false) {
   }
 }
 
+await writeFile(
+  join(root, "dist", "build-info.json"),
+  JSON.stringify(await buildIdentity(root), null, 2) + "\n",
+);
 await copyRegularTree(join(root, "dist"), join(release, "dist"), true);
 const apacheConfig = join(root, "dist", ".htaccess");
 const apacheConfigStat = await lstat(apacheConfig);

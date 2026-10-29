@@ -1284,8 +1284,8 @@ export const practicePages: Record<
   software: {
     title: { en: "Software engineering", fr: "Ingénierie logicielle" },
     lead: {
-      en: "Backend, infrastructure, Web, systems, blockchain, and open-source software.",
-      fr: "Backend, infrastructure, Web, systèmes, blockchain et logiciels open source.",
+      en: "Backend services, infrastructure, web applications, blockchain, and open-source tools.",
+      fr: "Services backend, infrastructure, applications web, blockchain et outils open source.",
     },
     capabilities: {
       en: [

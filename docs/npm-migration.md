@@ -25,12 +25,13 @@ lock. No permanent overrides or relaxed peer-dependency flags are used.
 
 ## Deployment boundary
 
-The production branch has since advanced to `feature/contact-protected` and the
-packaged Node.js contact runtime. Its documented Hostinger integration deploys
-automatically from that branch, using npm, `npm run build`, output `release`, and
-entry `server/index.mjs` relative to the output. The earlier static `dist` trial
-instructions do not describe this runtime. GitHub Pages still publishes `main`
-separately.
+The 34-route portfolio is now maintained on `main`, including the packaged
+Node.js contact runtime. Both targets use the same npm lock and application
+sources. After successful validation and Pages publication, the workflow advances
+`feature/contact-protected` to that exact commit for Hostinger's existing
+integration. Hostinger uses `npm run build`, output `release`, and entry
+`server/index.mjs` relative to the output. GitHub Pages publishes only `dist`.
+The earlier static `dist` trial instructions do not describe the Hostinger runtime.
 
 Local tests and GitHub checks alone do not establish a successful Hostinger
 deployment. Verify the provider result and public HTML/asset hashes after each
