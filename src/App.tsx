@@ -190,7 +190,7 @@ function Header({ route }: { route: RouteEntry }) {
           href={route.counterpart}
           hrefLang={locale === "en" ? "fr" : "en"}
           lang={locale === "en" ? "fr" : "en"}
-          aria-label={content.languageLabel}
+          title={content.languageLabel}
         >
           {content.language}
         </a>

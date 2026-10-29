@@ -1,7 +1,7 @@
 # npm migration
 
-This branch replaces pnpm with npm without changing the portfolio's content,
-design, dependency ranges, or application architecture. The baseline is commit
+The initial migration replaced pnpm with npm without changing the portfolio's
+content, design, dependency ranges, or application architecture. Its baseline was commit
 `ef54535` from `deploy/hostinger-custom-domain`, not the older `main` branch.
 
 ## Toolchain and reproducibility
@@ -9,9 +9,10 @@ design, dependency ranges, or application architecture. The baseline is commit
 - Node.js 24, npm 11.6.0 (installed explicitly in both GitHub workflows).
 - `package-lock.json` v3 is the only dependency lockfile; use `npm ci`.
 - Build, verification, and Playwright preview scripts no longer invoke pnpm.
-- Full build remains type checks, content checks, client build, SSR build, and
-  prerendering. `build:client` alone is not a release build.
-- The npm lock preserves all 16 direct dependency versions and the full set of
+- The production build runs the dependency audit, type checks, content checks,
+  client build, SSR build, prerendering, and Node runtime packaging.
+  `build:client` alone is not a release build.
+- At migration time, the npm lock preserved all 16 direct dependency versions and the full set of
   187 package/version pairs from the baseline pnpm lock, with matching integrity
   hashes. Dependency resolution paths can differ between package managers.
 
@@ -24,12 +25,15 @@ lock. No permanent overrides or relaxed peer-dependency flags are used.
 
 ## Deployment boundary
 
-Local and GitHub verification do not establish Hostinger recovery. The live site
-continues to serve the previously validated uploaded build. This branch does not
-enable automatic deployment, merge the migration PR, or change hosting settings.
+The production branch has since advanced to `feature/contact-protected` and the
+packaged Node.js contact runtime. Its documented Hostinger integration deploys
+automatically from that branch, using npm, `npm run build`, output `release`, and
+entry `server/index.mjs` relative to the output. The earlier static `dist` trial
+instructions do not describe this runtime. GitHub Pages still publishes `main`
+separately.
 
-A separately controlled Hostinger trial must select the current validated source,
-npm, `npm run build`, and output `dist`. Verify all prerendered routes, the actual
-404 status, asset hashes, and bilingual content before enabling automation.
-Do not redeploy the older `main` source over the live site. DNS, mail, and the
-separate `www` certificate issue are outside this migration.
+Local tests and GitHub checks alone do not establish a successful Hostinger
+deployment. Verify the provider result and public HTML/asset hashes after each
+production update. Keep DNS, mail configuration, and credentials unchanged during
+dependency maintenance. See [deployment branches](deployment-branches.md) and
+[the contact server layout](contact-server.md).

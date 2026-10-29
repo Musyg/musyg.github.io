@@ -22,7 +22,7 @@ The script refuses to replace an unrecognized release directory or follow symlin
 
 `npm run verify` includes packaging and a test that copies the release to a fresh
 temporary directory, starts its real entry without credentials or inherited
-Node module paths, compares all 28 routes, and checks source/dependency paths
+Node module paths, compares all 34 routes, and checks source/dependency paths
 return 404. These tests prove Node behavior, not upstream LiteSpeed behavior.
 Before hosted activation, check that Hostinger does not serve server files,
 package metadata, or bundled dependencies directly ahead of Node.

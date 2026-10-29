@@ -707,7 +707,7 @@ for (const route of publicRoutes) {
 
 test("language switch keeps the matching page context", async ({ page }) => {
   await page.goto("/work/celo-credentials/");
-  await page.getByRole("link", { name: "View this page in French" }).click();
+  await page.getByRole("link", { name: "Français", exact: true }).click();
   await expect(page).toHaveURL(/\/fr\/realisations\/celo-credentials\/$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 });
