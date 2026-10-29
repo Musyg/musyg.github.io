@@ -18,16 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 11.19.0
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm verify
+          cache: npm
+      - run: npm install --global npm@11.6.0
+      - run: npm ci
+      - run: npm exec -- playwright install --with-deps chromium
+      - run: npm run verify
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist

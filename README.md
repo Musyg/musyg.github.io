@@ -29,11 +29,17 @@ part of the portfolio identity.
 ## Local development
 
 ```bash
-pnpm install
-pnpm dev
-pnpm lint
-pnpm build
+npm ci
+npm run dev
+npm run lint
+npm run build
 ```
+
+Use Node.js 24 and npm 11.6.0 (the CI version). `package-lock.json` is the sole
+dependency lockfile. Run `npm run verify` for the full validation suite.
+Hostinger must use npm, the complete `npm run build` command, and `dist` output.
+Do not redeploy the older `main` branch or enable automatic deployment until the
+current release and prerendered routes have been verified on Hostinger.
 
 ## Content boundaries
 
