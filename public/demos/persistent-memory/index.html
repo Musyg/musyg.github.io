@@ -3315,7 +3315,6 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
         }
         byId("steps").querySelectorAll("button").forEach((button, index) => {
           button.querySelector(".step-label").textContent = captions[language][phases[index]][0];
-          button.setAttribute("aria-label", `${words.step} ${index + 1}: ${captions[language][phases[index]][0]}`);
           if (index === position) button.setAttribute("aria-current", "step"); else button.removeAttribute("aria-current");
         });
         byId("status").textContent = caption[0];
@@ -3389,7 +3388,6 @@ summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.brand{te
           node.setAttribute("aria-pressed", String(artifact === selectedArtifact));
           node.querySelector("strong").textContent = words[names[index]];
           node.querySelector("span").textContent = words[state];
-          node.setAttribute("aria-label", `${words.inspected} ${words[names[index]]}: ${words[state]}`);
         });
         const brief = currentEvidence(event, "atlas-brief").node;
         [["edge-date", "atlas-deadline"], ["edge-language", "atlas-language"]].forEach(([id, artifact]) => {

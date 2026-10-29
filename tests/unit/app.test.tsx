@@ -60,7 +60,7 @@ describe("App", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "View this page in French" }),
+      screen.getByRole("link", { name: "Français", exact: true }),
     ).toHaveAttribute("href", "/fr/");
   });
 
@@ -70,7 +70,7 @@ describe("App", () => {
       screen.getByRole("heading", { level: 1, name: "Celo Credentials" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "View this page in English" }),
+      screen.getByRole("link", { name: "English", exact: true }),
     ).toHaveAttribute("href", "/work/celo-credentials/");
   });
 

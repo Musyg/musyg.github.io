@@ -40,6 +40,9 @@ to `release` and the entry file to `server/index.mjs`, relative to that director
 The server serves the sibling `dist` directory. The older `main` branch is not the
 production deployment branch.
 
+See [deployment branches](docs/deployment-branches.md) for the separate GitHub
+Pages and Hostinger publication paths and the dependency maintenance procedure.
+
 ## Content boundaries
 
 - Only public, attributable evidence belongs in production content.
