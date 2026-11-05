@@ -217,6 +217,7 @@ export const projects: Project[] = [
           "In a separate study, a model completed task A, received feedback on its actual output and extracted a lesson before attempting a different task B in a fresh session.",
           "Across 48 episodes and 288 model calls, Luna succeeded in 22 of 24 B tasks with a lesson, 13 with the complete trace and feedback, and seven without experience. Sol scored 24 of 24 with either a lesson or the complete trace, and 12 without experience. The files produced by all 192 B tasks were independently reopened and checked, including both failed lesson-assisted tasks.",
           "Two sessions of a real agent each passed seven tests on the same thirteen scenarios, with identical quality results. The system message confirmed automatic delivery of stored lessons. A second agent retrieved the experience and produced code that passed the same tests unchanged, in one task. The report records this undeployed proposal and a defect outside those assertions: some metrics and secondary text use False or 0 for missing information.",
+          "In 16 tasks where an earlier rule still applied, memory completed 10 tasks, compared with 7 for a local ECC adaptation. In 16 tasks with a new rule, the results were 11 and 14. The study did not establish an advantage under its predefined criteria. The report includes all 128 outcomes across four conditions, correction attempts and resource use.",
         ],
         fr: [
           "Le noyau 0.3.0a5 est distribué avec ses fichiers d’installation, sommes de contrôle et guides français et anglais ; le registre de politiques indépendant reste en version 0.2.0a2. Le code, les données synthétiques, les protocoles et les calculs hors ligne sont publics.",
@@ -228,6 +229,7 @@ export const projects: Project[] = [
           "Dans une étude distincte, un modèle exécute une tâche A, reçoit un retour sur le fichier réellement produit et en extrait une leçon avant de tenter une tâche B différente dans une nouvelle session.",
           "Sur 48 épisodes et 288 appels aux modèles, Luna réussit 22 tâches B sur 24 avec la leçon, 13 avec la trace complète et le retour, et sept sans expérience. Sol réussit 24 tâches sur 24 avec la leçon comme avec la trace complète, et 12 sans expérience. Les fichiers produits par les 192 tâches B ont été rouverts et vérifiés indépendamment, y compris ceux des deux échecs avec leçon.",
           "Deux sessions d’un agent réel réussissent sept tests sur les mêmes treize scénarios, avec des résultats de qualité identiques. Le message système confirme la transmission automatique des enseignements. Un second agent retrouve l’expérience et produit, sur une mission, un code qui réussit les mêmes tests sans retouche. Le rapport conserve cette proposition non déployée et un défaut situé hors des assertions testées : certaines métriques et un texte secondaire utilisent False ou 0 pour des informations absentes.",
+          "Sur 16 missions où la règle précédente restait valable, la mémoire en réussit 10, contre 7 pour une adaptation locale d’ECC. Sur 16 missions soumises à une nouvelle règle, les résultats sont de 11 et 14. Les critères fixés avant les essais ne permettent pas de conclure à un avantage. Le rapport présente les 128 résultats des quatre conditions, les corrections et les ressources consommées.",
         ],
       },
       evidence: {
@@ -322,6 +324,15 @@ export const projects: Project[] = [
         url: "https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/experience-transfer-20261026/README.md",
         urlFr:
           "https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/experience-transfer-20261026/README.fr.md",
+      },
+      {
+        label: {
+          en: "Experience transfer comparison with ECC",
+          fr: "Comparaison du transfert d’expérience avec ECC",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/agentic-transfer-20261104/README.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/evidence/agentic-transfer-20261104/README.fr.md",
       },
       {
         label: {
