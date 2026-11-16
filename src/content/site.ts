@@ -136,8 +136,8 @@ export const projects: Project[] = [
       fr: "Mémoire persistante pour agents IA",
     },
     summary: {
-      en: "Persistent memory for AI agents in Python, with versioned evidence, revocation checks, typed retrieval and an optional policy registry.",
-      fr: "Mémoire persistante pour agents IA en Python, avec preuves versionnées, contrôle des retraits, recherche typée et registre de politiques facultatif.",
+      en: "Persistent memory for AI agents, installable from PyPI, with versioned evidence, withdrawal checks, an MCP server and an optional policy registry.",
+      fr: "Mémoire persistante pour agents IA, installable depuis PyPI, avec preuves versionnées, contrôle des retraits, serveur MCP et registre de politiques facultatif.",
     },
     role: {
       en: "Memory architecture, Python libraries and reproducible validation",
@@ -146,24 +146,32 @@ export const projects: Project[] = [
     status: "public-alpha",
     practice: "ai",
     filters: ["software", "ai"],
-    evidenceCheckedAt: "2026-10-29",
-    stack: ["Python", "SQLite", "FTS5", "HTTP", "MCP", "GitHub Actions"],
+    evidenceCheckedAt: "2026-11-16",
+    stack: [
+      "Python",
+      "SQLite",
+      "FTS5",
+      "HTTP",
+      "MCP",
+      "PyPI",
+      "GitHub Actions",
+    ],
     cardStack: ["Python", "SQLite", "FTS5", "MCP"],
     sections: {
       summary: {
         en: [
-          "Persistent Memory is a Python library for storing information used by AI agents, tracing it to its sources and excluding corrected or withdrawn evidence. It combines versioned memory with a separate policy registry. The MIT-licensed alpha runs on Linux without a model or external database.",
+          "Persistent Memory stores the information AI agents rely on, traces it to its sources and excludes corrected or withdrawn evidence. Any agent can use it: Python code imports the library, and other tools and frameworks connect to its MCP server. Version 0.4.0a2 is published on PyPI as persistent-memory-mcp. The MIT-licensed alpha runs on Linux, macOS and Windows without a model or external database. A separate policy registry is available alongside.",
         ],
         fr: [
-          "Persistent Memory est une bibliothèque Python pour conserver les informations utilisées par des agents IA, retrouver leurs sources et écarter celles qui ont été corrigées ou retirées. Elle associe une mémoire versionnée à un registre de politiques indépendant. Cette version alpha sous licence MIT fonctionne sous Linux sans modèle ni base externe.",
+          "Persistent Memory conserve les informations sur lesquelles s’appuient des agents IA, retrouve leurs sources et écarte celles qui ont été corrigées ou retirées. Tout agent peut l’utiliser : du code Python importe la bibliothèque, et les autres outils et frameworks se connectent à son serveur MCP. La version 0.4.0a2 est publiée sur PyPI sous le nom persistent-memory-mcp. Cette version alpha sous licence MIT fonctionne sous Linux, macOS et Windows, sans modèle ni base externe. Un registre de politiques indépendant est disponible à côté.",
         ],
       },
       role: {
         en: [
-          "I design and develop the storage, retrieval and recovery mechanisms, the Python interfaces and the optional HTTP and MCP integrations. I also maintain the public packages, bilingual documentation, standalone examples and tests for failures, concurrent access and evidence withdrawal.",
+          "I design and develop the storage, retrieval and recovery mechanisms, the Python interfaces, the MCP server and the setup command for client tools. I also maintain the packages for Linux, macOS and Windows, the PyPI release workflow, bilingual documentation, standalone examples and tests for failures, concurrent access and evidence withdrawal.",
         ],
         fr: [
-          "Je conçois et développe les mécanismes de stockage, de recherche et de reprise, les interfaces Python et les intégrations HTTP et MCP facultatives. Je maintiens aussi les packages publics, la documentation bilingue, les exemples autonomes et les tests de panne, d’accès concurrents et de retrait des informations.",
+          "Je conçois et développe les mécanismes de stockage, de recherche et de reprise, les interfaces Python, le serveur MCP et la commande de configuration des outils clients. Je maintiens aussi les paquets pour Linux, macOS et Windows, la chaîne de publication sur PyPI, la documentation bilingue, les exemples autonomes et les tests de panne, d’accès concurrents et de retrait des informations.",
         ],
       },
       problem: {
@@ -177,11 +185,13 @@ export const projects: Project[] = [
       architecture: {
         en: [
           "SQLite stores immutable versions and links between sources and derived information. A separate authority and freshness witness determine which evidence is still usable. Rebuildable FTS5 indexes find candidates, which are checked again before retrieval.",
+          "A single operations surface gives every entry point the same memory: remember, derive from exact parents, correct, explain, plan and apply a withdrawal, and learn from the outcome of a task. The MCP server exposes it as ten tools over stdio or Streamable HTTP. The setup command writes the configuration of Claude Code, Claude Desktop, Cursor, VS Code, Windsurf and Codex, and all of them share one store by default.",
           "Typed records distinguish documents, observations, hypotheses, procedures, tasks and feedback. Context can optionally include immutable source references; each complete text-and-reference item and the separators count towards the same budget. Plain text remains the default. The optional HTTP facade also offers a typed-only mode with a fixed workspace and token, configured by the host.",
           "An optional renderer turns supplied, reviewed facts into text using predefined French templates, preserving source versions and passages. The admission module checks the host’s authority and the final output buffer, and reports unknown, conflicting or withdrawn evidence.",
         ],
         fr: [
           "SQLite conserve des versions immuables et les liens entre les sources et les informations qui en découlent. Une autorité séparée et un témoin de fraîcheur déterminent quelles informations restent utilisables. Les index FTS5 reconstruisibles proposent des résultats, vérifiés à nouveau avant leur restitution.",
+          "Une surface d’opérations unique donne la même mémoire à chaque point d’entrée : enregistrer, dériver depuis des parents exacts, corriger, expliquer, planifier puis appliquer un retrait, et tirer une leçon du résultat d’une tâche. Le serveur MCP l’expose en dix outils, en stdio ou en Streamable HTTP. La commande setup écrit la configuration de Claude Code, Claude Desktop, Cursor, VS Code, Windsurf et Codex, qui partagent par défaut la même mémoire.",
           "Les enregistrements typés distinguent documents, observations, hypothèses, procédures, tâches et retours d’expérience. Le contexte peut inclure des références sources immuables : chaque ensemble complet texte-référence et les séparateurs comptent dans le même budget. Le texte seul reste le comportement par défaut. La façade HTTP facultative propose aussi un mode limité aux routes typées, avec un espace de travail et un jeton fixes, configurés par l’hôte.",
           "Un module de rendu facultatif transforme des faits fournis et déjà revus en texte, à partir de formulations françaises prédéfinies, en conservant les versions et passages sources. Le module d’admission vérifie l’autorité de l’hôte et le contenu final à transmettre, puis signale les informations inconnues, contradictoires ou retirées.",
         ],
@@ -200,15 +210,16 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "Core 0.3.0a5 and registry 0.2.0a2 passed 215 distinct test methods: 166 for the core and 49 for the registry. Testing installed wheels and wheels rebuilt from source archives produced 430 executions per Linux environment, 860 across the two hosts. The public downloads match the tested archives byte for byte. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
+          "Version 0.4.0a2 has 356 public test methods; the separate policy registry, version 0.2.0a2, has 51. Continuous integration runs them from the installed package on Linux, macOS and Windows, with Python 3.11 to 3.14. The release workflow builds the archives once, tests them on the three systems, publishes them to TestPyPI, reinstalls them from there on Linux and Windows, then waits for my approval before PyPI. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
         ],
         fr: [
-          "Le noyau 0.3.0a5 et le registre 0.2.0a2 ont passé 215 méthodes de test distinctes : 166 pour le noyau et 49 pour le registre. Les tests des wheels installés, puis de wheels reconstruits depuis les archives source, représentent 430 exécutions par environnement Linux, 860 au total sur deux hôtes. Les téléchargements publics sont identiques à l’octet près aux archives testées. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
+          "La version 0.4.0a2 compte 356 méthodes de test publiques ; le registre de politiques, en version 0.2.0a2, en compte 51. L’intégration continue les exécute depuis le paquet installé sous Linux, macOS et Windows, avec Python 3.11 à 3.14. La chaîne de publication construit les archives une fois, les teste sur les trois systèmes, les publie sur TestPyPI, les réinstalle depuis cet index sous Linux et Windows, puis attend mon approbation avant PyPI. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
         ],
       },
       results: {
         en: [
-          "Core 0.3.0a5 ships with installation files, checksums and French and English documentation; the separate policy registry remains at 0.2.0a2. The code, synthetic data, protocols and offline calculations are public.",
+          "Version 0.4.0a2 was published on PyPI on 15 November 2026 through GitHub trusted publishing, with an attestation for each file and published checksums. Installation with pip and uvx was then checked from PyPI. On a Windows 10 machine, Claude Desktop started the memory server from the configuration written by setup, and a stored entry was found again and checked on disk.",
+          "Eight agent frameworks loaded the ten tools through their own MCP integration: LangChain and LangGraph, OpenAI Agents SDK, Pydantic AI, CrewAI, LlamaIndex, AutoGen, smolagents and the official MCP SDK. Each ran the same sequence: remember a fact, find it, withdraw it, search again. The withdrawn entry was no longer returned. Each study publishes its code, synthetic data, protocol and offline calculations.",
           "Across 100 fixed lifecycle scenarios, all 751 valid reads were preserved and all 389 forbidden reads were blocked, matching a SQLite reference with retained current authority. After the core change, four SIGKILL interruption scenarios passed on each Linux host, with observed recovery times of 0.227 to 0.383 seconds.",
           "Across eight synthetic development histories retained between sessions, memory achieves 77 successes out of 96, compared with 29 for a lexical baseline with validity checks. Nine outcomes per configuration remain unknown and stay in the denominator. The campaign used 192 generations without retries; two Codex readers assessed the answers blind to the configuration.",
           "At 1,000 sources and 50 searches, a targeted core optimization reduced instrumented workload time by 28.01% on one host and 27.68% on the other, with the same checked outcomes and stored file sizes. Each figure comes from one before-and-after observation per host.",
@@ -220,7 +231,8 @@ export const projects: Project[] = [
           "In 16 tasks where an earlier rule still applied, memory completed 10 tasks, compared with 7 for a local ECC adaptation. In 16 tasks with a new rule, the results were 11 and 14. The study did not establish an advantage under its predefined criteria. The report includes all 128 outcomes across four conditions, correction attempts and resource use.",
         ],
         fr: [
-          "Le noyau 0.3.0a5 est distribué avec ses fichiers d’installation, sommes de contrôle et guides français et anglais ; le registre de politiques indépendant reste en version 0.2.0a2. Le code, les données synthétiques, les protocoles et les calculs hors ligne sont publics.",
+          "La version 0.4.0a2 a été publiée sur PyPI le 15 novembre 2026 par publication de confiance depuis GitHub, avec une attestation pour chaque fichier et des sommes de contrôle publiées. L’installation avec pip et uvx a ensuite été vérifiée depuis PyPI. Sur une machine Windows 10, Claude Desktop a lancé le serveur de mémoire à partir de la configuration écrite par setup, et une entrée enregistrée a été retrouvée puis contrôlée sur le disque.",
+          "Huit frameworks d’agents ont chargé les dix outils par leur propre intégration MCP : LangChain et LangGraph, OpenAI Agents SDK, Pydantic AI, CrewAI, LlamaIndex, AutoGen, smolagents et le SDK MCP officiel. Chacun a exécuté la même séquence : enregistrer un fait, le retrouver, le retirer, chercher à nouveau. L’entrée retirée n’était plus renvoyée. Chaque étude publie son code, ses données synthétiques, son protocole et ses calculs hors ligne.",
           "Sur 100 scénarios de cycle de vie définis à l’avance, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées, à égalité avec une référence SQLite conservant une autorité actuelle. Après la modification du noyau, quatre scénarios d’interruption par SIGKILL passent sur chacun des deux hôtes Linux, avec une reprise observée entre 0,227 et 0,383 seconde.",
           "Sur huit historiques synthétiques de développement conservés entre sessions, la mémoire obtient 77 réussites sur 96, contre 29 pour une référence lexicale avec contrôle de validité. Chaque configuration conserve neuf résultats inconnus au dénominateur. La campagne comprend 192 générations sans relance ; deux lecteurs Codex ont évalué les réponses à l’aveugle, sans connaître la configuration.",
           "À 1 000 sources et 50 recherches, une optimisation ciblée du noyau réduit la durée de la charge instrumentée de 28,01 % sur un hôte et de 27,68 % sur l’autre, avec les mêmes résultats vérifiés et les mêmes tailles de fichiers stockés. Chaque chiffre provient d’une seule observation avant et après par hôte.",
@@ -239,6 +251,7 @@ export const projects: Project[] = [
       limitations: {
         en: [
           "The library is released as an alpha. Recovery uses current authority and a freshness witness retained outside the restored content backup. Withdrawal controls subsequent library reads. Exported copies and information already transmitted are handled by the receiving system.",
+          "The framework checks ran on Linux with Python 3.13 and cover the tool layer; no model was called. AutoGen 0.7.5 and smolagents 1.26.0 need version 1 of the MCP Python SDK. Claude Code, Claude Desktop and Codex were checked in the real applications; the setup files for Cursor, VS Code and Windsurf are checked by tests. macOS is covered by continuous integration, without a test on a physical Mac.",
           "Optional rendering and admission receive supplied, reviewed facts under authenticated host authority. Integration assigns the host responsibility for fact extraction and semantic checks, callback isolation and deadlines, and the durable handoff journal. The host coordinates authorization and publication.",
           "The integration contract distinguishes delivery acknowledgment from tracking how the recipient uses the information. An effect with an uncertain outcome is reported to the host for a decision, without an automatic retry. The documentation provides the recovery and admission contracts.",
           "The learning study covers six task families and twelve synthetic worlds. Recovery measurements cover eight process interruptions. The 1,000-source performance protocol leaves cache state uncontrolled. Each linked report provides its execution conditions, observations and calculations.",
@@ -246,6 +259,7 @@ export const projects: Project[] = [
         ],
         fr: [
           "La bibliothèque est distribuée en version alpha. La reprise utilise une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée. Le retrait contrôle les lectures ultérieures de la bibliothèque. Les copies exportées et les informations déjà transmises sont gérées par le système destinataire.",
+          "Les vérifications des frameworks ont été faites sous Linux avec Python 3.13 et portent sur la couche d’outils, sans appel à un modèle. AutoGen 0.7.5 et smolagents 1.26.0 demandent la version 1 du SDK MCP Python. Claude Code, Claude Desktop et Codex ont été vérifiés dans les vraies applications ; les fichiers pour Cursor, VS Code et Windsurf sont vérifiés par des tests. macOS est couvert par l’intégration continue, sans essai sur un Mac physique.",
           "Le rendu et l’admission facultatifs reçoivent des faits fournis et revus, sous une autorité d’hôte authentifiée. Pour l’intégration, l’hôte prend en charge l’extraction et la vérification du sens des faits, l’isolation et les délais des fonctions de rappel, ainsi que le journal durable des remises. Il coordonne l’autorisation et la publication.",
           "Le contrat d’intégration distingue l’accusé de réception et le suivi d’utilisation des informations par le destinataire. Un effet dont l’issue est incertaine est signalé à l’hôte pour décision, sans relance automatique. La documentation fournit les contrats de reprise et d’admission.",
           "L’étude d’apprentissage porte sur six familles de tâches et douze mondes synthétiques. Les mesures de reprise couvrent huit interruptions de processus. Le protocole de performance à 1 000 sources laisse l’état du cache non contrôlé. Chaque rapport lié fournit ses conditions d’exécution, observations et calculs.",
@@ -353,17 +367,35 @@ export const projects: Project[] = [
       },
       {
         label: {
-          en: "Core alpha and installation files",
-          fr: "Noyau alpha et fichiers d’installation",
+          en: "Package on PyPI",
+          fr: "Paquet sur PyPI",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.3.0a5",
+        url: "https://pypi.org/project/persistent-memory-mcp/",
       },
       {
         label: {
-          en: "Linux package qualification",
-          fr: "Qualification des paquets sous Linux",
+          en: "Release 0.4.0a2 and checksums",
+          fr: "Version 0.4.0a2 et sommes de contrôle",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/download/v0.3.0a5/QUALIFICATION.json",
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.4.0a2",
+      },
+      {
+        label: {
+          en: "Connect your tools",
+          fr: "Connecter vos outils",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/SETUP.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/SETUP.fr.md",
+      },
+      {
+        label: {
+          en: "Agent frameworks checked",
+          fr: "Frameworks d’agents vérifiés",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/FRAMEWORKS.md",
+        urlFr:
+          "https://github.com/Musyg/persistent-memory/blob/main/docs/FRAMEWORKS.fr.md",
       },
       {
         label: {
