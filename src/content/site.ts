@@ -381,6 +381,13 @@ export const projects: Project[] = [
       },
       {
         label: {
+          en: "Recorded terminal demo",
+          fr: "Démo enregistrée en terminal",
+        },
+        url: "https://github.com/Musyg/persistent-memory/blob/main/docs/demo/README.md",
+      },
+      {
+        label: {
           en: "Connect your tools",
           fr: "Connecter vos outils",
         },
