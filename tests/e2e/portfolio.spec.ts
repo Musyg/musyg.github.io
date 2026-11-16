@@ -349,11 +349,18 @@ test("numbered case headings keep breathing room in both languages", async ({
               const title = section
                 .querySelector("h2")!
                 .getBoundingClientRect();
-              return title.left - number.right;
+              return {
+                beside: title.left - number.right,
+                below: title.top - number.bottom,
+              };
             }),
           );
         expect(gaps.length).toBeGreaterThan(0);
-        for (const gap of gaps) expect(gap).toBeGreaterThanOrEqual(19.5);
+        for (const gap of gaps) {
+          // Up to 720px the number sits above the title, giving the text the full width.
+          if (width <= 720) expect(gap.below).toBeGreaterThanOrEqual(8);
+          else expect(gap.beside).toBeGreaterThanOrEqual(19.5);
+        }
         expect(
           await page.evaluate(
             () => document.documentElement.scrollWidth <= innerWidth,

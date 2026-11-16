@@ -1914,8 +1914,22 @@
   }
 
   .case-body > section {
-    column-gap: 20px;
-    padding: 0 0 64px 12px;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+    padding: 0 0 56px 12px;
+  }
+
+  .case-body > section > :not(.section-number) {
+    grid-column: 1;
+  }
+
+  .case-body .section-number {
+    grid-row: auto;
+    margin: 0 0 12px;
+  }
+
+  .memory-priorities > li {
+    padding-left: 14px;
   }
 
   .case-stack {
