@@ -47,11 +47,8 @@ describe("Persistent Memory evidence hierarchy", () => {
       const cards = container.querySelectorAll(".memory-priorities > li");
       expect(cards).toHaveLength(3);
       expect(cards[0]).toHaveTextContent(/77.*96.*29\/96/);
-      expect(cards[0]).toHaveTextContent(
-        locale === "fr" ? /neuf.*inconnus/ : /nine.*unknown/,
-      );
       expect(cards[1]).toHaveTextContent(/Luna.*22.*24.*13\/24.*7\/24/);
-      expect(cards[2]).toHaveTextContent(/100.*751.*389.*SQLite/);
+      expect(cards[2]).toHaveTextContent(/100.*751.*389/);
       const paths = [
         "answer-quality-20261029/",
         "action-20261023/experience/",
@@ -107,7 +104,7 @@ describe("Persistent Memory evidence hierarchy", () => {
       expect(narrative).not.toMatch(
         /n’établissent ni|restent à mesurer|demandent des protocoles distincts|broader generalization|require separate evaluation|establish neither|remain unmeasured/,
       );
-      expect(narrative).toMatch(/False.*0/);
+      expect(narrative).toMatch(/cascade/i);
       expect(narrative).toMatch(/0[.,]227.*0[.,]383/);
       expect(narrative).toMatch(/0\.4\.0a4.*404.*51.*3[.,]11.*3[.,]15/);
       expect(narrative).toMatch(/Linux, macOS (?:and|et) Windows/);

@@ -165,10 +165,11 @@ describe("portfolio content contract", () => {
         }
       }
       expect(memory.sections.limitations[locale].join(" ")).toMatch(
-        /authority|autorité/,
+        /pip install persistent-memory-mcp/,
       );
-      expect(memory.sections.limitations[locale].join(" ")).toMatch(/copies/);
-      expect(memory.sections.limitations[locale].join(" ")).toMatch(/alpha/);
+      expect(memory.sections.limitations[locale].join(" ")).toMatch(
+        /--semantic.*--review/,
+      );
       for (const id of ["inaricom", "mikasshop", "pedi-sense"]) {
         const project = projects.find((p) => p.id === id)!;
         expect(

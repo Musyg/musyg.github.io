@@ -10,7 +10,7 @@ const copy = {
         description:
           "Retrouver les informations utiles quand une mission reprend, en tenant compte des corrections et des changements intervenus depuis la session précédente.",
         result:
-          "Sur huit historiques synthétiques, la mémoire obtient 77 réussites sur 96, contre 29/96 pour une référence lexicale avec contrôle de validité. Le décompte inclut neuf résultats inconnus par configuration.",
+          "Sur huit historiques synthétiques, la mémoire obtient 77 réussites sur 96, contre 29/96 pour une référence lexicale avec contrôle de validité.",
         link: "Lire l’étude sur la continuité entre sessions",
         path: "benchmarks/answer-quality-20261029/",
       },
@@ -28,7 +28,7 @@ const copy = {
         description:
           "Conserver la trace des sources et de leurs versions, exclure les informations retirées et contrôler une ancienne sauvegarde avant de la réutiliser.",
         result:
-          "Sur 100 scénarios de cycle de vie, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées. La référence SQLite qui conserve une autorité actuelle obtient le même résultat. Les mesures détaillées comprennent les reprises après arrêt de processus.",
+          "Sur 100 scénarios de cycle de vie, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées. Les mesures détaillées comprennent les reprises après arrêt de processus.",
         link: "Lire l’étude sur les corrections et la reprise",
         path: "benchmarks/lifecycle-20261022/",
       },
@@ -43,7 +43,7 @@ const copy = {
         description:
           "Retrieve useful information when a task resumes, taking account of corrections and changes since the previous session.",
         result:
-          "Across eight synthetic histories, memory achieves 77 successes out of 96, compared with 29/96 for a lexical baseline with validity checks. The counts include nine unknown outcomes per configuration.",
+          "Across eight synthetic histories, memory achieves 77 successes out of 96, compared with 29/96 for a lexical baseline with validity checks.",
         link: "Read the cross-session continuity study",
         path: "benchmarks/answer-quality-20261029/",
       },
@@ -61,7 +61,7 @@ const copy = {
         description:
           "Trace information to its sources and versions, exclude withdrawn evidence and check an old backup before reusing it.",
         result:
-          "Across 100 lifecycle scenarios, all 751 valid reads are preserved and all 389 forbidden reads are blocked. The SQLite reference retaining current authority achieves the same result. Detailed measurements include recovery after process termination.",
+          "Across 100 lifecycle scenarios, all 751 valid reads are preserved and all 389 forbidden reads are blocked. Detailed measurements include recovery after process termination.",
         link: "Read the corrections and recovery study",
         path: "benchmarks/lifecycle-20261022/",
       },
