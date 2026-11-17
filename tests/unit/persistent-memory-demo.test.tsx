@@ -19,6 +19,10 @@ const embeddedMemoryOnOff = (document: string) =>
   document.match(
     /<script id="recorded-memory-on-off" type="application\/json">([\s\S]*?)<\/script>/,
   )![1];
+const embeddedRelease = (document: string) =>
+  document.match(
+    /<script id="recorded-release" type="application\/json">([\s\S]*?)<\/script>/,
+  )![1];
 const embeddedComparison = (document: string) =>
   document.match(
     /<script id="recorded-comparison" type="application\/json">([\s\S]*?)<\/script>/,
@@ -139,6 +143,78 @@ describe("Persistent Memory recorded demonstration", () => {
       }
     },
   );
+
+  it("embeds the 0.4 recording and shows its five steps as text", () => {
+    const data = JSON.parse(readFileSync(`${prefix}release-0.4.json`, "utf8"));
+    expect(JSON.parse(embeddedRelease(html()))).toEqual(data);
+    expect(data.provenance.installed_version).toBe("0.4.0a4");
+    expect(data.provenance.script_sha256).toBe(
+      "4e720fe50e1b87a2bb0f2008983068a8b38b66fed69d1f3e2b9f9cd92dd79164",
+    );
+    expect(html()).toContain(
+      'href="https://github.com/Musyg/persistent-memory/blob/74c2e65d361d9e1ee807967cc2d59b35e0ccae20/examples/portfolio_demo_04.py"',
+    );
+    expect(Object.values(data.checks).every((value) => value === true)).toBe(
+      true,
+    );
+    for (const locale of ["fr", "en"]) {
+      const dom = new JSDOM(html(), {
+        runScripts: "dangerously",
+        url: `https://demo.invalid/?lang=${locale}`,
+      });
+      try {
+        const document = dom.window.document;
+        const steps = document.querySelectorAll("#release-steps > li");
+        expect(steps).toHaveLength(5);
+        expect(steps[1].textContent).toMatch(/similar.*deploy-day/);
+        expect(steps[2].textContent).toMatch(
+          /Quand déployons-nous.*deploy-day.*"items":\[\]/,
+        );
+        expect(steps[3].textContent).toMatch(
+          /pending_review.*Tuesdays.*review approve/,
+        );
+        expect(steps[4].textContent).toMatch(
+          /memory_notices.*superseded.*version_not_current/,
+        );
+        expect(document.getElementById("release-checks")!.textContent).toMatch(
+          locale === "fr" ? /11 vérifications sur 11/ : /11 of 11 checks/,
+        );
+        expect(document.getElementById("release-unavailable")!.hidden).toBe(
+          true,
+        );
+        expect(document.querySelector("#release-steps script")).toBeNull();
+      } finally {
+        dom.window.close();
+      }
+    }
+  });
+
+  it("hides the 0.4 recording when a check failed or a step is missing", () => {
+    const original = html();
+    const data = JSON.parse(embeddedRelease(original));
+    const failed = structuredClone(data);
+    failed.checks.notice_for_rule = false;
+    const missing = structuredClone(data);
+    missing.steps.pop();
+    for (const changed of [failed, missing]) {
+      const dom = new JSDOM(
+        original.replace(embeddedRelease(original), JSON.stringify(changed)),
+        { runScripts: "dangerously", url: "https://demo.invalid/?lang=en" },
+      );
+      try {
+        const document = dom.window.document;
+        expect(document.getElementById("release-results")!.hidden).toBe(true);
+        expect(document.getElementById("release-unavailable")!.hidden).toBe(
+          false,
+        );
+        expect(document.querySelectorAll("#release-steps > li")).toHaveLength(
+          0,
+        );
+      } finally {
+        dom.window.close();
+      }
+    }
+  });
 
   it("embeds the public memory-on/off evidence without changing original answers", () => {
     const data = memoryOnOff();
