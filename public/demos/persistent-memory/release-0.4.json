@@ -1,0 +1,223 @@
+{
+  "schema": "persistent-memory.portfolio-demo.release-0.4.v1",
+  "scenario": "deploy-day-v1",
+  "synthetic": true,
+  "generated_at_utc": "2026-11-17T18:21:47Z",
+  "provenance": {
+    "package": "persistent-memory-mcp",
+    "installed_version": "0.4.0a4",
+    "fastembed": "0.9.1",
+    "python": "3.13",
+    "platform": "linux",
+    "script_sha256": "4e720fe50e1b87a2bb0f2008983068a8b38b66fed69d1f3e2b9f9cd92dd79164"
+  },
+  "steps": [
+    {
+      "step": "remember",
+      "actor": "agent-a",
+      "calls": [
+        {
+          "tool": "memory_remember",
+          "arguments": {
+            "text": "Deploys happen on Tuesdays.",
+            "source_id": "deploy-day"
+          },
+          "result": {
+            "ref": {
+              "artifact_id": "deploy-day",
+              "version": "3d81b8d1070c"
+            }
+          }
+        },
+        {
+          "tool": "memory_derive",
+          "arguments": {
+            "text": "Freeze the main branch on Monday evening, before the deploy.",
+            "parents": [
+              "deploy-day"
+            ],
+            "artifact_id": "freeze-rule"
+          },
+          "result": {
+            "ref": {
+              "artifact_id": "freeze-rule",
+              "version": "f4306303f7cc"
+            },
+            "parents": [
+              {
+                "artifact_id": "deploy-day",
+                "version": "3d81b8d1070c"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "step": "near_duplicate",
+      "actor": "agent-a",
+      "calls": [
+        {
+          "tool": "memory_remember",
+          "arguments": {
+            "text": "Deploys happen on Tuesday.",
+            "source_id": "deploy-day-2"
+          },
+          "result": {
+            "ref": {
+              "artifact_id": "deploy-day-2",
+              "version": "bebbcc68ec87"
+            },
+            "similar": [
+              {
+                "artifact_id": "deploy-day",
+                "text": "Deploys happen on Tuesdays.",
+                "overlap": 0.6
+              }
+            ],
+            "similar_hint": "These existing entries are worded almost the same way. If the new text repeats or replaces one of them, keep a single entry: use memory_correct on the existing one, or memory_withdraw the one that should go. Nothing was merged."
+          }
+        },
+        {
+          "tool": "memory_withdraw",
+          "arguments": {
+            "artifact_id": "deploy-day-2",
+            "reason": "duplicate of deploy-day"
+          },
+          "result": {
+            "blocked": [
+              "deploy-day-2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "step": "semantic_search",
+      "actor": "agent-a",
+      "calls": [
+        {
+          "tool": "memory_search",
+          "arguments": {
+            "query": "Quand déployons-nous ?"
+          },
+          "result": {
+            "items": [
+              {
+                "artifact_id": "deploy-day",
+                "text": "Deploys happen on Tuesdays."
+              },
+              {
+                "artifact_id": "freeze-rule",
+                "text": "Freeze the main branch on Monday evening, before the deploy."
+              }
+            ],
+            "semantic": {
+              "projection": "local",
+              "status": "ok",
+              "candidates": 2
+            }
+          }
+        },
+        {
+          "tool": "memory_search",
+          "server": "without --semantic",
+          "arguments": {
+            "query": "Quand déployons-nous ?"
+          },
+          "result": {
+            "items": []
+          }
+        }
+      ]
+    },
+    {
+      "step": "review",
+      "actor": "agent-b",
+      "calls": [
+        {
+          "tool": "memory_correct",
+          "arguments": {
+            "artifact_id": "deploy-day",
+            "text": "Deploys happen on Thursdays.",
+            "expected_version": "3d81b8d1070c"
+          },
+          "result": {
+            "status": "pending_review",
+            "proposal_id": "p-34cda90783da4b53"
+          }
+        },
+        {
+          "tool": "memory_read",
+          "arguments": {
+            "ref": {
+              "artifact_id": "deploy-day",
+              "version": "3d81b8d1070c"
+            }
+          },
+          "result": {
+            "allowed": true,
+            "text": "Deploys happen on Tuesdays."
+          }
+        },
+        {
+          "command": "persistent-memory review approve p-34cda90783da4b53",
+          "actor": "person",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "step": "cascade_and_notices",
+      "actor": "agent-a",
+      "calls": [
+        {
+          "tool": "memory_search",
+          "arguments": {
+            "query": "freeze the main branch before the deploy"
+          },
+          "result": {
+            "items": [],
+            "memory_notices": [
+              {
+                "artifact_id": "deploy-day",
+                "state": "superseded"
+              },
+              {
+                "artifact_id": "freeze-rule",
+                "state": "superseded"
+              }
+            ]
+          }
+        },
+        {
+          "tool": "memory_read",
+          "arguments": {
+            "ref": {
+              "artifact_id": "freeze-rule",
+              "version": "f4306303f7cc"
+            }
+          },
+          "result": {
+            "allowed": false,
+            "reason": "version_not_current"
+          }
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "rule_names_exact_parent": true,
+    "duplicate_named_original": true,
+    "write_not_refused": true,
+    "found_by_meaning": true,
+    "keywords_alone_find_nothing": true,
+    "proposal_pending": true,
+    "nothing_changed_before_approval": true,
+    "approved": true,
+    "rule_not_served": true,
+    "notice_for_fact": true,
+    "notice_for_rule": true
+  },
+  "all_checks_passed": true
+}
