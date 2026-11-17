@@ -70,7 +70,7 @@ for (const locale of ["fr", "en"]) {
       await expect(priorities.nth(1)).toContainText(
         /Luna.*22.*24.*13\/24.*7\/24/,
       );
-      await expect(priorities.nth(2)).toContainText(/751.*389.*SQLite/);
+      await expect(priorities.nth(2)).toContainText(/100.*751.*389/);
       await expectUncovered(priorities.nth(0).locator("h3"));
       // Native fragment navigation sets the tab starting point at the results.
       // Check every study link after the browser's own keyboard scrolling.
@@ -184,7 +184,7 @@ for (const locale of ["fr", "en"]) {
       await summary.focus();
       await summary.press("Enter");
       await expect(disclosure).toHaveAttribute("open", "");
-      await expect(disclosure).toContainText("0.4.0a2");
+      await expect(disclosure).toContainText("0.4.0a4");
       await expect(disclosure).toContainText(/6[.,]79/);
       expect(
         await page.evaluate(
