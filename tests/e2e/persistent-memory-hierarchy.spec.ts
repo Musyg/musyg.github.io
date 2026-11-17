@@ -184,7 +184,7 @@ for (const locale of ["fr", "en"]) {
       await summary.focus();
       await summary.press("Enter");
       await expect(disclosure).toHaveAttribute("open", "");
-      await expect(disclosure).toContainText("0.4.0a2");
+      await expect(disclosure).toContainText("0.4.0a4");
       await expect(disclosure).toContainText(/6[.,]79/);
       expect(
         await page.evaluate(

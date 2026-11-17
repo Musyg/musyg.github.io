@@ -146,7 +146,7 @@ export const projects: Project[] = [
     status: "public-alpha",
     practice: "ai",
     filters: ["software", "ai"],
-    evidenceCheckedAt: "2026-11-16",
+    evidenceCheckedAt: "2026-11-17",
     stack: [
       "Python",
       "SQLite",
@@ -160,10 +160,10 @@ export const projects: Project[] = [
     sections: {
       summary: {
         en: [
-          "Persistent Memory stores the information AI agents rely on, traces it to its sources and excludes corrected or withdrawn evidence. Any agent can use it: Python code imports the library, and other tools and frameworks connect to its MCP server. Version 0.4.0a2 is published on PyPI as persistent-memory-mcp. The MIT-licensed alpha runs on Linux, macOS and Windows without a model or external database. A separate policy registry is available alongside.",
+          "Persistent Memory stores the information AI agents rely on, traces it to its sources and excludes corrected or withdrawn evidence. Any agent can use it: Python code imports the library, and other tools and frameworks connect to its MCP server. Version 0.4.0a4 is published on PyPI as persistent-memory-mcp. The MIT-licensed alpha runs on Linux, macOS and Windows without a model or external database; optional search by meaning uses a local model. A separate policy registry is available alongside.",
         ],
         fr: [
-          "Persistent Memory conserve les informations sur lesquelles s’appuient des agents IA, retrouve leurs sources et écarte celles qui ont été corrigées ou retirées. Tout agent peut l’utiliser : du code Python importe la bibliothèque, et les autres outils et frameworks se connectent à son serveur MCP. La version 0.4.0a2 est publiée sur PyPI sous le nom persistent-memory-mcp. Cette version alpha sous licence MIT fonctionne sous Linux, macOS et Windows, sans modèle ni base externe. Un registre de politiques indépendant est disponible à côté.",
+          "Persistent Memory conserve les informations sur lesquelles s’appuient des agents IA, retrouve leurs sources et écarte celles qui ont été corrigées ou retirées. Tout agent peut l’utiliser : du code Python importe la bibliothèque, et les autres outils et frameworks se connectent à son serveur MCP. La version 0.4.0a4 est publiée sur PyPI sous le nom persistent-memory-mcp. Cette version alpha sous licence MIT fonctionne sous Linux, macOS et Windows, sans modèle ni base externe ; la recherche par le sens, facultative, utilise un modèle local. Un registre de politiques indépendant est disponible à côté.",
         ],
       },
       role: {
@@ -186,12 +186,14 @@ export const projects: Project[] = [
         en: [
           "SQLite stores immutable versions and links between sources and derived information. A separate authority and freshness witness determine which evidence is still usable. Rebuildable FTS5 indexes find candidates, which are checked again before retrieval.",
           "A single operations surface gives every entry point the same memory: remember, derive from exact parents, correct, explain, plan and apply a withdrawal, and learn from the outcome of a task. The MCP server exposes it as ten tools over stdio or Streamable HTTP. The setup command writes the configuration of Claude Code, Claude Desktop, Cursor, VS Code, Windsurf and Codex, and all of them share one store by default.",
+          "Three options extend the server. A review mode holds an agent’s writes until a person approves them. A new entry that nearly repeats an existing one comes back with a warning naming the close entries. Search by meaning runs a multilingual model on the CPU, in the server process; its vectors hold references, never text, and every candidate is checked again by the authority like a keyword result.",
           "Typed records distinguish documents, observations, hypotheses, procedures, tasks and feedback. Context can optionally include immutable source references; each complete text-and-reference item and the separators count towards the same budget. Plain text remains the default. The optional HTTP facade also offers a typed-only mode with a fixed workspace and token, configured by the host.",
           "An optional renderer turns supplied, reviewed facts into text using predefined French templates, preserving source versions and passages. The admission module checks the host’s authority and the final output buffer, and reports unknown, conflicting or withdrawn evidence.",
         ],
         fr: [
           "SQLite conserve des versions immuables et les liens entre les sources et les informations qui en découlent. Une autorité séparée et un témoin de fraîcheur déterminent quelles informations restent utilisables. Les index FTS5 reconstruisibles proposent des résultats, vérifiés à nouveau avant leur restitution.",
           "Une surface d’opérations unique donne la même mémoire à chaque point d’entrée : enregistrer, dériver depuis des parents exacts, corriger, expliquer, planifier puis appliquer un retrait, et tirer une leçon du résultat d’une tâche. Le serveur MCP l’expose en dix outils, en stdio ou en Streamable HTTP. La commande setup écrit la configuration de Claude Code, Claude Desktop, Cursor, VS Code, Windsurf et Codex, qui partagent par défaut la même mémoire.",
+          "Trois options complètent le serveur. Un mode de relecture retient les écritures d’un agent jusqu’à l’approbation d’une personne. Une nouvelle entrée qui répète presque une entrée existante revient avec un avertissement qui nomme les entrées proches. La recherche par le sens fait tourner un modèle multilingue sur le processeur, dans le processus du serveur ; ses vecteurs contiennent des références, jamais de texte, et chaque candidat est vérifié à nouveau par l’autorité, comme un résultat par mots-clés.",
           "Les enregistrements typés distinguent documents, observations, hypothèses, procédures, tâches et retours d’expérience. Le contexte peut inclure des références sources immuables : chaque ensemble complet texte-référence et les séparateurs comptent dans le même budget. Le texte seul reste le comportement par défaut. La façade HTTP facultative propose aussi un mode limité aux routes typées, avec un espace de travail et un jeton fixes, configurés par l’hôte.",
           "Un module de rendu facultatif transforme des faits fournis et déjà revus en texte, à partir de formulations françaises prédéfinies, en conservant les versions et passages sources. Le module d’admission vérifie l’autorité de l’hôte et le contenu final à transmettre, puis signale les informations inconnues, contradictoires ou retirées.",
         ],
@@ -210,15 +212,16 @@ export const projects: Project[] = [
       },
       testing: {
         en: [
-          "Version 0.4.0a2 has 356 public test methods; the separate policy registry, version 0.2.0a2, has 51. Continuous integration runs them from the installed package on Linux, macOS and Windows, with Python 3.11 to 3.14. The release workflow builds the archives once, tests them on the three systems, publishes them to TestPyPI, reinstalls them from there on Linux and Windows, then waits for my approval before PyPI. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
+          "Version 0.4.0a4 has 404 public test methods; the separate policy registry, version 0.2.0a2, has 51. Continuous integration runs them from the installed package on Linux, macOS and Windows, with Python 3.11 to 3.15. The release workflow builds the archives once, tests them on the three systems, publishes them to TestPyPI, reinstalls them from there on Linux and Windows, then waits for my approval before PyPI. Separate synthetic studies cover corrections, withdrawals, process failures, execution time and learning between tasks.",
         ],
         fr: [
-          "La version 0.4.0a2 compte 356 méthodes de test publiques ; le registre de politiques, en version 0.2.0a2, en compte 51. L’intégration continue les exécute depuis le paquet installé sous Linux, macOS et Windows, avec Python 3.11 à 3.14. La chaîne de publication construit les archives une fois, les teste sur les trois systèmes, les publie sur TestPyPI, les réinstalle depuis cet index sous Linux et Windows, puis attend mon approbation avant PyPI. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
+          "La version 0.4.0a4 compte 404 méthodes de test publiques ; le registre de politiques, en version 0.2.0a2, en compte 51. L’intégration continue les exécute depuis le paquet installé sous Linux, macOS et Windows, avec Python 3.11 à 3.15. La chaîne de publication construit les archives une fois, les teste sur les trois systèmes, les publie sur TestPyPI, les réinstalle depuis cet index sous Linux et Windows, puis attend mon approbation avant PyPI. Des études synthétiques distinctes portent sur les corrections, les retraits, les pannes de processus, le temps d’exécution et l’apprentissage entre tâches.",
         ],
       },
       results: {
         en: [
           "Version 0.4.0a2 was published on PyPI on 15 November 2026 through GitHub trusted publishing, with an attestation for each file and published checksums. Installation with pip and uvx was then checked from PyPI. On a Windows 10 machine, Claude Desktop started the memory server from the configuration written by setup, and a stored entry was found again and checked on disk.",
+          "Version 0.4.0a4 followed on 17 November 2026 through the same workflow; its files on PyPI match the published checksums.",
           "Eight agent frameworks loaded the ten tools through their own MCP integration: LangChain and LangGraph, OpenAI Agents SDK, Pydantic AI, CrewAI, LlamaIndex, AutoGen, smolagents and the official MCP SDK. Each ran the same sequence: remember a fact, find it, withdraw it, search again. The withdrawn entry was no longer returned. Each study publishes its code, synthetic data, protocol and offline calculations.",
           "Across 100 fixed lifecycle scenarios, all 751 valid reads were preserved and all 389 forbidden reads were blocked, matching a SQLite reference with retained current authority. After the core change, four SIGKILL interruption scenarios passed on each Linux host, with observed recovery times of 0.227 to 0.383 seconds.",
           "Across eight synthetic development histories retained between sessions, memory achieves 77 successes out of 96, compared with 29 for a lexical baseline with validity checks. Nine outcomes per configuration remain unknown and stay in the denominator. The campaign used 192 generations without retries; two Codex readers assessed the answers blind to the configuration.",
@@ -232,6 +235,7 @@ export const projects: Project[] = [
         ],
         fr: [
           "La version 0.4.0a2 a été publiée sur PyPI le 15 novembre 2026 par publication de confiance depuis GitHub, avec une attestation pour chaque fichier et des sommes de contrôle publiées. L’installation avec pip et uvx a ensuite été vérifiée depuis PyPI. Sur une machine Windows 10, Claude Desktop a lancé le serveur de mémoire à partir de la configuration écrite par setup, et une entrée enregistrée a été retrouvée puis contrôlée sur le disque.",
+          "La version 0.4.0a4 a suivi le 17 novembre 2026 par la même chaîne ; ses fichiers sur PyPI correspondent aux sommes de contrôle publiées.",
           "Huit frameworks d’agents ont chargé les dix outils par leur propre intégration MCP : LangChain et LangGraph, OpenAI Agents SDK, Pydantic AI, CrewAI, LlamaIndex, AutoGen, smolagents et le SDK MCP officiel. Chacun a exécuté la même séquence : enregistrer un fait, le retrouver, le retirer, chercher à nouveau. L’entrée retirée n’était plus renvoyée. Chaque étude publie son code, ses données synthétiques, son protocole et ses calculs hors ligne.",
           "Sur 100 scénarios de cycle de vie définis à l’avance, les 751 lectures valides sont conservées et les 389 lectures interdites sont bloquées, à égalité avec une référence SQLite conservant une autorité actuelle. Après la modification du noyau, quatre scénarios d’interruption par SIGKILL passent sur chacun des deux hôtes Linux, avec une reprise observée entre 0,227 et 0,383 seconde.",
           "Sur huit historiques synthétiques de développement conservés entre sessions, la mémoire obtient 77 réussites sur 96, contre 29 pour une référence lexicale avec contrôle de validité. Chaque configuration conserve neuf résultats inconnus au dénominateur. La campagne comprend 192 générations sans relance ; deux lecteurs Codex ont évalué les réponses à l’aveugle, sans connaître la configuration.",
@@ -250,7 +254,7 @@ export const projects: Project[] = [
       },
       limitations: {
         en: [
-          "The library is released as an alpha. Recovery uses current authority and a freshness witness retained outside the restored content backup. Withdrawal controls subsequent library reads. Exported copies and information already transmitted are handled by the receiving system.",
+          "The library is released as an alpha. Search by meaning downloads a model of about 1 GB on first start and is measured so far on a small synthetic set of English and French questions. Recovery uses current authority and a freshness witness retained outside the restored content backup. Withdrawal controls subsequent library reads. Exported copies and information already transmitted are handled by the receiving system.",
           "The framework checks ran on Linux with Python 3.13 and cover the tool layer; no model was called. AutoGen 0.7.5 and smolagents 1.26.0 need version 1 of the MCP Python SDK. Claude Code, Claude Desktop and Codex were checked in the real applications; the setup files for Cursor, VS Code and Windsurf are checked by tests. macOS is covered by continuous integration, without a test on a physical Mac.",
           "Optional rendering and admission receive supplied, reviewed facts under authenticated host authority. Integration assigns the host responsibility for fact extraction and semantic checks, callback isolation and deadlines, and the durable handoff journal. The host coordinates authorization and publication.",
           "The integration contract distinguishes delivery acknowledgment from tracking how the recipient uses the information. An effect with an uncertain outcome is reported to the host for a decision, without an automatic retry. The documentation provides the recovery and admission contracts.",
@@ -258,7 +262,7 @@ export const projects: Project[] = [
           "The initial integration trial covers eight tasks, with one generation per condition, a preset intent and a restricted catalogue. AI judges assessed the answers. The test harness interrupted one condition during parallel searches; the report retains the available responses and that interruption.",
         ],
         fr: [
-          "La bibliothèque est distribuée en version alpha. La reprise utilise une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée. Le retrait contrôle les lectures ultérieures de la bibliothèque. Les copies exportées et les informations déjà transmises sont gérées par le système destinataire.",
+          "La bibliothèque est distribuée en version alpha. La recherche par le sens télécharge un modèle d’environ 1 Go au premier démarrage et n’est mesurée pour l’instant que sur un petit jeu synthétique de questions en anglais et en français. La reprise utilise une autorité actuelle et un témoin de fraîcheur conservés hors de la sauvegarde de contenu restaurée. Le retrait contrôle les lectures ultérieures de la bibliothèque. Les copies exportées et les informations déjà transmises sont gérées par le système destinataire.",
           "Les vérifications des frameworks ont été faites sous Linux avec Python 3.13 et portent sur la couche d’outils, sans appel à un modèle. AutoGen 0.7.5 et smolagents 1.26.0 demandent la version 1 du SDK MCP Python. Claude Code, Claude Desktop et Codex ont été vérifiés dans les vraies applications ; les fichiers pour Cursor, VS Code et Windsurf sont vérifiés par des tests. macOS est couvert par l’intégration continue, sans essai sur un Mac physique.",
           "Le rendu et l’admission facultatifs reçoivent des faits fournis et revus, sous une autorité d’hôte authentifiée. Pour l’intégration, l’hôte prend en charge l’extraction et la vérification du sens des faits, l’isolation et les délais des fonctions de rappel, ainsi que le journal durable des remises. Il coordonne l’autorisation et la publication.",
           "Le contrat d’intégration distingue l’accusé de réception et le suivi d’utilisation des informations par le destinataire. Un effet dont l’issue est incertaine est signalé à l’hôte pour décision, sans relance automatique. La documentation fournit les contrats de reprise et d’admission.",
@@ -374,10 +378,10 @@ export const projects: Project[] = [
       },
       {
         label: {
-          en: "Release 0.4.0a2 and checksums",
-          fr: "Version 0.4.0a2 et sommes de contrôle",
+          en: "Release 0.4.0a4 and checksums",
+          fr: "Version 0.4.0a4 et sommes de contrôle",
         },
-        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.4.0a2",
+        url: "https://github.com/Musyg/persistent-memory/releases/tag/v0.4.0a4",
       },
       {
         label: {

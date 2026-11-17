@@ -109,7 +109,7 @@ describe("Persistent Memory evidence hierarchy", () => {
       );
       expect(narrative).toMatch(/False.*0/);
       expect(narrative).toMatch(/0[.,]227.*0[.,]383/);
-      expect(narrative).toMatch(/0\.4\.0a2.*356.*51.*3[.,]11.*3[.,]14/);
+      expect(narrative).toMatch(/0\.4\.0a4.*404.*51.*3[.,]11.*3[.,]15/);
       expect(narrative).toMatch(/Linux, macOS (?:and|et) Windows/);
     },
   );
